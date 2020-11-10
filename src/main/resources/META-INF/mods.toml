@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="All rights reserved"
+
+[[mods]]
+modId="space"
+version="0.1.0"
+displayName="S P A C E"
+logoFile="space.png"
+authors="Ian Rehwinkel, Sebastian Gerdon, Robin Gerdon and Max"
+description='''
+Explore space!
+'''
+
+[[dependencies.space]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.space]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,1.17)"
+    ordering="NONE"
+    side="BOTH"
