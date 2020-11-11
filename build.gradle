@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.1.0'
-group = 'de.github.deerangle.space' 
+group = 'com.github.deerangle.space'
 archivesBaseName = 'space'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -27,7 +27,6 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -39,7 +38,6 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -51,7 +49,6 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
             args '--mod', 'space', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
