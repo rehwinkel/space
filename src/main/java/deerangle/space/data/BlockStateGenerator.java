@@ -1,6 +1,6 @@
 package deerangle.space.data;
 
-import deerangle.space.block.BlockRegistry;
+import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
@@ -25,8 +25,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlockWithItem(BlockRegistry.COPPER_ORE.get());
-        simpleBlockWithItem(BlockRegistry.ALUMINIUM_ORE.get());
+        simpleBlockWithItem(ResourceRegistry.COPPER_ORE.get());
+        simpleBlockWithItem(ResourceRegistry.ALUMINIUM_ORE.get());
     }
 
 }

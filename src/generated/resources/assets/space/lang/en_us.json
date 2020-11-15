@@ -1,5 +1,8 @@
 {
   "block.space.aluminium_ore": "Aluminium Ore",
+  "block.space.coal_generator": "Coal Generator",
   "block.space.copper_ore": "Copper Ore",
-  "itemGroup.space.blocks": "Space Blocks"
+  "itemGroup.space.machine": "Space Machines",
+  "itemGroup.space.resource": "Space Resources",
+  "stat.space.interact_with_coal_generator": "Interactions with Coal Generator"
 }

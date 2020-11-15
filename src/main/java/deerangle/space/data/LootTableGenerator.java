@@ -1,6 +1,6 @@
 package deerangle.space.data;
 
-import deerangle.space.block.BlockRegistry;
+import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
 
 public class LootTableGenerator extends AbstractLootTableGenerator {
@@ -11,8 +11,8 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
 
     @Override
     protected void populate() {
-        normalBlock(BlockRegistry.COPPER_ORE.get());
-        normalBlock(BlockRegistry.ALUMINIUM_ORE.get());
+        normalBlock(ResourceRegistry.COPPER_ORE.get());
+        normalBlock(ResourceRegistry.ALUMINIUM_ORE.get());
     }
 
 }
