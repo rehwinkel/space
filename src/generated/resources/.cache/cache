@@ -5,3 +5,5 @@ bf81f202ea51f05ef86c6bae24e4fd118ca6f800 assets/space/models/block/aluminium_ore
 5860866fbb3fe14a345ab67996a4659580b94b03 assets/space/models/block/copper_ore.json
 bca99bdcd470bdcea10d05b90c836efb35d10df4 assets/space/models/item/aluminium_ore.json
 1b8d66d398dda34b20e5ba427a6494951334eae5 assets/space/models/item/copper_ore.json
+76b669a1205b55c5b0f6b4084faf5efc3c7f3a0b data/space/loot_tables/aluminium_ore.json
+c7406515c2c871b577d1c2c1eb8d24507c53d3ec data/space/loot_tables/copper_ore.json

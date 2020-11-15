@@ -3,6 +3,7 @@ package deerangle.space.main;
 import deerangle.space.block.BlockRegistry;
 import deerangle.space.data.BlockStateGenerator;
 import deerangle.space.data.LanguageGenerator;
+import deerangle.space.data.LootTableGenerator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -43,6 +44,7 @@ public class SpaceMod {
     public static void registerData(GatherDataEvent event) {
         event.getGenerator()
                 .addProvider(new BlockStateGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
     }
 
