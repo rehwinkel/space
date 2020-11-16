@@ -17,9 +17,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -39,7 +36,8 @@ public class CoalGeneratorBlock extends Block {
         } else {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof CoalGeneratorTE) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, pos);
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity,
+                        ((CoalGeneratorTE) tileEntity)::writeGuiPacket);
                 player.addStat(Stats.INTERACT_WITH_COAL_GENERATOR);
             }
             return ActionResultType.CONSUME;

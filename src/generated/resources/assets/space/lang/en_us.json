@@ -2,6 +2,8 @@
   "block.space.aluminium_ore": "Aluminium Ore",
   "block.space.coal_generator": "Coal Generator",
   "block.space.copper_ore": "Copper Ore",
+  "info.space.energy": "Energy Stored: %s/%s FE",
+  "info.space.fluid": "%s: %s/%s mB",
   "itemGroup.space.machine": "Space Machines",
   "itemGroup.space.resource": "Space Resources",
   "stat.space.interact_with_coal_generator": "Interactions with Coal Generator"
