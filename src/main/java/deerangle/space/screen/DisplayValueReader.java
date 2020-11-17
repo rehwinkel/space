@@ -1,8 +1,8 @@
 package deerangle.space.screen;
 
 import com.mojang.datafixers.util.Pair;
-import deerangle.space.machine.EnergyMachineData;
-import deerangle.space.machine.IMachineData;
+import deerangle.space.machine.data.EnergyMachineData;
+import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.Machine;
 
 public class DisplayValueReader {

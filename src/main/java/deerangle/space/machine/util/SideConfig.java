@@ -1,4 +1,4 @@
-package deerangle.space.machine;
+package deerangle.space.machine.util;
 
 import net.minecraft.util.Direction;
 

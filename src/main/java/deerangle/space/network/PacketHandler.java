@@ -1,5 +1,6 @@
-package deerangle.space.main;
+package deerangle.space.network;
 
+import deerangle.space.main.SpaceMod;
 import deerangle.space.network.UpdateMachineMsg;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;

@@ -2,10 +2,9 @@ package deerangle.space.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import deerangle.space.container.CoalGeneratorContainer;
-import deerangle.space.machine.Machine;
+import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.type.Element;
-import deerangle.space.machine.type.SlotElement;
+import deerangle.space.machine.type.OverlayedElement;
 import deerangle.space.main.SpaceMod;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,7 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
 
-public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer> {
+public class MachineScreen extends ContainerScreen<MachineContainer> {
     // private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
 
     private static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
@@ -25,7 +24,7 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
     private final List<Element> elementList;
     private final DisplayValueReader valueReader;
 
-    public CoalGeneratorScreen(CoalGeneratorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public MachineScreen(MachineContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.elementList = screenContainer.machineType.getElements();
         this.valueReader = new DisplayValueReader(screenContainer.getMachine());
@@ -46,14 +45,14 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 
     private void renderBarTooltips(MatrixStack matrixStack, int x, int y) {
         for (Element el : this.elementList) {
-            if (el instanceof SlotElement) {
-                int barWidth = ((SlotElement) el).getWidth();
-                int barHeight = ((SlotElement) el).getHeight();
+            if (el instanceof OverlayedElement) {
+                int barWidth = ((OverlayedElement) el).getWidth();
+                int barHeight = ((OverlayedElement) el).getHeight();
                 int barX = el.getX();
                 int barY = el.getY();
                 if (x >= guiLeft + barX && x < guiLeft + barX + barWidth) {
                     if (y >= guiTop + barY && y < guiTop + barY + barHeight) {
-                        ITextComponent tooltipText = ((SlotElement) el).getTooltipText(this.valueReader);
+                        ITextComponent tooltipText = ((OverlayedElement) el).getTooltipText(this.valueReader);
                         if (tooltipText != null) {
                             this.renderTooltip(matrixStack, tooltipText, x, y);
                         }

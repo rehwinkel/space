@@ -1,7 +1,6 @@
 package deerangle.space.block;
 
-import deerangle.space.block.entity.CoalGeneratorTE;
-import deerangle.space.stats.Stats;
+import deerangle.space.block.entity.MachineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,22 +10,21 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class CoalGeneratorBlock extends Block {
+public class MachineBlock extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    private final ResourceLocation interactStat;
 
-    public CoalGeneratorBlock(Properties properties) {
+    public MachineBlock(Properties properties, ResourceLocation interactStat) {
         super(properties);
+        this.interactStat = interactStat;
     }
 
     @Override
@@ -35,10 +33,10 @@ public class CoalGeneratorBlock extends Block {
             return ActionResultType.SUCCESS;
         } else {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof CoalGeneratorTE) {
+            if (tileEntity instanceof MachineTileEntity) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity,
-                        ((CoalGeneratorTE) tileEntity)::writeGuiPacket);
-                player.addStat(Stats.INTERACT_WITH_COAL_GENERATOR);
+                        ((MachineTileEntity) tileEntity)::writeGuiPacket);
+                player.addStat(interactStat);
             }
             return ActionResultType.CONSUME;
         }
@@ -51,7 +49,7 @@ public class CoalGeneratorBlock extends Block {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new CoalGeneratorTE();
+        return new MachineTileEntity(this.getRegistryName().getPath());
     }
 
     @Override

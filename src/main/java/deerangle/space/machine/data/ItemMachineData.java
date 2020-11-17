@@ -1,4 +1,4 @@
-package deerangle.space.machine;
+package deerangle.space.machine.data;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -6,8 +6,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
-import java.util.List;
 
 public class ItemMachineData implements IMachineData {
 

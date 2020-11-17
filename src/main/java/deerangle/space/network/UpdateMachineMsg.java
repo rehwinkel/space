@@ -1,6 +1,6 @@
 package deerangle.space.network;
 
-import deerangle.space.block.entity.CoalGeneratorTE;
+import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -44,7 +44,7 @@ public class UpdateMachineMsg {
 
     public static void handle(UpdateMachineMsg msg, Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
-            CoalGeneratorTE tileEntity = (CoalGeneratorTE) Minecraft.getInstance().world.getTileEntity(msg.pos);
+            MachineTileEntity tileEntity = (MachineTileEntity) Minecraft.getInstance().world.getTileEntity(msg.pos);
             tileEntity.getMachine().readPacket(new PacketBuffer(msg.data));
         });
         contextSupplier.get().setPacketHandled(true);

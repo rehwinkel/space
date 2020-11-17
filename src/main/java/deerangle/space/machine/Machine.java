@@ -1,6 +1,10 @@
 package deerangle.space.machine;
 
+import deerangle.space.machine.data.EnergyMachineData;
+import deerangle.space.machine.data.IMachineData;
+import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.type.MachineType;
+import deerangle.space.machine.util.SideConfig;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;

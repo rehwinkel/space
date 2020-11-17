@@ -48,7 +48,7 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
 
         public Builder<M> addItemSlot(int x, int y, int index, boolean input) {
             int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
-            this.elements.add(new ItemSlotElement(x, y, index, input, color));
+            this.elements.add(new ItemElement(x, y, index, input, color));
             if (input) {
                 this.inputIndex++;
             } else {
@@ -59,7 +59,7 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
 
         public Builder<M> addEnergySlot(int x, int y, int index, boolean input) {
             int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
-            this.elements.add(new EnergySlotElement(x, y, index, input, color));
+            this.elements.add(new EnergyElement(x, y, index, input, color));
             if (input) {
                 this.inputIndex++;
             } else {

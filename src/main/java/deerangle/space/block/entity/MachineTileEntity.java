@@ -1,8 +1,8 @@
 package deerangle.space.block.entity;
 
-import deerangle.space.container.CoalGeneratorContainer;
+import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
-import deerangle.space.machine.MachineTypeRegistry;
+import deerangle.space.registry.MachineTypeRegistry;
 import deerangle.space.registry.MachineRegistry;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
@@ -25,13 +25,21 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.Objects;
 
-public class CoalGeneratorTE extends TileEntity implements INamedContainerProvider, ICapabilityProvider, ITickableTileEntity {
+public class MachineTileEntity extends TileEntity implements INamedContainerProvider, ICapabilityProvider, ITickableTileEntity {
 
     private final Machine machine;
+    private final String machineName;
 
-    public CoalGeneratorTE() {
-        super(MachineRegistry.COAL_GENERATOR_TE.get());
-        machine = MachineTypeRegistry.COAL_GENERATOR.getNewInstance();
+    public MachineTileEntity(String machineName) {
+        super(MachineRegistry.MACHINE_TE.get());
+        this.machine = MachineTypeRegistry.COAL_GENERATOR.getNewInstance();
+        this.machineName = machineName;
+    }
+
+    public MachineTileEntity() {
+        super(MachineRegistry.MACHINE_TE.get());
+        this.machine = MachineTypeRegistry.COAL_GENERATOR.getNewInstance();
+        this.machineName = "unknown";
     }
 
     @Override
@@ -64,14 +72,14 @@ public class CoalGeneratorTE extends TileEntity implements INamedContainerProvid
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("block.space.coal_generator");
+        return new TranslationTextComponent("block.space." + machineName);
     }
 
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
         PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
         this.writeGuiPacket(buf);
-        return new CoalGeneratorContainer(windowId, playerInventory, buf, this.machine);
+        return new MachineContainer(windowId, playerInventory, buf, this.machine);
     }
 
     public void writeGuiPacket(PacketBuffer buf) {

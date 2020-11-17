@@ -1,5 +1,11 @@
 package deerangle.space.machine;
 
+import deerangle.space.machine.data.BurnMachineData;
+import deerangle.space.machine.data.EnergyMachineData;
+import deerangle.space.machine.data.ItemMachineData;
+import deerangle.space.machine.util.SideConfig;
+import deerangle.space.registry.MachineTypeRegistry;
+
 public class CoalGeneratorMachine extends Machine {
 
     private final ItemMachineData fuel;

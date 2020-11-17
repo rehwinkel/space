@@ -1,5 +1,6 @@
-package deerangle.space.machine;
+package deerangle.space.registry;
 
+import deerangle.space.machine.CoalGeneratorMachine;
 import deerangle.space.machine.type.BurnElement;
 import deerangle.space.machine.type.MachineType;
 import net.minecraftforge.event.RegistryEvent;

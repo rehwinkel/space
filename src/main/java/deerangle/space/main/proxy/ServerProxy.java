@@ -1,4 +1,4 @@
-package deerangle.space.main;
+package deerangle.space.main.proxy;
 
 public class ServerProxy implements IProxy {
 

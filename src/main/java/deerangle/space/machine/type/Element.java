@@ -1,7 +1,7 @@
 package deerangle.space.machine.type;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.screen.CoalGeneratorScreen;
+import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
 
 public abstract class Element {
@@ -22,6 +22,6 @@ public abstract class Element {
         return y;
     }
 
-    public abstract void draw(CoalGeneratorScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop);
+    public abstract void draw(MachineScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop);
 
 }

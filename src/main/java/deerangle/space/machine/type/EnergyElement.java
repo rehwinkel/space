@@ -2,14 +2,14 @@ package deerangle.space.machine.type;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
-import deerangle.space.screen.CoalGeneratorScreen;
+import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class EnergySlotElement extends SlotElement {
+public class EnergyElement extends OverlayedElement {
 
-    EnergySlotElement(int x, int y, int index, boolean input, int overlayColor) {
+    EnergyElement(int x, int y, int index, boolean input, int overlayColor) {
         super(x, y, index, input, overlayColor, 10, 48);
     }
 
@@ -22,7 +22,7 @@ public class EnergySlotElement extends SlotElement {
     }
 
     @Override
-    public void draw(CoalGeneratorScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop) {
+    public void draw(MachineScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop) {
         int x = guiLeft + this.getX();
         int y = guiTop + this.getY();
         Pair<Integer, Integer> engAndCap = reader.getEnergyData(this.getIndex());

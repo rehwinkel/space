@@ -1,14 +1,14 @@
 package deerangle.space.container;
 
-import deerangle.space.block.entity.CoalGeneratorTE;
-import deerangle.space.machine.IMachineData;
-import deerangle.space.machine.ItemMachineData;
+import deerangle.space.block.entity.MachineTileEntity;
+import deerangle.space.machine.data.IMachineData;
+import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.type.DataElement;
 import deerangle.space.machine.type.Element;
-import deerangle.space.machine.type.ItemSlotElement;
+import deerangle.space.machine.type.ItemElement;
 import deerangle.space.machine.type.MachineType;
-import deerangle.space.main.PacketHandler;
+import deerangle.space.network.PacketHandler;
 import deerangle.space.network.UpdateMachineMsg;
 import deerangle.space.registry.MachineRegistry;
 import net.minecraft.client.Minecraft;
@@ -29,21 +29,21 @@ import net.minecraftforge.registries.RegistryManager;
 
 import java.util.Objects;
 
-public class CoalGeneratorContainer extends Container {
+public class MachineContainer extends Container {
 
     public final MachineType<?> machineType;
     private final Machine machine;
     private final BlockPos pos;
 
-    public CoalGeneratorContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public MachineContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
         this(windowId, inv, data, null);
     }
 
-    public CoalGeneratorContainer(int windowId, PlayerInventory inv, PacketBuffer data, Machine machine) {
-        super(MachineRegistry.COAL_GENERATOR_CONTAINER.get(), windowId);
+    public MachineContainer(int windowId, PlayerInventory inv, PacketBuffer data, Machine machine) {
+        super(MachineRegistry.MACHINE_CONTAINER.get(), windowId);
         this.pos = data.readBlockPos();
         if (machine == null) {
-            CoalGeneratorTE tileEntity = (CoalGeneratorTE) Minecraft.getInstance().world.getTileEntity(this.pos);
+            MachineTileEntity tileEntity = (MachineTileEntity) Minecraft.getInstance().world.getTileEntity(this.pos);
             this.machine = tileEntity.getMachine();
         } else {
             this.machine = machine;
@@ -52,7 +52,7 @@ public class CoalGeneratorContainer extends Container {
         this.machineType = Objects.requireNonNull(registry.getValue(data.readResourceLocation()));
 
         for (Element el : this.machineType.getElements()) {
-            if (el instanceof ItemSlotElement) {
+            if (el instanceof ItemElement) {
                 IItemHandler itemHandler;
                 if (machine != null) {
                     IMachineData slot = machine.getMachineData(((DataElement) el).getIndex());

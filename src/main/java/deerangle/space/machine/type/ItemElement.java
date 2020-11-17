@@ -1,13 +1,13 @@
 package deerangle.space.machine.type;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.screen.CoalGeneratorScreen;
+import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
 import net.minecraft.util.text.ITextComponent;
 
-public class ItemSlotElement extends SlotElement {
+public class ItemElement extends OverlayedElement {
 
-    ItemSlotElement(int x, int y, int index, boolean input, int overlayColor) {
+    ItemElement(int x, int y, int index, boolean input, int overlayColor) {
         super(x, y, index, input,overlayColor, 18, 18);
     }
 
@@ -17,7 +17,7 @@ public class ItemSlotElement extends SlotElement {
     }
 
     @Override
-    public void draw(CoalGeneratorScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop) {
+    public void draw(MachineScreen screen, DisplayValueReader reader, MatrixStack matrixStack, int guiLeft, int guiTop) {
         int x = guiLeft + this.getX();
         int y = guiTop + this.getY();
         screen.resetOverlayColor();

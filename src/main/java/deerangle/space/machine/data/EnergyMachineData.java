@@ -1,5 +1,6 @@
-package deerangle.space.machine;
+package deerangle.space.machine.data;
 
+import deerangle.space.machine.util.MachineEnergyStorage;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;

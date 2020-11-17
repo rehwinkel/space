@@ -1,4 +1,4 @@
-package deerangle.space.machine;
+package deerangle.space.machine.data;
 
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
