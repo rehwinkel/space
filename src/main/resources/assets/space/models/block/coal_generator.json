@@ -3,7 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"1": "dark_metal",
-		"2": "metal",
+		"2": "coal_generator_metal",
 		"3": "coal_generator_front"
 	},
 	"elements": [
