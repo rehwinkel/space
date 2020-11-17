@@ -3,17 +3,23 @@ package deerangle.space.main;
 import deerangle.space.data.BlockStateGenerator;
 import deerangle.space.data.LanguageGenerator;
 import deerangle.space.data.LootTableGenerator;
+import deerangle.space.machine.type.MachineType;
 import deerangle.space.registry.AbstractRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
+import deerangle.space.stats.Stats;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegistryBuilder;
 
 @Mod(SpaceMod.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -30,8 +36,10 @@ public class SpaceMod {
         AbstractRegistry.CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MachineRegistry.register();
         ResourceRegistry.register();
+        Stats.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigData.SERVER_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
     }
 
     @SubscribeEvent
@@ -50,8 +58,22 @@ public class SpaceMod {
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
     }
 
+    private static <T> Class<T> c(Class<?> cls) {
+        return (Class<T>) cls;
+    }
+
+    @SubscribeEvent
+    public static void newRegistries(RegistryEvent.NewRegistry event) {
+        new RegistryBuilder<MachineType<?>>().setType(c(MachineType.class))
+                .setName(new ResourceLocation(MOD_ID, "machine")).setMaxID(Integer.MAX_VALUE - 1).create();
+    }
+
     public void clientSetup(FMLClientSetupEvent event) {
         proxy.clientSetup();
+    }
+
+    public void commonSetup(FMLCommonSetupEvent event) {
+        PacketHandler.registerPackets();
     }
 
 }

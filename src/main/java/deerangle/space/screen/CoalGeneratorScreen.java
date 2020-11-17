@@ -3,32 +3,32 @@ package deerangle.space.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import deerangle.space.container.CoalGeneratorContainer;
+import deerangle.space.machine.Machine;
+import deerangle.space.machine.type.Element;
+import deerangle.space.machine.type.SlotElement;
 import deerangle.space.main.SpaceMod;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.ITextComponent;
 
+import java.util.List;
+
 public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer> {
-    private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
+    // private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
 
     private static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/machines.png");
     private static final ResourceLocation GENERIC_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/generic.png");
 
+    private final List<Element> elementList;
+    private final DisplayValueReader valueReader;
+
     public CoalGeneratorScreen(CoalGeneratorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        // elementList = ImmutableList.of(new Element(Element.ElementType.SLOT_ENERGY, 17, 17, false), new Element(Element.ElementType.SLOT_ITEM, 79, 47, true), new Element(Element.ElementType.DISPLAY_BURN, 79, 29, true));
+        this.elementList = screenContainer.machineType.getElements();
+        this.valueReader = new DisplayValueReader(screenContainer.getMachine());
     }
 
     @Override
@@ -45,61 +45,52 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
     }
 
     private void renderBarTooltips(MatrixStack matrixStack, int x, int y) {
-        /*
-        for (Element s : this.elementList) {
-            int barX = s.getX();
-            int barY = s.getY();
-            int barWidth = s.getWidth();
-            int barHeight = s.getHeight();
-            if (s.getType() != Element.ElementType.SLOT_ENERGY && s.getType() != Element.ElementType.SLOT_FLUID) {
-                continue;
-            }
-            if (x >= guiLeft + barX && x < guiLeft + barX + barWidth) {
-                if (y >= guiTop + barY && y < guiTop + barY + barHeight) {
-                    if (s.getType() == Element.ElementType.SLOT_FLUID) {
-                        this.renderTooltip(matrixStack, new TranslationTextComponent("info.space.fluid", "Lava", 1, 2),
-                                x, y);
-                    } else {
-                        this.renderTooltip(matrixStack, new TranslationTextComponent("info.space.energy", 1, 2), x, y);
+        for (Element el : this.elementList) {
+            if (el instanceof SlotElement) {
+                int barWidth = ((SlotElement) el).getWidth();
+                int barHeight = ((SlotElement) el).getHeight();
+                int barX = el.getX();
+                int barY = el.getY();
+                if (x >= guiLeft + barX && x < guiLeft + barX + barWidth) {
+                    if (y >= guiTop + barY && y < guiTop + barY + barHeight) {
+                        ITextComponent tooltipText = ((SlotElement) el).getTooltipText(this.valueReader);
+                        if (tooltipText != null) {
+                            this.renderTooltip(matrixStack, tooltipText, x, y);
+                        }
                     }
                 }
             }
         }
-        */
     }
 
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
-
         this.resetOverlayColor();
         this.minecraft.getTextureManager().bindTexture(GENERIC_GUI);
-        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        int overlayColor = 0x2056d4;
-        /*
-        for (Element s : this.elementList) {
-            switch (s.getType()) {
-                case SLOT_ENERGY:
-                    drawEnergyBar(matrixStack, i + s.getX(), j + s.getY(), 0.5f, overlayColor);
-                    break;
-                case SLOT_FLUID:
-                    drawFluidBar(matrixStack, Fluids.LAVA, i + s.getX(), j + s.getY(), 0.5f, overlayColor);
-                    break;
-                case SLOT_ITEM:
-                    drawSlot(matrixStack, i + s.getX(), j + s.getY(), overlayColor);
-                    break;
-                case DISPLAY_BURN:
-                    drawBurnDisplay(matrixStack, i + s.getX(), j + s.getY(), 0.3f, overlayColor);
-                    break;
-            }
+        for (Element el : this.elementList) {
+            el.draw(this, this.valueReader, matrixStack, this.guiLeft, this.guiTop);
         }
-        */
     }
 
+    public void bindMachinesTexture() {
+        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+    }
+
+    public void setOverlayColor(int overlay) {
+        RenderSystem
+                .color4f(((overlay >> 16) & 0xFF) / 255.0F, ((overlay >> 8) & 0xFF) / 255.0F, (overlay & 0xFF) / 255.0F,
+                        1.0F);
+    }
+
+    public void resetOverlayColor() {
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    /*
     private void drawBurnDisplay(MatrixStack matrixStack, int x, int y, float amount, int overlayColor) {
         this.resetOverlayColor();
-        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+        this.bindMachinesTexture();
         this.blit(matrixStack, x, y, 0, 96 + 18, 18, 18);
         if (amount > 0f) {
             int height = (int) (13 * (1 - amount));
@@ -109,7 +100,7 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 
     private void drawSlot(MatrixStack matrixStack, int x, int y, int overlay) {
         this.resetOverlayColor();
-        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+        this.bindMachinesTexture();
         this.blit(matrixStack, x, y, 0, 96, 18, 18);
         this.setOverlayColor(overlay);
         this.blit(matrixStack, x, y, 18, 96, 18, 18);
@@ -117,7 +108,7 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 
     private void drawEnergyBar(MatrixStack matrixStack, int x, int y, float amount, int overlay) {
         this.resetOverlayColor();
-        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+        this.bindMachinesTexture();
         int height = (int) (46 * (1F - amount));
         this.blit(matrixStack, x, y, 0, 48, 10, 48);
         this.blit(matrixStack, x + 1, y + 1 + height, 11, 49 + height, 8, 46 - height);
@@ -127,11 +118,11 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
 
     private void drawFluidBar(MatrixStack matrixStack, Fluid fluid, int x, int y, float amount, int overlay) {
         this.resetOverlayColor();
-        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+        this.bindMachinesTexture();
         int height = (int) (46 * (1F - amount));
         this.blit(matrixStack, x, y, 0, 0, 18, 48);
         this.drawFluidColumn(matrixStack, fluid, x + 1, y + 1 + height, 46 - height, true);
-        this.minecraft.getTextureManager().bindTexture(MACHINES_GUI);
+        this.bindMachinesTexture();
         this.setOverlayColor(overlay);
         this.blit(matrixStack, x, y, 36, 0, 18, 48);
     }
@@ -179,15 +170,6 @@ public class CoalGeneratorScreen extends ContainerScreen<CoalGeneratorContainer>
         RenderSystem.enableAlphaTest();
         WorldVertexBufferUploader.draw(bufferbuilder);
     }
-
-    private void setOverlayColor(int overlay) {
-        RenderSystem
-                .color4f(((overlay >> 16) & 0xFF) / 255.0F, ((overlay >> 8) & 0xFF) / 255.0F, (overlay & 0xFF) / 255.0F,
-                        1.0F);
-    }
-
-    private void resetOverlayColor() {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    }
+    */
 
 }
