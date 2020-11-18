@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -39,6 +41,17 @@ public class MachineBlock extends Block {
                 player.addStat(interactStat);
             }
             return ActionResultType.CONSUME;
+        }
+    }
+
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.isIn(newState.getBlock())) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof MachineTileEntity) {
+                ((MachineTileEntity) tileentity).getMachine().dropInventoryItems(worldIn, pos);
+            }
+
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }
 

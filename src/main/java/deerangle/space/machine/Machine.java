@@ -7,9 +7,12 @@ import deerangle.space.machine.type.MachineType;
 import deerangle.space.machine.util.SideConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
@@ -126,4 +129,15 @@ public abstract class Machine {
         return false;
     }
 
+    public void dropInventoryItems(World world, BlockPos dropPos) {
+        for (IMachineData slot : machineDataList) {
+            if (slot instanceof ItemMachineData) {
+                IItemHandler itemHandler = ((ItemMachineData) slot).getItemHandler()
+                        .orElseThrow(() -> new RuntimeException("failed to get item handler"));
+                for(int i = 0; i < itemHandler.getSlots(); i++) {
+                    InventoryHelper.spawnItemStack(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(), itemHandler.getStackInSlot(i));
+                }
+            }
+        }
+    }
 }

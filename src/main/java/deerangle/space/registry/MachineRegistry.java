@@ -1,5 +1,6 @@
 package deerangle.space.registry;
 
+import deerangle.space.block.CoalGeneratorBlock;
 import deerangle.space.block.MachineBlock;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.container.MachineContainer;
@@ -27,7 +28,7 @@ public class MachineRegistry extends AbstractRegistry {
     };
 
     public static final RegistryObject<Block> COAL_GENERATOR = BLOCKS
-            .register("coal_generator", () -> new MachineBlock(AbstractBlock.Properties.create(Material.IRON), Stats.INTERACT_WITH_COAL_GENERATOR));
+            .register("coal_generator", () -> new CoalGeneratorBlock(AbstractBlock.Properties.create(Material.IRON)));
 
     public static final RegistryObject<TileEntityType<MachineTileEntity>> MACHINE_TE = TILE_ENTITIES
             .register("machine",
