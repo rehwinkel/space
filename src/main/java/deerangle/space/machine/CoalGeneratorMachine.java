@@ -13,7 +13,7 @@ public class CoalGeneratorMachine extends Machine {
     private final BurnMachineData burn;
 
     public CoalGeneratorMachine() {
-        super(MachineTypeRegistry.COAL_GENERATOR, new SideConfig(0, 1, -1, -1, -1, -1));
+        super(MachineTypeRegistry.COAL_GENERATOR, new SideConfig(0, 1, -1, -1, -1, -1, 2));
         fuel = new ItemMachineData("Fuel");
         energy = new EnergyMachineData("Eng", 16000, 1000);
         burn = new BurnMachineData("Burn");

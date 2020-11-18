@@ -2,8 +2,8 @@ package deerangle.space.block.entity;
 
 import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
-import deerangle.space.registry.MachineTypeRegistry;
 import deerangle.space.registry.MachineRegistry;
+import deerangle.space.registry.MachineTypeRegistry;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +28,7 @@ import java.util.Objects;
 public class MachineTileEntity extends TileEntity implements INamedContainerProvider, ICapabilityProvider, ITickableTileEntity {
 
     private final Machine machine;
-    private final String machineName;
+    private String machineName;
 
     public MachineTileEntity(String machineName) {
         super(MachineRegistry.MACHINE_TE.get());
@@ -56,12 +56,14 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
         super.write(nbt);
+        nbt.putString("Name", this.machineName);
         return machine.write(nbt);
     }
 
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         super.read(state, nbt);
+        this.machineName = nbt.getString("Name");
         machine.read(nbt);
     }
 

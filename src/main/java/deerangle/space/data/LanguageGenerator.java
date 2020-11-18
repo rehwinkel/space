@@ -20,6 +20,13 @@ public class LanguageGenerator extends LanguageProvider {
         add("stat.space.interact_with_coal_generator", "Interactions with Coal Generator");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");
+        add("info.space.side_config", "Side Config");
+        add("info.space.top_letter", "U");
+        add("info.space.bottom_letter", "D");
+        add("info.space.front_letter", "F");
+        add("info.space.back_letter", "B");
+        add("info.space.left_letter", "L");
+        add("info.space.right_letter", "R");
     }
 
 }

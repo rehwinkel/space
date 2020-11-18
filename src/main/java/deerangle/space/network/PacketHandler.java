@@ -1,7 +1,6 @@
 package deerangle.space.network;
 
 import deerangle.space.main.SpaceMod;
-import deerangle.space.network.UpdateMachineMsg;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -16,6 +15,7 @@ public class PacketHandler {
 
     public static void registerPackets() {
         INSTANCE.registerMessage(0, UpdateMachineMsg.class, UpdateMachineMsg::serialize, UpdateMachineMsg::deserialize, UpdateMachineMsg::handle);
+        INSTANCE.registerMessage(1, AdvanceSideMsg.class, AdvanceSideMsg::serialize, AdvanceSideMsg::deserialize, AdvanceSideMsg::handle);
     }
 
 }

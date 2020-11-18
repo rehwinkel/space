@@ -1,9 +1,9 @@
 package deerangle.space.container;
 
 import deerangle.space.block.entity.MachineTileEntity;
+import deerangle.space.machine.Machine;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
-import deerangle.space.machine.Machine;
 import deerangle.space.machine.type.DataElement;
 import deerangle.space.machine.type.Element;
 import deerangle.space.machine.type.ItemElement;
@@ -33,7 +33,7 @@ public class MachineContainer extends Container {
 
     public final MachineType<?> machineType;
     private final Machine machine;
-    private final BlockPos pos;
+    public final BlockPos pos;
 
     public MachineContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
         this(windowId, inv, data, null);
@@ -82,15 +82,18 @@ public class MachineContainer extends Container {
         super.detectAndSendChanges();
         for (IContainerListener listener : this.listeners) {
             if (listener instanceof ServerPlayerEntity) {
-                PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener),
-                        new UpdateMachineMsg(this.pos, this.machine));
+                if (this.machine.shouldSync()) {
+                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener),
+                            new UpdateMachineMsg(this.pos, this.machine));
+                }
             }
         }
     }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return true; // TODO
+        return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
+                (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     public Machine getMachine() {

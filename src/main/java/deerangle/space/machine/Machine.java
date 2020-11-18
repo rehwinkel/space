@@ -5,6 +5,8 @@ import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.type.MachineType;
 import deerangle.space.machine.util.SideConfig;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
@@ -20,6 +22,7 @@ public abstract class Machine {
     protected final List<IMachineData> machineDataList = new ArrayList<>();
     protected final SideConfig sideConfig;
     private final MachineType<?> type;
+    private ByteBuf prevState;
 
     public Machine(MachineType<?> machineType, SideConfig sideConfig) {
         this.sideConfig = sideConfig;
@@ -89,17 +92,38 @@ public abstract class Machine {
     }
 
     public void writePacket(PacketBuffer buf) {
+        sideConfig.writePacket(buf);
         for (IMachineData iMachineData : this.machineDataList) {
             iMachineData.writePacket(buf);
         }
     }
 
     public void readPacket(PacketBuffer buf) {
+        sideConfig.readPacket(buf);
         for (IMachineData iMachineData : this.machineDataList) {
             iMachineData.readPacket(buf);
         }
     }
 
     public abstract void update();
+
+    public SideConfig getSideConfig() {
+        return this.sideConfig;
+    }
+
+    public boolean shouldSync() {
+        if (this.prevState == null) {
+            this.prevState = Unpooled.buffer();
+            this.writePacket(new PacketBuffer(prevState));
+            return true;
+        }
+        ByteBuf currentState = Unpooled.buffer();
+        this.writePacket(new PacketBuffer(currentState));
+        if (this.prevState.hashCode() != currentState.hashCode()) {
+            this.prevState = currentState;
+            return true;
+        }
+        return false;
+    }
 
 }

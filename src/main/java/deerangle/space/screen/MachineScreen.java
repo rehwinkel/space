@@ -6,41 +6,132 @@ import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.type.Element;
 import deerangle.space.machine.type.OverlayedElement;
 import deerangle.space.main.SpaceMod;
+import deerangle.space.network.AdvanceSideMsg;
+import deerangle.space.network.PacketHandler;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
 public class MachineScreen extends ContainerScreen<MachineContainer> {
     // private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
 
-    private static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
+    public static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/machines.png");
-    private static final ResourceLocation GENERIC_GUI = new ResourceLocation(SpaceMod.MOD_ID,
+    public static final ResourceLocation GENERIC_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/generic.png");
+    public static final ResourceLocation GENERIC_EMPTY_GUI = new ResourceLocation(SpaceMod.MOD_ID,
+            "textures/gui/machine/generic_empty.png");
 
     private final List<Element> elementList;
     private final DisplayValueReader valueReader;
+    private static final ITextComponent sideConfigText = new TranslationTextComponent("info.space.side_config");
+    private final BlockPos pos;
+    private boolean isMainScreen = true;
+    private int sideConfigX;
+    private SideColorButton frontButton;
+    private SideColorButton backButton;
+    private SideColorButton leftButton;
+    private SideColorButton rightButton;
+    private SideColorButton topButton;
+    private SideColorButton bottomButton;
 
     public MachineScreen(MachineContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.elementList = screenContainer.machineType.getElements();
-        this.valueReader = new DisplayValueReader(screenContainer.getMachine());
+        this.valueReader = new DisplayValueReader(screenContainer.getMachine(), this.elementList);
+        this.pos = screenContainer.pos;
     }
 
     @Override
     protected void init() {
         super.init();
+        addButton(new SettingsButton(guiLeft + xSize - 16 - 5, guiTop + 5, button -> {
+            this.isMainScreen = !this.isMainScreen;
+            this.setButtonVisibility(!this.isMainScreen);
+            if (!this.isMainScreen) {
+                this.container.inventorySlots.forEach(slot -> {
+                    slot.xPos -= 1000;
+                    slot.yPos -= 1000;
+                });
+            } else {
+                this.container.inventorySlots.forEach(slot -> {
+                    slot.xPos += 1000;
+                    slot.yPos += 1000;
+                });
+            }
+        }));
+        int dist = 6;
+        int size = dist + 20;
+        int topOffset = 48;
+        this.topButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + topOffset, this.valueReader.getTopColor(),
+                        new TranslationTextComponent("info.space.top_letter"), button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.TOP));
+                }));
+        this.frontButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + size + topOffset,
+                this.valueReader.getFrontColor(), new TranslationTextComponent("info.space.front_letter"), button -> {
+            PacketHandler.INSTANCE
+                    .send(PacketDistributor.SERVER.noArg(), new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.FRONT));
+        }));
+        this.bottomButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + size * 2 + topOffset,
+                this.valueReader.getBottomColor(), new TranslationTextComponent("info.space.bottom_letter"), button -> {
+            PacketHandler.INSTANCE
+                    .send(PacketDistributor.SERVER.noArg(), new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.BOTTOM));
+        }));
+        this.leftButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 - size, guiTop + size + topOffset,
+                this.valueReader.getLeftColor(), new TranslationTextComponent("info.space.left_letter"), button -> {
+            PacketHandler.INSTANCE
+                    .send(PacketDistributor.SERVER.noArg(), new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.LEFT));
+        }));
+        this.backButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 - size, guiTop + size * 2 + topOffset,
+                this.valueReader.getBackColor(), new TranslationTextComponent("info.space.back_letter"), button -> {
+            PacketHandler.INSTANCE
+                    .send(PacketDistributor.SERVER.noArg(), new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.BACK));
+        }));
+        this.rightButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 + size, guiTop + size + topOffset,
+                this.valueReader.getRightColor(), new TranslationTextComponent("info.space.right_letter"), button -> {
+            PacketHandler.INSTANCE
+                    .send(PacketDistributor.SERVER.noArg(), new AdvanceSideMsg(pos, true, AdvanceSideMsg.Face.RIGHT));
+        }));
+        this.setButtonVisibility(!isMainScreen);
         this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
+        this.sideConfigX = (this.xSize - this.font.getStringPropertyWidth(sideConfigText)) / 2;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.leftButton.setColor(this.valueReader.getLeftColor());
+        this.rightButton.setColor(this.valueReader.getRightColor());
+        this.topButton.setColor(this.valueReader.getTopColor());
+        this.bottomButton.setColor(this.valueReader.getBottomColor());
+        this.frontButton.setColor(this.valueReader.getFrontColor());
+        this.backButton.setColor(this.valueReader.getBackColor());
+    }
+
+    private void setButtonVisibility(boolean visible) {
+        this.frontButton.visible = visible;
+        this.backButton.visible = visible;
+        this.leftButton.visible = visible;
+        this.rightButton.visible = visible;
+        this.topButton.visible = visible;
+        this.bottomButton.visible = visible;
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderBarTooltips(matrixStack, mouseX, mouseY);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        if (isMainScreen) {
+            this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        }
     }
 
     private void renderBarTooltips(MatrixStack matrixStack, int x, int y) {
@@ -64,11 +155,29 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
 
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
         this.resetOverlayColor();
-        this.minecraft.getTextureManager().bindTexture(GENERIC_GUI);
+        if (isMainScreen) {
+            this.minecraft.getTextureManager().bindTexture(GENERIC_GUI);
+        } else {
+            this.minecraft.getTextureManager().bindTexture(GENERIC_EMPTY_GUI);
+        }
         this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        for (Element el : this.elementList) {
-            el.draw(this, this.valueReader, matrixStack, this.guiLeft, this.guiTop);
+        if (isMainScreen) {
+            for (Element el : this.elementList) {
+                el.draw(this, this.valueReader, matrixStack, this.guiLeft, this.guiTop);
+            }
+        }
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+        if (isMainScreen) {
+            this.font.func_243248_b(matrixStack, this.title, (float) this.titleX, (float) this.titleY, 4210752);
+            this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(),
+                    (float) this.playerInventoryTitleX, (float) this.playerInventoryTitleY, 4210752);
+        } else {
+            this.font
+                    .func_243248_b(matrixStack, sideConfigText, (float) this.sideConfigX, (float) this.titleY, 4210752);
         }
     }
 
