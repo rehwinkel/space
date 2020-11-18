@@ -1,12 +1,12 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "steel",
-		"3": "coal_generator_front",
-		"4": "coal_generator_w_e",
-		"5": "coal_generator_n_s",
-		"6": "coal_generator_u_d",
-		"particle": "coal_generator_w_e"
+		"1": "space:block/steel",
+		"3": "space:block/coal_generator_front",
+		"4": "space:block/coal_generator_w_e",
+		"5": "space:block/coal_generator_n_s",
+		"6": "space:block/coal_generator_u_d",
+		"particle": "space:block/coal_generator_w_e"
 	},
 	"elements": [
 		{
