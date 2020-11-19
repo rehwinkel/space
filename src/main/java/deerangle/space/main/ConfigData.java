@@ -5,17 +5,24 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class ConfigData {
 
+    public static final ClientConfig CLIENT;
     public static final ServerConfig SERVER;
     public static final ForgeConfigSpec SERVER_SPEC;
+    public static final ForgeConfigSpec CLIENT_SPEC;
 
     static {
         final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         SERVER = specPair.getLeft();
         SERVER_SPEC = specPair.getRight();
+        final Pair<ClientConfig, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder()
+                .configure(ClientConfig::new);
+        CLIENT = specPairClient.getLeft();
+        CLIENT_SPEC = specPairClient.getRight();
     }
 
     public static boolean spawnCopper;
     public static boolean spawnAluminium;
+    public static boolean doMachineParticles;
 
     public static class ServerConfig {
         private final ForgeConfigSpec.BooleanValue spawnCopper;
@@ -35,4 +42,20 @@ public class ConfigData {
         spawnCopper = SERVER.spawnCopper.get();
         spawnAluminium = SERVER.spawnAluminium.get();
     }
+
+    private static class ClientConfig {
+        private final ForgeConfigSpec.BooleanValue doMachineParticles;
+
+        private ClientConfig(ForgeConfigSpec.Builder builder) {
+            builder.push("rendering");
+            doMachineParticles = builder.comment("Determines whether or not machines should emit particles.")
+                    .define("do_machine_particles", true);
+            builder.pop();
+        }
+    }
+
+    public static void refreshClient() {
+        doMachineParticles = CLIENT.doMachineParticles.get();
+    }
+
 }

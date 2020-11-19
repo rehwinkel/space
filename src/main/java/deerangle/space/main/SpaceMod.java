@@ -43,6 +43,7 @@ public class SpaceMod {
         ResourceRegistry.register();
         Stats.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigData.SERVER_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigData.CLIENT_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
     }
@@ -52,6 +53,9 @@ public class SpaceMod {
         ModConfig config = event.getConfig();
         if (config.getSpec() == ConfigData.SERVER_SPEC) {
             ConfigData.refreshServer();
+        }
+        if (config.getSpec() == ConfigData.CLIENT_SPEC) {
+            ConfigData.refreshClient();
         }
     }
 

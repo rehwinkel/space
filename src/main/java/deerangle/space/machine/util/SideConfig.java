@@ -132,10 +132,18 @@ public class SideConfig {
         return -1;
     }
 
-    public int getNext(int index) {
-        int newIndex = index + 1;
-        if (newIndex == sideValueCount) {
-            newIndex = -1;
+    public int getNext(int index, boolean forward) {
+        int newIndex;
+        if (forward) {
+            newIndex = index + 1;
+            if (newIndex == sideValueCount) {
+                newIndex = -1;
+            }
+        } else {
+            newIndex = index - 1;
+            if (newIndex == -2) {
+                newIndex = sideValueCount - 1;
+            }
         }
         return newIndex;
     }

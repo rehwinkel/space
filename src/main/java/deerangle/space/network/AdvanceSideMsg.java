@@ -40,22 +40,22 @@ public class AdvanceSideMsg {
                     .getTileEntity(msg.pos)).getMachine().getSideConfig();
             switch (msg.face) {
                 case TOP:
-                    sides.setTop(sides.getNext(sides.getTop()));
+                    sides.setTop(sides.getNext(sides.getTop(), msg.forward));
                     break;
                 case BOTTOM:
-                    sides.setBottom(sides.getNext(sides.getBottom()));
+                    sides.setBottom(sides.getNext(sides.getBottom(), msg.forward));
                     break;
                 case FRONT:
-                    sides.setFront(sides.getNext(sides.getFront()));
+                    sides.setFront(sides.getNext(sides.getFront(), msg.forward));
                     break;
                 case BACK:
-                    sides.setBack(sides.getNext(sides.getBack()));
+                    sides.setBack(sides.getNext(sides.getBack(), msg.forward));
                     break;
                 case LEFT:
-                    sides.setLeft(sides.getNext(sides.getLeft()));
+                    sides.setLeft(sides.getNext(sides.getLeft(), msg.forward));
                     break;
                 case RIGHT:
-                    sides.setRight(sides.getNext(sides.getRight()));
+                    sides.setRight(sides.getNext(sides.getRight(), msg.forward));
                     break;
             }
         });

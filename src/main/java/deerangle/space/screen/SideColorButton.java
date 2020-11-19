@@ -7,13 +7,17 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SideColorButton extends Button {
 
+    private final IPressableRL pressedAction;
     private int color;
 
-    public SideColorButton(int x, int y, int color, ITextComponent title, IPressable pressedAction) {
-        super(x, y, 20, 20, title, pressedAction);
+    public SideColorButton(int x, int y, int color, ITextComponent title, IPressableRL pressedAction) {
+        super(x, y, 20, 20, title, null);
+        this.pressedAction = pressedAction;
         this.color = color;
     }
 
@@ -22,6 +26,24 @@ public class SideColorButton extends Button {
         RenderSystem
                 .color4f(((overlay >> 16) & 0xFF) / 255.0F, ((overlay >> 8) & 0xFF) / 255.0F, (overlay & 0xFF) / 255.0F,
                         this.alpha);
+    }
+
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.active && this.visible) {
+            if (this.isValidClickButton(button)) {
+                boolean flag = this.clicked(mouseX, mouseY);
+                if (flag) {
+                    this.playDownSound(Minecraft.getInstance().getSoundHandler());
+                    this.pressedAction.onPress(button);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected boolean isValidClickButton(int button) {
+        return button == 0 || button == 1;
     }
 
     @Override
@@ -45,6 +67,11 @@ public class SideColorButton extends Button {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public interface IPressableRL {
+        void onPress(int mouseButton);
     }
 
 }
