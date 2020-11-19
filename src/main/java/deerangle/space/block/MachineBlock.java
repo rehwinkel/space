@@ -43,8 +43,8 @@ public abstract class MachineBlock extends Block {
     public static final BooleanProperty UP = SixWayBlock.UP;
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
-    private final ResourceLocation interactStat;
-    private final Supplier<MachineType<?>> machineType;
+    protected final ResourceLocation interactStat;
+    protected final Supplier<MachineType<?>> machineType;
 
     public MachineBlock(Properties properties, Supplier<MachineType<?>> machineType, ResourceLocation interactStat) {
         super(properties);
