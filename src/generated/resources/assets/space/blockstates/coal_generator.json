@@ -1,19 +1,220 @@
 {
-  "variants": {
-    "facing=north": {
-      "model": "space:block/coal_generator"
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "running": "false"
+      },
+      "apply": {
+        "model": "space:block/coal_generator"
+      }
     },
-    "facing=south": {
-      "model": "space:block/coal_generator",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "running": "false"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 180
+      }
     },
-    "facing=west": {
-      "model": "space:block/coal_generator",
-      "y": 270
+    {
+      "when": {
+        "facing": "west",
+        "running": "false"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 270
+      }
     },
-    "facing=east": {
-      "model": "space:block/coal_generator",
-      "y": 90
+    {
+      "when": {
+        "facing": "east",
+        "running": "false"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "south": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "south": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 360
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "south": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "south": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 450
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "east": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "east": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "east": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "east": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 360
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "west": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "west": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 450
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "west": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 360
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "west": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 540
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "space:block/connector_long",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "x": 270
+      }
     }
-  }
+  ]
 }

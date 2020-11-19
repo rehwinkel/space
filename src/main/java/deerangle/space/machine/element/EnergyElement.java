@@ -2,15 +2,15 @@ package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
-import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
+import deerangle.space.screen.MachineScreen;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnergyElement extends OverlayedElement {
 
     EnergyElement(int x, int y, int index, boolean input, int overlayColor) {
-        super(x, y, index, input, overlayColor, 10, 48);
+        super(x, y, index, input, overlayColor, 10, 49);
     }
 
     @Override
@@ -32,10 +32,10 @@ public class EnergyElement extends OverlayedElement {
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
         int height = (int) (46 * (1F - amount));
-        screen.blit(matrixStack, x, y, 0, 48, 10, 48);
-        screen.blit(matrixStack, x + 1, y + 1 + height, 11, 49 + height, 8, 46 - height);
+        screen.blit(matrixStack, x, y, 0, 49, 10, 49);
+        screen.blit(matrixStack, x + 1, y + 1 + height, 11, 50 + height, 8, 47 - height);
         screen.setOverlayColor(this.getOverlayColor());
-        screen.blit(matrixStack, x, y, 20, 48, 10, 48);
+        screen.blit(matrixStack, x, y, 20, 49, 10, 49);
     }
 
 }
