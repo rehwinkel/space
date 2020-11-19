@@ -1,4 +1,4 @@
-package deerangle.space.machine.type;
+package deerangle.space.machine.element;
 
 import deerangle.space.screen.DisplayValueReader;
 import net.minecraft.util.text.ITextComponent;

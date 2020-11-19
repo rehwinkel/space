@@ -1,4 +1,4 @@
-package deerangle.space.machine.type;
+package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;

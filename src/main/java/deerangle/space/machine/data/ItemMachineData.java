@@ -48,4 +48,9 @@ public class ItemMachineData implements IMachineData {
 
     }
 
+    @Override
+    public boolean storeInItem() {
+        return false;
+    }
+
 }

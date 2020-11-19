@@ -107,10 +107,13 @@ public class SideConfig {
                 break;
             case SOUTH:
                 side = side.rotateY().rotateY();
+                break;
             case EAST:
-                side = side.rotateY();
-            case WEST:
                 side = side.rotateYCCW();
+                break;
+            case WEST:
+                side = side.rotateY();
+                break;
         }
         switch (side) {
             case NORTH:

@@ -3,13 +3,16 @@ package deerangle.space.machine;
 import deerangle.space.machine.data.EnergyMachineData;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
-import deerangle.space.machine.type.MachineType;
+import deerangle.space.machine.element.MachineType;
 import deerangle.space.machine.util.SideConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
@@ -31,6 +34,10 @@ public abstract class Machine {
 
     public IMachineData getMachineData(int index) {
         return machineDataList.get(index);
+    }
+
+    public int getMachineDataSize() {
+        return this.machineDataList.size();
     }
 
     public MachineType<?> getType() {
@@ -124,6 +131,61 @@ public abstract class Machine {
             return true;
         }
         return false;
+    }
+
+    public void dropInventoryItems(World world, BlockPos dropPos) {
+        for (IMachineData slot : machineDataList) {
+            if (slot instanceof ItemMachineData) {
+                IItemHandler itemHandler = ((ItemMachineData) slot).getItemHandler()
+                        .orElseThrow(() -> new RuntimeException("failed to get item handler"));
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    InventoryHelper.spawnItemStack(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(),
+                            itemHandler.getStackInSlot(i));
+                }
+            }
+        }
+    }
+
+    public CompoundNBT saveItemNBT(CompoundNBT nbt) {
+        CompoundNBT sideConfigNbt = new CompoundNBT();
+        sideConfigNbt.putByte("F", (byte) sideConfig.getFront());
+        sideConfigNbt.putByte("Ba", (byte) sideConfig.getBack());
+        sideConfigNbt.putByte("R", (byte) sideConfig.getRight());
+        sideConfigNbt.putByte("L", (byte) sideConfig.getLeft());
+        sideConfigNbt.putByte("T", (byte) sideConfig.getTop());
+        sideConfigNbt.putByte("Bo", (byte) sideConfig.getBottom());
+        nbt.put("SideConfig", sideConfigNbt);
+
+        for (IMachineData slot : this.machineDataList) {
+            if (slot.storeInItem()) {
+                nbt.put(slot.getName(), slot.write());
+            }
+        }
+        saveExtraItemNBT(nbt);
+        return nbt;
+    }
+
+    public void loadItemNBT(CompoundNBT nbt) {
+        CompoundNBT sideConfigNbt = nbt.getCompound("SideConfig");
+        sideConfig.setFront(sideConfigNbt.getByte("F"));
+        sideConfig.setBack(sideConfigNbt.getByte("Ba"));
+        sideConfig.setRight(sideConfigNbt.getByte("R"));
+        sideConfig.setLeft(sideConfigNbt.getByte("L"));
+        sideConfig.setTop(sideConfigNbt.getByte("T"));
+        sideConfig.setBottom(sideConfigNbt.getByte("Bo"));
+
+        for (IMachineData slot : this.machineDataList) {
+            if (slot.storeInItem()) {
+                slot.read(nbt.get(slot.getName()));
+            }
+        }
+        loadExtraItemNBT(nbt);
+    }
+
+    protected void saveExtraItemNBT(CompoundNBT nbt) {
+    }
+
+    protected void loadExtraItemNBT(CompoundNBT nbt) {
     }
 
 }

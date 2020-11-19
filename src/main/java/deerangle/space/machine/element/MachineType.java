@@ -1,4 +1,4 @@
-package deerangle.space.machine.type;
+package deerangle.space.machine.element;
 
 import com.google.common.collect.ImmutableList;
 import deerangle.space.machine.Machine;

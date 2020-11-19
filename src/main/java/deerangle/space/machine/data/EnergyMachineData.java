@@ -39,7 +39,7 @@ public class EnergyMachineData implements IMachineData {
         int capacity = compound.getInt("Cap");
         int energy = compound.getInt("Eng");
         int xfer = compound.getInt("XFer");
-        this.storage = LazyOptional.of(() -> new EnergyStorage(capacity, xfer, xfer, energy));
+        this.storage = LazyOptional.of(() -> new MachineEnergyStorage(capacity, xfer, xfer, energy));
     }
 
     @Override
@@ -66,6 +66,11 @@ public class EnergyMachineData implements IMachineData {
         MachineEnergyStorage storage = (MachineEnergyStorage) this.storage.orElseThrow(() -> new RuntimeException("no energy storage present"));
         storage.setEnergy(buf.readInt());
         storage.setCapacity(buf.readInt());
+    }
+
+    @Override
+    public boolean storeInItem() {
+        return true;
     }
 
 }

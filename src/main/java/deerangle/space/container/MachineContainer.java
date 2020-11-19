@@ -4,10 +4,10 @@ import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
-import deerangle.space.machine.type.DataElement;
-import deerangle.space.machine.type.Element;
-import deerangle.space.machine.type.ItemElement;
-import deerangle.space.machine.type.MachineType;
+import deerangle.space.machine.element.DataElement;
+import deerangle.space.machine.element.Element;
+import deerangle.space.machine.element.ItemElement;
+import deerangle.space.machine.element.MachineType;
 import deerangle.space.network.PacketHandler;
 import deerangle.space.network.UpdateMachineMsg;
 import deerangle.space.registry.MachineRegistry;
@@ -18,6 +18,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -34,6 +35,7 @@ public class MachineContainer extends Container {
     public final MachineType<?> machineType;
     private final Machine machine;
     public final BlockPos pos;
+    private final int itemSlotCount;
 
     public MachineContainer(int windowId, PlayerInventory inv, PacketBuffer data) {
         this(windowId, inv, data, null);
@@ -50,6 +52,7 @@ public class MachineContainer extends Container {
         }
         IForgeRegistry<MachineType<?>> registry = RegistryManager.ACTIVE.getRegistry(MachineType.class);
         this.machineType = Objects.requireNonNull(registry.getValue(data.readResourceLocation()));
+        this.itemSlotCount = this.getItemSlotCount();
 
         for (Element el : this.machineType.getElements()) {
             if (el instanceof ItemElement) {
@@ -99,4 +102,39 @@ public class MachineContainer extends Container {
     public Machine getMachine() {
         return this.machine;
     }
+
+    private int getItemSlotCount() {
+        int counter = 0;
+        for (int i = 0; i < this.machine.getMachineDataSize(); i++) {
+            if (this.machine.getMachineData(i) instanceof ItemMachineData) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            if (index < this.itemSlotCount) {
+                if (!this.mergeItemStack(itemstack1, this.itemSlotCount, this.inventorySlots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.mergeItemStack(itemstack1, 0, this.itemSlotCount, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (itemstack1.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                slot.onSlotChanged();
+            }
+        }
+
+        return itemstack;
+    }
+
 }

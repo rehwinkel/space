@@ -6,6 +6,8 @@ import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.MachineTypeRegistry;
 
+import java.util.Random;
+
 public class CoalGeneratorMachine extends Machine {
 
     private final ItemMachineData fuel;
@@ -25,5 +27,6 @@ public class CoalGeneratorMachine extends Machine {
     @Override
     public void update() {
         this.energy.getStorage().orElseThrow(() -> new RuntimeException("a")).receiveEnergy(40, false);
+        this.burn.setProgress(new Random().nextFloat());
     }
 }

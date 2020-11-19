@@ -1,5 +1,6 @@
 package deerangle.space.block.entity;
 
+import deerangle.space.block.MachineBlock;
 import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
 import deerangle.space.registry.MachineRegistry;
@@ -45,10 +46,10 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            return machine.getEnergyStorage(Direction.NORTH, side).cast();
+            return machine.getEnergyStorage(this.getBlockState().get(MachineBlock.FACING), side).cast();
         }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return machine.getItemHandler(Direction.NORTH, side).cast();
+            return machine.getItemHandler(this.getBlockState().get(MachineBlock.FACING), side).cast();
         }
         return super.getCapability(cap, side);
     }
