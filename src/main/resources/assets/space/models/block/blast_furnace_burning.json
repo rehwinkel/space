@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "space:block/coal_generator_front",
+		"0": "space:block/coal_generator_front_burning",
 		"2": "minecraft:block/iron_block",
 		"3": "space:block/copper_block",
 		"4": "space:block/blast_furnace_tower",
