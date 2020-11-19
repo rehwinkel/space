@@ -1,30 +1,27 @@
 package deerangle.space.block;
 
 import deerangle.space.stats.Stats;
+import deerangle.space.util.VoxelShapeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
 public class CoalGeneratorBlock extends MachineBlock {
 
-    private static final VoxelShape SHAPE = VoxelShapes.or(Block.makeCuboidShape(1, 3, 0, 15, 14, 16));
+    private static final VoxelShape[] SHAPE = VoxelShapeUtil
+            .horizontalShape(Block.makeCuboidShape(1, 3, 0, 15, 14, 16), Block.makeCuboidShape(14, 10, 14, 16, 16, 16));
 
     public CoalGeneratorBlock(Properties properties) {
         super(properties, Stats.INTERACT_WITH_COAL_GENERATOR);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    protected VoxelShape[] getMachineShape() {
         return SHAPE;
     }
 
