@@ -2,10 +2,12 @@ package deerangle.space.machine.element;
 
 import com.google.common.collect.ImmutableList;
 import deerangle.space.machine.Machine;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineType<?>> {
@@ -46,9 +48,9 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
             this.constructor = constructor;
         }
 
-        public Builder<M> addItemSlot(int x, int y, int index, boolean input) {
+        public Builder<M> addItemSlot(int x, int y, int index, boolean input, Predicate<ItemStack> validPredicate) {
             int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
-            this.elements.add(new ItemElement(x, y, index, input, color));
+            this.elements.add(new ItemElement(x, y, index, input, color, validPredicate));
             if (input) {
                 this.inputIndex++;
             } else {

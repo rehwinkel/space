@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 
@@ -65,7 +64,8 @@ public class MachineContainer extends Container {
                 } else {
                     itemHandler = new ItemStackHandler();
                 }
-                this.addSlot(new SlotItemHandler(itemHandler, 0, el.getX() + 1, el.getY() + 1));
+                this.addSlot(
+                        new MachineSlot(itemHandler, 0, el.getX() + 1, el.getY() + 1, ((ItemElement) el)::isValid));
             }
         }
 

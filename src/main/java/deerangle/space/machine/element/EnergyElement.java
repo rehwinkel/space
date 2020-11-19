@@ -31,7 +31,7 @@ public class EnergyElement extends OverlayedElement {
         float amount = eng / (float) cap;
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
-        int height = (int) (46 * (1F - amount));
+        int height = (int) (47 * (1F - amount));
         screen.blit(matrixStack, x, y, 0, 49, 10, 49);
         screen.blit(matrixStack, x + 1, y + 1 + height, 11, 50 + height, 8, 47 - height);
         screen.setOverlayColor(this.getOverlayColor());

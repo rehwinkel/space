@@ -66,40 +66,48 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
                 });
             }
         }));
+        int width = 20;
         int dist = 6;
-        int size = dist + 20;
+        int size = dist + width;
         int topOffset = 48;
-        this.topButton = addButton(
-                new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + topOffset, this.valueReader.getTopColor(),
-                        new TranslationTextComponent("info.space.top_letter"), button -> {
-                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.TOP));
-                }));
-        this.frontButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + size + topOffset,
+        this.topButton = addButton(new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + topOffset,
+                this.valueReader.getTopColor(), new TranslationTextComponent("info.space.top_letter"), button -> {
+            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.TOP));
+        }));
+        this.frontButton = addButton(new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + size + topOffset,
                 this.valueReader.getFrontColor(), new TranslationTextComponent("info.space.front_letter"), button -> {
             PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
                     new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.FRONT));
         }));
-        this.bottomButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8, guiTop + size * 2 + topOffset,
-                this.valueReader.getBottomColor(), new TranslationTextComponent("info.space.bottom_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BOTTOM));
-        }));
-        this.leftButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 - size, guiTop + size + topOffset,
-                this.valueReader.getLeftColor(), new TranslationTextComponent("info.space.left_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.LEFT));
-        }));
-        this.backButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 - size, guiTop + size * 2 + topOffset,
-                this.valueReader.getBackColor(), new TranslationTextComponent("info.space.back_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BACK));
-        }));
-        this.rightButton = addButton(new SideColorButton(guiLeft + xSize / 2 - 8 + size, guiTop + size + topOffset,
-                this.valueReader.getRightColor(), new TranslationTextComponent("info.space.right_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.RIGHT));
-        }));
+        this.bottomButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + size * 2 + topOffset,
+                        this.valueReader.getBottomColor(), new TranslationTextComponent("info.space.bottom_letter"),
+                        button -> {
+                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BOTTOM));
+                        }));
+        this.leftButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2) - size, guiTop + size + topOffset,
+                        this.valueReader.getLeftColor(), new TranslationTextComponent("info.space.left_letter"),
+                        button -> {
+                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.LEFT));
+                        }));
+        this.backButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2) - size, guiTop + size * 2 + topOffset,
+                        this.valueReader.getBackColor(), new TranslationTextComponent("info.space.back_letter"),
+                        button -> {
+                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BACK));
+                        }));
+        this.rightButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2) + size, guiTop + size + topOffset,
+                        this.valueReader.getRightColor(), new TranslationTextComponent("info.space.right_letter"),
+                        button -> {
+                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.RIGHT));
+                        }));
         this.setButtonVisibility(!isMainScreen);
         this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
         this.sideConfigX = (this.xSize - this.font.getStringPropertyWidth(sideConfigText)) / 2;
@@ -196,34 +204,6 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
     }
 
     /*
-    private void drawBurnDisplay(MatrixStack matrixStack, int x, int y, float amount, int overlayColor) {
-        this.resetOverlayColor();
-        this.bindMachinesTexture();
-        this.blit(matrixStack, x, y, 0, 96 + 18, 18, 18);
-        if (amount > 0f) {
-            int height = (int) (13 * (1 - amount));
-            this.blit(matrixStack, x + 2, y + 2 + height, 20, 116 + height, 14, 14);
-        }
-    }
-
-    private void drawSlot(MatrixStack matrixStack, int x, int y, int overlay) {
-        this.resetOverlayColor();
-        this.bindMachinesTexture();
-        this.blit(matrixStack, x, y, 0, 96, 18, 18);
-        this.setOverlayColor(overlay);
-        this.blit(matrixStack, x, y, 18, 96, 18, 18);
-    }
-
-    private void drawEnergyBar(MatrixStack matrixStack, int x, int y, float amount, int overlay) {
-        this.resetOverlayColor();
-        this.bindMachinesTexture();
-        int height = (int) (46 * (1F - amount));
-        this.blit(matrixStack, x, y, 0, 48, 10, 48);
-        this.blit(matrixStack, x + 1, y + 1 + height, 11, 49 + height, 8, 46 - height);
-        this.setOverlayColor(overlay);
-        this.blit(matrixStack, x, y, 20, 48, 10, 48);
-    }
-
     private void drawFluidBar(MatrixStack matrixStack, Fluid fluid, int x, int y, float amount, int overlay) {
         this.resetOverlayColor();
         this.bindMachinesTexture();

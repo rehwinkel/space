@@ -3,6 +3,7 @@ package deerangle.space.block;
 import deerangle.space.main.ConfigData;
 import deerangle.space.stats.Stats;
 import deerangle.space.util.VoxelShapeUtil;
+import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particles.ParticleTypes;

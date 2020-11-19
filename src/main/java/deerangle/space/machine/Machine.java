@@ -112,7 +112,7 @@ public abstract class Machine {
         }
     }
 
-    public abstract void update();
+    public abstract void update(World world, BlockPos pos);
 
     public SideConfig getSideConfig() {
         return this.sideConfig;

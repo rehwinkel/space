@@ -102,18 +102,20 @@ public class SideConfig {
     }
 
     public int getIndexForSide(Direction facing, Direction side) {
-        switch (facing) {
-            case NORTH:
-                break;
-            case SOUTH:
-                side = side.rotateY().rotateY();
-                break;
-            case EAST:
-                side = side.rotateYCCW();
-                break;
-            case WEST:
-                side = side.rotateY();
-                break;
+        if (side.getAxis() != Direction.Axis.Y) {
+            switch (facing) {
+                case NORTH:
+                    break;
+                case SOUTH:
+                    side = side.rotateY().rotateY();
+                    break;
+                case EAST:
+                    side = side.rotateYCCW();
+                    break;
+                case WEST:
+                    side = side.rotateY();
+                    break;
+            }
         }
         switch (side) {
             case NORTH:

@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyMachineData implements IMachineData {
@@ -22,6 +21,10 @@ public class EnergyMachineData implements IMachineData {
 
     public LazyOptional<IEnergyStorage> getStorage() {
         return storage;
+    }
+
+    public IEnergyStorage getStorageOrThrow() {
+        return storage.orElseThrow(() -> new RuntimeException("failed to get energy storage"));
     }
 
     @Override
@@ -63,7 +66,8 @@ public class EnergyMachineData implements IMachineData {
 
     @Override
     public void readPacket(PacketBuffer buf) {
-        MachineEnergyStorage storage = (MachineEnergyStorage) this.storage.orElseThrow(() -> new RuntimeException("no energy storage present"));
+        MachineEnergyStorage storage = (MachineEnergyStorage) this.storage
+                .orElseThrow(() -> new RuntimeException("no energy storage present"));
         storage.setEnergy(buf.readInt());
         storage.setCapacity(buf.readInt());
     }

@@ -96,7 +96,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
 
     @Override
     public void tick() {
-        this.machine.update();
+        this.machine.update(this.world, this.pos);
     }
 
 }
