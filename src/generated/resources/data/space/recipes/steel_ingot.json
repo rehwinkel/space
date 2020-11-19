@@ -1,0 +1,9 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "tag": "forge:ingots/iron"
+  },
+  "result": "space:steel_ingot",
+  "experience": 1.5,
+  "duration": 3200
+}

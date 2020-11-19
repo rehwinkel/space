@@ -28,6 +28,9 @@ public class ResourceRegistry extends AbstractRegistry {
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
                     .hardnessAndResistance(3.0F, 3.0F)));
 
+    public static final RegistryObject<Item> STEEL_INGOT = ITEMS
+            .register("steel_ingot", () -> new Item(new Item.Properties().group(TAB)));
+
     static {
         ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(TAB)));
         ITEMS.register("aluminium_ore", () -> new BlockItem(ALUMINIUM_ORE.get(), new Item.Properties().group(TAB)));

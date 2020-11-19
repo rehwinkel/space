@@ -4,6 +4,7 @@ import deerangle.space.main.SpaceMod;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,5 +18,7 @@ public abstract class AbstractRegistry {
             .create(ForgeRegistries.TILE_ENTITIES, SpaceMod.MOD_ID);
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister
             .create(ForgeRegistries.CONTAINERS, SpaceMod.MOD_ID);
+    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
+            .create(ForgeRegistries.RECIPE_SERIALIZERS, SpaceMod.MOD_ID);
 
 }

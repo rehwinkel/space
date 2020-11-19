@@ -39,6 +39,7 @@ public class SpaceMod {
         AbstractRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        AbstractRegistry.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MachineRegistry.register();
         ResourceRegistry.register();
         Stats.register();

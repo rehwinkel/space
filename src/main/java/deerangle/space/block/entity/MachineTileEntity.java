@@ -5,7 +5,6 @@ import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.element.MachineType;
 import deerangle.space.registry.MachineRegistry;
-import deerangle.space.registry.MachineTypeRegistry;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -69,7 +68,8 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     public void read(BlockState state, CompoundNBT nbt) {
         super.read(state, nbt);
         IForgeRegistry<MachineType<?>> registry = RegistryManager.ACTIVE.getRegistry(MachineType.class);
-        MachineType<?>machineType = Objects.requireNonNull(registry.getValue(new ResourceLocation(nbt.getString("MachineType"))));
+        MachineType<?> machineType = Objects
+                .requireNonNull(registry.getValue(new ResourceLocation(nbt.getString("MachineType"))));
         this.machine = machineType.getNewInstance();
         this.machineName = nbt.getString("Name");
         machine.read(nbt);
@@ -103,7 +103,9 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
 
     @Override
     public void tick() {
-        this.machine.update(this.world, this.pos);
+        if (!this.world.isRemote) {
+            this.machine.update(this.world, this.pos);
+        }
     }
 
 }

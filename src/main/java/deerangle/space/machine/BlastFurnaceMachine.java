@@ -5,12 +5,16 @@ import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.data.ProgressMachineData;
 import deerangle.space.machine.util.SideConfig;
+import deerangle.space.recipe.BlastFurnaceRecipe;
 import deerangle.space.registry.MachineTypeRegistry;
+import deerangle.space.registry.RecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+
+import java.util.Optional;
 
 public class BlastFurnaceMachine extends Machine {
 
@@ -36,6 +40,8 @@ public class BlastFurnaceMachine extends Machine {
     @Override
     public void update(World world, BlockPos pos) {
         boolean wasBurning = this.isBurning();
+        Optional<BlastFurnaceRecipe> recipe = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
+                new StackInventory(this.input.getItemHandlerOrThrow().getStackInSlot(0)), world);
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
