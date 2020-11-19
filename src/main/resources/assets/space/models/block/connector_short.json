@@ -2,12 +2,13 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "space:block/steel_block",
+		"1": "space:block/copper_block",
 		"particle": "space:block/steel_block"
 	},
 	"elements": [
 		{
-			"from": [5, 5, 16],
-			"to": [11, 11, 17],
+			"from": [5, 5, -1],
+			"to": [11, 11, 0],
 			"faces": {
 				"north": {"uv": [0, 0, 6, 6], "texture": "#0"},
 				"east": {"uv": [0, 0, 1, 6], "texture": "#0"},
@@ -15,6 +16,17 @@
 				"west": {"uv": [0, 0, 1, 6], "texture": "#0"},
 				"up": {"uv": [0, 0, 6, 1], "texture": "#0"},
 				"down": {"uv": [0, 0, 6, 1], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 7, 0],
+			"to": [9, 9, 1],
+			"faces": {
+				"east": {"uv": [7, 1, 8, 3], "texture": "#1"},
+				"south": {"uv": [3, 1, 5, 3], "texture": "#1"},
+				"west": {"uv": [8, 6, 9, 8], "texture": "#1"},
+				"up": {"uv": [5, 3, 7, 4], "texture": "#1"},
+				"down": {"uv": [3, 2, 5, 3], "texture": "#1"}
 			}
 		}
 	]
