@@ -23,12 +23,9 @@ public class CoalGeneratorMachine extends Machine {
 
     public CoalGeneratorMachine() {
         super(MachineTypeRegistry.COAL_GENERATOR, new SideConfig(0, 1, -1, -1, -1, -1, 2));
-        fuel = new ItemMachineData("Fuel");
-        energy = new EnergyMachineData("Eng", 16000, 1000);
-        burn = new BurnMachineData("Burn");
-        machineDataList.add(fuel);
-        machineDataList.add(energy);
-        machineDataList.add(burn);
+        fuel = addMachineData(new ItemMachineData("Fuel"));
+        energy = addMachineData(new EnergyMachineData("Eng", 16000, 1000));
+        burn = addMachineData(new BurnMachineData("Burn"));
     }
 
     @Override

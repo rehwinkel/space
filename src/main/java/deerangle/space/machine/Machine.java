@@ -22,7 +22,7 @@ import java.util.List;
 
 public abstract class Machine {
 
-    protected final List<IMachineData> machineDataList = new ArrayList<>();
+    private final List<IMachineData> machineDataList = new ArrayList<>();
     protected final SideConfig sideConfig;
     private final MachineType<?> type;
     private ByteBuf prevState;
@@ -30,6 +30,11 @@ public abstract class Machine {
     public Machine(MachineType<?> machineType, SideConfig sideConfig) {
         this.sideConfig = sideConfig;
         this.type = machineType;
+    }
+
+    protected <MD extends IMachineData> MD addMachineData(MD data) {
+        this.machineDataList.add(data);
+        return data;
     }
 
     public IMachineData getMachineData(int index) {

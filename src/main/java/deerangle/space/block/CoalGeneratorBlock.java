@@ -1,6 +1,7 @@
 package deerangle.space.block;
 
 import deerangle.space.main.ConfigData;
+import deerangle.space.registry.MachineTypeRegistry;
 import deerangle.space.stats.Stats;
 import deerangle.space.util.VoxelShapeUtil;
 import net.minecraft.block.Block;
@@ -23,11 +24,11 @@ public class CoalGeneratorBlock extends MachineBlock {
                     Block.makeCuboidShape(0, 4, 2, 1, 9, 10), Block.makeCuboidShape(5, 14, 4, 8, 16, 11));
 
     public CoalGeneratorBlock(Properties properties) {
-        super(properties, Stats.INTERACT_WITH_COAL_GENERATOR);
+        super(properties, () -> MachineTypeRegistry.COAL_GENERATOR, Stats.INTERACT_WITH_COAL_GENERATOR);
     }
 
     @Override
-    protected VoxelShape[] getMachineShape() {
+    protected VoxelShape[] getMachineShape(BlockState state) {
         return SHAPE;
     }
 

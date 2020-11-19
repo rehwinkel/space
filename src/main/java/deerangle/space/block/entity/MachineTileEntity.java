@@ -3,6 +3,7 @@ package deerangle.space.block.entity;
 import deerangle.space.block.MachineBlock;
 import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
+import deerangle.space.machine.element.MachineType;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.MachineTypeRegistry;
 import io.netty.buffer.Unpooled;
@@ -16,6 +17,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -23,23 +25,24 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryManager;
 
 import java.util.Objects;
 
 public class MachineTileEntity extends TileEntity implements INamedContainerProvider, ICapabilityProvider, ITickableTileEntity {
 
-    private final Machine machine;
+    private Machine machine;
     private String machineName;
 
-    public MachineTileEntity(String machineName) {
+    public MachineTileEntity(String machineName, MachineType<?> machineType) {
         super(MachineRegistry.MACHINE_TE.get());
-        this.machine = MachineTypeRegistry.COAL_GENERATOR.getNewInstance();
+        this.machine = machineType.getNewInstance();
         this.machineName = machineName;
     }
 
     public MachineTileEntity() {
         super(MachineRegistry.MACHINE_TE.get());
-        this.machine = MachineTypeRegistry.COAL_GENERATOR.getNewInstance();
         this.machineName = "unknown";
     }
 
@@ -57,6 +60,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
         super.write(nbt);
+        nbt.putString("MachineType", this.machine.getType().getRegistryName().toString());
         nbt.putString("Name", this.machineName);
         return machine.write(nbt);
     }
@@ -64,6 +68,9 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         super.read(state, nbt);
+        IForgeRegistry<MachineType<?>> registry = RegistryManager.ACTIVE.getRegistry(MachineType.class);
+        MachineType<?>machineType = Objects.requireNonNull(registry.getValue(new ResourceLocation(nbt.getString("MachineType"))));
+        this.machine = machineType.getNewInstance();
         this.machineName = nbt.getString("Name");
         machine.read(nbt);
     }

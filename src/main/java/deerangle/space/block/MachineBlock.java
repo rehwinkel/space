@@ -2,6 +2,7 @@ package deerangle.space.block;
 
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
+import deerangle.space.machine.element.MachineType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
@@ -30,6 +31,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import java.util.function.Supplier;
+
 public abstract class MachineBlock extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -41,20 +44,22 @@ public abstract class MachineBlock extends Block {
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private final ResourceLocation interactStat;
+    private final Supplier<MachineType<?>> machineType;
 
-    public MachineBlock(Properties properties, ResourceLocation interactStat) {
+    public MachineBlock(Properties properties, Supplier<MachineType<?>> machineType, ResourceLocation interactStat) {
         super(properties);
+        this.machineType = machineType;
         this.interactStat = interactStat;
         this.setDefaultState(
                 this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false)
                         .with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false));
     }
 
-    protected abstract VoxelShape[] getMachineShape();
+    protected abstract VoxelShape[] getMachineShape(BlockState state);
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return getMachineShape()[state.get(FACING).getHorizontalIndex()];
+        return getMachineShape(state)[state.get(FACING).getHorizontalIndex()];
     }
 
     @Override
@@ -126,7 +131,7 @@ public abstract class MachineBlock extends Block {
 
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new MachineTileEntity(this.getRegistryName().getPath());
+        return new MachineTileEntity(this.getRegistryName().getPath(), this.machineType.get());
     }
 
     @Override
@@ -141,8 +146,8 @@ public abstract class MachineBlock extends Block {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING, RUNNING, NORTH, SOUTH, EAST, WEST, UP, DOWN);
         super.fillStateContainer(builder);
+        builder.add(FACING, RUNNING, NORTH, SOUTH, EAST, WEST, UP, DOWN);
     }
 
     @OnlyIn(Dist.CLIENT)

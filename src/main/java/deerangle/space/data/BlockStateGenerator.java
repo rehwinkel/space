@@ -22,6 +22,8 @@ public class BlockStateGenerator extends BlockStateProvider {
             "block/connector_short");
     private static final ResourceLocation CONNECTOR_LONG_LOC = new ResourceLocation(SpaceMod.MOD_ID,
             "block/connector_long");
+    private static final ResourceLocation CONNECTOR_LONG3_LOC = new ResourceLocation(SpaceMod.MOD_ID,
+            "block/connector_long3");
 
     public BlockStateGenerator(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
         super(gen, modid, exFileHelper);
@@ -80,9 +82,14 @@ public class BlockStateGenerator extends BlockStateProvider {
         this.addConnector(builder, connectors[1], MachineBlock.SOUTH);
         this.addConnector(builder, connectors[2], MachineBlock.EAST);
         this.addConnector(builder, connectors[3], MachineBlock.WEST);
-        builder.part().modelFile(connectors[4].model).rotationX(connectors[4].x).rotationY(connectors[4].y).addModel()
-                .condition(MachineBlock.UP, true).end().part().modelFile(connectors[5].model).rotationX(connectors[5].x)
-                .rotationY(connectors[5].y).addModel().condition(MachineBlock.DOWN, true).end();
+        if (connectors[4] != null) {
+            builder.part().modelFile(connectors[4].model).rotationX(connectors[4].x).rotationY(connectors[4].y)
+                    .addModel().condition(MachineBlock.UP, true).end();
+        }
+        if (connectors[5] != null) {
+            builder.part().modelFile(connectors[5].model).rotationX(connectors[5].x).rotationY(connectors[5].y)
+                    .addModel().condition(MachineBlock.DOWN, true).end();
+        }
         simpleBlockItem(block, baseModelOff);
     }
 
@@ -104,12 +111,16 @@ public class BlockStateGenerator extends BlockStateProvider {
         ModelFile connector = models().getExistingFile(CONNECTOR_LOC);
         ModelFile connectorShort = models().getExistingFile(CONNECTOR_SHORT_LOC);
         ModelFile connectorLong = models().getExistingFile(CONNECTOR_LONG_LOC);
+        ModelFile connectorLong3 = models().getExistingFile(CONNECTOR_LONG3_LOC);
         simpleBlockWithItem(ResourceRegistry.COPPER_ORE.get());
         simpleBlockWithItem(ResourceRegistry.ALUMINIUM_ORE.get());
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
-                        90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 90,
-                        0), new RotatedModel(connector, 270, 0)});
+                        90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270,
+                        0), new RotatedModel(connector, 90, 0)});
+        machineBlockWithItem(MachineRegistry.BLAST_FURNACE.get(),
+                new RotatedModel[]{null, new RotatedModel(connectorLong3, 0, 180), new RotatedModel(connectorShort, 0,
+                        90), new RotatedModel(connectorShort, 0, 270), null, new RotatedModel(connector, 90, 0)});
     }
 
 }

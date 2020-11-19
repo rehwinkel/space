@@ -9,6 +9,8 @@ public class Stats {
 
     public static final ResourceLocation INTERACT_WITH_COAL_GENERATOR = registerCustom("interact_with_coal_generator",
             IStatFormatter.DEFAULT);
+    public static final ResourceLocation INTERACT_WITH_BLAST_FURNACE = registerCustom("interact_with_blast_furnace",
+            IStatFormatter.DEFAULT);
 
     public static void register() {
     }
