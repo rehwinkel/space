@@ -9,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockStateGenerator extends BlockStateProvider {
@@ -31,25 +32,30 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlockItem(block, models().getExistingFile(parent));
     }
 
-    private void facingBlockWithItem(Block block) {
+    private void machineBlockWithItem(Block block) {
         ResourceLocation blockName = block.getRegistryName();
-        ResourceLocation parent = new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath());
-        getVariantBuilder(block).partialState().with(MachineBlock.FACING, Direction.NORTH).modelForState()
-                .modelFile(models().getExistingFile(parent)).addModel().partialState()
-                .with(MachineBlock.FACING, Direction.SOUTH).modelForState().rotationY(180)
-                .modelFile(models().getExistingFile(parent)).addModel().partialState()
-                .with(MachineBlock.FACING, Direction.EAST).modelForState().rotationY(90)
-                .modelFile(models().getExistingFile(parent)).addModel().partialState()
-                .with(MachineBlock.FACING, Direction.WEST).modelForState().rotationY(270)
-                .modelFile(models().getExistingFile(parent)).addModel();
-        simpleBlockItem(block, models().getExistingFile(parent));
+        ModelFile baseModelOff = models()
+                .getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath()));
+        ModelFile baseModelRunning = models().getExistingFile(
+                new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_running"));
+
+        getMultipartBuilder(block)
+                .part().modelFile(baseModelOff).addModel().condition(MachineBlock.FACING, Direction.NORTH).condition(MachineBlock.RUNNING, false).end()
+                .part().modelFile(baseModelOff).rotationY(180).addModel().condition(MachineBlock.FACING, Direction.SOUTH).condition(MachineBlock.RUNNING, false).end()
+                .part().modelFile(baseModelOff).rotationY(270).addModel().condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, false).end()
+                .part().modelFile(baseModelOff).rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST).condition(MachineBlock.RUNNING, false).end()
+                .part().modelFile(baseModelRunning).addModel().condition(MachineBlock.FACING, Direction.NORTH).condition(MachineBlock.RUNNING, true).end()
+                .part().modelFile(baseModelRunning).rotationY(180).addModel().condition(MachineBlock.FACING, Direction.SOUTH).condition(MachineBlock.RUNNING, true).end()
+                .part().modelFile(baseModelRunning).rotationY(270).addModel().condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, true).end()
+                .part().modelFile(baseModelRunning).rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST).condition(MachineBlock.RUNNING, true).end();
+        simpleBlockItem(block, baseModelOff);
     }
 
     @Override
     protected void registerStatesAndModels() {
         simpleBlockWithItem(ResourceRegistry.COPPER_ORE.get());
         simpleBlockWithItem(ResourceRegistry.ALUMINIUM_ORE.get());
-        facingBlockWithItem(MachineRegistry.COAL_GENERATOR.get());
+        machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get());
     }
 
 }

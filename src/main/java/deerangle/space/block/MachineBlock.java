@@ -4,16 +4,17 @@ import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -32,6 +33,13 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public abstract class MachineBlock extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty NORTH = SixWayBlock.NORTH;
+    public static final BooleanProperty EAST = SixWayBlock.EAST;
+    public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
+    public static final BooleanProperty WEST = SixWayBlock.WEST;
+    public static final BooleanProperty UP = SixWayBlock.UP;
+    public static final BooleanProperty DOWN = SixWayBlock.DOWN;
+    public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private final ResourceLocation interactStat;
 
     public MachineBlock(Properties properties, ResourceLocation interactStat) {
@@ -130,7 +138,7 @@ public abstract class MachineBlock extends Block {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, RUNNING, NORTH, SOUTH, EAST, WEST, UP, DOWN);
         super.fillStateContainer(builder);
     }
 

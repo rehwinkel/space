@@ -1,19 +1,82 @@
 {
-  "variants": {
-    "facing=north": {
-      "model": "space:block/coal_generator"
+  "multipart": [
+    {
+      "when": {
+        "running": "false",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/coal_generator"
+      }
     },
-    "facing=south": {
-      "model": "space:block/coal_generator",
-      "y": 180
+    {
+      "when": {
+        "running": "false",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 180
+      }
     },
-    "facing=west": {
-      "model": "space:block/coal_generator",
-      "y": 270
+    {
+      "when": {
+        "running": "false",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 270
+      }
     },
-    "facing=east": {
-      "model": "space:block/coal_generator",
-      "y": 90
+    {
+      "when": {
+        "running": "false",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/coal_generator",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "running": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running"
+      }
+    },
+    {
+      "when": {
+        "running": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "running": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "running": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 90
+      }
     }
-  }
+  ]
 }
