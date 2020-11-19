@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "block/iron_block",
-		"2": "block/steel",
-		"3": "block/red_metal",
-		"particle": "block/iron_block"
+		"1": "minecraft:block/iron_block",
+		"2": "space:block/steel_block",
+		"3": "space:block/red_metal",
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{

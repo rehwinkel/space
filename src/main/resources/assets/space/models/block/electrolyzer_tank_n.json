@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "electrolyzer_tank",
-		"particle": "electrolyzer_tank"
+		"0": "space:block/electrolyzer_tank",
+		"particle": "space:block/electrolyzer_tank"
 	},
 	"elements": [
 		{
