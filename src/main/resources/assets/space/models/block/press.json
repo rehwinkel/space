@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "space:block/steel_block",
 		"2": "space:block/press_side",

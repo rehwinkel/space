@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"0": "space:block/coal_generator_front",
 		"2": "block/iron_block",

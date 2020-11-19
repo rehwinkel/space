@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"1": "minecraft:block/iron_block",
 		"2": "space:block/steel_block",
