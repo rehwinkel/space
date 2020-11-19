@@ -1,12 +1,13 @@
 package deerangle.space.machine.data;
 
+import net.minecraft.nbt.FloatNBT;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.IntNBT;
 import net.minecraft.network.PacketBuffer;
 
 public class BurnMachineData implements IMachineData {
 
     private final String name;
+    private float progress;
 
     public BurnMachineData(String name) {
         this.name = name;
@@ -14,12 +15,12 @@ public class BurnMachineData implements IMachineData {
 
     @Override
     public INBT write() {
-        return IntNBT.valueOf(1);
+        return FloatNBT.valueOf(this.progress);
     }
 
     @Override
     public void read(INBT nbt) {
-
+        this.progress = ((FloatNBT) nbt).getFloat();
     }
 
     @Override
@@ -29,12 +30,25 @@ public class BurnMachineData implements IMachineData {
 
     @Override
     public void writePacket(PacketBuffer buf) {
-        buf.writeInt(1);
+        buf.writeFloat(this.progress);
     }
 
     @Override
     public void readPacket(PacketBuffer buf) {
-        buf.readInt();
+        this.progress = buf.readFloat();
+    }
+
+    @Override
+    public boolean storeInItem() {
+        return false;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
+    }
+
+    public float getProgress() {
+        return progress;
     }
 
 }

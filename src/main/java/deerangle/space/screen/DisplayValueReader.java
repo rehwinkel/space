@@ -2,11 +2,12 @@ package deerangle.space.screen;
 
 import com.mojang.datafixers.util.Pair;
 import deerangle.space.machine.Machine;
+import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.EnergyMachineData;
 import deerangle.space.machine.data.IMachineData;
-import deerangle.space.machine.type.DataElement;
-import deerangle.space.machine.type.Element;
-import deerangle.space.machine.type.OverlayedElement;
+import deerangle.space.machine.element.DataElement;
+import deerangle.space.machine.element.Element;
+import deerangle.space.machine.element.OverlayedElement;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,9 @@ public class DisplayValueReader {
     }
 
     public float getBurnData(int index) {
-        return 0.5f;
+        IMachineData data = machine.getMachineData(index);
+        assert data instanceof BurnMachineData;
+        return ((BurnMachineData) data).getProgress();
     }
 
     public int getIndexColor(int index) {

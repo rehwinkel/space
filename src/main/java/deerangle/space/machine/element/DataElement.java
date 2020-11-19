@@ -1,4 +1,4 @@
-package deerangle.space.machine.type;
+package deerangle.space.machine.element;
 
 public abstract class DataElement extends Element {
 

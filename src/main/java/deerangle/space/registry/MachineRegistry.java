@@ -4,6 +4,7 @@ import deerangle.space.block.CoalGeneratorBlock;
 import deerangle.space.block.MachineBlock;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.container.MachineContainer;
+import deerangle.space.item.MachineItem;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.stats.Stats;
 import net.minecraft.block.AbstractBlock;
@@ -38,7 +39,7 @@ public class MachineRegistry extends AbstractRegistry {
             .register("machine", () -> IForgeContainerType.create(MachineContainer::new));
 
     static {
-        ITEMS.register("coal_generator", () -> new BlockItem(COAL_GENERATOR.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("coal_generator", () -> new MachineItem(COAL_GENERATOR.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {

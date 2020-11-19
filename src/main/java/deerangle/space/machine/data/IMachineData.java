@@ -15,4 +15,6 @@ public interface IMachineData {
 
     void readPacket(PacketBuffer buf);
 
+    boolean storeInItem();
+
 }
