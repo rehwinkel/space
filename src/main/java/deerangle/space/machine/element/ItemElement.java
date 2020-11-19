@@ -1,14 +1,14 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
+import deerangle.space.screen.MachineScreen;
 import net.minecraft.util.text.ITextComponent;
 
 public class ItemElement extends OverlayedElement {
 
     ItemElement(int x, int y, int index, boolean input, int overlayColor) {
-        super(x, y, index, input,overlayColor, 18, 18);
+        super(x, y, index, input, overlayColor, 18, 18);
     }
 
     @Override
@@ -22,9 +22,9 @@ public class ItemElement extends OverlayedElement {
         int y = guiTop + this.getY();
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
-        screen.blit(matrixStack, x, y, 0, 96, 18, 18);
+        screen.blit(matrixStack, x, y, 0, 98, 18, 18);
         screen.setOverlayColor(this.getOverlayColor());
-        screen.blit(matrixStack, x, y, 18, 96, 18, 18);
+        screen.blit(matrixStack, x, y, 18, 98, 18, 18);
     }
 
 }

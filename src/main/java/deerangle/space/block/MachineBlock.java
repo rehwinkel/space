@@ -45,6 +45,9 @@ public abstract class MachineBlock extends Block {
     public MachineBlock(Properties properties, ResourceLocation interactStat) {
         super(properties);
         this.interactStat = interactStat;
+        this.setDefaultState(
+                this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false)
+                        .with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false));
     }
 
     protected abstract VoxelShape[] getMachineShape();

@@ -1,8 +1,8 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
+import deerangle.space.screen.MachineScreen;
 
 public class BurnElement extends DataElement {
 
@@ -17,10 +17,10 @@ public class BurnElement extends DataElement {
         float amount = reader.getBurnData(this.getIndex());
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
-        screen.blit(matrixStack, x, y, 0, 96 + 18, 18, 18);
+        screen.blit(matrixStack, x, y, 0, 116, 18, 18);
         if (amount > 0f) {
             int height = (int) (13 * (1 - amount));
-            screen.blit(matrixStack, x + 2, y + 2 + height, 20, 116 + height, 14, 14);
+            screen.blit(matrixStack, x + 2, y + 2 + height, 20, 118 + height, 14, 14);
         }
     }
 

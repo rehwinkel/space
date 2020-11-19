@@ -5,7 +5,6 @@ import deerangle.space.stats.Stats;
 import deerangle.space.util.VoxelShapeUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FurnaceBlock;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
