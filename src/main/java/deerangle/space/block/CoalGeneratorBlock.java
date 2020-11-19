@@ -3,10 +3,12 @@ package deerangle.space.block;
 import deerangle.space.main.ConfigData;
 import deerangle.space.stats.Stats;
 import deerangle.space.util.VoxelShapeUtil;
-import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
@@ -34,17 +36,29 @@ public class CoalGeneratorBlock extends MachineBlock {
         if (ConfigData.doMachineParticles) {
             if (stateIn.get(RUNNING)) {
                 double baseX = (double) pos.getX() + 0.5D;
-                double baseY = pos.getY() + 1.125D;
+                double baseY = pos.getY() + 0.25D;
                 double baseZ = (double) pos.getZ() + 0.5D;
-                //TODO: if (rand.nextDouble() < 0.1D) { worldIn.playSound(d0, d1, d2, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false); }
+                if (rand.nextDouble() < 0.1D) {
+                    worldIn.playSound(baseX, baseY, baseZ, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS,
+                            1.0F, 1.0F, false);
+                }
+
+                Direction direction = stateIn.get(FACING);
+                Direction.Axis axis = direction.getAxis();
+                double n = rand.nextDouble() * 0.6D - 0.3D;
+                double fireOffX = axis == Direction.Axis.X ? (double) direction.getXOffset() * 0.52D : n;
+                double fireOffY = rand.nextDouble() * 6.0D / 16.0D;
+                double fireOffZ = axis == Direction.Axis.Z ? (double) direction.getZOffset() * 0.52D : n;
+                worldIn.addParticle(ParticleTypes.FLAME, baseX + fireOffX, baseY + fireOffY, baseZ + fireOffZ, 0.0D,
+                        0.0D, 0.0D);
 
                 for (int i = 0; i < 4; i++) {
                     double randOffX = rand.nextDouble() * 0.125D - 0.0625D;
                     double randOffZ = 0.375D + (rand.nextDouble() * 0.125D - 0.0625D);
-                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY, baseZ,
-                            randOffX + 0.4375f, randOffZ);
-                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY, baseZ,
-                            randOffX - 0.4375f, randOffZ);
+                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY + 0.875D,
+                            baseZ, randOffX + 0.4375f, randOffZ);
+                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY + 0.875D,
+                            baseZ, randOffX - 0.4375f, randOffZ);
                 }
             }
         }
