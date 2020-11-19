@@ -14,7 +14,9 @@ import java.util.Random;
 public class CoalGeneratorBlock extends MachineBlock {
 
     private static final VoxelShape[] SHAPE = VoxelShapeUtil
-            .horizontalShape(Block.makeCuboidShape(1, 3, 0, 15, 14, 16), Block.makeCuboidShape(14, 10, 14, 16, 16, 16));
+            .horizontalShape(Block.makeCuboidShape(2, 0, 1, 14, 3, 16), Block.makeCuboidShape(1, 3, 0, 15, 14, 16),
+                    Block.makeCuboidShape(14, 10, 13, 16, 16, 15), Block.makeCuboidShape(0, 10, 13, 2, 16, 15),
+                    Block.makeCuboidShape(0, 4, 2, 1, 9, 10), Block.makeCuboidShape(5, 14, 4, 8, 16, 11));
 
     public CoalGeneratorBlock(Properties properties) {
         super(properties, Stats.INTERACT_WITH_COAL_GENERATOR);
