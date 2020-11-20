@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ti",
+    "tti",
+    "tii"
+  ],
+  "key": {
+    "i": {
+      "item": "space:steel_plate"
+    },
+    "t": {
+      "item": "space:silica_tile"
+    }
+  },
+  "result": {
+    "item": "space:rocket_fin"
+  }
+}

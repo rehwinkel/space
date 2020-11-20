@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cic",
+    "ifi",
+    "ibi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "b": {
+      "item": "space:machine_base"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "c": {
+      "item": "space:copper_pipe"
+    }
+  },
+  "result": {
+    "item": "space:coal_generator"
+  }
+}

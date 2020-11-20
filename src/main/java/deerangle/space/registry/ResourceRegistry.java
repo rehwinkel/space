@@ -9,6 +9,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 
 public class ResourceRegistry extends AbstractRegistry {
@@ -42,11 +43,11 @@ public class ResourceRegistry extends AbstractRegistry {
             AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(3)
                     .hardnessAndResistance(6.0F, 6.0F)));
     public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
-            AbstractBlock.Properties.create(Material.SAND).setRequiresTool().harvestLevel(1)
-                    .hardnessAndResistance(3.0F, 3.0F)));
+            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
+                    .hardnessAndResistance(1.0F, 1.0F)));
     public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new Block(
-            AbstractBlock.Properties.create(Material.SAND).setRequiresTool().harvestLevel(1)
-                    .hardnessAndResistance(3.0F, 3.0F)));
+            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
+                    .hardnessAndResistance(1.0F, 1.0F)));
 
     public static final RegistryObject<Item> ALUMINIUM_INGOT = ITEMS
             .register("aluminium_ingot", () -> new Item(new Item.Properties().group(TAB)));

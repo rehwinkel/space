@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "space:titanium_ingot"
+    }
+  ],
+  "result": {
+    "item": "space:titanium_nugget",
+    "count": 9
+  }
+}

@@ -13,6 +13,13 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
     protected void populate() {
         normalBlock(ResourceRegistry.COPPER_ORE.get());
         normalBlock(ResourceRegistry.ALUMINIUM_ORE.get());
+        normalBlock(ResourceRegistry.ILMENITE_ORE.get());
+        normalBlock(ResourceRegistry.ALUMINIUM_BLOCK.get());
+        normalBlock(ResourceRegistry.COPPER_BLOCK.get());
+        normalBlock(ResourceRegistry.STEEL_BLOCK.get());
+        normalBlock(ResourceRegistry.TITANIUM_BLOCK.get());
+        normalBlock(ResourceRegistry.QUARTZ_SAND.get());
+        normalBlock(ResourceRegistry.RUSTY_DUST.get());
     }
 
 }

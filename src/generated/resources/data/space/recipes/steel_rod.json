@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "s  ",
+    "s  ",
+    "   "
+  ],
+  "key": {
+    "s": {
+      "item": "space:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "space:steel_rod",
+    "count": 2
+  }
+}

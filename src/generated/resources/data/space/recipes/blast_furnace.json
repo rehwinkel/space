@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cic",
+    "cbi",
+    "bfb"
+  ],
+  "key": {
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "b": {
+      "item": "minecraft:iron_block"
+    },
+    "c": {
+      "item": "space:copper_pipe"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "space:blast_furnace"
+  }
+}

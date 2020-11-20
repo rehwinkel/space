@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:battery"
+    ]
+  },
+  "criteria": {
+    "has_aluminium_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:aluminium_plate"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:battery"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aluminium_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

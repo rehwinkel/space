@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    },
+    {
+      "item": "space:steel_ingot"
+    }
+  ],
+  "result": {
+    "item": "space:steel_block"
+  }
+}
