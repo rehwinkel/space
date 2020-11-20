@@ -1,12 +1,12 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldVertexBufferUploader;
@@ -58,10 +58,9 @@ public class FluidElement extends OverlayedElement {
     }
 
     private void drawFluidColumn(MachineScreen screen, MatrixStack matrixStack, Fluid fluid, int x, int y, int height, boolean bottomUp) {
-        BlockState fluidState = fluid.getDefaultState().getBlockState();
-        TextureAtlasSprite sprite = screen.getModelForState(fluidState).getParticleTexture();
+        TextureAtlasSprite sprite = screen.getFluidStillTexture(fluid);
         screen.bindTexture(sprite.getAtlasTexture().getTextureLocation());
-        int color = screen.getBlockColor(fluidState);
+        int color = fluid.getAttributes().getColor();
         screen.setOverlayColor(color);
         if (bottomUp) {
             for (int i = height; i > 0; i -= 16) {
@@ -78,6 +77,7 @@ public class FluidElement extends OverlayedElement {
     }
 
     private void blitSprite(MatrixStack matrixStack, int x, int y, int blitOffset, int offX, int offY, int width, int height, int textureWidth, int textureHeight, TextureAtlasSprite sprite) {
+        GlStateManager.disableBlend();
         Matrix4f matrix = matrixStack.getLast().getMatrix();
         BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -98,6 +98,7 @@ public class FluidElement extends OverlayedElement {
         bufferbuilder.finishDrawing();
         RenderSystem.enableAlphaTest();
         WorldVertexBufferUploader.draw(bufferbuilder);
+        GlStateManager.enableBlend();
     }
 
 

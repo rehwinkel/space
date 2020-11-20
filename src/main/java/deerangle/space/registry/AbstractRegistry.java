@@ -2,6 +2,7 @@ package deerangle.space.registry;
 
 import deerangle.space.main.SpaceMod;
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -20,5 +21,7 @@ public abstract class AbstractRegistry {
             .create(ForgeRegistries.CONTAINERS, SpaceMod.MOD_ID);
     public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
             .create(ForgeRegistries.RECIPE_SERIALIZERS, SpaceMod.MOD_ID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister
+            .create(ForgeRegistries.FLUIDS, SpaceMod.MOD_ID);
 
 }

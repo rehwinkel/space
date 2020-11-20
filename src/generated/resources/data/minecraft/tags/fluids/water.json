@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "space:crude_oil",
+    "space:crude_oil_flowing"
+  ]
+}

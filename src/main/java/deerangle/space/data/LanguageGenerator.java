@@ -22,6 +22,8 @@ public class LanguageGenerator extends LanguageProvider {
         add("block.space.combustion_generator", "Combustion Generator");
         add("block.space.gas_tank", "Gas Tank");
         add("block.space.drum", "Drum");
+        add("block.space.crude_oil", "Crude Oil");
+        add("item.space.crude_oil_bucket", "Crude Oil Bucket");
         add("stat.space.interact_with_coal_generator", "Interactions with Coal Generator");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");

@@ -2,10 +2,12 @@ package deerangle.space.data;
 
 import deerangle.space.block.MachineBlock;
 import deerangle.space.main.SpaceMod;
+import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -117,6 +119,17 @@ public class BlockStateGenerator extends BlockStateProvider {
         }
     }
 
+    private void fluidBlock(Fluid fluid) {
+        Block block = fluid.getDefaultState().getBlockState().getBlock();
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().getBuilder(blockName(block))
+                .texture("particle", new ResourceLocation(SpaceMod.MOD_ID,
+                        "block/" + block.getRegistryName().getPath() + "_still"))));
+    }
+
+    private String blockName(Block block) {
+        return block.getRegistryName().getNamespace() + ":block/" + block.getRegistryName().getPath();
+    }
+
     @Override
     protected void registerStatesAndModels() {
         ModelFile connector = models().getExistingFile(CONNECTOR_LOC);
@@ -125,6 +138,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         ModelFile connectorLong3 = models().getExistingFile(CONNECTOR_LONG3_LOC);
         simpleBlockWithItem(ResourceRegistry.COPPER_ORE.get());
         simpleBlockWithItem(ResourceRegistry.ALUMINIUM_ORE.get());
+        fluidBlock(FluidRegistry.CRUDE_OIL.get());
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
                         90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270,

@@ -11,7 +11,10 @@ import deerangle.space.network.PacketHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -21,8 +24,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 public class MachineScreen extends ContainerScreen<MachineContainer> {
-
-    private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
 
     public static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/machines.png");
@@ -206,16 +207,12 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public int getBlockColor(BlockState fluidState) {
-        return this.minecraft.getBlockColors().getColor(fluidState, TEXTURE_WORLD_READER, new BlockPos(0, 0, 0), 0);
-    }
-
     public void bindTexture(ResourceLocation textureLocation) {
         this.minecraft.getTextureManager().bindTexture(textureLocation);
     }
 
-    public IBakedModel getModelForState(BlockState state) {
-        return this.minecraft.getBlockRendererDispatcher().getModelForState(state);
+    public TextureAtlasSprite getFluidStillTexture(Fluid fluid) {
+        return this.minecraft.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
+                .apply(fluid.getAttributes().getStillTexture());
     }
-
 }

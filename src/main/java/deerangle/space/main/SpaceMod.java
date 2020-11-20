@@ -7,6 +7,7 @@ import deerangle.space.main.proxy.IProxy;
 import deerangle.space.main.proxy.ServerProxy;
 import deerangle.space.network.PacketHandler;
 import deerangle.space.registry.AbstractRegistry;
+import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import deerangle.space.stats.Stats;
@@ -37,8 +38,10 @@ public class SpaceMod {
         AbstractRegistry.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.RECIPE_SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        AbstractRegistry.FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MachineRegistry.register();
         ResourceRegistry.register();
+        FluidRegistry.register();
         Stats.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigData.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigData.CLIENT_SPEC);
@@ -63,6 +66,8 @@ public class SpaceMod {
                 .addProvider(new BlockStateGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator()
                 .addProvider(new ItemModelGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator()
+                .addProvider(new FluidTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));

@@ -8,6 +8,7 @@ import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.util.FlowType;
 import deerangle.space.machine.util.SideConfig;
+import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -30,8 +31,8 @@ public class CombustionGeneratorMachine extends Machine {
 
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
-    //TODO: oil, not lava
-    public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap.of(Fluids.LAVA, 2);
+
+    public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap.of(FluidRegistry.CRUDE_OIL.get(), 2);
     private int currentBurnTime;
     private int currentMaxBurnTime;
 
