@@ -3,7 +3,9 @@ af6c56f16da8ac1936f6cdaa386601c30c46b2eb assets/space/blockstates/blast_furnace.
 e19397369bbd3d7003d450983f5589e0c3c9f675 assets/space/blockstates/coal_generator.json
 8c02692fd8b058c591d7b5165788111630456f12 assets/space/blockstates/combustion_generator.json
 057b4df0f2a89097bd2919193ed1411408e7d0ab assets/space/blockstates/copper_ore.json
-fa28d941fe6415b8ced7db65dade13e85f2c4621 assets/space/lang/en_us.json
+62bf0ba7719172cde2e7a0936e14196bf3a52b61 assets/space/blockstates/drum.json
+58bb521dd5f338824de3e5e30483fd604d64486f assets/space/blockstates/gas_tank.json
+3469d973272e34aa2b37c524174e9bb8f15eb0c2 assets/space/lang/en_us.json
 bf81f202ea51f05ef86c6bae24e4fd118ca6f800 assets/space/models/block/aluminium_ore.json
 5860866fbb3fe14a345ab67996a4659580b94b03 assets/space/models/block/copper_ore.json
 bca99bdcd470bdcea10d05b90c836efb35d10df4 assets/space/models/item/aluminium_ore.json
@@ -11,6 +13,8 @@ fbfc68f2e7e70097f5e7b0af9f1ab490c5ba11a6 assets/space/models/item/blast_furnace.
 7851baf8c71e51f932073dddac98876570da78bf assets/space/models/item/coal_generator.json
 4dfcbbc3cfee77d192b20a077f16954f1bba6136 assets/space/models/item/combustion_generator.json
 1b8d66d398dda34b20e5ba427a6494951334eae5 assets/space/models/item/copper_ore.json
+a073d853f58afa4ff1d55352a3cf80baf5f8d049 assets/space/models/item/drum.json
+87575518fc7cbd381f480dd2b79c73d5798bdacb assets/space/models/item/gas_tank.json
 1b9019ccdc0fafb932deb8ad7ee1c0fd036463c0 assets/space/models/item/steel_ingot.json
 76b669a1205b55c5b0f6b4084faf5efc3c7f3a0b data/space/loot_tables/aluminium_ore.json
 c7406515c2c871b577d1c2c1eb8d24507c53d3ec data/space/loot_tables/copper_ore.json

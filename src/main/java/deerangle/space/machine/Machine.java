@@ -1,6 +1,7 @@
 package deerangle.space.machine;
 
 import deerangle.space.machine.data.EnergyMachineData;
+import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.element.MachineType;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
@@ -79,7 +81,7 @@ public abstract class Machine {
         return nbt;
     }
 
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing, Direction side) {
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing, Direction side, boolean fromCapability) {
         int index = this.sideConfig.getIndexForSide(facing, side);
         if (index < 0) {
             return LazyOptional.empty();
@@ -91,7 +93,7 @@ public abstract class Machine {
         return LazyOptional.empty();
     }
 
-    public LazyOptional<IItemHandler> getItemHandler(Direction facing, Direction side) {
+    public LazyOptional<IItemHandler> getItemHandler(Direction facing, Direction side, boolean fromCapability) {
         int index = this.sideConfig.getIndexForSide(facing, side);
         if (index < 0) {
             return LazyOptional.empty();
@@ -99,6 +101,18 @@ public abstract class Machine {
         IMachineData slot = machineDataList.get(index);
         if (slot instanceof ItemMachineData) {
             return ((ItemMachineData) slot).getItemHandler();
+        }
+        return LazyOptional.empty();
+    }
+
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing, Direction side, boolean fromCapability) {
+        int index = this.sideConfig.getIndexForSide(facing, side);
+        if (index < 0) {
+            return LazyOptional.empty();
+        }
+        IMachineData slot = machineDataList.get(index);
+        if (slot instanceof FluidMachineData) {
+            return ((FluidMachineData) slot).getTank();
         }
         return LazyOptional.empty();
     }

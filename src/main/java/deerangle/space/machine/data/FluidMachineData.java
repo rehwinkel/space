@@ -16,6 +16,7 @@ public class FluidMachineData implements IMachineData {
     private final String name;
     private final LazyOptional<IFluidHandler> tank;
 
+    //TODO: inout behavior
     public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate) {
         this.tank = LazyOptional.of(() -> new FluidTank(capacity, validPredicate));
         this.name = name;

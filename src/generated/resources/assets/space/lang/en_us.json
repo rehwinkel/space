@@ -4,6 +4,8 @@
   "block.space.coal_generator": "Coal Generator",
   "block.space.combustion_generator": "Combustion Generator",
   "block.space.copper_ore": "Copper Ore",
+  "block.space.drum": "Drum",
+  "block.space.gas_tank": "Gas Tank",
   "info.space.back_letter": "B",
   "info.space.bottom_letter": "D",
   "info.space.energy": "Energy Stored: %s/%s FE",

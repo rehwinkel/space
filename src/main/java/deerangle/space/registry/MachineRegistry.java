@@ -1,9 +1,6 @@
 package deerangle.space.registry;
 
-import deerangle.space.block.BlastFurnaceBlock;
-import deerangle.space.block.CoalGeneratorBlock;
-import deerangle.space.block.CombustionGeneratorBlock;
-import deerangle.space.block.MachineBlock;
+import deerangle.space.block.*;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.container.MachineContainer;
 import deerangle.space.item.MachineItem;
@@ -42,13 +39,19 @@ public class MachineRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> COMBUSTION_GENERATOR = BLOCKS.register("combustion_generator",
             () -> new CombustionGeneratorBlock(AbstractBlock.Properties.create(Material.IRON)));
 
+    public static final RegistryObject<Block> GAS_TANK = BLOCKS
+            .register("gas_tank", () -> new GasTankBlock(AbstractBlock.Properties.create(Material.IRON)));
+
+    public static final RegistryObject<Block> DRUM = BLOCKS
+            .register("drum", () -> new DrumBlock(AbstractBlock.Properties.create(Material.IRON)));
+
     private static ToIntFunction<BlockState> getRunningLightLevel(int light) {
         return state -> state.get(MachineBlock.RUNNING) ? light : 0;
     }
 
     public static final RegistryObject<TileEntityType<MachineTileEntity>> MACHINE_TE = TILE_ENTITIES.register("machine",
             () -> TileEntityType.Builder.create(MachineTileEntity::new, COAL_GENERATOR.get(), BLAST_FURNACE.get(),
-                    COMBUSTION_GENERATOR.get()).build(null));
+                    COMBUSTION_GENERATOR.get(), GAS_TANK.get(), DRUM.get()).build(null));
 
     public static final RegistryObject<ContainerType<MachineContainer>> MACHINE_CONTAINER = CONTAINERS
             .register("machine", () -> IForgeContainerType.create(MachineContainer::new));
@@ -58,6 +61,8 @@ public class MachineRegistry extends AbstractRegistry {
         ITEMS.register("blast_furnace", () -> new MachineItem(BLAST_FURNACE.get(), new Item.Properties().group(TAB)));
         ITEMS.register("combustion_generator",
                 () -> new MachineItem(COMBUSTION_GENERATOR.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("gas_tank", () -> new MachineItem(GAS_TANK.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("drum", () -> new MachineItem(DRUM.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {

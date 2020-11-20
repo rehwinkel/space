@@ -13,6 +13,10 @@ public class Stats {
             IStatFormatter.DEFAULT);
     public static final ResourceLocation INTERACT_WITH_COMBUSTION_GENERATOR = registerCustom(
             "interact_with_combustion_generator", IStatFormatter.DEFAULT);
+    public static final ResourceLocation INTERACT_WITH_GAS_TANK = registerCustom("interact_with_gas_tank",
+            IStatFormatter.DEFAULT);
+    public static final ResourceLocation INTERACT_WITH_DRUM = registerCustom("interact_with_drum",
+            IStatFormatter.DEFAULT);
 
     public static void register() {
     }

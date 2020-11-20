@@ -48,10 +48,10 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
         if (cap == CapabilityEnergy.ENERGY) {
-            return machine.getEnergyStorage(this.getBlockState().get(MachineBlock.FACING), side).cast();
+            return machine.getEnergyStorage(this.getBlockState().get(MachineBlock.FACING), side, true).cast();
         }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return machine.getItemHandler(this.getBlockState().get(MachineBlock.FACING), side).cast();
+            return machine.getItemHandler(this.getBlockState().get(MachineBlock.FACING), side, true).cast();
         }
         return super.getCapability(cap, side);
     }

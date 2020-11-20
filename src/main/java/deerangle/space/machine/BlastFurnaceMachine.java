@@ -51,7 +51,7 @@ public class BlastFurnaceMachine extends Machine {
 
         Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
                 new StackInventory(this.input.getItemHandlerOrThrow().getStackInSlot(0)), world);
-        boolean shouldUseFuel = recipeOpt.isPresent() && ((MachineItemHandler) this.output.getItemHandlerOrThrow())
+        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getMachineItemHandler()
                 .insertItemOverride(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
         if (this.currentRecipe != null && this.currentProgress == 1) {
             shouldUseFuel = false;

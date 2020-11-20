@@ -41,10 +41,6 @@ public class ItemMachineData implements IMachineData {
         return this.stack.orElseThrow(() -> new RuntimeException("failed to get item handler"));
     }
 
-    public MachineItemHandler getMachineItemHandler() {
-        return (MachineItemHandler) this.getItemHandlerOrThrow();
-    }
-
     @Override
     public INBT write() {
         return ((MachineItemHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
@@ -75,6 +71,10 @@ public class ItemMachineData implements IMachineData {
     @Override
     public boolean storeInItem() {
         return false;
+    }
+
+    public MachineItemHandler getMachineItemHandler() {
+        return (MachineItemHandler) this.getItemHandlerOrThrow(); //TODO remove
     }
 
 }

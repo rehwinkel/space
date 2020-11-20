@@ -13,6 +13,7 @@ public class EnergyMachineData implements IMachineData {
     private final String name;
     private LazyOptional<IEnergyStorage> storage;
 
+    //TODO: inout behavior
     public EnergyMachineData(String name, int capacity, int transfer) {
         this.storage = LazyOptional.of(() -> new MachineEnergyStorage(capacity, transfer, transfer, 0));
         this.transfer = transfer;
