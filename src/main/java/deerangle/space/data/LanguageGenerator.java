@@ -14,6 +14,13 @@ public class LanguageGenerator extends LanguageProvider {
     protected void addTranslations() {
         add(ResourceRegistry.COPPER_ORE.get(), "Copper Ore");
         add(ResourceRegistry.ALUMINIUM_ORE.get(), "Aluminium Ore");
+        add(ResourceRegistry.ILMENITE_ORE.get(), "Ilmenite Ore");
+        add(ResourceRegistry.ALUMINIUM_BLOCK.get(), "Aluminium Block");
+        add(ResourceRegistry.COPPER_BLOCK.get(), "Copper Block");
+        add(ResourceRegistry.STEEL_BLOCK.get(), "Steel Block");
+        add(ResourceRegistry.TITANIUM_BLOCK.get(), "Titanium Block");
+        add(ResourceRegistry.QUARTZ_SAND.get(), "Quartz Sand");
+        add(ResourceRegistry.RUSTY_DUST.get(), "Rusty Dust");
         add(ResourceRegistry.STEEL_INGOT.get(), "Steel Ingot");
         add(ResourceRegistry.COPPER_INGOT.get(), "Copper Ingot");
         add(ResourceRegistry.TITANIUM_INGOT.get(), "Titanium Ingot");

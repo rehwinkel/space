@@ -23,9 +23,29 @@ public class ResourceRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
                     .hardnessAndResistance(3.0F, 3.0F)));
-
     public static final RegistryObject<Block> ALUMINIUM_ORE = BLOCKS.register("aluminium_ore", () -> new OreBlock(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
+                    .hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> ILMENITE_ORE = BLOCKS.register("ilmenite_ore", () -> new OreBlock(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(2)
+                    .hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> ALUMINIUM_BLOCK = BLOCKS.register("aluminium_block", () -> new Block(
+            AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(1)
+                    .hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> COPPER_BLOCK = BLOCKS.register("copper_block", () -> new Block(
+            AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(1)
+                    .hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> STEEL_BLOCK = BLOCKS.register("steel_block", () -> new Block(
+            AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(2)
+                    .hardnessAndResistance(4.0F, 4.0F)));
+    public static final RegistryObject<Block> TITANIUM_BLOCK = BLOCKS.register("titanium_block", () -> new Block(
+            AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(3)
+                    .hardnessAndResistance(6.0F, 6.0F)));
+    public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
+            AbstractBlock.Properties.create(Material.SAND).setRequiresTool().harvestLevel(1)
+                    .hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new Block(
+            AbstractBlock.Properties.create(Material.SAND).setRequiresTool().harvestLevel(1)
                     .hardnessAndResistance(3.0F, 3.0F)));
 
     public static final RegistryObject<Item> ALUMINIUM_INGOT = ITEMS
@@ -88,6 +108,13 @@ public class ResourceRegistry extends AbstractRegistry {
     static {
         ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(TAB)));
         ITEMS.register("aluminium_ore", () -> new BlockItem(ALUMINIUM_ORE.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("ilmenite_ore", () -> new BlockItem(ILMENITE_ORE.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("aluminium_block", () -> new BlockItem(ALUMINIUM_BLOCK.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("copper_block", () -> new BlockItem(COPPER_BLOCK.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("titanium_block", () -> new BlockItem(TITANIUM_BLOCK.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("quartz_sand", () -> new BlockItem(QUARTZ_SAND.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("rusty_dust", () -> new BlockItem(RUSTY_DUST.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {
