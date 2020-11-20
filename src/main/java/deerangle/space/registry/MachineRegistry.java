@@ -2,6 +2,7 @@ package deerangle.space.registry;
 
 import deerangle.space.block.BlastFurnaceBlock;
 import deerangle.space.block.CoalGeneratorBlock;
+import deerangle.space.block.CombustionGeneratorBlock;
 import deerangle.space.block.MachineBlock;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.container.MachineContainer;
@@ -38,12 +39,16 @@ public class MachineRegistry extends AbstractRegistry {
             () -> new BlastFurnaceBlock(
                     AbstractBlock.Properties.create(Material.IRON).setLightLevel(getRunningLightLevel(15))));
 
+    public static final RegistryObject<Block> COMBUSTION_GENERATOR = BLOCKS.register("combustion_generator",
+            () -> new CombustionGeneratorBlock(AbstractBlock.Properties.create(Material.IRON)));
+
     private static ToIntFunction<BlockState> getRunningLightLevel(int light) {
         return state -> state.get(MachineBlock.RUNNING) ? light : 0;
     }
 
     public static final RegistryObject<TileEntityType<MachineTileEntity>> MACHINE_TE = TILE_ENTITIES.register("machine",
-            () -> TileEntityType.Builder.create(MachineTileEntity::new, COAL_GENERATOR.get(), BLAST_FURNACE.get()).build(null));
+            () -> TileEntityType.Builder.create(MachineTileEntity::new, COAL_GENERATOR.get(), BLAST_FURNACE.get(),
+                    COMBUSTION_GENERATOR.get()).build(null));
 
     public static final RegistryObject<ContainerType<MachineContainer>> MACHINE_CONTAINER = CONTAINERS
             .register("machine", () -> IForgeContainerType.create(MachineContainer::new));
@@ -51,6 +56,8 @@ public class MachineRegistry extends AbstractRegistry {
     static {
         ITEMS.register("coal_generator", () -> new MachineItem(COAL_GENERATOR.get(), new Item.Properties().group(TAB)));
         ITEMS.register("blast_furnace", () -> new MachineItem(BLAST_FURNACE.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("combustion_generator",
+                () -> new MachineItem(COMBUSTION_GENERATOR.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {

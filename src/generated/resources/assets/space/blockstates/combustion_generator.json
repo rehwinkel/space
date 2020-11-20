@@ -1,0 +1,127 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/combustion_generator"
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/combustion_generator",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/combustion_generator",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/combustion_generator",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/connector"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 360
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 450
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 90
+      }
+    }
+  ]
+}

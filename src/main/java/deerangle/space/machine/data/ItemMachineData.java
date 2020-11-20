@@ -47,13 +47,13 @@ public class ItemMachineData implements IMachineData {
 
     @Override
     public INBT write() {
-        return ((ItemStackHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
+        return ((MachineItemHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
                 .serializeNBT();
     }
 
     @Override
     public void read(INBT nbt) {
-        ((ItemStackHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
+        ((MachineItemHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
                 .deserializeNBT((CompoundNBT) nbt);
     }
 

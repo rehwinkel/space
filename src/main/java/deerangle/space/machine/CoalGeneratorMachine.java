@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeHooks;
 
 public class CoalGeneratorMachine extends Machine {
 
-    private static final int RF_PER_BURN_TICK = 20;
+    private static final int RF_PER_TICK = 20;
     private final ItemMachineData fuel;
     private final EnergyMachineData energy;
     private final BurnMachineData burn;
@@ -31,6 +31,8 @@ public class CoalGeneratorMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
+
+        //double burning speeed
         boolean wasBurning = this.isBurning();
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
@@ -42,7 +44,7 @@ public class CoalGeneratorMachine extends Machine {
             }
         } else {
             currentBurnTime--;
-            this.energy.getStorageOrThrow().receiveEnergy(RF_PER_BURN_TICK, false);
+            this.energy.getStorageOrThrow().receiveEnergy(RF_PER_TICK, false);
         }
         if (currentMaxBurnTime > 0) {
             this.burn.setProgress(currentBurnTime / (float) currentMaxBurnTime);

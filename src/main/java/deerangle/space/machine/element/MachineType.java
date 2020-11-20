@@ -48,7 +48,7 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
             this.constructor = constructor;
         }
 
-        public Builder<M> addItemSlot(int x, int y, int index, boolean input, Predicate<ItemStack> validPredicate) {
+        public Builder<M> addItemElement(int x, int y, int index, boolean input, Predicate<ItemStack> validPredicate) {
             int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
             this.elements.add(new ItemElement(x, y, index, input, color, validPredicate));
             if (input) {
@@ -59,9 +59,20 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
             return this;
         }
 
-        public Builder<M> addEnergySlot(int x, int y, int index, boolean input) {
+        public Builder<M> addEnergyElement(int x, int y, int index, boolean input) {
             int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
             this.elements.add(new EnergyElement(x, y, index, input, color));
+            if (input) {
+                this.inputIndex++;
+            } else {
+                this.outputIndex++;
+            }
+            return this;
+        }
+
+        public Builder<M> addFluidElement(int x, int y, int index, boolean input) {
+            int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
+            this.elements.add(new FluidElement(x, y, index, input, color));
             if (input) {
                 this.inputIndex++;
             } else {

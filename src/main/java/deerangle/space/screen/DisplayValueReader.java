@@ -2,13 +2,11 @@ package deerangle.space.screen;
 
 import com.mojang.datafixers.util.Pair;
 import deerangle.space.machine.Machine;
-import deerangle.space.machine.data.BurnMachineData;
-import deerangle.space.machine.data.EnergyMachineData;
-import deerangle.space.machine.data.IMachineData;
-import deerangle.space.machine.data.ProgressMachineData;
+import deerangle.space.machine.data.*;
 import deerangle.space.machine.element.DataElement;
 import deerangle.space.machine.element.Element;
 import deerangle.space.machine.element.OverlayedElement;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +35,14 @@ public class DisplayValueReader {
         int cap = ((EnergyMachineData) data).getCapacity();
         int eng = ((EnergyMachineData) data).getEnergy();
         return new Pair<>(eng, cap);
+    }
+
+    public Pair<FluidStack, Integer> getFluidData(int index) {
+        IMachineData data = machine.getMachineData(index);
+        assert data instanceof FluidMachineData;
+        int cap = ((FluidMachineData) data).getCapacity();
+        FluidStack fluid = ((FluidMachineData) data).getFluidStack();
+        return new Pair<>(fluid, cap);
     }
 
     public float getBurnData(int index) {

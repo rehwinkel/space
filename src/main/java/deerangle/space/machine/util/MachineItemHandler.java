@@ -1,12 +1,14 @@
 package deerangle.space.machine.util;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.function.Predicate;
 
-public class MachineItemHandler implements IItemHandler {
+public class MachineItemHandler implements IItemHandlerModifiable {
 
     private final Predicate<ItemStack> validPredicate;
     private final boolean input;
@@ -57,6 +59,19 @@ public class MachineItemHandler implements IItemHandler {
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
         return this.validPredicate.test(stack);
+    }
+
+    @Override
+    public void setStackInSlot(int slot, ItemStack stack) {
+        this.internal.setStackInSlot(slot, stack);
+    }
+
+    public INBT serializeNBT() {
+        return this.internal.serializeNBT();
+    }
+
+    public void deserializeNBT(CompoundNBT nbt) {
+        this.internal.deserializeNBT(nbt);
     }
 
 }
