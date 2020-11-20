@@ -1,9 +1,6 @@
 package deerangle.space.main;
 
-import deerangle.space.data.BlockStateGenerator;
-import deerangle.space.data.LanguageGenerator;
-import deerangle.space.data.LootTableGenerator;
-import deerangle.space.data.RecipeGenerator;
+import deerangle.space.data.*;
 import deerangle.space.machine.element.MachineType;
 import deerangle.space.main.proxy.ClientProxy;
 import deerangle.space.main.proxy.IProxy;
@@ -64,6 +61,8 @@ public class SpaceMod {
     public static void registerData(GatherDataEvent event) {
         event.getGenerator()
                 .addProvider(new BlockStateGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator()
+                .addProvider(new ItemModelGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));

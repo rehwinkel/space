@@ -14,6 +14,7 @@ public class LanguageGenerator extends LanguageProvider {
     protected void addTranslations() {
         add(ResourceRegistry.COPPER_ORE.get(), "Copper Ore");
         add(ResourceRegistry.ALUMINIUM_ORE.get(), "Aluminium Ore");
+        add(ResourceRegistry.STEEL_INGOT.get(), "Steel Ingot");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
         add("block.space.coal_generator", "Coal Generator");

@@ -46,13 +46,7 @@ public class BlastFurnaceMachine extends Machine {
         boolean wasBurning = this.isBurning();
         Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
                 new StackInventory(this.input.getItemHandlerOrThrow().getStackInSlot(0)), world);
-        if (currentBurnTime <= 1) {
-            if (currentBurnTime == 0) {
-                this.currentMaxProgress = 0;
-                this.currentProgress = 0;
-                this.currentRecipe = null;
-                this.progress.setProgress(0);
-            }
+        if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0 && recipeOpt.isPresent()) {
@@ -60,45 +54,6 @@ public class BlastFurnaceMachine extends Machine {
                 currentMaxBurnTime = burnTime;
                 currentBurnTime += currentMaxBurnTime + 1;
             }
-        }
-
-        if (currentBurnTime > 0) {
-            if (currentRecipe == null) {
-                recipeOpt.ifPresent(recipe -> {
-                    this.currentRecipe = recipe;
-                    this.currentMaxProgress = recipe.getDuration();
-                    this.currentProgress = recipe.getDuration();
-                });
-            } else {
-                this.currentProgress--;
-
-                if (this.currentProgress == 0) {
-                    if (ItemStack.EMPTY == this.output.getItemHandlerOrThrow()
-                            .insertItem(0, this.currentRecipe.getCraftingResult(null), true)) {
-                        this.output.getItemHandlerOrThrow()
-                                .insertItem(0, this.currentRecipe.getCraftingResult(null), false);
-                        this.input.getItemHandlerOrThrow().extractItem(0, 1, false);
-                    }
-                    this.currentRecipe = null;
-                    this.currentMaxProgress = 0;
-                }
-            }
-        }
-
-        if (currentBurnTime > 0) {
-            currentBurnTime--;
-        }
-
-        if (currentMaxProgress > 0) {
-            this.progress.setProgress(1 - (currentProgress / (float) currentMaxProgress));
-        } else {
-            this.progress.setProgress(0);
-        }
-
-        if (currentMaxBurnTime > 0) {
-            this.burn.setProgress(currentBurnTime / (float) currentMaxBurnTime);
-        } else {
-            this.burn.setProgress(0);
         }
 
         if (wasBurning != this.isBurning()) {
