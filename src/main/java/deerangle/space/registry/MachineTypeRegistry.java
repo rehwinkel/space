@@ -31,10 +31,10 @@ public class MachineTypeRegistry {
                 .addItemElement(55, 16, 1, true, stack -> true).addItemElement(110, 34, 2, false, stack -> false)
                 .add(new BurnElement(55, 34, 3)).add(new ProgressElement(79, 33, 4)));
         COMBUSTION_GENERATOR = register("combustion_generator",
-                MachineType.builder(CombustionGeneratorMachine::new).addFluidElement(79, 17, 0, true)
-                        .addEnergyElement(17, 17, 1, false).addItemElement(79 + 20, 29 + 20, 2, true,
+                MachineType.builder(CombustionGeneratorMachine::new).addFluidElement(89, 17, 0, true)
+                        .addEnergyElement(17, 17, 1, false).addItemElement(69, 48, 2, true,
                         stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent())
-                        .add(new BurnElement(79 + 20, 29, 3)));
+                        .add(new BurnElement(69, 29, 3)));
         event.getRegistry().registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR);
     }
 

@@ -29,18 +29,22 @@ public class CombustionGeneratorMachine extends Machine {
 
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
+    //TODO: oil, not lava
     public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap.of(Fluids.LAVA, 2);
     private int currentBurnTime;
     private int currentMaxBurnTime;
 
     public static int getBurnTime(FluidStack stack) {
+        if (!BURN_TIME_HASHMAP.containsKey(stack.getFluid())) {
+            return 0;
+        }
         return BURN_TIME_HASHMAP.get(stack.getFluid()) * stack.getAmount();
     }
 
     public CombustionGeneratorMachine() {
         super(MachineTypeRegistry.COMBUSTION_GENERATOR,
                 new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 2));
-        fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> true));
+        fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0));
         energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000));
         bucket = addMachineData(new ItemMachineData("Bucket",
                 stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()));
@@ -77,7 +81,7 @@ public class CombustionGeneratorMachine extends Machine {
                 currentMaxBurnTime = getBurnTime(drainedSim);
                 currentBurnTime = currentMaxBurnTime;
                 this.fuel.getTankOrThrow().drain(SIP_SIZE, IFluidHandler.FluidAction.EXECUTE);
-            }else{
+            } else {
                 currentBurnTime = 0;
             }
         }

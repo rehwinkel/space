@@ -20,6 +20,8 @@ import java.util.Optional;
 
 public class BlastFurnaceMachine extends Machine {
 
+    private static final int BURN_RATE = 2;
+
     private final ItemMachineData fuel;
     private final ItemMachineData input;
     private final ItemMachineData output;
@@ -103,7 +105,7 @@ public class BlastFurnaceMachine extends Machine {
 
     protected void doBurn(boolean shouldUseFuel) {
         if (currentBurnTime > 0) {
-            currentBurnTime--;
+            currentBurnTime -= BURN_RATE;
         }
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
