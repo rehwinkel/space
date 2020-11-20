@@ -4,6 +4,7 @@ import deerangle.space.block.MachineBlock;
 import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.EnergyMachineData;
 import deerangle.space.machine.data.ItemMachineData;
+import deerangle.space.machine.util.FlowType;
 import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.item.ItemStack;
@@ -24,8 +25,8 @@ public class CoalGeneratorMachine extends Machine {
     public CoalGeneratorMachine() {
         super(MachineTypeRegistry.COAL_GENERATOR,
                 new SideConfig(-1, 0, 1, 1, 1, 1, true, false, false, false, false, false, 2));
-        fuel = addMachineData(new ItemMachineData("Fuel", stack -> ForgeHooks.getBurnTime(stack) > 0));
-        energy = addMachineData(new EnergyMachineData("Eng", 30000, 1000));
+        fuel = addMachineData(new ItemMachineData("Fuel", stack -> ForgeHooks.getBurnTime(stack) > 0, FlowType.INPUT));
+        energy = addMachineData(new EnergyMachineData("Eng", 30000, 1000, FlowType.OUTPUT));
         burn = addMachineData(new BurnMachineData("Burn"));
     }
 
@@ -33,16 +34,16 @@ public class CoalGeneratorMachine extends Machine {
     public void update(World world, BlockPos pos) {
         boolean wasBurning = this.isBurning();
         if (currentBurnTime == 0) {
-            ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
+            ItemStack currentFuelStack = this.fuel.getItemHandlerForce().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0) {
-                this.fuel.getMachineItemHandler().extractItemOverride(0, 1, false);
+                this.fuel.getItemHandlerForce().extractItem(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }
         } else {
             currentBurnTime--;
-            this.energy.getStorageOrThrow().receiveEnergy(RF_PER_TICK, false);
+            this.energy.getEnergyStorageForce().receiveEnergy(RF_PER_TICK, false);
         }
         if (currentMaxBurnTime > 0) {
             this.burn.setProgress(currentBurnTime / (float) currentMaxBurnTime);

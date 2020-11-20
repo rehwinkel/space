@@ -5,7 +5,6 @@ import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.data.ProgressMachineData;
 import deerangle.space.machine.util.FlowType;
-import deerangle.space.machine.util.MachineItemHandler;
 import deerangle.space.machine.util.SideConfig;
 import deerangle.space.recipe.BlastFurnaceRecipe;
 import deerangle.space.registry.MachineTypeRegistry;
@@ -16,6 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.Optional;
 
@@ -38,8 +38,8 @@ public class BlastFurnaceMachine extends Machine {
     public BlastFurnaceMachine() {
         super(MachineTypeRegistry.BLAST_FURNACE,
                 new SideConfig(-1, -1, 1, 2, -1, 0, true, false, false, false, true, false, 3));
-        fuel = addMachineData(new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL)));
-        input = addMachineData(new ItemMachineData("Input"));
+        fuel = addMachineData(new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL), FlowType.INPUT));
+        input = addMachineData(new ItemMachineData("Input", FlowType.INPUT));
         output = addMachineData(new ItemMachineData("Output", FlowType.OUTPUT));
         burn = addMachineData(new BurnMachineData("Burn"));
         progress = addMachineData(new ProgressMachineData("Prog"));
@@ -50,9 +50,9 @@ public class BlastFurnaceMachine extends Machine {
         boolean wasBurning = this.isBurning();
 
         Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
-                new StackInventory(this.input.getItemHandlerOrThrow().getStackInSlot(0)), world);
-        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getMachineItemHandler()
-                .insertItemOverride(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
+                new StackInventory(this.input.getItemHandlerForce().getStackInSlot(0)), world);
+        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandlerForce()
+                .insertItem(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
         if (this.currentRecipe != null && this.currentProgress == 1) {
             shouldUseFuel = false;
         }
@@ -79,9 +79,9 @@ public class BlastFurnaceMachine extends Machine {
         }
 
         if (this.currentProgress == 0 && this.currentRecipe != null) {
-            MachineItemHandler out = this.output.getMachineItemHandler();
-            out.insertItemOverride(0, this.currentRecipe.getCraftingResult(null), false);
-            this.input.getMachineItemHandler().extractItemOverride(0, 1, false);
+            IItemHandler out = this.output.getItemHandlerForce();
+            out.insertItem(0, this.currentRecipe.getCraftingResult(null), false);
+            this.input.getItemHandlerForce().extractItem(0, 1, false);
             this.currentRecipe = null;
             this.currentMaxProgress = 0;
             this.currentProgress = 0;
@@ -109,10 +109,10 @@ public class BlastFurnaceMachine extends Machine {
             currentBurnTime -= BURN_RATE;
         }
         if (currentBurnTime == 0) {
-            ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
+            ItemStack currentFuelStack = this.fuel.getItemHandlerForce().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0 && shouldUseFuel) {
-                this.fuel.getMachineItemHandler().extractItemOverride(0, 1, false);
+                this.fuel.getItemHandlerForce().extractItem(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }

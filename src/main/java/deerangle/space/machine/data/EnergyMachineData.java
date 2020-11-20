@@ -1,6 +1,6 @@
 package deerangle.space.machine.data;
 
-import deerangle.space.machine.util.MachineEnergyStorage;
+import deerangle.space.machine.util.FlowType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
@@ -9,41 +9,57 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyMachineData implements IMachineData {
 
-    private final int transfer;
     private final String name;
-    private LazyOptional<IEnergyStorage> storage;
+    private EnergyMachineGate storage;
 
     //TODO: inout behavior
-    public EnergyMachineData(String name, int capacity, int transfer) {
-        this.storage = LazyOptional.of(() -> new MachineEnergyStorage(capacity, transfer, transfer, 0));
-        this.transfer = transfer;
+    public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType) {
+        this.storage = new EnergyMachineGate(capacity, transfer, transfer, 0, flowType);
         this.name = name;
     }
 
-    public LazyOptional<IEnergyStorage> getStorage() {
-        return storage;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(boolean fromCapability) {
+        return storage.getEnergyStorage(fromCapability);
     }
 
-    public IEnergyStorage getStorageOrThrow() {
-        return storage.orElseThrow(() -> new RuntimeException("failed to get energy storage"));
+    public IEnergyStorage getEnergyStorageForce(boolean fromCapability) {
+        return this.getEnergyStorage(fromCapability)
+                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
+    }
+
+    public IEnergyStorage getEnergyStorageForce() {
+        return this.getEnergyStorageForce(false);
     }
 
     @Override
     public INBT write() {
         CompoundNBT nbt = new CompoundNBT();
-        nbt.putInt("Cap", this.getCapacity());
-        nbt.putInt("Eng", this.getEnergy());
-        nbt.putInt("XFer", this.transfer);
+        nbt.putInt("Cap", this.storage.getCapacity());
+        nbt.putInt("Rec", this.storage.getMaxReceive());
+        nbt.putInt("Ext", this.storage.getMaxExtract());
+        nbt.putInt("Eng", this.storage.getEnergy());
         return nbt;
     }
 
     @Override
     public void read(INBT nbt) {
         CompoundNBT compound = (CompoundNBT) nbt;
-        int capacity = compound.getInt("Cap");
-        int energy = compound.getInt("Eng");
-        int xfer = compound.getInt("XFer");
-        this.storage = LazyOptional.of(() -> new MachineEnergyStorage(capacity, xfer, xfer, energy));
+        this.storage.setCapacity(compound.getInt("Cap"));
+        this.storage.setMaxReceive(compound.getInt("Rec"));
+        this.storage.setMaxExtract(compound.getInt("Ext"));
+        this.storage.setEnergy(compound.getInt("Eng"));
+    }
+
+    @Override
+    public void writePacket(PacketBuffer buf) {
+        buf.writeInt(this.storage.getEnergy());
+        buf.writeInt(this.storage.getCapacity());
+    }
+
+    @Override
+    public void readPacket(PacketBuffer buf) {
+        this.storage.setEnergy(buf.readInt());
+        this.storage.setCapacity(buf.readInt());
     }
 
     @Override
@@ -52,25 +68,11 @@ public class EnergyMachineData implements IMachineData {
     }
 
     public int getCapacity() {
-        return this.storage.orElseThrow(() -> new RuntimeException("no energy storage present")).getMaxEnergyStored();
+        return this.storage.getCapacity();
     }
 
     public int getEnergy() {
-        return this.storage.orElseThrow(() -> new RuntimeException("no energy storage present")).getEnergyStored();
-    }
-
-    @Override
-    public void writePacket(PacketBuffer buf) {
-        buf.writeInt(this.getEnergy());
-        buf.writeInt(this.getCapacity());
-    }
-
-    @Override
-    public void readPacket(PacketBuffer buf) {
-        MachineEnergyStorage storage = (MachineEnergyStorage) this.storage
-                .orElseThrow(() -> new RuntimeException("no energy storage present"));
-        storage.setEnergy(buf.readInt());
-        storage.setCapacity(buf.readInt());
+        return this.storage.getEnergy();
     }
 
     @Override

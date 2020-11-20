@@ -1,83 +1,117 @@
 package deerangle.space.machine.util;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
+import javax.annotation.Nonnull;
 import java.util.function.Predicate;
 
 public class MachineItemHandler implements IItemHandlerModifiable {
 
+    private final Ref<ItemStack> stack;
     private final Predicate<ItemStack> validPredicate;
-    private final FlowType flowType;
-    private final ItemStackHandler internal;
+    private final FlowType flowType;  //TODO
 
-    public MachineItemHandler(Predicate<ItemStack> validPredicate, FlowType flowType) {
-        this.internal = new ItemStackHandler();
+    public MachineItemHandler(Ref<ItemStack> stack, Predicate<ItemStack> validPredicate, FlowType flowType) {
+        this.stack = stack;
         this.validPredicate = validPredicate;
         this.flowType = flowType;
     }
 
     @Override
+    public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+        this.stack.set(stack);
+    }
+
+    @Override
     public int getSlots() {
-        return this.internal.getSlots();
+        return 1;
     }
 
     @Override
+    @Nonnull
     public ItemStack getStackInSlot(int slot) {
-        return this.internal.getStackInSlot(slot);
+        return this.stack.get();
     }
 
     @Override
-    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (this.flowType == FlowType.OUTPUT) {
-            if (!this.isItemValid(slot, stack))
-                return stack;
-        }
-        return this.internal.insertItem(slot, stack, simulate);
-    }
-
-    public ItemStack insertItemOverride(int slot, ItemStack stack, boolean simulate) {
-        if (!this.isItemValid(slot, stack))
-            return stack;
-        return this.internal.insertItem(slot, stack, simulate);
-    }
-
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (this.flowType == FlowType.INPUT) {
+    @Nonnull
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        if (stack.isEmpty())
             return ItemStack.EMPTY;
+
+        if (!isItemValid(slot, stack))
+            return stack;
+
+        ItemStack existing = this.stack.get();
+
+        int limit = getStackLimit(slot, stack);
+
+        if (!existing.isEmpty()) {
+            if (!ItemHandlerHelper.canItemStacksStack(stack, existing))
+                return stack;
+
+            limit -= existing.getCount();
         }
-        return this.internal.extractItem(slot, amount, simulate);
+
+        if (limit <= 0)
+            return stack;
+
+        boolean reachedLimit = stack.getCount() > limit;
+
+        if (!simulate) {
+            if (existing.isEmpty()) {
+                this.stack.set(reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
+            } else {
+                existing.grow(reachedLimit ? limit : stack.getCount());
+            }
+        }
+
+        return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : ItemStack.EMPTY;
     }
 
-    public ItemStack extractItemOverride(int slot, int amount, boolean simulate) {
-        return this.internal.extractItem(slot, amount, simulate);
+    @Override
+    @Nonnull
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        if (amount == 0)
+            return ItemStack.EMPTY;
+
+        ItemStack existing = this.stack.get();
+
+        if (existing.isEmpty())
+            return ItemStack.EMPTY;
+
+        int toExtract = Math.min(amount, existing.getMaxStackSize());
+
+        if (existing.getCount() <= toExtract) {
+            if (!simulate) {
+                this.stack.set(ItemStack.EMPTY);
+                return existing;
+            } else {
+                return existing.copy();
+            }
+        } else {
+            if (!simulate) {
+                this.stack.set(ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
+            }
+
+            return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+        }
     }
 
     @Override
     public int getSlotLimit(int slot) {
-        return this.internal.getSlotLimit(slot);
+        return 64;
+    }
+
+    protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+        return Math.min(getSlotLimit(slot), stack.getMaxStackSize());
     }
 
     @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return this.validPredicate.test(stack);
-    }
-
-    @Override
-    public void setStackInSlot(int slot, ItemStack stack) {
-        this.internal.setStackInSlot(slot, stack);
-    }
-
-    public INBT serializeNBT() {
-        return this.internal.serializeNBT();
-    }
-
-    public void deserializeNBT(CompoundNBT nbt) {
-        this.internal.deserializeNBT(nbt);
     }
 
 }

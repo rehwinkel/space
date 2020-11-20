@@ -1,56 +1,50 @@
 package deerangle.space.machine.data;
 
 import deerangle.space.machine.util.FlowType;
-import deerangle.space.machine.util.MachineItemHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.function.Predicate;
 
 public class ItemMachineData implements IMachineData {
 
     private final String name;
-    private LazyOptional<IItemHandler> stack;
+    private final ItemMachineGate stack;
 
     public ItemMachineData(String name, Predicate<ItemStack> validPredicate, FlowType flowType) {
-        stack = LazyOptional.of(() -> new MachineItemHandler(validPredicate, flowType));
+        stack = new ItemMachineGate(validPredicate, flowType);
         this.name = name;
-    }
-
-    public ItemMachineData(String name, Predicate<ItemStack> validPredicate) {
-        this(name, validPredicate, FlowType.INPUT);
     }
 
     public ItemMachineData(String name, FlowType flowType) {
         this(name, stack -> true, flowType);
     }
 
-    public ItemMachineData(String name) {
-        this(name, stack -> true, FlowType.INPUT);
+    public LazyOptional<IItemHandlerModifiable> getItemHandler(boolean fromCapability) {
+        return stack.getItemHandler(fromCapability);
     }
 
-    public LazyOptional<IItemHandler> getItemHandler() {
-        return this.stack;
+    public IItemHandlerModifiable getItemHandlerForce(boolean fromCapability) {
+        return this.getItemHandler(fromCapability)
+                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
     }
 
-    public IItemHandler getItemHandlerOrThrow() {
-        return this.stack.orElseThrow(() -> new RuntimeException("failed to get item handler"));
+    public IItemHandlerModifiable getItemHandlerForce() {
+        return this.getItemHandlerForce(false);
     }
 
     @Override
     public INBT write() {
-        return ((MachineItemHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
-                .serializeNBT();
+        return stack.getStack().write(new CompoundNBT());
     }
 
     @Override
     public void read(INBT nbt) {
-        ((MachineItemHandler) stack.orElseThrow(() -> new RuntimeException("failed to write item slot")))
-                .deserializeNBT((CompoundNBT) nbt);
+        stack.setStack(ItemStack.read((CompoundNBT) nbt));
     }
 
     @Override
@@ -60,21 +54,17 @@ public class ItemMachineData implements IMachineData {
 
     @Override
     public void writePacket(PacketBuffer buf) {
-
+        buf.writeItemStack(stack.getStack());
     }
 
     @Override
     public void readPacket(PacketBuffer buf) {
-
+        stack.setStack(buf.readItemStack());
     }
 
     @Override
     public boolean storeInItem() {
         return false;
-    }
-
-    public MachineItemHandler getMachineItemHandler() {
-        return (MachineItemHandler) this.getItemHandlerOrThrow(); //TODO remove
     }
 
 }

@@ -1,43 +1,57 @@
 package deerangle.space.machine.data;
 
+import deerangle.space.machine.util.FlowType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.function.Predicate;
 
 public class FluidMachineData implements IMachineData {
 
     private final String name;
-    private final LazyOptional<IFluidHandler> tank;
+    private final FluidMachineGate tank;
 
-    //TODO: inout behavior
-    public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate) {
-        this.tank = LazyOptional.of(() -> new FluidTank(capacity, validPredicate));
+    public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate, FlowType flowType) {
+        this.tank = new FluidMachineGate(capacity, validPredicate, flowType);
         this.name = name;
     }
 
-    public LazyOptional<IFluidHandler> getTank() {
-        return tank;
+    public LazyOptional<IFluidHandler> getFluidHandler(boolean fromCapability) {
+        return tank.getFluidHandler(fromCapability);
     }
 
-    public IFluidHandler getTankOrThrow() {
-        return tank.orElseThrow(() -> new RuntimeException("failed to get energy storage"));
+    public IFluidHandler getFluidHandlerForce(boolean fromCapability) {
+        return this.getFluidHandler(fromCapability)
+                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
+    }
+
+    public IFluidHandler getFluidHandlerForce() {
+        return this.getFluidHandlerForce(false);
     }
 
     @Override
     public INBT write() {
-        return ((FluidTank) this.getTankOrThrow()).writeToNBT(new CompoundNBT());
+        return this.tank.getFluid().writeToNBT(new CompoundNBT());
     }
 
     @Override
     public void read(INBT nbt) {
-        ((FluidTank) this.getTankOrThrow()).readFromNBT((CompoundNBT) nbt);
+        FluidStack fluid = FluidStack.loadFluidStackFromNBT((CompoundNBT) nbt);
+        this.tank.setFluid(fluid);
+    }
+
+    @Override
+    public void writePacket(PacketBuffer buf) {
+        buf.writeFluidStack(this.tank.getFluid());
+    }
+
+    @Override
+    public void readPacket(PacketBuffer buf) {
+        this.tank.setFluid(buf.readFluidStack());
     }
 
     @Override
@@ -46,27 +60,16 @@ public class FluidMachineData implements IMachineData {
     }
 
     @Override
-    public void writePacket(PacketBuffer buf) {
-        buf.writeFluidStack(this.getTankOrThrow().getFluidInTank(0));
-    }
-
-    @Override
-    public void readPacket(PacketBuffer buf) {
-        FluidStack fluid = buf.readFluidStack();
-        ((FluidTank) this.getTankOrThrow()).setFluid(fluid);
-    }
-
-    @Override
     public boolean storeInItem() {
         return true;
     }
 
     public int getCapacity() {
-        return this.getTankOrThrow().getTankCapacity(0);
+        return this.tank.getCapacity();
     }
 
     public FluidStack getFluidStack() {
-        return this.getTankOrThrow().getFluidInTank(0);
+        return this.tank.getFluid();
     }
 
 }

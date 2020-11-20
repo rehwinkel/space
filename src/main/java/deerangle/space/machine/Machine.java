@@ -88,7 +88,7 @@ public abstract class Machine {
         }
         IMachineData slot = machineDataList.get(index);
         if (slot instanceof EnergyMachineData) {
-            return ((EnergyMachineData) slot).getStorage();
+            return ((EnergyMachineData) slot).getEnergyStorage(fromCapability);
         }
         return LazyOptional.empty();
     }
@@ -100,7 +100,7 @@ public abstract class Machine {
         }
         IMachineData slot = machineDataList.get(index);
         if (slot instanceof ItemMachineData) {
-            return ((ItemMachineData) slot).getItemHandler();
+            return ((ItemMachineData) slot).getItemHandler(fromCapability).cast();
         }
         return LazyOptional.empty();
     }
@@ -112,7 +112,7 @@ public abstract class Machine {
         }
         IMachineData slot = machineDataList.get(index);
         if (slot instanceof FluidMachineData) {
-            return ((FluidMachineData) slot).getTank();
+            return ((FluidMachineData) slot).getFluidHandler(fromCapability);
         }
         return LazyOptional.empty();
     }
@@ -155,7 +155,7 @@ public abstract class Machine {
     public void dropInventoryItems(World world, BlockPos dropPos) {
         for (IMachineData slot : machineDataList) {
             if (slot instanceof ItemMachineData) {
-                IItemHandler itemHandler = ((ItemMachineData) slot).getItemHandler()
+                IItemHandler itemHandler = ((ItemMachineData) slot).getItemHandler(false)
                         .orElseThrow(() -> new RuntimeException("failed to get item handler"));
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
                     InventoryHelper.spawnItemStack(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(),

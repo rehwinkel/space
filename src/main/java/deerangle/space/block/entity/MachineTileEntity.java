@@ -23,6 +23,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
@@ -52,6 +53,9 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
         }
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return machine.getItemHandler(this.getBlockState().get(MachineBlock.FACING), side, true).cast();
+        }
+        if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            return machine.getFluidHandler(this.getBlockState().get(MachineBlock.FACING), side, true).cast();
         }
         return super.getCapability(cap, side);
     }

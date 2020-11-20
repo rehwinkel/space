@@ -59,7 +59,7 @@ public class MachineContainer extends Container {
                 if (machine != null) {
                     IMachineData slot = machine.getMachineData(((DataElement) el).getIndex());
                     assert slot instanceof ItemMachineData;
-                    itemHandler = ((ItemMachineData) slot).getItemHandler()
+                    itemHandler = ((ItemMachineData) slot).getItemHandler(false)
                             .orElseThrow(() -> new RuntimeException("couldn't get item handler"));
                 } else {
                     itemHandler = new ItemStackHandler();

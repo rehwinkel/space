@@ -29,7 +29,7 @@ public class RecipeGenerator extends RecipeProvider {
     }
 
     private class BlastFurnaceResult implements IFinishedRecipe {
-
+        //TODO remove experience field
         private final ResourceLocation recipeId;
         private final Ingredient ingredient;
         private final Item result;

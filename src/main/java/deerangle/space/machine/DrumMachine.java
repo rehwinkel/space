@@ -17,7 +17,7 @@ public class DrumMachine extends Machine {
 
     public DrumMachine() {
         super(MachineTypeRegistry.GAS_TANK, new SideConfig(0, 0, 0, 0, 0, 0, 3));
-        tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true));
+        tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true, FlowType.INOUT));
         input = addMachineData(new ItemMachineData("Input",
                 stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
                 FlowType.INPUT));
