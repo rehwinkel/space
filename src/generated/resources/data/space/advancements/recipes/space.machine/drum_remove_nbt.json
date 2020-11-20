@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:drum_remove_nbt"
+    ]
+  },
+  "criteria": {
+    "has_drum": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:drum"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:drum_remove_nbt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_drum",
+      "has_the_recipe"
+    ]
+  ]
+}

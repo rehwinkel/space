@@ -35,7 +35,6 @@ public class CombustionGeneratorBlock extends MachineBlock {
                 double baseX = (double) pos.getX() + 0.5D;
                 double baseY = pos.getY() + 1.125D;
                 double baseZ = (double) pos.getZ() + 0.5D;
-                //TODO: sound? // if (rand.nextDouble() < 0.1D) { worldIn.playSound(baseX, baseY, baseZ, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false); }
 
                 for (int i = 0; i < 5; i++) {
                     double randOffX = rand.nextDouble() * 0.125D - 0.0625D;

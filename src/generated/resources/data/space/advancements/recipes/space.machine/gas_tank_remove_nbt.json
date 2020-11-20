@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:gas_tank_remove_nbt"
+    ]
+  },
+  "criteria": {
+    "has_gas_tank": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:gas_tank"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:gas_tank_remove_nbt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gas_tank",
+      "has_the_recipe"
+    ]
+  ]
+}

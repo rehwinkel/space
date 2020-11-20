@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "space:gas_tank"
+    }
+  ],
+  "result": {
+    "item": "space:gas_tank"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:combustion_generator_remove_nbt"
+    ]
+  },
+  "criteria": {
+    "has_combustion_generator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:combustion_generator"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:combustion_generator_remove_nbt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_combustion_generator",
+      "has_the_recipe"
+    ]
+  ]
+}

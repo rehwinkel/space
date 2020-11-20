@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:coal_generator_remove_nbt"
+    ]
+  },
+  "criteria": {
+    "has_coal_generator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:coal_generator"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:coal_generator_remove_nbt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_coal_generator",
+      "has_the_recipe"
+    ]
+  ]
+}
