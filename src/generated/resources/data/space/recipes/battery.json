@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aca",
+    "ara",
+    "aca"
+  ],
+  "key": {
+    "a": {
+      "item": "space:aluminium_plate"
+    },
+    "c": {
+      "item": "space:copper_plate"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "space:battery"
+  }
+}

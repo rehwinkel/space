@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ii ",
+    "ii ",
+    "   "
+  ],
+  "key": {
+    "i": {
+      "item": "space:iron_dust"
+    }
+  },
+  "result": {
+    "item": "minecraft:iron_nugget"
+  }
+}

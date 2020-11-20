@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i  ",
+    "s  ",
+    "   "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": {
+      "item": "space:steel_rod"
+    }
+  },
+  "result": {
+    "item": "space:cylinder"
+  }
+}

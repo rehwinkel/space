@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "dbd",
+    "sss"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "b": {
+      "item": "minecraft:blaze_rod"
+    },
+    "s": {
+      "item": "space:steel_nugget"
+    }
+  },
+  "result": {
+    "item": "space:ignition_coil"
+  }
+}

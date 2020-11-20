@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    "sss",
+    "   "
+  ],
+  "key": {
+    "s": {
+      "item": "space:steel_ingot"
+    },
+    "c": {
+      "item": "space:copper_nugget"
+    }
+  },
+  "result": {
+    "item": "space:machine_base"
+  }
+}

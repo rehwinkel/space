@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "qqq",
+    "qqq",
+    "qqq"
+  ],
+  "key": {
+    "q": {
+      "item": "space:quartz_dust"
+    }
+  },
+  "result": {
+    "item": "space:quartz_sand"
+  }
+}

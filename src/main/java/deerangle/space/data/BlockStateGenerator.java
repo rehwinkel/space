@@ -138,6 +138,13 @@ public class BlockStateGenerator extends BlockStateProvider {
         ModelFile connectorLong3 = models().getExistingFile(CONNECTOR_LONG3_LOC);
         simpleBlockWithItem(ResourceRegistry.COPPER_ORE.get());
         simpleBlockWithItem(ResourceRegistry.ALUMINIUM_ORE.get());
+        simpleBlockWithItem(ResourceRegistry.ILMENITE_ORE.get());
+        simpleBlockWithItem(ResourceRegistry.ALUMINIUM_BLOCK.get());
+        simpleBlockWithItem(ResourceRegistry.COPPER_BLOCK.get());
+        simpleBlockWithItem(ResourceRegistry.STEEL_BLOCK.get());
+        simpleBlockWithItem(ResourceRegistry.TITANIUM_BLOCK.get());
+        simpleBlockWithItem(ResourceRegistry.QUARTZ_SAND.get());
+        simpleBlockWithItem(ResourceRegistry.RUSTY_DUST.get());
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
