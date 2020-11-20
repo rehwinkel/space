@@ -81,7 +81,7 @@ public class BlastFurnaceMachine extends Machine {
         if (this.currentProgress == 0 && this.currentRecipe != null) {
             MachineItemHandler out = this.output.getMachineItemHandler();
             out.insertItemOverride(0, this.currentRecipe.getCraftingResult(null), false);
-            this.input.getItemHandlerOrThrow().extractItem(0, 1, false);
+            this.input.getMachineItemHandler().extractItemOverride(0, 1, false);
             this.currentRecipe = null;
             this.currentMaxProgress = 0;
             this.currentProgress = 0;
@@ -112,7 +112,7 @@ public class BlastFurnaceMachine extends Machine {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0 && shouldUseFuel) {
-                this.fuel.getItemHandlerOrThrow().extractItem(0, 1, false);
+                this.fuel.getMachineItemHandler().extractItemOverride(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }

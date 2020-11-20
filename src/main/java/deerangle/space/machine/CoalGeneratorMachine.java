@@ -36,7 +36,7 @@ public class CoalGeneratorMachine extends Machine {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0) {
-                this.fuel.getItemHandlerOrThrow().extractItem(0, 1, false);
+                this.fuel.getMachineItemHandler().extractItemOverride(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }

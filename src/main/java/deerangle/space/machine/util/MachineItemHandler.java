@@ -35,9 +35,8 @@ public class MachineItemHandler implements IItemHandlerModifiable {
         if (this.flowType == FlowType.OUTPUT) {
             if (!this.isItemValid(slot, stack))
                 return stack;
-            return this.internal.insertItem(slot, stack, simulate);
         }
-        return stack;
+        return this.internal.insertItem(slot, stack, simulate);
     }
 
     public ItemStack insertItemOverride(int slot, ItemStack stack, boolean simulate) {
@@ -51,6 +50,10 @@ public class MachineItemHandler implements IItemHandlerModifiable {
         if (this.flowType == FlowType.INPUT) {
             return ItemStack.EMPTY;
         }
+        return this.internal.extractItem(slot, amount, simulate);
+    }
+
+    public ItemStack extractItemOverride(int slot, int amount, boolean simulate) {
         return this.internal.extractItem(slot, amount, simulate);
     }
 
