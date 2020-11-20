@@ -1,11 +1,10 @@
 {
-	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "space:block/barrel_bottom",
-		"1": "space:block/barrel_side",
-		"2": "space:block/barrel_top",
-		"particle": "space:block/barrel_bottom"
+		"0": "space:block/drum_bottom",
+		"1": "space:block/drum_side",
+		"2": "space:block/drum_top",
+		"particle": "space:block/drum_bottom"
 	},
 	"elements": [
 		{

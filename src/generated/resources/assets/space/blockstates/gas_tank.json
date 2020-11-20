@@ -200,7 +200,7 @@
       },
       "apply": {
         "model": "space:block/connector_short",
-        "y": 270
+        "x": 270
       }
     },
     {
@@ -209,7 +209,7 @@
       },
       "apply": {
         "model": "space:block/connector_short",
-        "y": 90
+        "x": 90
       }
     }
   ]

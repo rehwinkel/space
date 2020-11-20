@@ -28,6 +28,7 @@ public class GasTankMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
+        // TODO
     }
 
 }

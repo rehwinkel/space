@@ -155,16 +155,16 @@ public class BlockStateGenerator extends BlockStateProvider {
                         90), new RotatedModel(connectorShort, 0, 270), null, new RotatedModel(connector, 90, 0)}, true);
         machineBlockWithItem(MachineRegistry.COMBUSTION_GENERATOR.get(),
                 new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connectorShort, 0,
-                        180), null, null, null, new RotatedModel(connector, 0, 90)}, false);
+                        180), null, null, null, new RotatedModel(connector, 90, 0)}, false);
         machineBlockWithItem(MachineRegistry.GAS_TANK.get(),
                 new RotatedModel[]{new RotatedModel(connectorLong3, 0, 0), new RotatedModel(connectorLong3, 0,
                         180), new RotatedModel(connectorLong3, 0, 90), new RotatedModel(connectorLong3, 0,
-                        270), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorShort, 0, 90)},
+                        270), new RotatedModel(connectorShort, 270, 0), new RotatedModel(connectorShort, 90, 0)},
                 false);
         machineBlockWithItem(MachineRegistry.DRUM.get(),
                 new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connector, 0,
                         180), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(
-                        connectorShort, 0, 270), new RotatedModel(connector, 0, 90)}, false);
+                        connectorShort, 270, 0), new RotatedModel(connector, 90, 0)}, false);
     }
 
 }
