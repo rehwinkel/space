@@ -22,8 +22,9 @@ public class CoalGeneratorMachine extends Machine {
     private int currentBurnTime = 0;
 
     public CoalGeneratorMachine() {
-        super(MachineTypeRegistry.COAL_GENERATOR, new SideConfig(0, 1, -1, -1, -1, -1, 2));
-        fuel = addMachineData(new ItemMachineData("Fuel"));
+        super(MachineTypeRegistry.COAL_GENERATOR,
+                new SideConfig(-1, 0, 1, 1, 1, 1, true, false, false, false, false, false, 2));
+        fuel = addMachineData(new ItemMachineData("Fuel", stack -> ForgeHooks.getBurnTime(stack) > 0));
         energy = addMachineData(new EnergyMachineData("Eng", 16000, 1000));
         burn = addMachineData(new BurnMachineData("Burn"));
     }
