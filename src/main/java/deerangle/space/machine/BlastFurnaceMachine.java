@@ -10,10 +10,10 @@ import deerangle.space.registry.MachineTypeRegistry;
 import deerangle.space.registry.RecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.Optional;
 
@@ -43,21 +43,77 @@ public class BlastFurnaceMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
+        boolean avoidBlockStateUpdate = false;
         boolean wasBurning = this.isBurning();
+
         Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
                 new StackInventory(this.input.getItemHandlerOrThrow().getStackInSlot(0)), world);
-        if (currentBurnTime == 0) {
-            ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
-            int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
-            if (burnTime > 0 && recipeOpt.isPresent()) {
-                this.fuel.getItemHandlerOrThrow().extractItem(0, 1, false);
-                currentMaxBurnTime = burnTime;
-                currentBurnTime += currentMaxBurnTime + 1;
+        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandlerOrThrow()
+                .insertItem(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
+        if (this.currentRecipe != null && this.currentProgress == 1) {
+            shouldUseFuel = false;
+            avoidBlockStateUpdate = true;
+        }
+
+        this.doBurn(shouldUseFuel);
+
+        if (this.currentRecipe != null) {
+            this.currentProgress--;
+        }
+
+        boolean isFuelled = currentBurnTime > 0;
+        if (isFuelled && recipeOpt.isPresent()) {
+            if (this.currentRecipe == null) {
+                this.currentRecipe = recipeOpt.get();
+                this.currentMaxProgress = this.currentRecipe.getDuration();
+                this.currentProgress = this.currentMaxProgress;
+            }
+        } else {
+            if (this.currentProgress != 0 && this.currentRecipe != null) {
+                this.currentRecipe = null;
+                this.currentMaxProgress = 0;
+                this.currentProgress = 0;
             }
         }
 
-        if (wasBurning != this.isBurning()) {
+        if (this.currentProgress == 0 && this.currentRecipe != null) {
+            IItemHandler out = this.output.getItemHandlerOrThrow();
+            out.insertItem(0, this.currentRecipe.getCraftingResult(null), false);
+            this.input.getItemHandlerOrThrow().extractItem(0, 1, false);
+            this.currentRecipe = null;
+            this.currentMaxProgress = 0;
+            this.currentProgress = 0;
+        }
+
+        if (this.currentMaxBurnTime > 0) {
+            this.burn.setProgress(this.currentBurnTime / (float) this.currentMaxBurnTime);
+        } else {
+            this.burn.setProgress(0);
+        }
+
+        if (this.currentMaxProgress > 0) {
+            this.progress.setProgress(1 - (this.currentProgress / (float) this.currentMaxProgress));
+        } else {
+            this.progress.setProgress(0);
+        }
+
+        if (!avoidBlockStateUpdate && wasBurning != this.isBurning()) {
             world.setBlockState(pos, world.getBlockState(pos).with(MachineBlock.RUNNING, this.isBurning()), 3);
+        }
+    }
+
+    protected void doBurn(boolean shouldUseFuel) {
+        if (currentBurnTime > 0) {
+            currentBurnTime--;
+        }
+        if (currentBurnTime == 0) {
+            ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
+            int burnTime = ForgeHooks.getBurnTime(currentFuelStack) > 0 ? 100 : 0;
+            if (burnTime > 0 && shouldUseFuel) {
+                this.fuel.getItemHandlerOrThrow().extractItem(0, 1, false);
+                currentMaxBurnTime = burnTime;
+                currentBurnTime = currentMaxBurnTime;
+            }
         }
     }
 
