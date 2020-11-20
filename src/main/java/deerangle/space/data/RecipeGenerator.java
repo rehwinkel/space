@@ -24,23 +24,20 @@ public class RecipeGenerator extends RecipeProvider {
 
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
         consumer.accept(new BlastFurnaceResult(new ResourceLocation(SpaceMod.MOD_ID, "steel_ingot"),
-                Ingredient.fromTag(Tags.Items.INGOTS_IRON), ResourceRegistry.STEEL_INGOT.get(), 1.5F, 200 * 16));
+                Ingredient.fromTag(Tags.Items.INGOTS_IRON), ResourceRegistry.STEEL_INGOT.get(), 200 * 16));
         //TODO: craft machines to machines without data
     }
 
     private class BlastFurnaceResult implements IFinishedRecipe {
-        //TODO remove experience field
         private final ResourceLocation recipeId;
         private final Ingredient ingredient;
         private final Item result;
-        private final float experience;
         private final int duration;
 
-        public BlastFurnaceResult(ResourceLocation recipeId, Ingredient ingredient, Item result, float experience, int duration) {
+        public BlastFurnaceResult(ResourceLocation recipeId, Ingredient ingredient, Item result, int duration) {
             this.recipeId = recipeId;
             this.ingredient = ingredient;
             this.result = result;
-            this.experience = experience;
             this.duration = duration;
         }
 
@@ -48,7 +45,6 @@ public class RecipeGenerator extends RecipeProvider {
         public void serialize(JsonObject json) {
             json.add("ingredient", this.ingredient.serialize());
             json.addProperty("result", Registry.ITEM.getKey(this.result).toString());
-            json.addProperty("experience", this.experience);
             json.addProperty("duration", this.duration);
         }
 

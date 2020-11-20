@@ -15,19 +15,13 @@ public class BlastFurnaceRecipe implements IRecipe<IInventory> {
     private final ResourceLocation recipeId;
     public final Ingredient ingredient;
     public final ItemStack result;
-    public final float experience;
     public final int duration;
 
-    public BlastFurnaceRecipe(ResourceLocation recipeId, Ingredient ingredient, ItemStack result, float experience, int duration) {
+    public BlastFurnaceRecipe(ResourceLocation recipeId, Ingredient ingredient, ItemStack result, int duration) {
         this.recipeId = recipeId;
         this.ingredient = ingredient;
         this.result = result;
-        this.experience = experience;
         this.duration = duration;
-    }
-
-    public float getExperience() {
-        return experience;
     }
 
     public int getDuration() {

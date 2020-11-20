@@ -31,25 +31,22 @@ public class BlastFurnaceRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
             resultStack = new ItemStack(Registry.ITEM.getOptional(resourcelocation)
                     .orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
         }
-        float experience = JSONUtils.getFloat(json, "experience", 0.0F);
         int duration = JSONUtils.getInt(json, "duration", 0);
-        return new BlastFurnaceRecipe(recipeId, ingredient, resultStack, experience, duration);
+        return new BlastFurnaceRecipe(recipeId, ingredient, resultStack, duration);
     }
 
     @Override
     public BlastFurnaceRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
         Ingredient ingredient = Ingredient.read(buffer);
         ItemStack resultStack = buffer.readItemStack();
-        float experience = buffer.readFloat();
         int duration = buffer.readVarInt();
-        return new BlastFurnaceRecipe(recipeId, ingredient, resultStack, experience, duration);
+        return new BlastFurnaceRecipe(recipeId, ingredient, resultStack, duration);
     }
 
     @Override
     public void write(PacketBuffer buffer, BlastFurnaceRecipe recipe) {
         recipe.ingredient.write(buffer);
         buffer.writeItemStack(recipe.result);
-        buffer.writeFloat(recipe.experience);
         buffer.writeVarInt(recipe.duration);
     }
 

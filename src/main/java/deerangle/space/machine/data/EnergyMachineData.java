@@ -12,7 +12,6 @@ public class EnergyMachineData implements IMachineData {
     private final String name;
     private EnergyMachineGate storage;
 
-    //TODO: inout behavior
     public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType) {
         this.storage = new EnergyMachineGate(capacity, transfer, transfer, 0, flowType);
         this.name = name;

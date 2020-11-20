@@ -32,6 +32,7 @@ public class CoalGeneratorMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
+        //TODO: bug, continues burning after full
         boolean wasBurning = this.isBurning();
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandlerForce().getStackInSlot(0);
