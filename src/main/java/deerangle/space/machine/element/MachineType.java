@@ -2,6 +2,7 @@ package deerangle.space.machine.element;
 
 import com.google.common.collect.ImmutableList;
 import deerangle.space.machine.Machine;
+import deerangle.space.machine.util.FlowType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -33,40 +34,68 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
     }
 
     public static class Builder<M extends Machine> {
-        private static final int[] inputColors = new int[]{0x2056d4, 0x682edb, 0x2edb7c};
-        private static final int[] outputColors = new int[]{0xd18232, 0xd14f32, 0xe6df27};
-
         private final ArrayList<Element> elements;
         private final Supplier<M> constructor;
         private int inputIndex;
         private int outputIndex;
+        private int inOutIndex;
 
         public Builder(Supplier<M> constructor) {
             this.elements = new ArrayList<>();
             this.inputIndex = 0;
             this.outputIndex = 0;
+            this.inOutIndex = 0;
             this.constructor = constructor;
         }
 
-        public Builder<M> addItemSlot(int x, int y, int index, boolean input, Predicate<ItemStack> validPredicate) {
-            int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
-            this.elements.add(new ItemElement(x, y, index, input, color, validPredicate));
-            if (input) {
-                this.inputIndex++;
-            } else {
-                this.outputIndex++;
-            }
+        public Builder<M> addItemElement(int x, int y, int index, FlowType flowType, Predicate<ItemStack> validPredicate) {
+            int color = this.getColor(flowType);
+            this.elements.add(new ItemElement(x, y, index, flowType, color, validPredicate));
+            this.incrementColorCounter(flowType);
             return this;
         }
 
-        public Builder<M> addEnergySlot(int x, int y, int index, boolean input) {
-            int color = input ? inputColors[this.inputIndex] : outputColors[this.outputIndex];
-            this.elements.add(new EnergyElement(x, y, index, input, color));
-            if (input) {
-                this.inputIndex++;
-            } else {
-                this.outputIndex++;
+        public Builder<M> addEnergyElement(int x, int y, int index, FlowType flowType) {
+            int color = this.getColor(flowType);
+            this.elements.add(new EnergyElement(x, y, index, flowType, color));
+            this.incrementColorCounter(flowType);
+            return this;
+        }
+
+        private void incrementColorCounter(FlowType flowType) {
+            switch (flowType) {
+                case INOUT:
+                    this.inOutIndex++;
+                    break;
+                case INPUT:
+                    this.inputIndex++;
+                    break;
+                case OUTPUT:
+                    this.outputIndex++;
+                    break;
             }
+        }
+
+        private int getColor(FlowType flowType) {
+            int colorIndex = -1;
+            switch (flowType) {
+                case INOUT:
+                    colorIndex = this.inOutIndex;
+                    break;
+                case INPUT:
+                    colorIndex = this.inputIndex;
+                    break;
+                case OUTPUT:
+                    colorIndex = this.outputIndex;
+                    break;
+            }
+            return flowType.getColor(colorIndex);
+        }
+
+        public Builder<M> addFluidElement(int x, int y, int index, FlowType flowType) {
+            int color = this.getColor(flowType);
+            this.elements.add(new FluidElement(x, y, index, flowType, color));
+            this.incrementColorCounter(flowType);
             return this;
         }
 

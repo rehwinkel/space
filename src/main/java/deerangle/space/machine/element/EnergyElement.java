@@ -2,6 +2,7 @@ package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
+import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
 import net.minecraft.util.text.ITextComponent;
@@ -9,8 +10,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnergyElement extends OverlayedElement {
 
-    EnergyElement(int x, int y, int index, boolean input, int overlayColor) {
-        super(x, y, index, input, overlayColor, 10, 49);
+    EnergyElement(int x, int y, int index, FlowType flowType, int overlayColor) {
+        super(x, y, index, flowType, overlayColor, 10, 49);
     }
 
     @Override

@@ -58,26 +58,37 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     // connectors: north, south, east, west, up, down
-    private void machineBlockWithItem(Block block, RotatedModel[] connectors) {
+    private void machineBlockWithItem(Block block, RotatedModel[] connectors, boolean hasRunningVariant) {
         ResourceLocation blockName = block.getRegistryName();
         ModelFile baseModelOff = models()
                 .getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath()));
-        ModelFile baseModelRunning = models().getExistingFile(
-                new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_running"));
 
-        MultiPartBlockStateBuilder builder = getMultipartBuilder(block).part().modelFile(baseModelOff).addModel()
-                .condition(MachineBlock.FACING, Direction.NORTH).condition(MachineBlock.RUNNING, false).end().part()
-                .modelFile(baseModelOff).rotationY(180).addModel().condition(MachineBlock.FACING, Direction.SOUTH)
-                .condition(MachineBlock.RUNNING, false).end().part().modelFile(baseModelOff).rotationY(270).addModel()
-                .condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, false).end().part()
-                .modelFile(baseModelOff).rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST)
-                .condition(MachineBlock.RUNNING, false).end().part().modelFile(baseModelRunning).addModel()
-                .condition(MachineBlock.FACING, Direction.NORTH).condition(MachineBlock.RUNNING, true).end().part()
-                .modelFile(baseModelRunning).rotationY(180).addModel().condition(MachineBlock.FACING, Direction.SOUTH)
-                .condition(MachineBlock.RUNNING, true).end().part().modelFile(baseModelRunning).rotationY(270)
-                .addModel().condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, true).end()
-                .part().modelFile(baseModelRunning).rotationY(90).addModel()
-                .condition(MachineBlock.FACING, Direction.EAST).condition(MachineBlock.RUNNING, true).end();
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+        if (hasRunningVariant) {
+            ModelFile baseModelRunning = models().getExistingFile(
+                    new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_running"));
+
+            builder.part().modelFile(baseModelOff).addModel().condition(MachineBlock.FACING, Direction.NORTH)
+                    .condition(MachineBlock.RUNNING, false).end().part().modelFile(baseModelOff).rotationY(180)
+                    .addModel().condition(MachineBlock.FACING, Direction.SOUTH).condition(MachineBlock.RUNNING, false)
+                    .end().part().modelFile(baseModelOff).rotationY(270).addModel()
+                    .condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, false).end().part()
+                    .modelFile(baseModelOff).rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST)
+                    .condition(MachineBlock.RUNNING, false).end().part().modelFile(baseModelRunning).addModel()
+                    .condition(MachineBlock.FACING, Direction.NORTH).condition(MachineBlock.RUNNING, true).end().part()
+                    .modelFile(baseModelRunning).rotationY(180).addModel()
+                    .condition(MachineBlock.FACING, Direction.SOUTH).condition(MachineBlock.RUNNING, true).end().part()
+                    .modelFile(baseModelRunning).rotationY(270).addModel()
+                    .condition(MachineBlock.FACING, Direction.WEST).condition(MachineBlock.RUNNING, true).end().part()
+                    .modelFile(baseModelRunning).rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST)
+                    .condition(MachineBlock.RUNNING, true).end();
+        } else {
+            builder.part().modelFile(baseModelOff).addModel().condition(MachineBlock.FACING, Direction.NORTH).end()
+                    .part().modelFile(baseModelOff).rotationY(180).addModel()
+                    .condition(MachineBlock.FACING, Direction.SOUTH).end().part().modelFile(baseModelOff).rotationY(270)
+                    .addModel().condition(MachineBlock.FACING, Direction.WEST).end().part().modelFile(baseModelOff)
+                    .rotationY(90).addModel().condition(MachineBlock.FACING, Direction.EAST).end();
+        }
         this.addConnector(builder, connectors[0], MachineBlock.NORTH);
         this.addConnector(builder, connectors[1], MachineBlock.SOUTH);
         this.addConnector(builder, connectors[2], MachineBlock.EAST);
@@ -117,10 +128,13 @@ public class BlockStateGenerator extends BlockStateProvider {
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
                         90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270,
-                        0), new RotatedModel(connector, 90, 0)});
+                        0), new RotatedModel(connector, 90, 0)}, true);
         machineBlockWithItem(MachineRegistry.BLAST_FURNACE.get(),
                 new RotatedModel[]{null, new RotatedModel(connectorLong3, 0, 180), new RotatedModel(connectorShort, 0,
-                        90), new RotatedModel(connectorShort, 0, 270), null, new RotatedModel(connector, 90, 0)});
+                        90), new RotatedModel(connectorShort, 0, 270), null, new RotatedModel(connector, 90, 0)}, true);
+        machineBlockWithItem(MachineRegistry.COMBUSTION_GENERATOR.get(),
+                new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connectorShort, 0,
+                        180), null, null, null, new RotatedModel(connector, 0, 90)}, false);
     }
 
 }

@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeHooks;
 
 public class CoalGeneratorMachine extends Machine {
 
-    private static final int RF_PER_BURN_TICK = 20;
+    private static final int RF_PER_TICK = 20;
     private final ItemMachineData fuel;
     private final EnergyMachineData energy;
     private final BurnMachineData burn;
@@ -25,7 +25,7 @@ public class CoalGeneratorMachine extends Machine {
         super(MachineTypeRegistry.COAL_GENERATOR,
                 new SideConfig(-1, 0, 1, 1, 1, 1, true, false, false, false, false, false, 2));
         fuel = addMachineData(new ItemMachineData("Fuel", stack -> ForgeHooks.getBurnTime(stack) > 0));
-        energy = addMachineData(new EnergyMachineData("Eng", 16000, 1000));
+        energy = addMachineData(new EnergyMachineData("Eng", 30000, 1000));
         burn = addMachineData(new BurnMachineData("Burn"));
     }
 
@@ -36,13 +36,13 @@ public class CoalGeneratorMachine extends Machine {
             ItemStack currentFuelStack = this.fuel.getItemHandlerOrThrow().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0) {
-                this.fuel.getItemHandlerOrThrow().extractItem(0, 1, false);
+                this.fuel.getMachineItemHandler().extractItemOverride(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }
         } else {
             currentBurnTime--;
-            this.energy.getStorageOrThrow().receiveEnergy(RF_PER_BURN_TICK, false);
+            this.energy.getStorageOrThrow().receiveEnergy(RF_PER_TICK, false);
         }
         if (currentMaxBurnTime > 0) {
             this.burn.setProgress(currentBurnTime / (float) currentMaxBurnTime);

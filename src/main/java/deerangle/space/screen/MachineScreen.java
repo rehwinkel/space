@@ -8,7 +8,9 @@ import deerangle.space.machine.element.OverlayedElement;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.network.AdvanceSideMsg;
 import deerangle.space.network.PacketHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +21,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.List;
 
 public class MachineScreen extends ContainerScreen<MachineContainer> {
-    // private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
+
+    private static final ScreenTextureWorldReader TEXTURE_WORLD_READER = new ScreenTextureWorldReader();
 
     public static final ResourceLocation MACHINES_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/machines.png");
@@ -203,61 +206,16 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    /*
-    private void drawFluidBar(MatrixStack matrixStack, Fluid fluid, int x, int y, float amount, int overlay) {
-        this.resetOverlayColor();
-        this.bindMachinesTexture();
-        int height = (int) (46 * (1F - amount));
-        this.blit(matrixStack, x, y, 0, 0, 18, 48);
-        this.drawFluidColumn(matrixStack, fluid, x + 1, y + 1 + height, 46 - height, true);
-        this.bindMachinesTexture();
-        this.setOverlayColor(overlay);
-        this.blit(matrixStack, x, y, 36, 0, 18, 48);
+    public int getBlockColor(BlockState fluidState) {
+        return this.minecraft.getBlockColors().getColor(fluidState, TEXTURE_WORLD_READER, new BlockPos(0, 0, 0), 0);
     }
 
-    private void drawFluidColumn(MatrixStack matrixStack, Fluid fluid, int x, int y, int height, boolean bottomUp) {
-        BlockState fluidState = fluid.getDefaultState().getBlockState();
-        TextureAtlasSprite sprite = this.minecraft.getBlockRendererDispatcher().getModelForState(fluidState)
-                .getParticleTexture();
-        this.minecraft.getTextureManager().bindTexture(sprite.getAtlasTexture().getTextureLocation());
-        int color = this.minecraft.getBlockColors()
-                .getColor(fluidState, TEXTURE_WORLD_READER, new BlockPos(0, 0, 0), 0);
-        setOverlayColor(color);
-        if (bottomUp) {
-            for (int i = height; i > 0; i -= 16) {
-                int drawHeight = 16 - Math.min(i, 16);
-                blitSprite(matrixStack, x, y + i + drawHeight - 16, 0, drawHeight, 16, 16, 16, 16, sprite);
-            }
-        } else {
-            for (int i = 0; i < height; i += 16) {
-                int drawHeight = Math.min(height - i, 16);
-                blitSprite(matrixStack, x, y + i, 0, 0, 16, drawHeight, 16, 16, sprite);
-            }
-        }
+    public void bindTexture(ResourceLocation textureLocation) {
+        this.minecraft.getTextureManager().bindTexture(textureLocation);
     }
 
-    private void blitSprite(MatrixStack matrixStack, int x, int y, int offX, int offY, int width, int height, int textureWidth, int textureHeight, TextureAtlasSprite sprite) {
-        Matrix4f matrix = matrixStack.getLast().getMatrix();
-        BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        int x2 = x + width - offX;
-        int y2 = y + height - offY;
-        float minU = sprite.getMinU();
-        float minV = sprite.getMinV();
-        float spriteWidth = sprite.getMaxU() - minU;
-        float spriteHeight = sprite.getMaxV() - minV;
-        minU += (offX / (float) textureWidth) * spriteWidth;
-        minV += (offY / (float) textureHeight) * spriteHeight;
-        float maxU = minU + ((width - offX) / (float) textureWidth) * spriteWidth;
-        float maxV = minV + ((height - offY) / (float) textureHeight) * spriteHeight;
-        bufferbuilder.pos(matrix, (float) x, (float) y2, (float) this.getBlitOffset()).tex(minU, maxV).endVertex();
-        bufferbuilder.pos(matrix, (float) x2, (float) y2, (float) this.getBlitOffset()).tex(maxU, maxV).endVertex();
-        bufferbuilder.pos(matrix, (float) x2, (float) y, (float) this.getBlitOffset()).tex(maxU, minV).endVertex();
-        bufferbuilder.pos(matrix, (float) x, (float) y, (float) this.getBlitOffset()).tex(minU, minV).endVertex();
-        bufferbuilder.finishDrawing();
-        RenderSystem.enableAlphaTest();
-        WorldVertexBufferUploader.draw(bufferbuilder);
+    public IBakedModel getModelForState(BlockState state) {
+        return this.minecraft.getBlockRendererDispatcher().getModelForState(state);
     }
-    */
 
 }
