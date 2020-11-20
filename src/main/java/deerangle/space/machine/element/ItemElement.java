@@ -1,6 +1,7 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
 import net.minecraft.item.ItemStack;
@@ -12,8 +13,8 @@ public class ItemElement extends OverlayedElement {
 
     private final Predicate<ItemStack> validPredicate;
 
-    ItemElement(int x, int y, int index, boolean input, int overlayColor, Predicate<ItemStack> acceptedForSlot) {
-        super(x, y, index, input, overlayColor, 18, 18);
+    ItemElement(int x, int y, int index, FlowType flowType, int overlayColor, Predicate<ItemStack> acceptedForSlot) {
+        super(x, y, index, flowType, overlayColor, 18, 18);
         this.validPredicate = acceptedForSlot;
     }
 

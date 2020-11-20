@@ -4,6 +4,7 @@ import deerangle.space.block.MachineBlock;
 import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.data.ProgressMachineData;
+import deerangle.space.machine.util.FlowType;
 import deerangle.space.machine.util.MachineItemHandler;
 import deerangle.space.machine.util.SideConfig;
 import deerangle.space.recipe.BlastFurnaceRecipe;
@@ -39,7 +40,7 @@ public class BlastFurnaceMachine extends Machine {
                 new SideConfig(-1, -1, 1, 2, -1, 0, true, false, false, false, true, false, 3));
         fuel = addMachineData(new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL)));
         input = addMachineData(new ItemMachineData("Input"));
-        output = addMachineData(new ItemMachineData("Output", false));
+        output = addMachineData(new ItemMachineData("Output", FlowType.OUTPUT));
         burn = addMachineData(new BurnMachineData("Burn"));
         progress = addMachineData(new ProgressMachineData("Prog"));
     }

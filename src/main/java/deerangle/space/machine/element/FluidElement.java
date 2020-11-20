@@ -3,6 +3,7 @@ package deerangle.space.machine.element;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
+import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
 import net.minecraft.block.BlockState;
@@ -19,8 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class FluidElement extends OverlayedElement {
 
-    public FluidElement(int x, int y, int index, boolean input, int color) {
-        super(x, y, index, input, color, 18, 49);
+    public FluidElement(int x, int y, int index, FlowType flowType, int color) {
+        super(x, y, index, flowType, color, 18, 49);
     }
 
     @Override
@@ -38,11 +39,10 @@ public class FluidElement extends OverlayedElement {
         FluidStack fluid = fluidAndCap.getFirst();
         int cap = fluidAndCap.getSecond();
         ITextComponent fluidName = new TranslationTextComponent(fluid.getTranslationKey());
-        if(fluid.isEmpty()) {
+        if (fluid.isEmpty()) {
             fluidName = new TranslationTextComponent("info.space.missing_fluid");
         }
-        return new TranslationTextComponent("info.space.fluid", fluidName,
-                fluid.getAmount(), cap);
+        return new TranslationTextComponent("info.space.fluid", fluidName, fluid.getAmount(), cap);
     }
 
 

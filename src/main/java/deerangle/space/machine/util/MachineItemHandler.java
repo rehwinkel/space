@@ -11,13 +11,13 @@ import java.util.function.Predicate;
 public class MachineItemHandler implements IItemHandlerModifiable {
 
     private final Predicate<ItemStack> validPredicate;
-    private final boolean input;
+    private final FlowType flowType;
     private final ItemStackHandler internal;
 
-    public MachineItemHandler(Predicate<ItemStack> validPredicate, boolean input) {
+    public MachineItemHandler(Predicate<ItemStack> validPredicate, FlowType flowType) {
         this.internal = new ItemStackHandler();
         this.validPredicate = validPredicate;
-        this.input = input;
+        this.flowType = flowType;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MachineItemHandler implements IItemHandlerModifiable {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (this.input) {
+        if (this.flowType == FlowType.OUTPUT) {
             if (!this.isItemValid(slot, stack))
                 return stack;
             return this.internal.insertItem(slot, stack, simulate);
@@ -48,6 +48,9 @@ public class MachineItemHandler implements IItemHandlerModifiable {
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        if (this.flowType == FlowType.INPUT) {
+            return ItemStack.EMPTY;
+        }
         return this.internal.extractItem(slot, amount, simulate);
     }
 
