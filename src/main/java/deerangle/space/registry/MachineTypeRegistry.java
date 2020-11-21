@@ -77,11 +77,11 @@ public class MachineTypeRegistry {
                 .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT, MachineTypeRegistry::holdsEnergy, BATTERY_TEXT));
         REFINERY = register("refinery",
                 MachineType.builder(RefineryMachine::new).addEnergyElement(17, 17, 0, FlowType.INPUT, ENERGY_TEXT)
-                        .addFluidElement(17 + 12, 17, 1, FlowType.INPUT, INPUT_TEXT)
-                        .addFluidElement(176 - 17 - 18 - 12, 17, 2, FlowType.OUTPUT, OUTPUT_TEXT)
-                        .addItemElement(17 + 12+20, 48, 3, FlowType.INPUT, MachineTypeRegistry::holdsFluid, BUCKET_TEXT)
-                        .addItemElement(176 - 17 - 18 - 20 - 12, 48, 4, FlowType.OUTPUT, MachineTypeRegistry::holdsFluid,
-                                BUCKET_TEXT).add(new ProgressElement(176/2-12, 30, 5)));
+                        .addFluidElement(29, 17, 1, FlowType.INPUT, INPUT_TEXT)
+                        .addFluidElement(129, 17, 2, FlowType.OUTPUT, OUTPUT_TEXT)
+                        .addItemElement(49, 48, 3, FlowType.INPUT, MachineTypeRegistry::holdsFluid, BUCKET_TEXT)
+                        .addItemElement(109, 48, 4, FlowType.OUTPUT, MachineTypeRegistry::holdsFluid, BUCKET_TEXT)
+                        .add(new ProgressElement(76, 30, 5)));
         event.getRegistry()
                 .registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK,
                         REFINERY);
