@@ -1,5 +1,6 @@
 package deerangle.space.machine.data;
 
+import deerangle.space.machine.util.FlowType;
 import net.minecraft.nbt.FloatNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
@@ -41,6 +42,11 @@ public class BurnMachineData implements IMachineData {
     @Override
     public boolean storeInItem() {
         return false;
+    }
+
+    @Override
+    public FlowType getFlowType() {
+        return null;
     }
 
     public void setProgress(float progress) {

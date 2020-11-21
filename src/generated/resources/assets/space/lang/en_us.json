@@ -56,5 +56,10 @@
   "item.space.titanium_nugget": "Titanium Nugget",
   "itemGroup.space.machine": "Space Machines",
   "itemGroup.space.resource": "Space Resources",
-  "stat.space.interact_with_coal_generator": "Interactions with Coal Generator"
+  "stat.space.interact_with_battery_pack": "Interactions with Battery Pack",
+  "stat.space.interact_with_blast_furnace": "Interactions with Blast Furnace",
+  "stat.space.interact_with_coal_generator": "Interactions with Coal Generator",
+  "stat.space.interact_with_combustion_generator": "Interactions with Combustion Generator",
+  "stat.space.interact_with_drum": "Interactions with Drum",
+  "stat.space.interact_with_gas_tank": "Interactions with Gas Tank"
 }

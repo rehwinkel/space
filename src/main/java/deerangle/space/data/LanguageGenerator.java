@@ -62,6 +62,11 @@ public class LanguageGenerator extends LanguageProvider {
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
         add("stat.space.interact_with_coal_generator", "Interactions with Coal Generator");
+        add("stat.space.interact_with_blast_furnace", "Interactions with Blast Furnace");
+        add("stat.space.interact_with_combustion_generator", "Interactions with Combustion Generator");
+        add("stat.space.interact_with_drum", "Interactions with Drum");
+        add("stat.space.interact_with_gas_tank", "Interactions with Gas Tank");
+        add("stat.space.interact_with_battery_pack", "Interactions with Battery Pack");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");
         add("info.space.missing_fluid", "None");

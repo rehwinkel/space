@@ -14,10 +14,17 @@ public class FluidMachineData implements IMachineData {
 
     private final String name;
     private final FluidMachineGate tank;
+    private final FlowType flowType;
 
     public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate, FlowType flowType) {
         this.tank = new FluidMachineGate(capacity, validPredicate, flowType);
         this.name = name;
+        this.flowType = flowType;
+    }
+
+    @Override
+    public FlowType getFlowType() {
+        return this.flowType;
     }
 
     public LazyOptional<IFluidHandler> getFluidHandler(boolean fromCapability) {
