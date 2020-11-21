@@ -11,12 +11,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
-public class DrumBlock extends MachineBlock {
+public class BatteryPackBlock extends MachineBlock {
 
     private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 16, 16);
 
-    public DrumBlock(AbstractBlock.Properties properties) {
-        super(properties, () -> MachineTypeRegistry.DRUM, Stats.INTERACT_WITH_DRUM);
+    public BatteryPackBlock(AbstractBlock.Properties properties) {
+        super(properties, () -> MachineTypeRegistry.BATTERY_PACK, Stats.INTERACT_WITH_BATTERY_PACK);
     }
 
     @Override

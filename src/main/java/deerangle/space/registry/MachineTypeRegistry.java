@@ -12,8 +12,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.function.Supplier;
-
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MachineTypeRegistry {
 
@@ -22,6 +20,7 @@ public class MachineTypeRegistry {
     public static MachineType<CombustionGeneratorMachine> COMBUSTION_GENERATOR;
     public static MachineType<GasTankMachine> GAS_TANK;
     public static MachineType<DrumMachine> DRUM;
+    public static MachineType<BatteryPackMachine> BATTERY_PACK;
 
     @SubscribeEvent
     public static void registerMachineTypes(RegistryEvent.Register<MachineType<?>> event) {
@@ -45,14 +44,21 @@ public class MachineTypeRegistry {
                                         .isPresent()).addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
                         stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
                                 .isPresent()));
-        DRUM = register("drum",
-                MachineType.builder(DrumMachine::new).addFluidElement(79, 17, 0, FlowType.INOUT)
+        DRUM = register("drum", MachineType.builder(DrumMachine::new).addFluidElement(79, 17, 0, FlowType.INOUT)
+                .addItemElement(79 - 20, 17, 1, FlowType.INPUT,
+                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent())
+                .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
+                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
+                                .isPresent()));
+        BATTERY_PACK = register("battery_pack",
+                MachineType.builder(BatteryPackMachine::new).addEnergyElement(79 + 4, 17, 0, FlowType.INOUT)
                         .addItemElement(79 - 20, 17, 1, FlowType.INPUT,
                                 stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
                                         .isPresent()).addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
                         stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
                                 .isPresent()));
-        event.getRegistry().registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM);
+        event.getRegistry()
+                .registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK);
     }
 
     private static <M extends Machine> MachineType<M> register(String name, MachineType.Builder<M> builder) {

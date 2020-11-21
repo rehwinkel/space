@@ -1,5 +1,7 @@
 package deerangle.space.data;
 
+import deerangle.space.registry.FluidRegistry;
+import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -12,6 +14,14 @@ public class LanguageGenerator extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add(MachineRegistry.COAL_GENERATOR.get(), "Coal Generator");
+        add(MachineRegistry.BLAST_FURNACE.get(), "Blast Furnace");
+        add(MachineRegistry.COMBUSTION_GENERATOR.get(), "Combustion Generator");
+        add(MachineRegistry.GAS_TANK.get(), "Gas Tank");
+        add(MachineRegistry.DRUM.get(), "Drum");
+        add(MachineRegistry.BATTERY_PACK.get(), "Battery Pack");
+        add(FluidRegistry.CRUDE_OIL_BLOCK.get(), "Crude Oil");
+        add(FluidRegistry.CRUDE_OIL_BUCKET.get(), "Crude Oil Bucket");
         add(ResourceRegistry.COPPER_ORE.get(), "Copper Ore");
         add(ResourceRegistry.ALUMINIUM_ORE.get(), "Aluminium Ore");
         add(ResourceRegistry.ILMENITE_ORE.get(), "Ilmenite Ore");
@@ -51,13 +61,6 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.ROCKET_THRUSTER.get(), "Rocket Thruster");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
-        add("block.space.coal_generator", "Coal Generator");
-        add("block.space.blast_furnace", "Blast Furnace");
-        add("block.space.combustion_generator", "Combustion Generator");
-        add("block.space.gas_tank", "Gas Tank");
-        add("block.space.drum", "Drum");
-        add("block.space.crude_oil", "Crude Oil");
-        add("item.space.crude_oil_bucket", "Crude Oil Bucket");
         add("stat.space.interact_with_coal_generator", "Interactions with Coal Generator");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");

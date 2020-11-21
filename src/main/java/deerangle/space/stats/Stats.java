@@ -17,6 +17,8 @@ public class Stats {
             IStatFormatter.DEFAULT);
     public static final ResourceLocation INTERACT_WITH_DRUM = registerCustom("interact_with_drum",
             IStatFormatter.DEFAULT);
+    public static final ResourceLocation INTERACT_WITH_BATTERY_PACK = registerCustom("interact_with_battery_pack",
+            IStatFormatter.DEFAULT);
 
     public static void register() {
     }

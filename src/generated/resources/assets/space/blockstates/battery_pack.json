@@ -2,80 +2,76 @@
   "multipart": [
     {
       "when": {
-        "running": "false",
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/blast_furnace"
+        "model": "space:block/battery_pack"
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/battery_pack",
         "y": 180
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "west"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/battery_pack",
         "y": 270
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "east"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/battery_pack",
         "y": 90
       }
     },
     {
       "when": {
-        "running": "true",
+        "north": "true",
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running"
+        "model": "space:block/connector_short"
       }
     },
     {
       "when": {
-        "running": "true",
+        "north": "true",
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
+        "model": "space:block/connector_short",
         "y": 180
       }
     },
     {
       "when": {
-        "running": "true",
-        "facing": "west"
+        "north": "true",
+        "facing": "east"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
-        "y": 270
+        "model": "space:block/connector_short",
+        "y": 90
       }
     },
     {
       "when": {
-        "running": "true",
-        "facing": "east"
+        "north": "true",
+        "facing": "west"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
-        "y": 90
+        "model": "space:block/connector_short",
+        "y": 270
       }
     },
     {
@@ -84,7 +80,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector_short",
         "y": 180
       }
     },
@@ -94,7 +90,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector_short",
         "y": 360
       }
     },
@@ -104,7 +100,7 @@
         "facing": "east"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector_short",
         "y": 270
       }
     },
@@ -114,7 +110,7 @@
         "facing": "west"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector_short",
         "y": 450
       }
     },
@@ -196,6 +192,15 @@
       "apply": {
         "model": "space:block/connector_short",
         "y": 540
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "x": 270
       }
     },
     {

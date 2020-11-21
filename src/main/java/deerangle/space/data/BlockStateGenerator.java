@@ -165,6 +165,10 @@ public class BlockStateGenerator extends BlockStateProvider {
                 new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connector, 0,
                         180), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(
                         connectorShort, 270, 0), new RotatedModel(connector, 90, 0)}, false);
+        machineBlockWithItem(MachineRegistry.BATTERY_PACK.get(),
+                new RotatedModel[]{new RotatedModel(connectorShort, 0, 0), new RotatedModel(connectorShort, 0,
+                        180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0,
+                        270), new RotatedModel(connector, 270, 0), new RotatedModel(connector, 90, 0)}, false);
     }
 
 }
