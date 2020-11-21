@@ -10,7 +10,7 @@ public class MachineFluidHandler implements IFluidHandler {
     private final Ref<Integer> capacity;
     private final Ref<FluidStack> fluid;
     private final Predicate<FluidStack> validPredicate;
-    private final FlowType flowType; //TODO
+    private final FlowType flowType;
 
     public MachineFluidHandler(Ref<FluidStack> fluidStack, Ref<Integer> capacity, Predicate<FluidStack> validPredicate, FlowType flowType) {
         this.capacity = capacity;
@@ -45,6 +45,9 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
+        if (flowType == FlowType.OUTPUT) {
+            return 0;
+        }
         if (resource.isEmpty() || !isFluidValid(resource)) {
             return 0;
         }
@@ -77,8 +80,10 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        if (resource.isEmpty() || !resource.isFluidEqual(fluid.get()))
-        {
+        if (flowType == FlowType.INPUT) {
+            return FluidStack.EMPTY;
+        }
+        if (resource.isEmpty() || !resource.isFluidEqual(fluid.get())) {
             return FluidStack.EMPTY;
         }
         return drain(resource.getAmount(), action);
@@ -86,14 +91,15 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
+        if (flowType == FlowType.INPUT) {
+            return FluidStack.EMPTY;
+        }
         int drained = maxDrain;
-        if (fluid.get().getAmount() < drained)
-        {
+        if (fluid.get().getAmount() < drained) {
             drained = fluid.get().getAmount();
         }
         FluidStack stack = new FluidStack(fluid.get(), drained);
-        if (action.execute() && drained > 0)
-        {
+        if (action.execute() && drained > 0) {
             fluid.get().shrink(drained);
         }
         return stack;

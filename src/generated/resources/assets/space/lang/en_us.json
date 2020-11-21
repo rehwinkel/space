@@ -1,6 +1,7 @@
 {
   "block.space.aluminium_block": "Aluminium Block",
   "block.space.aluminium_ore": "Aluminium Ore",
+  "block.space.battery_pack": "Battery Pack",
   "block.space.blast_furnace": "Blast Furnace",
   "block.space.coal_generator": "Coal Generator",
   "block.space.combustion_generator": "Combustion Generator",
@@ -10,6 +11,7 @@
   "block.space.drum": "Drum",
   "block.space.gas_tank": "Gas Tank",
   "block.space.ilmenite_ore": "Ilmenite Ore",
+  "block.space.kerosene": "Kerosene",
   "block.space.quartz_sand": "Quartz Sand",
   "block.space.rusty_dust": "Rusty Dust",
   "block.space.steel_block": "Steel Block",
@@ -40,6 +42,7 @@
   "item.space.iron_dust": "Iron Dust",
   "item.space.iron_pipe": "Iron Pipe",
   "item.space.iron_plate": "Iron Plate",
+  "item.space.kerosene_bucket": "Kerosene Bucket",
   "item.space.machine_base": "Machine Base",
   "item.space.plated_rocket_body": "Plated Rocket Body",
   "item.space.quartz_dust": "Quartz Dust",
@@ -55,5 +58,10 @@
   "item.space.titanium_nugget": "Titanium Nugget",
   "itemGroup.space.machine": "Space Machines",
   "itemGroup.space.resource": "Space Resources",
-  "stat.space.interact_with_coal_generator": "Interactions with Coal Generator"
+  "stat.space.interact_with_battery_pack": "Interactions with Battery Pack",
+  "stat.space.interact_with_blast_furnace": "Interactions with Blast Furnace",
+  "stat.space.interact_with_coal_generator": "Interactions with Coal Generator",
+  "stat.space.interact_with_combustion_generator": "Interactions with Combustion Generator",
+  "stat.space.interact_with_drum": "Interactions with Drum",
+  "stat.space.interact_with_gas_tank": "Interactions with Gas Tank"
 }

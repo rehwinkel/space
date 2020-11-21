@@ -11,7 +11,7 @@ public class MachineItemHandler implements IItemHandlerModifiable {
 
     private final Ref<ItemStack> stack;
     private final Predicate<ItemStack> validPredicate;
-    private final FlowType flowType;  //TODO
+    private final FlowType flowType;
 
     public MachineItemHandler(Ref<ItemStack> stack, Predicate<ItemStack> validPredicate, FlowType flowType) {
         this.stack = stack;
@@ -38,6 +38,9 @@ public class MachineItemHandler implements IItemHandlerModifiable {
     @Override
     @Nonnull
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        if (flowType == FlowType.OUTPUT) {
+            return stack;
+        }
         if (stack.isEmpty())
             return ItemStack.EMPTY;
 
@@ -74,6 +77,9 @@ public class MachineItemHandler implements IItemHandlerModifiable {
     @Override
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        if (flowType == FlowType.INPUT) {
+            return ItemStack.EMPTY;
+        }
         if (amount == 0)
             return ItemStack.EMPTY;
 

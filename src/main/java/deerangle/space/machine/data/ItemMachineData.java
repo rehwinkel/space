@@ -14,10 +14,16 @@ public class ItemMachineData implements IMachineData {
 
     private final String name;
     private final ItemMachineGate stack;
+    private final FlowType flowType;
 
     public ItemMachineData(String name, Predicate<ItemStack> validPredicate, FlowType flowType) {
         stack = new ItemMachineGate(validPredicate, flowType);
+        this.flowType = flowType;
         this.name = name;
+    }
+
+    public FlowType getFlowType() {
+        return flowType;
     }
 
     public ItemMachineData(String name, FlowType flowType) {

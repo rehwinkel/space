@@ -11,7 +11,6 @@ import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +31,8 @@ public class CombustionGeneratorMachine extends Machine {
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
 
-    public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap.of(FluidRegistry.CRUDE_OIL.get(), 2);
+    public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap
+            .of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
     private int currentBurnTime;
     private int currentMaxBurnTime;
 
@@ -45,7 +45,7 @@ public class CombustionGeneratorMachine extends Machine {
 
     public CombustionGeneratorMachine() {
         super(MachineTypeRegistry.COMBUSTION_GENERATOR,
-                new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 2));
+                new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 3));
         fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT));
         energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000, FlowType.OUTPUT));
         bucket = addMachineData(new ItemMachineData("Bucket",

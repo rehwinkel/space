@@ -10,11 +10,18 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class EnergyMachineData implements IMachineData {
 
     private final String name;
+    private final FlowType flowType;
     private EnergyMachineGate storage;
 
     public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType) {
         this.storage = new EnergyMachineGate(capacity, transfer, transfer, 0, flowType);
+        this.flowType = flowType;
         this.name = name;
+    }
+
+    @Override
+    public FlowType getFlowType() {
+        return this.flowType;
     }
 
     public LazyOptional<IEnergyStorage> getEnergyStorage(boolean fromCapability) {

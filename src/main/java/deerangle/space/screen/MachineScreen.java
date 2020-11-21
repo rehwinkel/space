@@ -140,8 +140,8 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderBarTooltips(matrixStack, mouseX, mouseY);
         if (isMainScreen) {
+            this.renderBarTooltips(matrixStack, mouseX, mouseY);
             this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
         }
     }

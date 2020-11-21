@@ -33,6 +33,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     protected void registerModels() {
         addFlatItem(ResourceRegistry.STEEL_INGOT.get());
         addBucketItem(FluidRegistry.CRUDE_OIL_BUCKET.get());
+        addBucketItem(FluidRegistry.KEROSENE_BUCKET.get());
         addFlatItem(ResourceRegistry.COPPER_INGOT.get());
         addFlatItem(ResourceRegistry.ALUMINIUM_INGOT.get());
         addFlatItem(ResourceRegistry.TITANIUM_INGOT.get());
