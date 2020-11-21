@@ -63,7 +63,7 @@ public class RecipeGenerator extends RecipeProvider {
                 .patternLine("ii ").patternLine("ii ").patternLine("   ")
                 .addCriterion("has_iron_dust", hasItem(ResourceRegistry.IRON_DUST.get()))
                 .build(consumer, "iron_nugget_from_iron_dust");
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.COPPER_PIPE.get(), 4)
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.COPPER_TUBE.get(), 4)
                 .key('c', ResourceRegistry.COPPER_INGOT.get()).patternLine("ccc").patternLine("c c").patternLine("ccc")
                 .addCriterion("has_copper_ingot", hasItem(ResourceRegistry.COPPER_INGOT.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.STEEL_ROD.get(), 2)
@@ -72,7 +72,7 @@ public class RecipeGenerator extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.CYLINDER.get()).key('i', Items.IRON_INGOT)
                 .key('s', ResourceRegistry.STEEL_ROD.get()).patternLine("i  ").patternLine("s  ").patternLine("   ")
                 .addCriterion("has_steel_rod", hasItem(ResourceRegistry.STEEL_ROD.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.IRON_PIPE.get(), 4).key('i', Items.IRON_INGOT)
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.IRON_TUBE.get(), 4).key('i', Items.IRON_INGOT)
                 .patternLine("iii").patternLine("i i").patternLine("iii")
                 .addCriterion("has_iron_ingot", hasItem(Items.IRON_INGOT)).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.BATTERY.get())
@@ -89,10 +89,10 @@ public class RecipeGenerator extends RecipeProvider {
                 .addCriterion("has_steel_ingot", hasItem(ResourceRegistry.STEEL_INGOT.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(MachineRegistry.COAL_GENERATOR.get()).key('i', Items.IRON_INGOT)
                 .key('b', ResourceRegistry.MACHINE_BASE.get()).key('f', Blocks.FURNACE)
-                .key('c', ResourceRegistry.COPPER_PIPE.get()).patternLine("cic").patternLine("ifi").patternLine("ibi")
+                .key('c', ResourceRegistry.COPPER_TUBE.get()).patternLine("cic").patternLine("ifi").patternLine("ibi")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(MachineRegistry.BLAST_FURNACE.get()).key('f', Blocks.FURNACE)
-                .key('b', Blocks.IRON_BLOCK).key('c', ResourceRegistry.COPPER_PIPE.get()).key('i', Items.IRON_INGOT)
+                .key('b', Blocks.IRON_BLOCK).key('c', ResourceRegistry.COPPER_TUBE.get()).key('i', Items.IRON_INGOT)
                 .patternLine("cic").patternLine("cbi").patternLine("bfb")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_FIN.get()).key('i', ResourceRegistry.STEEL_PLATE.get())

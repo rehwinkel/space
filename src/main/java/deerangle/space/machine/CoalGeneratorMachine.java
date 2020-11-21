@@ -25,7 +25,7 @@ public class CoalGeneratorMachine extends Machine {
     public CoalGeneratorMachine() {
         super(MachineTypeRegistry.COAL_GENERATOR,
                 new SideConfig(-1, 0, 1, 1, 1, 1, true, false, false, false, false, false, 2));
-        fuel = addMachineData(new ItemMachineData("Fuel", stack -> ForgeHooks.getBurnTime(stack) > 0, FlowType.INPUT));
+        fuel = addMachineData(new ItemMachineData("Fuel", MachineTypeRegistry::isFuel, FlowType.INPUT));
         energy = addMachineData(new EnergyMachineData("Eng", 30000, 1000, FlowType.OUTPUT));
         burn = addMachineData(new BurnMachineData("Burn"));
     }

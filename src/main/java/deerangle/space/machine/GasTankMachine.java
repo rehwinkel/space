@@ -7,7 +7,6 @@ import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class GasTankMachine extends Machine {
 
@@ -16,14 +15,10 @@ public class GasTankMachine extends Machine {
     private final ItemMachineData output;
 
     public GasTankMachine() {
-        super(MachineTypeRegistry.GAS_TANK, new SideConfig(0, 0, 0, 0, 0, 0, 3));
+        super(MachineTypeRegistry.GAS_TANK, new SideConfig(0, 0, 0, 0, 0, 0, 1));
         tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true, FlowType.INOUT));
-        input = addMachineData(new ItemMachineData("Input",
-                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
-                FlowType.INPUT));
-        output = addMachineData(new ItemMachineData("Output",
-                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
-                FlowType.OUTPUT));
+        input = addMachineData(new ItemMachineData("Input", MachineTypeRegistry::holdsFluid, FlowType.INPUT));
+        output = addMachineData(new ItemMachineData("Output", MachineTypeRegistry::holdsFluid, FlowType.OUTPUT));
     }
 
     @Override

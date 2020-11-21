@@ -19,14 +19,10 @@ public class DrumMachine extends Machine {
     private final ItemMachineData output;
 
     public DrumMachine() {
-        super(MachineTypeRegistry.DRUM, new SideConfig(0, 0, 0, 0, 0, 0, 3));
+        super(MachineTypeRegistry.DRUM, new SideConfig(0, 0, 0, 0, 0, 0, 1));
         tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true, FlowType.INOUT));
-        input = addMachineData(new ItemMachineData("Input",
-                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
-                FlowType.INPUT));
-        output = addMachineData(new ItemMachineData("Output",
-                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
-                FlowType.OUTPUT));
+        input = addMachineData(new ItemMachineData("Input", MachineTypeRegistry::holdsFluid, FlowType.INPUT));
+        output = addMachineData(new ItemMachineData("Output", MachineTypeRegistry::holdsFluid, FlowType.OUTPUT));
     }
 
     @Override

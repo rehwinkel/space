@@ -2,80 +2,76 @@
   "multipart": [
     {
       "when": {
-        "running": "false",
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/blast_furnace"
+        "model": "space:block/refinery"
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/refinery",
         "y": 180
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "west"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/refinery",
         "y": 270
       }
     },
     {
       "when": {
-        "running": "false",
         "facing": "east"
       },
       "apply": {
-        "model": "space:block/blast_furnace",
+        "model": "space:block/refinery",
         "y": 90
       }
     },
     {
       "when": {
-        "running": "true",
+        "north": "true",
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running"
+        "model": "space:block/refinery_connector_north"
       }
     },
     {
       "when": {
-        "running": "true",
+        "north": "true",
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
+        "model": "space:block/refinery_connector_north",
         "y": 180
       }
     },
     {
       "when": {
-        "running": "true",
-        "facing": "west"
+        "north": "true",
+        "facing": "east"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
-        "y": 270
+        "model": "space:block/refinery_connector_north",
+        "y": 90
       }
     },
     {
       "when": {
-        "running": "true",
-        "facing": "east"
+        "north": "true",
+        "facing": "west"
       },
       "apply": {
-        "model": "space:block/blast_furnace_running",
-        "y": 90
+        "model": "space:block/refinery_connector_north",
+        "y": 270
       }
     },
     {
@@ -84,8 +80,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "space:block/connector_long3",
-        "y": 180
+        "model": "space:block/refinery_connector_south"
       }
     },
     {
@@ -94,97 +89,97 @@
         "facing": "south"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/refinery_connector_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/refinery_connector_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/refinery_connector_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/connector",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "space:block/connector",
         "y": 360
       }
     },
     {
       "when": {
-        "south": "true",
-        "facing": "east"
+        "west": "true",
+        "facing": "north"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector",
         "y": 270
       }
     },
     {
       "when": {
-        "south": "true",
-        "facing": "west"
+        "west": "true",
+        "facing": "south"
       },
       "apply": {
-        "model": "space:block/connector_long3",
+        "model": "space:block/connector",
         "y": 450
       }
     },
     {
       "when": {
-        "east": "true",
-        "facing": "north"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "east": "true",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "east": "true",
-        "facing": "east"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "east": "true",
-        "facing": "west"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 360
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "north"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 450
-      }
-    },
-    {
-      "when": {
         "west": "true",
         "facing": "east"
       },
       "apply": {
-        "model": "space:block/connector_short",
+        "model": "space:block/connector",
         "y": 360
       }
     },
@@ -194,8 +189,16 @@
         "facing": "west"
       },
       "apply": {
-        "model": "space:block/connector_short",
+        "model": "space:block/connector",
         "y": 540
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "space:block/refinery_connector_top"
       }
     },
     {

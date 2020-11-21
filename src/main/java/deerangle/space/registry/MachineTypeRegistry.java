@@ -5,8 +5,10 @@ import deerangle.space.machine.element.BurnElement;
 import deerangle.space.machine.element.MachineType;
 import deerangle.space.machine.element.ProgressElement;
 import deerangle.space.machine.util.FlowType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -21,11 +23,25 @@ public class MachineTypeRegistry {
     public static MachineType<GasTankMachine> GAS_TANK;
     public static MachineType<DrumMachine> DRUM;
     public static MachineType<BatteryPackMachine> BATTERY_PACK;
+    public static MachineType<RefineryMachine> REFINERY;
+
+    public static boolean holdsFluid(ItemStack stack) {
+        return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent();
+    }
+
+    public static boolean holdsEnergy(ItemStack stack) {
+        //TODO
+        return stack.getCapability(CapabilityEnergy.ENERGY).isPresent();
+    }
+
+    public static boolean isFuel(ItemStack stack) {
+        return ForgeHooks.getBurnTime(stack) > 0;
+    }
 
     @SubscribeEvent
     public static void registerMachineTypes(RegistryEvent.Register<MachineType<?>> event) {
         COAL_GENERATOR = register("coal_generator", MachineType.builder(CoalGeneratorMachine::new)
-                .addItemElement(79, 47, 0, FlowType.INPUT, stack -> ForgeHooks.getBurnTime(stack) > 0)
+                .addItemElement(79, 47, 0, FlowType.INPUT, MachineTypeRegistry::isFuel)
                 .addEnergyElement(17, 17, 1, FlowType.OUTPUT).add(new BurnElement(79, 29, 2)));
         BLAST_FURNACE = register("blast_furnace", MachineType.builder(BlastFurnaceMachine::new)
                 .addItemElement(55, 52, 0, FlowType.INPUT, stack -> stack.getItem().equals(Items.COAL))
@@ -34,31 +50,28 @@ public class MachineTypeRegistry {
                 .add(new ProgressElement(79, 33, 4)));
         COMBUSTION_GENERATOR = register("combustion_generator",
                 MachineType.builder(CombustionGeneratorMachine::new).addFluidElement(89, 17, 0, FlowType.INPUT)
-                        .addEnergyElement(17, 17, 1, FlowType.OUTPUT).addItemElement(69, 48, 2, FlowType.INPUT,
-                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent())
+                        .addEnergyElement(17, 17, 1, FlowType.OUTPUT)
+                        .addItemElement(69, 48, 2, FlowType.INPUT, MachineTypeRegistry::holdsFluid)
                         .add(new BurnElement(69, 29, 3)));
         GAS_TANK = register("gas_tank",
                 MachineType.builder(GasTankMachine::new).addFluidElement(79, 17, 0, FlowType.INOUT)
-                        .addItemElement(79 - 20, 17, 1, FlowType.INPUT,
-                                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                                        .isPresent()).addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
-                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                                .isPresent()));
+                        .addItemElement(79 - 20, 17, 1, FlowType.INPUT, MachineTypeRegistry::holdsFluid)
+                        .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT, MachineTypeRegistry::holdsFluid));
         DRUM = register("drum", MachineType.builder(DrumMachine::new).addFluidElement(79, 17, 0, FlowType.INOUT)
-                .addItemElement(79 - 20, 17, 1, FlowType.INPUT,
-                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent())
-                .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
-                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                                .isPresent()));
+                .addItemElement(79 - 20, 17, 1, FlowType.INPUT, MachineTypeRegistry::holdsFluid)
+                .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT, MachineTypeRegistry::holdsFluid));
         BATTERY_PACK = register("battery_pack",
                 MachineType.builder(BatteryPackMachine::new).addEnergyElement(79 + 4, 17, 0, FlowType.INOUT)
-                        .addItemElement(79 - 20, 17, 1, FlowType.INPUT,
-                                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                                        .isPresent()).addItemElement(79 + 20, 17, 2, FlowType.OUTPUT,
-                        stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY)
-                                .isPresent()));
+                        .addItemElement(79 - 20, 17, 1, FlowType.INPUT, MachineTypeRegistry::holdsEnergy)
+                        .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT, MachineTypeRegistry::holdsEnergy));
+        REFINERY = register("refinery",
+                MachineType.builder(RefineryMachine::new).addEnergyElement(17, 17, 0, FlowType.INPUT)
+                        .addFluidElement(37, 17, 1, FlowType.INPUT).addFluidElement(57, 17, 2, FlowType.OUTPUT)
+                        .addItemElement(77, 17, 3, FlowType.INPUT, MachineTypeRegistry::holdsFluid)
+                        .addItemElement(97, 17, 4, FlowType.OUTPUT, MachineTypeRegistry::holdsFluid));
         event.getRegistry()
-                .registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK);
+                .registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK,
+                        REFINERY);
     }
 
     private static <M extends Machine> MachineType<M> register(String name, MachineType.Builder<M> builder) {

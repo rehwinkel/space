@@ -81,10 +81,10 @@ public class ResourceRegistry extends AbstractRegistry {
             .register("ignition_coil", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> INDUSTRIAL_PISTON = ITEMS
             .register("industrial_piston", () -> new Item(new Item.Properties().group(TAB)));
-    public static final RegistryObject<Item> COPPER_PIPE = ITEMS
-            .register("copper_pipe", () -> new Item(new Item.Properties().group(TAB)));
-    public static final RegistryObject<Item> IRON_PIPE = ITEMS
-            .register("iron_pipe", () -> new Item(new Item.Properties().group(TAB)));
+    public static final RegistryObject<Item> COPPER_TUBE = ITEMS
+            .register("copper_tube", () -> new Item(new Item.Properties().group(TAB)));
+    public static final RegistryObject<Item> IRON_TUBE = ITEMS
+            .register("iron_tube", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> IRON_DUST = ITEMS
             .register("iron_dust", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> QUARTZ_DUST = ITEMS

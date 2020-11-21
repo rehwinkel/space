@@ -16,7 +16,7 @@ public class BatteryPackMachine extends Machine {
     private final ItemMachineData output;
 
     public BatteryPackMachine() {
-        super(MachineTypeRegistry.BATTERY_PACK, new SideConfig(0, 0, 0, 0, 0, 0, 3));
+        super(MachineTypeRegistry.BATTERY_PACK, new SideConfig(0, 0, 0, 0, 0, 0, 1));
         energy = addMachineData(new EnergyMachineData("Energy", 500000, 1000, FlowType.INOUT));
         input = addMachineData(
                 new ItemMachineData("Input", stack -> stack.getCapability(CapabilityEnergy.ENERGY).isPresent(),

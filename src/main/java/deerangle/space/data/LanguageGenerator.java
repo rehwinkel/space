@@ -3,6 +3,7 @@ package deerangle.space.data;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -14,12 +15,13 @@ public class LanguageGenerator extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add(MachineRegistry.COAL_GENERATOR.get(), "Coal Generator");
-        add(MachineRegistry.BLAST_FURNACE.get(), "Blast Furnace");
-        add(MachineRegistry.COMBUSTION_GENERATOR.get(), "Combustion Generator");
-        add(MachineRegistry.GAS_TANK.get(), "Gas Tank");
-        add(MachineRegistry.DRUM.get(), "Drum");
-        add(MachineRegistry.BATTERY_PACK.get(), "Battery Pack");
+        addMachine(MachineRegistry.COAL_GENERATOR.get(), "Coal Generator");
+        addMachine(MachineRegistry.BLAST_FURNACE.get(), "Blast Furnace");
+        addMachine(MachineRegistry.COMBUSTION_GENERATOR.get(), "Combustion Generator");
+        addMachine(MachineRegistry.GAS_TANK.get(), "Gas Tank");
+        addMachine(MachineRegistry.DRUM.get(), "Drum");
+        addMachine(MachineRegistry.BATTERY_PACK.get(), "Battery Pack");
+        addMachine(MachineRegistry.REFINERY.get(), "Refinery");
         add(FluidRegistry.CRUDE_OIL_BLOCK.get(), "Crude Oil");
         add(FluidRegistry.CRUDE_OIL_BUCKET.get(), "Crude Oil Bucket");
         add(FluidRegistry.KEROSENE_BLOCK.get(), "Kerosene");
@@ -49,8 +51,8 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.CYLINDER.get(), "Cylinder");
         add(ResourceRegistry.IGNITION_COIL.get(), "Ignition Coil");
         add(ResourceRegistry.INDUSTRIAL_PISTON.get(), "Industrial Piston");
-        add(ResourceRegistry.COPPER_PIPE.get(), "Copper Pipe");
-        add(ResourceRegistry.IRON_PIPE.get(), "Iron Pipe");
+        add(ResourceRegistry.COPPER_TUBE.get(), "Copper Tube");
+        add(ResourceRegistry.IRON_TUBE.get(), "Iron Tube");
         add(ResourceRegistry.IRON_DUST.get(), "Iron Dust");
         add(ResourceRegistry.QUARTZ_DUST.get(), "Quartz Dust");
         add(ResourceRegistry.STEEL_ROD.get(), "Steel Rod");
@@ -63,12 +65,6 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.ROCKET_THRUSTER.get(), "Rocket Thruster");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
-        add("stat.space.interact_with_coal_generator", "Interactions with Coal Generator");
-        add("stat.space.interact_with_blast_furnace", "Interactions with Blast Furnace");
-        add("stat.space.interact_with_combustion_generator", "Interactions with Combustion Generator");
-        add("stat.space.interact_with_drum", "Interactions with Drum");
-        add("stat.space.interact_with_gas_tank", "Interactions with Gas Tank");
-        add("stat.space.interact_with_battery_pack", "Interactions with Battery Pack");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");
         add("info.space.missing_fluid", "None");
@@ -79,6 +75,12 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.back_letter", "B");
         add("info.space.left_letter", "L");
         add("info.space.right_letter", "R");
+    }
+
+    private void addMachine(Block block, String translation) {
+        String blockName = block.getRegistryName().getPath();
+        add("stat.space.interact_with_" + blockName, "Interactions with " + translation);
+        add(block, translation);
     }
 
 }

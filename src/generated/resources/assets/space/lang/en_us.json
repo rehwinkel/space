@@ -13,6 +13,7 @@
   "block.space.ilmenite_ore": "Ilmenite Ore",
   "block.space.kerosene": "Kerosene",
   "block.space.quartz_sand": "Quartz Sand",
+  "block.space.refinery": "Refinery",
   "block.space.rusty_dust": "Rusty Dust",
   "block.space.steel_block": "Steel Block",
   "block.space.titanium_block": "Titanium Block",
@@ -63,5 +64,6 @@
   "stat.space.interact_with_coal_generator": "Interactions with Coal Generator",
   "stat.space.interact_with_combustion_generator": "Interactions with Combustion Generator",
   "stat.space.interact_with_drum": "Interactions with Drum",
-  "stat.space.interact_with_gas_tank": "Interactions with Gas Tank"
+  "stat.space.interact_with_gas_tank": "Interactions with Gas Tank",
+  "stat.space.interact_with_refinery": "Interactions with Refinery"
 }

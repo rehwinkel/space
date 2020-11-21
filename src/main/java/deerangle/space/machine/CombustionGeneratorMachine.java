@@ -31,26 +31,24 @@ public class CombustionGeneratorMachine extends Machine {
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
 
-    public static final Map<Fluid, Integer> BURN_TIME_HASHMAP = ImmutableMap
+    public static final Map<Fluid, Integer> BURN_TIME_MAP = ImmutableMap
             .of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
     private int currentBurnTime;
     private int currentMaxBurnTime;
 
     public static int getBurnTime(FluidStack stack) {
-        if (!BURN_TIME_HASHMAP.containsKey(stack.getFluid())) {
+        if (!BURN_TIME_MAP.containsKey(stack.getFluid())) {
             return 0;
         }
-        return BURN_TIME_HASHMAP.get(stack.getFluid()) * stack.getAmount();
+        return BURN_TIME_MAP.get(stack.getFluid()) * stack.getAmount();
     }
 
     public CombustionGeneratorMachine() {
         super(MachineTypeRegistry.COMBUSTION_GENERATOR,
-                new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 3));
+                new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 2));
         fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT));
         energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000, FlowType.OUTPUT));
-        bucket = addMachineData(new ItemMachineData("Bucket",
-                stack -> stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent(),
-                FlowType.INPUT));
+        bucket = addMachineData(new ItemMachineData("Bucket", MachineTypeRegistry::holdsFluid, FlowType.INPUT));
         burn = addMachineData(new BurnMachineData("Burn"));
     }
 

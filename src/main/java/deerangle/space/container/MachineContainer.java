@@ -20,6 +20,7 @@ import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.IItemHandler;
@@ -50,7 +51,8 @@ public class MachineContainer extends Container {
             this.machine = machine;
         }
         IForgeRegistry<MachineType<?>> registry = RegistryManager.ACTIVE.getRegistry(MachineType.class);
-        this.machineType = Objects.requireNonNull(registry.getValue(data.readResourceLocation()));
+        ResourceLocation loc = data.readResourceLocation();
+        this.machineType = Objects.requireNonNull(registry.getValue(loc));
         this.itemSlotCount = this.getItemSlotCount();
 
         for (Element el : this.machineType.getElements()) {

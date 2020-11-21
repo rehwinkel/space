@@ -74,6 +74,7 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         int dist = 6;
         int size = dist + width;
         int topOffset = 48;
+        //TODO: show tooltip for sides
         this.topButton = addButton(new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + topOffset,
                 this.valueReader.getTopColor(), new TranslationTextComponent("info.space.top_letter"), button -> {
             PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),

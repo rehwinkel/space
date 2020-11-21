@@ -170,6 +170,13 @@ public class BlockStateGenerator extends BlockStateProvider {
                 new RotatedModel[]{new RotatedModel(connectorShort, 0, 0), new RotatedModel(connectorShort, 0,
                         180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0,
                         270), new RotatedModel(connector, 270, 0), new RotatedModel(connector, 90, 0)}, false);
+        machineBlockWithItem(MachineRegistry.REFINERY.get(), new RotatedModel[]{new RotatedModel(
+                models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_north")), 0,
+                0), new RotatedModel(
+                models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_south")), 0,
+                0), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(
+                models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_top")), 0,
+                0), new RotatedModel(connector, 90, 0)}, false); //TODO: fix south
     }
 
 }

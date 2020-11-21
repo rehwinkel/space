@@ -6,7 +6,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.DynamicBucketModel;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
@@ -49,8 +48,8 @@ public class ItemModelGenerator extends ItemModelProvider {
         addFlatItem(ResourceRegistry.CYLINDER.get());
         addFlatItem(ResourceRegistry.IGNITION_COIL.get());
         addFlatItem(ResourceRegistry.INDUSTRIAL_PISTON.get());
-        addFlatItem(ResourceRegistry.COPPER_PIPE.get());
-        addFlatItem(ResourceRegistry.IRON_PIPE.get());
+        addFlatItem(ResourceRegistry.COPPER_TUBE.get());
+        addFlatItem(ResourceRegistry.IRON_TUBE.get());
         addFlatItem(ResourceRegistry.IRON_DUST.get());
         addFlatItem(ResourceRegistry.QUARTZ_DUST.get());
         addFlatItem(ResourceRegistry.STEEL_ROD.get());
