@@ -1,10 +1,7 @@
 package deerangle.space.registry;
 
 import deerangle.space.main.SpaceMod;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -46,7 +43,7 @@ public class ResourceRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
                     .hardnessAndResistance(1.0F, 1.0F)));
-    public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new Block(
+    public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new FallingBlock(
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
                     .hardnessAndResistance(1.0F, 1.0F)));
 

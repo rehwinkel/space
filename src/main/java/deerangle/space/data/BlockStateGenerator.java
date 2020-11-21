@@ -186,7 +186,7 @@ public class BlockStateGenerator extends BlockStateProvider {
                 models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_south")), 0,
                 0), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(
                 models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_top")), 0,
-                0), new RotatedModel(connector, 90, 0)}, false); //TODO: fix south
+                0), new RotatedModel(connector, 90, 0)}, false);
     }
 
 }

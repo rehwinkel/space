@@ -114,6 +114,7 @@ public abstract class MachineBlock extends Block {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof MachineTileEntity) {
                 Machine machine = ((MachineTileEntity) tileEntity).getMachine();
+                //TODO Ctrl + Middle click
                 machine.loadItemNBT(dataTag);
             }
         }
