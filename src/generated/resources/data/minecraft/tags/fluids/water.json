@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "space:crude_oil",
-    "space:crude_oil_flowing"
+    "space:crude_oil_flowing",
+    "space:kerosene",
+    "space:kerosene_flowing"
   ]
 }

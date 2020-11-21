@@ -22,6 +22,8 @@ public class LanguageGenerator extends LanguageProvider {
         add(MachineRegistry.BATTERY_PACK.get(), "Battery Pack");
         add(FluidRegistry.CRUDE_OIL_BLOCK.get(), "Crude Oil");
         add(FluidRegistry.CRUDE_OIL_BUCKET.get(), "Crude Oil Bucket");
+        add(FluidRegistry.KEROSENE_BLOCK.get(), "Kerosene");
+        add(FluidRegistry.KEROSENE_BUCKET.get(), "Kerosene Bucket");
         add(ResourceRegistry.COPPER_ORE.get(), "Copper Ore");
         add(ResourceRegistry.ALUMINIUM_ORE.get(), "Aluminium Ore");
         add(ResourceRegistry.ILMENITE_ORE.get(), "Ilmenite Ore");

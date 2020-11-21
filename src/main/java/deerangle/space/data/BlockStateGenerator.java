@@ -146,6 +146,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlockWithItem(ResourceRegistry.QUARTZ_SAND.get());
         simpleBlockWithItem(ResourceRegistry.RUSTY_DUST.get());
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
+        fluidBlock(FluidRegistry.KEROSENE.get());
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
                         90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270,
