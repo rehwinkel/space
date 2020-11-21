@@ -33,6 +33,7 @@ public class SpaceMod {
     public static IProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
     public SpaceMod() {
+        //TODO: jei integration
         AbstractRegistry.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         AbstractRegistry.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
