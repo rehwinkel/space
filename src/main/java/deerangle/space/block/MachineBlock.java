@@ -96,7 +96,7 @@ public abstract class MachineBlock extends Block {
                 ItemStack itemstack = new ItemStack(this);
                 CompoundNBT nbt = machine.saveItemNBT(new CompoundNBT());
                 if (!nbt.isEmpty()) {
-                    itemstack.setTagInfo("Data", nbt);
+                    itemstack.setTagInfo("BlockEntityTag", nbt);
                 }
 
                 ItemEntity itemEntity = new ItemEntity(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D,
@@ -106,18 +106,6 @@ public abstract class MachineBlock extends Block {
             }
         }
         super.onBlockHarvested(worldIn, pos, state, player);
-    }
-
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (stack.getTag() != null) {
-            CompoundNBT dataTag = stack.getTag().getCompound("Data");
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if (tileEntity instanceof MachineTileEntity) {
-                Machine machine = ((MachineTileEntity) tileEntity).getMachine();
-                //TODO Ctrl + Middle click
-                machine.loadItemNBT(dataTag);
-            }
-        }
     }
 
     @Override

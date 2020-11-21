@@ -75,7 +75,7 @@ public class MachineTypeRegistry {
                 .addEnergyElement(79 + 4, 17, 0, FlowType.INOUT, ENERGY_TEXT)
                 .addItemElement(79 - 20, 17, 1, FlowType.INPUT, MachineTypeRegistry::holdsEnergy, BATTERY_TEXT)
                 .addItemElement(79 + 20, 17, 2, FlowType.OUTPUT, MachineTypeRegistry::holdsEnergy, BATTERY_TEXT));
-        REFINERY = register("refinery",
+        REFINERY = register("refinery", //TODO: slot positions
                 MachineType.builder(RefineryMachine::new).addEnergyElement(17, 17, 0, FlowType.INPUT, ENERGY_TEXT)
                         .addFluidElement(37, 17, 1, FlowType.INPUT, INPUT_TEXT)
                         .addFluidElement(57, 17, 2, FlowType.OUTPUT, OUTPUT_TEXT)
