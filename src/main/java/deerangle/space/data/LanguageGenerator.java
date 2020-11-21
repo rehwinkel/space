@@ -67,7 +67,15 @@ public class LanguageGenerator extends LanguageProvider {
         add("itemGroup.space.machine", "Space Machines");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");
-        add("info.space.missing_fluid", "None");
+        add("info.space.blocked", "Blocked");
+        add("info.space.none", "None");
+        add("info.space.element.bucket", "Bucket");
+        add("info.space.element.battery", "Battery");
+        add("info.space.element.tank", "Tank");
+        add("info.space.element.fuel", "Fuel");
+        add("info.space.element.energy", "Energy");
+        add("info.space.element.input", "Input");
+        add("info.space.element.output", "Output");
         add("info.space.side_config", "Side Config");
         add("info.space.top_letter", "U");
         add("info.space.bottom_letter", "D");
@@ -75,6 +83,12 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.back_letter", "B");
         add("info.space.left_letter", "L");
         add("info.space.right_letter", "R");
+        add("info.space.top", "Up: %s");
+        add("info.space.bottom", "Down: %s");
+        add("info.space.front", "Front: %s");
+        add("info.space.back", "Back: %s");
+        add("info.space.left", "Left: %s");
+        add("info.space.right", "Right: %s");
     }
 
     private void addMachine(Block block, String translation) {

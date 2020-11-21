@@ -20,8 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class FluidElement extends OverlayedElement {
 
-    public FluidElement(int x, int y, int index, FlowType flowType, int color) {
-        super(x, y, index, flowType, color, 18, 49);
+    public FluidElement(int x, int y, int index, FlowType flowType, int color, ITextComponent name) {
+        super(x, y, index, flowType, color, name, 18, 49);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FluidElement extends OverlayedElement {
         int cap = fluidAndCap.getSecond();
         ITextComponent fluidName = new TranslationTextComponent(fluid.getTranslationKey());
         if (fluid.isEmpty()) {
-            fluidName = new TranslationTextComponent("info.space.missing_fluid");
+            fluidName = new TranslationTextComponent("info.space.none");
         }
         return new TranslationTextComponent("info.space.fluid", fluidName, fluid.getAmount(), cap);
     }

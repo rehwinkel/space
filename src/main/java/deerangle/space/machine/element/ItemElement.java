@@ -13,8 +13,8 @@ public class ItemElement extends OverlayedElement {
 
     private final Predicate<ItemStack> validPredicate;
 
-    ItemElement(int x, int y, int index, FlowType flowType, int overlayColor, Predicate<ItemStack> acceptedForSlot) {
-        super(x, y, index, flowType, overlayColor, 18, 18);
+    ItemElement(int x, int y, int index, FlowType flowType, int overlayColor, ITextComponent name, Predicate<ItemStack> acceptedForSlot) {
+        super(x, y, index, flowType, overlayColor, name, 18, 18);
         this.validPredicate = acceptedForSlot;
     }
 

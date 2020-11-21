@@ -8,9 +8,7 @@ import deerangle.space.machine.element.OverlayedElement;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.network.AdvanceSideMsg;
 import deerangle.space.network.PacketHandler;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
@@ -74,45 +73,41 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         int dist = 6;
         int size = dist + width;
         int topOffset = 48;
-        //TODO: show tooltip for sides
-        this.topButton = addButton(new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + topOffset,
-                this.valueReader.getTopColor(), new TranslationTextComponent("info.space.top_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.TOP));
-        }));
-        this.frontButton = addButton(new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + size + topOffset,
-                this.valueReader.getFrontColor(), new TranslationTextComponent("info.space.front_letter"), button -> {
-            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.FRONT));
-        }));
+        this.topButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + topOffset, "info.space.top", button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.TOP));
+                }));
+        this.frontButton = addButton(
+                new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + size + topOffset, "info.space.front",
+                        button -> {
+                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.FRONT));
+                        }));
         this.bottomButton = addButton(
                 new SideColorButton(guiLeft + xSize / 2 - (width / 2), guiTop + size * 2 + topOffset,
-                        this.valueReader.getBottomColor(), new TranslationTextComponent("info.space.bottom_letter"),
-                        button -> {
-                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BOTTOM));
-                        }));
+                        "info.space.bottom", button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BOTTOM));
+                }));
         this.leftButton = addButton(
                 new SideColorButton(guiLeft + xSize / 2 - (width / 2) - size, guiTop + size + topOffset,
-                        this.valueReader.getLeftColor(), new TranslationTextComponent("info.space.left_letter"),
-                        button -> {
-                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.LEFT));
-                        }));
+                        "info.space.left", button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.LEFT));
+                }));
         this.backButton = addButton(
                 new SideColorButton(guiLeft + xSize / 2 - (width / 2) - size, guiTop + size * 2 + topOffset,
-                        this.valueReader.getBackColor(), new TranslationTextComponent("info.space.back_letter"),
-                        button -> {
-                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BACK));
-                        }));
+                        "info.space.back", button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.BACK));
+                }));
         this.rightButton = addButton(
                 new SideColorButton(guiLeft + xSize / 2 - (width / 2) + size, guiTop + size + topOffset,
-                        this.valueReader.getRightColor(), new TranslationTextComponent("info.space.right_letter"),
-                        button -> {
-                            PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
-                                    new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.RIGHT));
-                        }));
+                        "info.space.right", button -> {
+                    PacketHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(),
+                            new AdvanceSideMsg(pos, button == 0, AdvanceSideMsg.Face.RIGHT));
+                }));
         this.setButtonVisibility(!isMainScreen);
         this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
         this.sideConfigX = (this.xSize - this.font.getStringPropertyWidth(sideConfigText)) / 2;
@@ -127,6 +122,12 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         this.bottomButton.setColor(this.valueReader.getBottomColor());
         this.frontButton.setColor(this.valueReader.getFrontColor());
         this.backButton.setColor(this.valueReader.getBackColor());
+        this.leftButton.setSelectedName(this.valueReader.getLeftName());
+        this.rightButton.setSelectedName(this.valueReader.getRightName());
+        this.topButton.setSelectedName(this.valueReader.getTopName());
+        this.bottomButton.setSelectedName(this.valueReader.getBottomName());
+        this.frontButton.setSelectedName(this.valueReader.getFrontName());
+        this.backButton.setSelectedName(this.valueReader.getBackName());
     }
 
     private void setButtonVisibility(boolean visible) {
@@ -144,7 +145,18 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
         if (isMainScreen) {
             this.renderBarTooltips(matrixStack, mouseX, mouseY);
             this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        } else {
+            this.renderSideButtonTooltips(matrixStack, mouseX, mouseY);
         }
+    }
+
+    private void renderSideButtonTooltips(MatrixStack matrixStack, int x, int y) {
+        this.topButton.drawTooltip(this, matrixStack, x, y);
+        this.bottomButton.drawTooltip(this, matrixStack, x, y);
+        this.leftButton.drawTooltip(this, matrixStack, x, y);
+        this.rightButton.drawTooltip(this, matrixStack, x, y);
+        this.frontButton.drawTooltip(this, matrixStack, x, y);
+        this.backButton.drawTooltip(this, matrixStack, x, y);
     }
 
     private void renderBarTooltips(MatrixStack matrixStack, int x, int y) {

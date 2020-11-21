@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.util.FlowType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
@@ -48,16 +49,16 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
             this.constructor = constructor;
         }
 
-        public Builder<M> addItemElement(int x, int y, int index, FlowType flowType, Predicate<ItemStack> validPredicate) {
+        public Builder<M> addItemElement(int x, int y, int index, FlowType flowType, Predicate<ItemStack> validPredicate, ITextComponent name) {
             int color = this.getColor(flowType);
-            this.elements.add(new ItemElement(x, y, index, flowType, color, validPredicate));
+            this.elements.add(new ItemElement(x, y, index, flowType, color, name,validPredicate));
             this.incrementColorCounter(flowType);
             return this;
         }
 
-        public Builder<M> addEnergyElement(int x, int y, int index, FlowType flowType) {
+        public Builder<M> addEnergyElement(int x, int y, int index, FlowType flowType, ITextComponent name) {
             int color = this.getColor(flowType);
-            this.elements.add(new EnergyElement(x, y, index, flowType, color));
+            this.elements.add(new EnergyElement(x, y, index, flowType, color, name));
             this.incrementColorCounter(flowType);
             return this;
         }
@@ -92,9 +93,9 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
             return flowType.getColor(colorIndex);
         }
 
-        public Builder<M> addFluidElement(int x, int y, int index, FlowType flowType) {
+        public Builder<M> addFluidElement(int x, int y, int index, FlowType flowType, ITextComponent name) {
             int color = this.getColor(flowType);
-            this.elements.add(new FluidElement(x, y, index, flowType, color));
+            this.elements.add(new FluidElement(x, y, index, flowType, color, name));
             this.incrementColorCounter(flowType);
             return this;
         }

@@ -4,21 +4,25 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SideColorButton extends Button {
 
     private final IPressableRL pressedAction;
+    private final String tooltip;
     private int color;
+    private ITextComponent selectedName;
 
-    public SideColorButton(int x, int y, int color, ITextComponent title, IPressableRL pressedAction) {
-        super(x, y, 20, 20, title, null);
+    public SideColorButton(int x, int y, String title, IPressableRL pressedAction) {
+        super(x, y, 20, 20, new TranslationTextComponent(title + "_letter"), null);
         this.pressedAction = pressedAction;
-        this.color = color;
+        this.tooltip = title;
     }
 
     private void setOverlayColor() {
@@ -65,8 +69,20 @@ public class SideColorButton extends Button {
                 this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
     }
 
+    public void drawTooltip(Screen screen, MatrixStack matrixStack, int mouseX, int mouseY) {
+        if (mouseX >= this.x && mouseX < this.x + 20) {
+            if (mouseY >= this.y && mouseY < this.y + 20) {
+                screen.renderTooltip(matrixStack, new TranslationTextComponent(tooltip, selectedName), mouseX, mouseY);
+            }
+        }
+    }
+
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public void setSelectedName(ITextComponent selectedName) {
+        this.selectedName = selectedName;
     }
 
     @OnlyIn(Dist.CLIENT)

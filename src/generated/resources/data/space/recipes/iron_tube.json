@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ccc",
-    "c c",
-    "ccc"
+    "iii",
+    "i i",
+    "iii"
   ],
   "key": {
-    "c": {
-      "item": "space:copper_ingot"
+    "i": {
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "space:copper_pipe",
+    "item": "space:iron_tube",
     "count": 4
   }
 }

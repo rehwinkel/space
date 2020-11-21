@@ -10,8 +10,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class EnergyElement extends OverlayedElement {
 
-    EnergyElement(int x, int y, int index, FlowType flowType, int overlayColor) {
-        super(x, y, index, flowType, overlayColor, 10, 49);
+    EnergyElement(int x, int y, int index, FlowType flowType, int overlayColor, ITextComponent name) {
+        super(x, y, index, flowType, overlayColor, name, 10, 49);
     }
 
     @Override

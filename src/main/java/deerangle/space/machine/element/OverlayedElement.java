@@ -10,13 +10,15 @@ public abstract class OverlayedElement extends DataElement {
     private final int width;
     private final int height;
     private final int overlayColor;
+    private final ITextComponent name;
 
-    public OverlayedElement(int x, int y, int index, FlowType flowType, int overlayColor, int width, int height) {
+    public OverlayedElement(int x, int y, int index, FlowType flowType, int overlayColor, ITextComponent name, int width, int height) {
         super(x, y, index);
         this.flowType = flowType;
         this.overlayColor = overlayColor;
         this.width = width;
         this.height = height;
+        this.name = name;
     }
 
     public FlowType getFlowType() {
@@ -36,5 +38,9 @@ public abstract class OverlayedElement extends DataElement {
     }
 
     public abstract ITextComponent getTooltipText(DisplayValueReader valueReader);
+
+    public ITextComponent getName() {
+        return this.name;
+    }
 
 }

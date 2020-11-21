@@ -6,6 +6,8 @@ import deerangle.space.machine.data.*;
 import deerangle.space.machine.element.DataElement;
 import deerangle.space.machine.element.Element;
 import deerangle.space.machine.element.OverlayedElement;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;
@@ -67,6 +69,16 @@ public class DisplayValueReader {
         return ((OverlayedElement) this.dataElementMap.get(index)).getOverlayColor();
     }
 
+    private ITextComponent getIndexName(int index, boolean blocked) {
+        if (blocked) {
+            return new TranslationTextComponent("info.space.blocked");
+        }
+        if (index == -1) {
+            return new TranslationTextComponent("info.space.none");
+        }
+        return ((OverlayedElement) this.dataElementMap.get(index)).getName();
+    }
+
     public int getFrontColor() {
         return this.getIndexColor(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
     }
@@ -89,6 +101,30 @@ public class DisplayValueReader {
 
     public int getBottomColor() {
         return this.getIndexColor(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
+    }
+
+    public ITextComponent getBackName() {
+        return this.getIndexName(machine.getSideConfig().getBack(), machine.getSideConfig().isBackBlocked());
+    }
+
+    public ITextComponent getFrontName() {
+        return this.getIndexName(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
+    }
+
+    public ITextComponent getBottomName() {
+        return this.getIndexName(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
+    }
+
+    public ITextComponent getTopName() {
+        return this.getIndexName(machine.getSideConfig().getTop(), machine.getSideConfig().isTopBlocked());
+    }
+
+    public ITextComponent getRightName() {
+        return this.getIndexName(machine.getSideConfig().getRight(), machine.getSideConfig().isRightBlocked());
+    }
+
+    public ITextComponent getLeftName() {
+        return this.getIndexName(machine.getSideConfig().getLeft(), machine.getSideConfig().isLeftBlocked());
     }
 
 }
