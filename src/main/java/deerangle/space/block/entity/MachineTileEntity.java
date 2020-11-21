@@ -4,6 +4,7 @@ import deerangle.space.block.MachineBlock;
 import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.data.EnergyMachineData;
+import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.element.MachineType;
@@ -29,7 +30,9 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -41,6 +44,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
 
     public static final int ITEM_PUSH_COOLDOWN = 8;
     public static final int ITEM_PUSH_SIZE = 4;
+    public static final int FLUID_PER_TICK = 10;
 
     private Machine machine;
     private String machineName;
@@ -146,11 +150,23 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
             } else if (data instanceof EnergyMachineData) {
                 handleEnergyPush(((EnergyMachineData) data).getEnergyStorageForce(),
                         tileEntity.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()));
+            } else if (data instanceof FluidMachineData) {
+                handleFluidPush(((FluidMachineData) data).getFluidHandlerForce(),
+                        tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, dir.getOpposite()));
             }
-            //TODO: push fluids
         }
         if (this.pushCooldown > 0) {
             this.pushCooldown--;
+        }
+    }
+
+    private void handleFluidPush(IFluidHandler fluidHandler, LazyOptional<IFluidHandler> otherHandlerOpt) {
+        if (otherHandlerOpt.isPresent()) {
+            FluidStack drainedSim = fluidHandler.drain(FLUID_PER_TICK, IFluidHandler.FluidAction.SIMULATE);
+            IFluidHandler otherHandler = otherHandlerOpt.orElse(null);
+            int filled = otherHandler.fill(drainedSim, IFluidHandler.FluidAction.SIMULATE);
+            otherHandler.fill(fluidHandler.drain(filled, IFluidHandler.FluidAction.EXECUTE),
+                    IFluidHandler.FluidAction.EXECUTE);
         }
     }
 
