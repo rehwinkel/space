@@ -4,6 +4,7 @@ import deerangle.space.main.SpaceMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.OreBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -46,10 +47,9 @@ public class ResourceRegistry extends AbstractRegistry {
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
                     .hardnessAndResistance(1.0F, 1.0F)));
     public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new Block(
-            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
+            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
                     .hardnessAndResistance(1.0F, 1.0F)));
 
-    //TODO: sound of rusty dust and rotate top
     public static final RegistryObject<Item> ALUMINIUM_INGOT = ITEMS
             .register("aluminium_ingot", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> COPPER_INGOT = ITEMS

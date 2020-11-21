@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "space:block/rusty_dust"
-    }
+    "": [
+      {
+        "model": "space:block/rusty_dust",
+        "y": 90
+      },
+      {
+        "model": "space:block/rusty_dust",
+        "y": 180
+      },
+      {
+        "model": "space:block/rusty_dust",
+        "y": 270
+      },
+      {
+        "model": "space:block/rusty_dust"
+      }
+    ]
   }
 }
