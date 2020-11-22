@@ -20,7 +20,8 @@ public class SideColorButton extends Button {
     private ITextComponent selectedName;
 
     public SideColorButton(int x, int y, String title, IPressableRL pressedAction) {
-        super(x, y, 20, 20, new TranslationTextComponent(title + "_letter"), null);
+        super(x, y, 20, 20, new TranslationTextComponent(title + "_letter"), button -> {
+        });
         this.pressedAction = pressedAction;
         this.tooltip = title;
     }

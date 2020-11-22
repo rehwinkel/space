@@ -33,6 +33,7 @@ public class CoalGeneratorMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
+        //TODO: don't consume lava buckets
         boolean wasBurning = this.isBurning();
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandler().getStackInSlot(0);

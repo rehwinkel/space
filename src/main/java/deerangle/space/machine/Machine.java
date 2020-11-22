@@ -35,7 +35,7 @@ public abstract class Machine implements IColorGetter {
     protected static final ITextComponent ENERGY_TEXT = new TranslationTextComponent("info.space.element.energy");
     protected static final ITextComponent INPUT_TEXT = new TranslationTextComponent("info.space.element.input");
     protected static final ITextComponent OUTPUT_TEXT = new TranslationTextComponent("info.space.element.output");
-    private static final int[][] COLORS = new int[][]{new int[]{0xff0000, 0xff7f00, 0xffff00}, new int[]{0x0000ff, 0x007fff, 0x00ffff}, new int[]{0xff00ff}, null};
+    private static final int[][] COLORS = new int[][]{new int[]{0x0000ff, 0x007fff, 0x00ffff}, new int[]{0xff0000, 0xff7f00, 0xffff00}, new int[]{0xff00ff}, null};
     protected final SideConfig sideConfig;
     private final List<IMachineData> machineDataList = new ArrayList<>();
     private final MachineType<?> type;
