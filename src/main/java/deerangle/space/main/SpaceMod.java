@@ -6,6 +6,7 @@ import deerangle.space.main.proxy.ClientProxy;
 import deerangle.space.main.proxy.IProxy;
 import deerangle.space.main.proxy.ServerProxy;
 import deerangle.space.network.PacketHandler;
+import deerangle.space.planets.PlanetRegistry;
 import deerangle.space.registry.AbstractRegistry;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
@@ -43,6 +44,7 @@ public class SpaceMod {
         ResourceRegistry.register();
         FluidRegistry.register();
         Stats.register();
+        PlanetRegistry.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigData.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigData.CLIENT_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -73,6 +75,7 @@ public class SpaceMod {
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
+        PlanetRegistry.registerData(event);
     }
 
     private static <T> Class<T> c(Class<?> cls) {
