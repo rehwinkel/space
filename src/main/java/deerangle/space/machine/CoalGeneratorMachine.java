@@ -33,13 +33,17 @@ public class CoalGeneratorMachine extends Machine {
 
     @Override
     public void update(World world, BlockPos pos) {
-        //TODO: don't consume lava buckets
         boolean wasBurning = this.isBurning();
         if (currentBurnTime == 0) {
             ItemStack currentFuelStack = this.fuel.getItemHandler().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0 && this.energy.getEnergyStorage().receiveEnergy(RF_PER_TICK, true) != 0) {
-                this.fuel.getItemHandler().extractItem(0, 1, false);
+                ItemStack stack = this.fuel.getItemHandler().getStackInSlot(0);
+                if (stack.hasContainerItem()) {
+                    this.fuel.getItemHandler().setStackInSlot(0, stack.getContainerItem());
+                } else {
+                    this.fuel.getItemHandler().extractItem(0, 1, false);
+                }
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }

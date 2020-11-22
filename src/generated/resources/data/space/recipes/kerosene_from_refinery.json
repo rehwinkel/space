@@ -1,0 +1,12 @@
+{
+  "type": "space:refinery",
+  "input": {
+    "fluid": "space:crude_oil",
+    "amount": 2
+  },
+  "result": {
+    "fluid": "space:kerosene",
+    "amount": 1
+  },
+  "duration": 4
+}

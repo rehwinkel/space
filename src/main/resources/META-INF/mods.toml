@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="[35,)"
-license="All rights reserved"
+license="GPL-3.0-or-later"
 
 [[mods]]
 modId="space"
 version="0.1.0"
 displayName="S P A C E"
 logoFile="space.png"
-authors="Ian Rehwinkel, Sebastian Gerdon, Robin Gerdon and Max"
+authors="Ian Rehwinkel, Sebastian Gerdon and Robin Gerdon"
 description='''
 Explore space!
 '''

@@ -1,7 +1,8 @@
 package deerangle.space.data;
 
 import com.google.gson.JsonObject;
-import deerangle.space.main.SpaceMod;
+import deerangle.space.recipe.RefineryRecipeSerializer;
+import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.RecipeRegistry;
 import deerangle.space.registry.ResourceRegistry;
@@ -15,6 +16,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
@@ -25,8 +27,11 @@ public class RecipeGenerator extends RecipeProvider {
     }
 
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        consumer.accept(new BlastFurnaceResult(new ResourceLocation(SpaceMod.MOD_ID, "steel_ingot"),
-                Ingredient.fromTag(Tags.Items.INGOTS_IRON), ResourceRegistry.STEEL_INGOT.get(), 200 * 16));
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromTag(Tags.Items.INGOTS_IRON),
+                ResourceRegistry.STEEL_INGOT.get(), 200 * 16);
+
+        addRefineryRecipe(consumer, new FluidStack(FluidRegistry.CRUDE_OIL.get(), 2),
+                new FluidStack(FluidRegistry.KEROSENE.get(), 1), 4);
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get().asItem()),
                 ResourceRegistry.COPPER_INGOT.get(), 0.7F, 200)
@@ -119,6 +124,20 @@ public class RecipeGenerator extends RecipeProvider {
         addMachineRemoveNBTRecipe(MachineRegistry.DRUM.get(), consumer);
     }
 
+    private void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration) {
+        ResourceLocation loc = result.getRegistryName();
+        consumer.accept(new BlastFurnaceResult(
+                new ResourceLocation(loc.getNamespace(), loc.getPath() + "_from_space_blast_furnace"), input, result,
+                duration));
+    }
+
+    private void addRefineryRecipe(Consumer<IFinishedRecipe> consumer, FluidStack input, FluidStack result, int duration) {
+        ResourceLocation loc = result.getFluid().getRegistryName();
+        consumer.accept(
+                new RefineryResult(new ResourceLocation(loc.getNamespace(), loc.getPath() + "_from_refinery"), input,
+                        result, duration));
+    }
+
     private void addMachineRemoveNBTRecipe(Block block, Consumer<IFinishedRecipe> consumer) {
         String name = block.getRegistryName().getPath();
         ShapelessRecipeBuilder.shapelessRecipe(block).addIngredient(block).addCriterion("has_" + name, hasItem(block))
@@ -165,6 +184,48 @@ public class RecipeGenerator extends RecipeProvider {
         @Override
         public IRecipeSerializer<?> getSerializer() {
             return RecipeRegistry.BLAST_FURNACE.get();
+        }
+
+        @Override
+        public JsonObject getAdvancementJson() {
+            return null;
+        }
+
+        @Override
+        public ResourceLocation getAdvancementID() {
+            return null;
+        }
+
+    }
+
+    private class RefineryResult implements IFinishedRecipe {
+        private final ResourceLocation recipeId;
+        private final FluidStack input;
+        private final FluidStack result;
+        private final int duration;
+
+        public RefineryResult(ResourceLocation recipeId, FluidStack input, FluidStack result, int duration) {
+            this.recipeId = recipeId;
+            this.input = input;
+            this.result = result;
+            this.duration = duration;
+        }
+
+        @Override
+        public void serialize(JsonObject json) {
+            json.add("input", RefineryRecipeSerializer.writeFluidStack(this.input));
+            json.add("result", RefineryRecipeSerializer.writeFluidStack(this.result));
+            json.addProperty("duration", this.duration);
+        }
+
+        @Override
+        public ResourceLocation getID() {
+            return this.recipeId;
+        }
+
+        @Override
+        public IRecipeSerializer<?> getSerializer() {
+            return RecipeRegistry.REFINERY.get();
         }
 
         @Override
