@@ -7,7 +7,6 @@ import deerangle.space.machine.data.EnergyMachineData;
 import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.util.FlowType;
-import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.fluid.Fluid;
@@ -44,50 +43,53 @@ public class CombustionGeneratorMachine extends Machine {
     }
 
     public CombustionGeneratorMachine() {
-        super(MachineTypeRegistry.COMBUSTION_GENERATOR,
-                new SideConfig(0, 1, -1, -1, -1, 1, false, false, true, true, true, false, 2));
-        fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT));
-        energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000, FlowType.OUTPUT));
-        bucket = addMachineData(new ItemMachineData("Bucket", MachineTypeRegistry::holdsFluid, FlowType.INPUT));
+        super(MachineTypeRegistry.COMBUSTION_GENERATOR, false, false, true, true, true, false);
+        fuel = addMachineData(
+                new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT, this, FUEL_TEXT));
+        energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000, FlowType.OUTPUT, this, ENERGY_TEXT));
+        bucket = addMachineData(
+                new ItemMachineData("Bucket", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         burn = addMachineData(new BurnMachineData("Burn"));
+        this.sideConfig.setFront(fuel.getInputAccessor());
+        this.sideConfig.setBack(energy.getOutputAccessor());
     }
 
     @Override
     public void update(World world, BlockPos pos) {
         boolean wasBurning = this.isBurning();
 
-        ItemStack bucketItem = bucket.getItemHandlerForce().getStackInSlot(0);
+        ItemStack bucketItem = bucket.getItemHandler().getStackInSlot(0);
         bucketItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(cap -> {
             FluidStack simDrain = cap.drain(20, IFluidHandler.FluidAction.SIMULATE);
             if (simDrain.isEmpty()) {
                 simDrain = cap.drain(1000, IFluidHandler.FluidAction.SIMULATE);
                 if (!simDrain.isEmpty()) {
-                    int doneFill = this.fuel.getFluidHandlerForce().fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
+                    int doneFill = this.fuel.getFluidHandler().fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
                     if (doneFill == 1000) {
                         cap.drain(doneFill, IFluidHandler.FluidAction.EXECUTE);
-                        this.fuel.getFluidHandlerForce().fill(simDrain, IFluidHandler.FluidAction.EXECUTE);
+                        this.fuel.getFluidHandler().fill(simDrain, IFluidHandler.FluidAction.EXECUTE);
                     }
                 }
             } else {
-                int doneFill = this.fuel.getFluidHandlerForce().fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
+                int doneFill = this.fuel.getFluidHandler().fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
                 cap.drain(doneFill, IFluidHandler.FluidAction.EXECUTE);
-                this.fuel.getFluidHandlerForce().fill(simDrain, IFluidHandler.FluidAction.EXECUTE);
+                this.fuel.getFluidHandler().fill(simDrain, IFluidHandler.FluidAction.EXECUTE);
             }
-            bucket.getItemHandlerForce().setStackInSlot(0, cap.getContainer());
+            bucket.getItemHandler().setStackInSlot(0, cap.getContainer());
         });
 
-        FluidStack drainedSim = this.fuel.getFluidHandlerForce().drain(SIP_SIZE, IFluidHandler.FluidAction.SIMULATE);
+        FluidStack drainedSim = this.fuel.getFluidHandler().drain(SIP_SIZE, IFluidHandler.FluidAction.SIMULATE);
         if (!drainedSim.isEmpty() && currentBurnTime <= 0) {
-            if (this.energy.getEnergyStorageForce().receiveEnergy(RF_PER_TICK, true) > 0) {
+            if (this.energy.getEnergyStorage().receiveEnergy(RF_PER_TICK, true) > 0) {
                 currentMaxBurnTime = getBurnTime(drainedSim);
                 currentBurnTime = currentMaxBurnTime;
-                this.fuel.getFluidHandlerForce().drain(SIP_SIZE, IFluidHandler.FluidAction.EXECUTE);
+                this.fuel.getFluidHandler().drain(SIP_SIZE, IFluidHandler.FluidAction.EXECUTE);
             } else {
                 currentBurnTime = 0;
             }
         }
         if (currentBurnTime > 0) {
-            this.energy.getEnergyStorageForce().receiveEnergy(RF_PER_TICK, false);
+            this.energy.getEnergyStorage().receiveEnergy(RF_PER_TICK, false);
             currentBurnTime--;
         }
         if (currentMaxBurnTime > 0) {

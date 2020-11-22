@@ -5,7 +5,7 @@ import deerangle.space.machine.data.BurnMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.data.ProgressMachineData;
 import deerangle.space.machine.util.FlowType;
-import deerangle.space.machine.util.SideConfig;
+import deerangle.space.machine.util.StackInventory;
 import deerangle.space.recipe.BlastFurnaceRecipe;
 import deerangle.space.registry.MachineTypeRegistry;
 import deerangle.space.registry.RecipeRegistry;
@@ -36,13 +36,17 @@ public class BlastFurnaceMachine extends Machine {
     private BlastFurnaceRecipe currentRecipe = null;
 
     public BlastFurnaceMachine() {
-        super(MachineTypeRegistry.BLAST_FURNACE,
-                new SideConfig(-1, -1, 1, 2, -1, 0, true, false, false, false, true, false, 3));
-        fuel = addMachineData(new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL), FlowType.INPUT));
-        input = addMachineData(new ItemMachineData("Input", FlowType.INPUT));
-        output = addMachineData(new ItemMachineData("Output", FlowType.OUTPUT));
+        super(MachineTypeRegistry.BLAST_FURNACE, true, false, false, false, true, false);
+        fuel = addMachineData(
+                new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL), FlowType.INPUT, this,
+                        FUEL_TEXT));
+        input = addMachineData(new ItemMachineData("Input", FlowType.INPUT, this, INPUT_TEXT));
+        output = addMachineData(new ItemMachineData("Output", FlowType.OUTPUT, this, OUTPUT_TEXT));
         burn = addMachineData(new BurnMachineData("Burn"));
         progress = addMachineData(new ProgressMachineData("Prog"));
+        this.sideConfig.setLeft(input.getInputAccessor());
+        this.sideConfig.setRight(output.getOutputAccessor());
+        this.sideConfig.setBack(fuel.getInputAccessor());
     }
 
     @Override
@@ -50,8 +54,8 @@ public class BlastFurnaceMachine extends Machine {
         boolean wasBurning = this.isBurning();
 
         Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
-                new StackInventory(this.input.getItemHandlerForce().getStackInSlot(0)), world);
-        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandlerForce()
+                new StackInventory(this.input.getItemHandler().getStackInSlot(0)), world);
+        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandler()
                 .insertItem(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
         if (this.currentRecipe != null && this.currentProgress == 1) {
             shouldUseFuel = false;
@@ -79,9 +83,9 @@ public class BlastFurnaceMachine extends Machine {
         }
 
         if (this.currentProgress == 0 && this.currentRecipe != null) {
-            IItemHandler out = this.output.getItemHandlerForce();
+            IItemHandler out = this.output.getItemHandler();
             out.insertItem(0, this.currentRecipe.getCraftingResult(null), false);
-            this.input.getItemHandlerForce().extractItem(0, 1, false);
+            this.input.getItemHandler().extractItem(0, 1, false);
             this.currentRecipe = null;
             this.currentMaxProgress = 0;
             this.currentProgress = 0;
@@ -109,10 +113,10 @@ public class BlastFurnaceMachine extends Machine {
             currentBurnTime -= BURN_RATE;
         }
         if (currentBurnTime == 0) {
-            ItemStack currentFuelStack = this.fuel.getItemHandlerForce().getStackInSlot(0);
+            ItemStack currentFuelStack = this.fuel.getItemHandler().getStackInSlot(0);
             int burnTime = ForgeHooks.getBurnTime(currentFuelStack);
             if (burnTime > 0 && shouldUseFuel) {
-                this.fuel.getItemHandlerForce().extractItem(0, 1, false);
+                this.fuel.getItemHandler().extractItem(0, 1, false);
                 currentMaxBurnTime = burnTime;
                 currentBurnTime = currentMaxBurnTime;
             }
@@ -122,16 +126,20 @@ public class BlastFurnaceMachine extends Machine {
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
         super.write(nbt);
-        nbt.putInt("CurrentBurn", currentBurnTime);
-        nbt.putInt("CurrentMax", currentMaxBurnTime);
+        nbt.putInt("BurnCurr", currentBurnTime);
+        nbt.putInt("BurnMax", currentMaxBurnTime);
+        nbt.putInt("ProgCurr", currentProgress);
+        nbt.putInt("ProgMax", currentMaxProgress);
         return nbt;
     }
 
     @Override
     public void read(CompoundNBT nbt) {
         super.read(nbt);
-        currentMaxBurnTime = nbt.getInt("CurrentMax");
-        currentBurnTime = nbt.getInt("CurrentBurn");
+        currentMaxBurnTime = nbt.getInt("BurnMax");
+        currentBurnTime = nbt.getInt("BurnCurr");
+        currentMaxProgress = nbt.getInt("ProgMax");
+        currentProgress = nbt.getInt("ProgCurr");
     }
 
     private boolean isBurning() {

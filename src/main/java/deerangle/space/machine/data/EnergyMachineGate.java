@@ -1,8 +1,8 @@
 package deerangle.space.machine.data;
 
-import deerangle.space.machine.util.FlowType;
 import deerangle.space.machine.util.MachineEnergyStorage;
 import deerangle.space.machine.util.Ref;
+import deerangle.space.machine.util.Restriction;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -12,27 +12,37 @@ public class EnergyMachineGate {
     private final Ref<Integer> maxReceive;
     private final Ref<Integer> maxExtract;
     private final Ref<Integer> energy;
-    private final LazyOptional<IEnergyStorage> restricted;
     private final LazyOptional<IEnergyStorage> unrestricted;
+    private final LazyOptional<IEnergyStorage> only_out;
+    private final LazyOptional<IEnergyStorage> only_in;
 
-    public EnergyMachineGate(int capacity, int maxReceive, int maxExtract, int energy, FlowType flowType) {
+    public EnergyMachineGate(int capacity, int maxReceive, int maxExtract, int energy) {
         this.capacity = new Ref<>(capacity);
         this.maxReceive = new Ref<>(maxReceive);
         this.maxExtract = new Ref<>(maxExtract);
         this.energy = new Ref<>(energy);
-        restricted = LazyOptional
-                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
-                        flowType));
         unrestricted = LazyOptional
-                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy, null));
+                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
+                        Restriction.UNRESTRICTED));
+        only_out = LazyOptional
+                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
+                        Restriction.ONLY_OUT));
+        only_in = LazyOptional
+                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
+                        Restriction.ONLY_IN));
+
     }
 
-    public LazyOptional<IEnergyStorage> getEnergyStorage(boolean fromCapability) {
-        if (fromCapability) {
-            return restricted;
-        } else {
-            return unrestricted;
+    public LazyOptional<IEnergyStorage> getEnergyStorage(Restriction restriction) {
+        switch (restriction) {
+            case UNRESTRICTED:
+                return unrestricted;
+            case ONLY_OUT:
+                return only_out;
+            case ONLY_IN:
+                return only_in;
         }
+        return null;
     }
 
     public int getCapacity() {

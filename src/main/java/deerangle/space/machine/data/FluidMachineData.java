@@ -1,43 +1,38 @@
 package deerangle.space.machine.data;
 
 import deerangle.space.machine.util.FlowType;
+import deerangle.space.machine.util.IColorGetter;
+import deerangle.space.machine.util.Restriction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.function.Predicate;
 
-public class FluidMachineData implements IMachineData {
+public class FluidMachineData extends BaseMachineData {
 
-    private final String name;
     private final FluidMachineGate tank;
-    private final FlowType flowType;
 
-    public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate, FlowType flowType) {
-        this.tank = new FluidMachineGate(capacity, validPredicate, flowType);
-        this.name = name;
-        this.flowType = flowType;
+    public FluidMachineData(String name, int capacity, Predicate<FluidStack> validPredicate, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
+        super(name, flowType, colorGetter, dataName);
+        this.tank = new FluidMachineGate(capacity, validPredicate);
     }
 
-    @Override
-    public FlowType getFlowType() {
-        return this.flowType;
+
+    public LazyOptional<IFluidHandler> getFluidHandlerOpt(Restriction restriction) {
+        return this.tank.getFluidHandler(restriction);
     }
 
-    public LazyOptional<IFluidHandler> getFluidHandler(boolean fromCapability) {
-        return tank.getFluidHandler(fromCapability);
+    public IFluidHandler getFluidHandler(Restriction restriction) {
+        return this.getFluidHandlerOpt(restriction).orElseThrow(() -> new RuntimeException("Optional wasn't present"));
     }
 
-    public IFluidHandler getFluidHandlerForce(boolean fromCapability) {
-        return this.getFluidHandler(fromCapability)
-                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
-    }
-
-    public IFluidHandler getFluidHandlerForce() {
-        return this.getFluidHandlerForce(false);
+    public IFluidHandler getFluidHandler() {
+        return this.getFluidHandler(Restriction.UNRESTRICTED);
     }
 
     @Override
@@ -59,16 +54,6 @@ public class FluidMachineData implements IMachineData {
     @Override
     public void readPacket(PacketBuffer buf) {
         this.tank.setFluid(buf.readFluidStack());
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public boolean storeInItem() {
-        return true;
     }
 
     public int getCapacity() {

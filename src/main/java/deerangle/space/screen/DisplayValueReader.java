@@ -5,7 +5,7 @@ import deerangle.space.machine.Machine;
 import deerangle.space.machine.data.*;
 import deerangle.space.machine.element.DataElement;
 import deerangle.space.machine.element.Element;
-import deerangle.space.machine.element.OverlayedElement;
+import deerangle.space.machine.util.Accessor;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
@@ -13,22 +13,16 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class DisplayValueReader {
 
     private final Machine machine;
-    private final Map<Integer, DataElement> dataElementMap;
     private static final int DEFAULT_EMPTY_COLOR = 0x888888;
     private static final int BLOCKED_COLOR = 0x444444;
 
-    public DisplayValueReader(Machine machine, List<Element> elementList) {
+    public DisplayValueReader(Machine machine) {
         this.machine = machine;
-        dataElementMap = new HashMap<>();
-        for (Element el : elementList) {
-            if (el instanceof DataElement) {
-                dataElementMap.put(((DataElement) el).getIndex(), (DataElement) el);
-            }
-        }
     }
 
     public Pair<Integer, Integer> getEnergyData(int index) {
@@ -59,72 +53,75 @@ public class DisplayValueReader {
         return ((ProgressMachineData) data).getProgress();
     }
 
-    public int getIndexColor(int index, boolean blocked) {
+    public int getAccessorColor(Accessor accessor, boolean blocked) {
         if (blocked) {
             return BLOCKED_COLOR;
         }
-        if (index == -1) {
+        if (accessor == null) {
             return DEFAULT_EMPTY_COLOR;
         }
-        return ((OverlayedElement) this.dataElementMap.get(index)).getOverlayColor();
+        return accessor.getColor();
     }
 
-    private ITextComponent getIndexName(int index, boolean blocked) {
+    private ITextComponent getAccessorName(Accessor accessor, boolean blocked) {
         if (blocked) {
             return new TranslationTextComponent("info.space.blocked");
         }
-        if (index == -1) {
+        if (accessor == null) {
             return new TranslationTextComponent("info.space.none");
         }
-        return ((OverlayedElement) this.dataElementMap.get(index)).getName();
+        return accessor.getName();
     }
 
     public int getFrontColor() {
-        return this.getIndexColor(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
     }
 
     public int getBackColor() {
-        return this.getIndexColor(machine.getSideConfig().getBack(), machine.getSideConfig().isBackBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getBack(), machine.getSideConfig().isBackBlocked());
     }
 
     public int getLeftColor() {
-        return this.getIndexColor(machine.getSideConfig().getLeft(), machine.getSideConfig().isLeftBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getLeft(), machine.getSideConfig().isLeftBlocked());
     }
 
     public int getRightColor() {
-        return this.getIndexColor(machine.getSideConfig().getRight(), machine.getSideConfig().isRightBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getRight(), machine.getSideConfig().isRightBlocked());
     }
 
     public int getTopColor() {
-        return this.getIndexColor(machine.getSideConfig().getTop(), machine.getSideConfig().isTopBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getTop(), machine.getSideConfig().isTopBlocked());
     }
 
     public int getBottomColor() {
-        return this.getIndexColor(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
+        return this.getAccessorColor(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
     }
 
     public ITextComponent getBackName() {
-        return this.getIndexName(machine.getSideConfig().getBack(), machine.getSideConfig().isBackBlocked());
+        return this.getAccessorName(machine.getSideConfig().getBack(), machine.getSideConfig().isBackBlocked());
     }
 
     public ITextComponent getFrontName() {
-        return this.getIndexName(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
+        return this.getAccessorName(machine.getSideConfig().getFront(), machine.getSideConfig().isFrontBlocked());
     }
 
     public ITextComponent getBottomName() {
-        return this.getIndexName(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
+        return this.getAccessorName(machine.getSideConfig().getBottom(), machine.getSideConfig().isBottomBlocked());
     }
 
     public ITextComponent getTopName() {
-        return this.getIndexName(machine.getSideConfig().getTop(), machine.getSideConfig().isTopBlocked());
+        return this.getAccessorName(machine.getSideConfig().getTop(), machine.getSideConfig().isTopBlocked());
     }
 
     public ITextComponent getRightName() {
-        return this.getIndexName(machine.getSideConfig().getRight(), machine.getSideConfig().isRightBlocked());
+        return this.getAccessorName(machine.getSideConfig().getRight(), machine.getSideConfig().isRightBlocked());
     }
 
     public ITextComponent getLeftName() {
-        return this.getIndexName(machine.getSideConfig().getLeft(), machine.getSideConfig().isLeftBlocked());
+        return this.getAccessorName(machine.getSideConfig().getLeft(), machine.getSideConfig().isLeftBlocked());
     }
 
+    public int getOverlayColor(int index) {
+        return machine.getMachineData(index).getColor();
+    }
 }

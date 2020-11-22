@@ -1,7 +1,6 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
 import net.minecraft.item.ItemStack;
@@ -9,12 +8,12 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.function.Predicate;
 
-public class ItemElement extends OverlayedElement {
+public class ItemElement extends TooltipElement {
 
     private final Predicate<ItemStack> validPredicate;
 
-    ItemElement(int x, int y, int index, FlowType flowType, int overlayColor, ITextComponent name, Predicate<ItemStack> acceptedForSlot) {
-        super(x, y, index, flowType, overlayColor, name, 18, 18);
+    public ItemElement(int x, int y, int index, ITextComponent name, Predicate<ItemStack> acceptedForSlot) {
+        super(x, y, index, name, 18, 18);
         this.validPredicate = acceptedForSlot;
     }
 
@@ -30,7 +29,7 @@ public class ItemElement extends OverlayedElement {
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
         screen.blit(matrixStack, x, y, 0, 98, 18, 18);
-        screen.setOverlayColor(this.getOverlayColor());
+        screen.setOverlayColor(reader.getOverlayColor(this.getIndex()));
         screen.blit(matrixStack, x, y, 18, 98, 18, 18);
     }
 

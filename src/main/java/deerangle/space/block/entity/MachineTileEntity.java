@@ -8,7 +8,7 @@ import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.IMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.element.MachineType;
-import deerangle.space.machine.util.FlowType;
+import deerangle.space.machine.util.Accessor;
 import deerangle.space.registry.MachineRegistry;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.BlockState;
@@ -134,24 +134,25 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     }
 
     private void handlePush(Direction dir) {
-        int index = this.machine.getSideConfig().getIndexForSide(this.getBlockState().get(MachineBlock.FACING), dir);
-        if (index == -1) {
+        Accessor accessor = this.machine.getSideConfig()
+                .getAccessorForSide(this.getBlockState().get(MachineBlock.FACING), dir);
+        if (accessor == null) {
             return;
         }
-        IMachineData data = this.machine.getMachineData(index);
-        if (data.getFlowType() != null && data.getFlowType() != FlowType.INPUT) {
+        IMachineData data = accessor.getAssociatedData();
+        if (!accessor.isInput()) {
             TileEntity tileEntity = this.getWorld().getTileEntity(getPos().offset(dir));
             if (tileEntity == null) {
                 return;
             }
             if (data instanceof ItemMachineData && this.pushCooldown == 0) {
-                handleItemPush(((ItemMachineData) data).getItemHandlerForce(),
+                handleItemPush(((ItemMachineData) data).getItemHandler(),
                         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite()));
             } else if (data instanceof EnergyMachineData) {
-                handleEnergyPush(((EnergyMachineData) data).getEnergyStorageForce(),
+                handleEnergyPush(((EnergyMachineData) data).getEnergyStorage(),
                         tileEntity.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()));
             } else if (data instanceof FluidMachineData) {
-                handleFluidPush(((FluidMachineData) data).getFluidHandlerForce(),
+                handleFluidPush(((FluidMachineData) data).getFluidHandler(),
                         tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, dir.getOpposite()));
             }
         }

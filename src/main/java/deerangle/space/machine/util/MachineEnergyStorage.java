@@ -8,19 +8,19 @@ public class MachineEnergyStorage implements IEnergyStorage {
     private final Ref<Integer> maxReceive;
     private final Ref<Integer> maxExtract;
     private final Ref<Integer> energy;
-    private final FlowType flowType;
+    private final Restriction restriction;
 
-    public MachineEnergyStorage(Ref<Integer> capacity, Ref<Integer> maxReceive, Ref<Integer> maxExtract, Ref<Integer> energy, FlowType flowType) {
+    public MachineEnergyStorage(Ref<Integer> capacity, Ref<Integer> maxReceive, Ref<Integer> maxExtract, Ref<Integer> energy, Restriction restriction) {
         this.capacity = capacity;
         this.maxReceive = maxReceive;
         this.maxExtract = maxExtract;
         this.energy = energy;
-        this.flowType = flowType;
+        this.restriction = restriction;
     }
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
-        if (this.flowType == FlowType.OUTPUT) {
+        if (this.restriction == Restriction.ONLY_OUT) {
             return 0;
         }
         if (!canReceive())
@@ -34,7 +34,7 @@ public class MachineEnergyStorage implements IEnergyStorage {
 
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
-        if (this.flowType == FlowType.INPUT) {
+        if (this.restriction == Restriction.ONLY_IN) {
             return 0;
         }
         if (!canExtract())

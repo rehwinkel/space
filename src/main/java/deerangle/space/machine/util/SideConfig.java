@@ -1,107 +1,112 @@
 package deerangle.space.machine.util;
 
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SideConfig {
 
-    private byte front;
-    private byte back;
-    private byte left;
-    private byte right;
-    private byte top;
-    private byte bottom;
+    private Accessor front;
+    private Accessor back;
+    private Accessor left;
+    private Accessor right;
+    private Accessor top;
+    private Accessor bottom;
     private final boolean[] blocked;
-    private final byte sideValueCount;
+    private final List<Accessor> accessors;
 
-    public SideConfig(int front, int back, int left, int right, int top, int bottom, int sideValueCount) {
-        this(front, back, left, right, top, bottom, false, false, false, false, false, false, sideValueCount);
+    public SideConfig() {
+        this(new boolean[]{false, false, false, false, false, false});
     }
 
-    public SideConfig(int front, int back, int left, int right, int top, int bottom, boolean frontBlock, boolean backBlock, boolean leftBlock, boolean rightBlock, boolean topBlock, boolean bottomBlock, int sideValueCount) {
-        this.front = (byte) front;
-        this.back = (byte) back;
-        this.left = (byte) left;
-        this.right = (byte) right;
-        this.top = (byte) top;
-        this.bottom = (byte) bottom;
-        this.blocked = new boolean[]{frontBlock, backBlock, leftBlock, rightBlock, topBlock, bottomBlock};
-        this.sideValueCount = (byte) sideValueCount;
+    public SideConfig(boolean[] blocked) {
+        this.accessors = new ArrayList<>();
+        this.accessors.add(null);
+        this.blocked = blocked;
+        this.bottom = null;
+        this.top = null;
+        this.right = null;
+        this.front = null;
+        this.back = null;
+        this.left = null;
     }
 
-    public int getFront() {
-        return this.isFrontBlocked() ? -1 : front;
+    public Accessor getFront() {
+        return front;
     }
 
-    public void setFront(int front) {
-        this.front = (byte) front;
+    public void setFront(Accessor front) {
+        this.front = front;
     }
 
     public boolean isFrontBlocked() {
         return this.blocked[0];
     }
 
-    public int getBack() {
-        return this.isBackBlocked() ? -1 : back;
+    public Accessor getBack() {
+        return back;
     }
 
-    public void setBack(int back) {
-        this.back = (byte) back;
+    public void setBack(Accessor back) {
+        this.back = back;
     }
 
     public boolean isBackBlocked() {
         return this.blocked[1];
     }
 
-    public int getLeft() {
-        return this.isLeftBlocked() ? -1 : left;
+    public Accessor getLeft() {
+        return left;
     }
 
-    public void setLeft(int left) {
-        this.left = (byte) left;
+    public void setLeft(Accessor left) {
+        this.left = left;
     }
 
     public boolean isLeftBlocked() {
         return this.blocked[2];
     }
 
-    public int getRight() {
-        return this.isRightBlocked() ? -1 : right;
+    public Accessor getRight() {
+        return right;
     }
 
-    public void setRight(int right) {
-        this.right = (byte) right;
+    public void setRight(Accessor right) {
+        this.right = right;
     }
 
     public boolean isRightBlocked() {
         return this.blocked[3];
     }
 
-    public int getTop() {
-        return this.isTopBlocked() ? -1 : top;
+    public Accessor getTop() {
+        return top;
     }
 
-    public void setTop(int top) {
-        this.top = (byte) top;
+    public void setTop(Accessor top) {
+        this.top = top;
     }
 
     public boolean isTopBlocked() {
         return this.blocked[4];
     }
 
-    public int getBottom() {
-        return this.isBottomBlocked() ? -1 : bottom;
+    public Accessor getBottom() {
+        return bottom;
     }
 
-    public void setBottom(int bottom) {
-        this.bottom = (byte) bottom;
+    public void setBottom(Accessor bottom) {
+        this.bottom = bottom;
     }
 
     public boolean isBottomBlocked() {
         return this.blocked[5];
     }
 
-    public int getIndexForSide(Direction facing, Direction side) {
+    public Accessor getAccessorForSide(Direction facing, Direction side) {
         if (side.getAxis() != Direction.Axis.Y) {
             switch (facing) {
                 case NORTH:
@@ -131,41 +136,68 @@ public class SideConfig {
             case WEST:
                 return this.getRight();
         }
-        return -1;
+        return null;
     }
 
-    public int getNext(int index, boolean forward) {
-        int newIndex;
-        if (forward) {
-            newIndex = index + 1;
-            if (newIndex == sideValueCount) {
-                newIndex = -1;
-            }
-        } else {
-            newIndex = index - 1;
-            if (newIndex == -2) {
-                newIndex = sideValueCount - 1;
-            }
+    public Accessor getNext(Accessor in, boolean forward) {
+        int index = this.accessors.indexOf(in);
+        int newIndex = index + (forward ? 1 : -1);
+        if (newIndex == -1) {
+            newIndex = this.accessors.size() - 1;
+        } else if (newIndex == this.accessors.size()) {
+            newIndex = 0;
         }
-        return newIndex;
+        return this.accessors.get(newIndex);
     }
 
     public void writePacket(PacketBuffer buf) {
-        buf.writeByte(front);
-        buf.writeByte(back);
-        buf.writeByte(left);
-        buf.writeByte(right);
-        buf.writeByte(top);
-        buf.writeByte(bottom);
+        buf.writeByte(this.accessors.indexOf(front));
+        buf.writeByte(this.accessors.indexOf(back));
+        buf.writeByte(this.accessors.indexOf(left));
+        buf.writeByte(this.accessors.indexOf(right));
+        buf.writeByte(this.accessors.indexOf(top));
+        buf.writeByte(this.accessors.indexOf(bottom));
     }
 
     public void readPacket(PacketBuffer buf) {
-        front = buf.readByte();
-        back = buf.readByte();
-        left = buf.readByte();
-        right = buf.readByte();
-        top = buf.readByte();
-        bottom = buf.readByte();
+        front = this.accessors.get(buf.readByte());
+        back = this.accessors.get(buf.readByte());
+        left = this.accessors.get(buf.readByte());
+        right = this.accessors.get(buf.readByte());
+        top = this.accessors.get(buf.readByte());
+        bottom = this.accessors.get(buf.readByte());
+    }
+
+    public void addAccessor(Accessor accessor) {
+        this.accessors.add(accessor);
+    }
+
+    public CompoundNBT write(CompoundNBT nbt) {
+        nbt.putByte("U", (byte) this.accessors.indexOf(this.getTop()));
+        nbt.putByte("D", (byte) this.accessors.indexOf(this.getBottom()));
+        nbt.putByte("L", (byte) this.accessors.indexOf(this.getLeft()));
+        nbt.putByte("R", (byte) this.accessors.indexOf(this.getRight()));
+        nbt.putByte("F", (byte) this.accessors.indexOf(this.getFront()));
+        nbt.putByte("B", (byte) this.accessors.indexOf(this.getBack()));
+        return nbt;
+    }
+
+    public void read(CompoundNBT nbt) {
+        this.setRight(this.accessors.get(nbt.getByte("R")));
+        this.setLeft(this.accessors.get(nbt.getByte("L")));
+        this.setFront(this.accessors.get(nbt.getByte("F")));
+        this.setBack(this.accessors.get(nbt.getByte("B")));
+        this.setTop(this.accessors.get(nbt.getByte("U")));
+        this.setBottom(this.accessors.get(nbt.getByte("D")));
+    }
+
+    public void setAll(Accessor accessor) {
+        this.setBottom(accessor);
+        this.setTop(accessor);
+        this.setBack(accessor);
+        this.setFront(accessor);
+        this.setLeft(accessor);
+        this.setRight(accessor);
     }
 
 }

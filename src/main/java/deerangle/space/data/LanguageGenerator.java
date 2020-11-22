@@ -69,6 +69,8 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.fluid", "%s: %s/%s mB");
         add("info.space.blocked", "Blocked");
         add("info.space.none", "None");
+        add("info.space.in", "%s (In)");
+        add("info.space.out", "%s (Out)");
         add("info.space.element.bucket", "Bucket");
         add("info.space.element.battery", "Battery");
         add("info.space.element.tank", "Tank");

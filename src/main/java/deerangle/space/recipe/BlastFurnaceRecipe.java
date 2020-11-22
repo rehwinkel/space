@@ -25,7 +25,7 @@ public class BlastFurnaceRecipe implements IRecipe<IInventory> {
     }
 
     public int getDuration() {
-        return duration * 2;
+        return duration / 2;
     }
 
     @Override

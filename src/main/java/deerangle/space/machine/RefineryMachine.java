@@ -6,7 +6,6 @@ import deerangle.space.machine.data.FluidMachineData;
 import deerangle.space.machine.data.ItemMachineData;
 import deerangle.space.machine.data.ProgressMachineData;
 import deerangle.space.machine.util.FlowType;
-import deerangle.space.machine.util.SideConfig;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineTypeRegistry;
 import net.minecraft.fluid.Fluid;
@@ -31,13 +30,21 @@ public class RefineryMachine extends Machine {
             .of(FluidRegistry.CRUDE_OIL.get(), FluidRegistry.KEROSENE.get());
 
     public RefineryMachine() {
-        super(MachineTypeRegistry.REFINERY, new SideConfig(0, -1, 1, 2, -1, -1, 3));
-        energy = addMachineData(new EnergyMachineData("Energy", 15000, 1000, FlowType.INPUT));
-        input = addMachineData(new FluidMachineData("Input", 4000, fluidStack -> true, FlowType.INPUT));
-        output = addMachineData(new FluidMachineData("Output", 4000, fluidStack -> true, FlowType.OUTPUT));
-        bucketInput = addMachineData(new ItemMachineData("InBuck", MachineTypeRegistry::holdsFluid, FlowType.INPUT));
-        bucketOutput = addMachineData(new ItemMachineData("OutBuck", MachineTypeRegistry::holdsFluid, FlowType.OUTPUT));
+        super(MachineTypeRegistry.REFINERY);
+        energy = addMachineData(new EnergyMachineData("Energy", 15000, 1000, FlowType.INPUT, this, ENERGY_TEXT));
+        input = addMachineData(
+                new FluidMachineData("Input", 4000, fluidStack -> true, FlowType.INPUT, this, INPUT_TEXT));
+        output = addMachineData(
+                new FluidMachineData("Output", 4000, fluidStack -> true, FlowType.OUTPUT, this, OUTPUT_TEXT));
+        bucketInput = addMachineData(
+                new ItemMachineData("InBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        bucketOutput = addMachineData(
+                new ItemMachineData("OutBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         progress = addMachineData(new ProgressMachineData("Progress"));
+        this.sideConfig.setFront(energy.getInputAccessor());
+        this.sideConfig.setBack(energy.getInputAccessor());
+        this.sideConfig.setLeft(input.getInputAccessor());
+        this.sideConfig.setRight(output.getOutputAccessor());
     }
 
     @Override

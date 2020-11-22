@@ -10,13 +10,13 @@ public class MachineFluidHandler implements IFluidHandler {
     private final Ref<Integer> capacity;
     private final Ref<FluidStack> fluid;
     private final Predicate<FluidStack> validPredicate;
-    private final FlowType flowType;
+    private final Restriction restriction;
 
-    public MachineFluidHandler(Ref<FluidStack> fluidStack, Ref<Integer> capacity, Predicate<FluidStack> validPredicate, FlowType flowType) {
+    public MachineFluidHandler(Ref<FluidStack> fluidStack, Ref<Integer> capacity, Predicate<FluidStack> validPredicate, Restriction restriction) {
         this.capacity = capacity;
         this.fluid = fluidStack;
         this.validPredicate = validPredicate;
-        this.flowType = flowType;
+        this.restriction = restriction;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        if (flowType == FlowType.OUTPUT) {
+        if (this.restriction == Restriction.ONLY_OUT) {
             return 0;
         }
         if (resource.isEmpty() || !isFluidValid(resource)) {
@@ -80,7 +80,7 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public FluidStack drain(FluidStack resource, FluidAction action) {
-        if (flowType == FlowType.INPUT) {
+        if (this.restriction == Restriction.ONLY_IN) {
             return FluidStack.EMPTY;
         }
         if (resource.isEmpty() || !resource.isFluidEqual(fluid.get())) {
@@ -91,7 +91,7 @@ public class MachineFluidHandler implements IFluidHandler {
 
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
-        if (flowType == FlowType.INPUT) {
+        if (this.restriction == Restriction.ONLY_IN) {
             return FluidStack.EMPTY;
         }
         int drained = maxDrain;

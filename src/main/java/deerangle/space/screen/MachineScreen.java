@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import deerangle.space.container.MachineContainer;
 import deerangle.space.machine.element.Element;
-import deerangle.space.machine.element.OverlayedElement;
+import deerangle.space.machine.element.TooltipElement;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.network.AdvanceSideMsg;
 import deerangle.space.network.PacketHandler;
@@ -17,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
     public MachineScreen(MachineContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.elementList = screenContainer.machineType.getElements();
-        this.valueReader = new DisplayValueReader(screenContainer.getMachine(), this.elementList);
+        this.valueReader = new DisplayValueReader(screenContainer.getMachine());
         this.pos = screenContainer.pos;
     }
 
@@ -161,14 +160,14 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
 
     private void renderBarTooltips(MatrixStack matrixStack, int x, int y) {
         for (Element el : this.elementList) {
-            if (el instanceof OverlayedElement) {
-                int barWidth = ((OverlayedElement) el).getWidth();
-                int barHeight = ((OverlayedElement) el).getHeight();
+            if (el instanceof TooltipElement) {
+                int barWidth = ((TooltipElement) el).getWidth();
+                int barHeight = ((TooltipElement) el).getHeight();
                 int barX = el.getX();
                 int barY = el.getY();
                 if (x >= guiLeft + barX && x < guiLeft + barX + barWidth) {
                     if (y >= guiTop + barY && y < guiTop + barY + barHeight) {
-                        ITextComponent tooltipText = ((OverlayedElement) el).getTooltipText(this.valueReader);
+                        ITextComponent tooltipText = ((TooltipElement) el).getTooltipText(this.valueReader);
                         if (tooltipText != null) {
                             this.renderTooltip(matrixStack, tooltipText, x, y);
                         }

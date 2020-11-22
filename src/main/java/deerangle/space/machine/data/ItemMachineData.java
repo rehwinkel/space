@@ -1,46 +1,41 @@
 package deerangle.space.machine.data;
 
 import deerangle.space.machine.util.FlowType;
+import deerangle.space.machine.util.IColorGetter;
+import deerangle.space.machine.util.Restriction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.function.Predicate;
 
-public class ItemMachineData implements IMachineData {
+public class ItemMachineData extends BaseMachineData {
 
-    private final String name;
     private final ItemMachineGate stack;
-    private final FlowType flowType;
 
-    public ItemMachineData(String name, Predicate<ItemStack> validPredicate, FlowType flowType) {
-        stack = new ItemMachineGate(validPredicate, flowType);
-        this.flowType = flowType;
-        this.name = name;
+    public ItemMachineData(String name, Predicate<ItemStack> validPredicate, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
+        super(name, flowType, colorGetter, dataName);
+        stack = new ItemMachineGate(validPredicate);
     }
 
-    public FlowType getFlowType() {
-        return flowType;
+    public ItemMachineData(String name, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
+        this(name, stack -> true, flowType, colorGetter, dataName);
     }
 
-    public ItemMachineData(String name, FlowType flowType) {
-        this(name, stack -> true, flowType);
+    public LazyOptional<IItemHandlerModifiable> getItemHandlerOpt(Restriction restriction) {
+        return this.stack.getItemHandler(restriction);
     }
 
-    public LazyOptional<IItemHandlerModifiable> getItemHandler(boolean fromCapability) {
-        return stack.getItemHandler(fromCapability);
+    public IItemHandlerModifiable getItemHandler(Restriction restriction) {
+        return this.getItemHandlerOpt(restriction).orElseThrow(() -> new RuntimeException("Optional wasn't present"));
     }
 
-    public IItemHandlerModifiable getItemHandlerForce(boolean fromCapability) {
-        return this.getItemHandler(fromCapability)
-                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
-    }
-
-    public IItemHandlerModifiable getItemHandlerForce() {
-        return this.getItemHandlerForce(false);
+    public IItemHandlerModifiable getItemHandler() {
+        return this.getItemHandler(Restriction.UNRESTRICTED);
     }
 
     @Override
@@ -54,11 +49,6 @@ public class ItemMachineData implements IMachineData {
     }
 
     @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
     public void writePacket(PacketBuffer buf) {
         buf.writeItemStack(stack.getStack());
     }
@@ -66,11 +56,6 @@ public class ItemMachineData implements IMachineData {
     @Override
     public void readPacket(PacketBuffer buf) {
         stack.setStack(buf.readItemStack());
-    }
-
-    @Override
-    public boolean storeInItem() {
-        return false;
     }
 
 }

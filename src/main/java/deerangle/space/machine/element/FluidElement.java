@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
-import deerangle.space.machine.util.FlowType;
 import deerangle.space.screen.DisplayValueReader;
 import deerangle.space.screen.MachineScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -18,10 +17,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidElement extends OverlayedElement {
+public class FluidElement extends TooltipElement {
 
-    public FluidElement(int x, int y, int index, FlowType flowType, int color, ITextComponent name) {
-        super(x, y, index, flowType, color, name, 18, 49);
+    public FluidElement(int x, int y, int index, ITextComponent name) {
+        super(x, y, index, name, 18, 49);
     }
 
     @Override
@@ -29,8 +28,8 @@ public class FluidElement extends OverlayedElement {
         Pair<FluidStack, Integer> fluidAndCap = reader.getFluidData(this.getIndex());
         FluidStack fluid = fluidAndCap.getFirst();
         int cap = fluidAndCap.getSecond();
-        drawFluidBar(screen, matrixStack, fluid.getFluid(), guiLeft + this.getX(), guiTop + this.getY(),
-                fluid.getAmount() / (float) cap, this.getOverlayColor());
+        drawFluidBar(screen, matrixStack, reader, fluid.getFluid(), guiLeft + this.getX(), guiTop + this.getY(),
+                fluid.getAmount() / (float) cap);
     }
 
     @Override
@@ -46,14 +45,14 @@ public class FluidElement extends OverlayedElement {
     }
 
 
-    private void drawFluidBar(MachineScreen screen, MatrixStack matrixStack, Fluid fluid, int x, int y, float amount, int overlay) {
+    private void drawFluidBar(MachineScreen screen, MatrixStack matrixStack, DisplayValueReader reader, Fluid fluid, int x, int y, float amount) {
         screen.resetOverlayColor();
         screen.bindMachinesTexture();
         int height = (int) (47 * (1F - amount));
         screen.blit(matrixStack, x, y, 0, 0, 18, 49);
         this.drawFluidColumn(screen, matrixStack, fluid, x + 1, y + 1 + height, 47 - height, true);
         screen.bindMachinesTexture();
-        screen.setOverlayColor(overlay);
+        screen.setOverlayColor(reader.getOverlayColor(this.getIndex()));
         screen.blit(matrixStack, x, y, 36, 0, 18, 49);
     }
 

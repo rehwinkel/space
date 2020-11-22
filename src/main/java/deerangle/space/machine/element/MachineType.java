@@ -2,7 +2,6 @@ package deerangle.space.machine.element;
 
 import com.google.common.collect.ImmutableList;
 import deerangle.space.machine.Machine;
-import deerangle.space.machine.util.FlowType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -37,66 +36,24 @@ public class MachineType<M extends Machine> extends ForgeRegistryEntry<MachineTy
     public static class Builder<M extends Machine> {
         private final ArrayList<Element> elements;
         private final Supplier<M> constructor;
-        private int inputIndex;
-        private int outputIndex;
-        private int inOutIndex;
 
         public Builder(Supplier<M> constructor) {
             this.elements = new ArrayList<>();
-            this.inputIndex = 0;
-            this.outputIndex = 0;
-            this.inOutIndex = 0;
             this.constructor = constructor;
         }
 
-        public Builder<M> addItemElement(int x, int y, int index, FlowType flowType, Predicate<ItemStack> validPredicate, ITextComponent name) {
-            int color = this.getColor(flowType);
-            this.elements.add(new ItemElement(x, y, index, flowType, color, name,validPredicate));
-            this.incrementColorCounter(flowType);
+        public Builder<M> addItemElement(int x, int y, int index, ITextComponent name, Predicate<ItemStack> validPredicate) {
+            this.elements.add(new ItemElement(x, y, index, name, validPredicate));
             return this;
         }
 
-        public Builder<M> addEnergyElement(int x, int y, int index, FlowType flowType, ITextComponent name) {
-            int color = this.getColor(flowType);
-            this.elements.add(new EnergyElement(x, y, index, flowType, color, name));
-            this.incrementColorCounter(flowType);
+        public Builder<M> addEnergyElement(int x, int y, int index, ITextComponent name) {
+            this.elements.add(new EnergyElement(x, y, index, name));
             return this;
         }
 
-        private void incrementColorCounter(FlowType flowType) {
-            switch (flowType) {
-                case INOUT:
-                    this.inOutIndex++;
-                    break;
-                case INPUT:
-                    this.inputIndex++;
-                    break;
-                case OUTPUT:
-                    this.outputIndex++;
-                    break;
-            }
-        }
-
-        private int getColor(FlowType flowType) {
-            int colorIndex = -1;
-            switch (flowType) {
-                case INOUT:
-                    colorIndex = this.inOutIndex;
-                    break;
-                case INPUT:
-                    colorIndex = this.inputIndex;
-                    break;
-                case OUTPUT:
-                    colorIndex = this.outputIndex;
-                    break;
-            }
-            return flowType.getColor(colorIndex);
-        }
-
-        public Builder<M> addFluidElement(int x, int y, int index, FlowType flowType, ITextComponent name) {
-            int color = this.getColor(flowType);
-            this.elements.add(new FluidElement(x, y, index, flowType, color, name));
-            this.incrementColorCounter(flowType);
+        public Builder<M> addFluidElement(int x, int y, int index, ITextComponent name) {
+            this.elements.add(new FluidElement(x, y, index, name));
             return this;
         }
 

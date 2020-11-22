@@ -1,40 +1,45 @@
 package deerangle.space.machine.data;
 
+import deerangle.space.machine.util.Accessor;
 import deerangle.space.machine.util.FlowType;
+import deerangle.space.machine.util.IColorGetter;
+import deerangle.space.machine.util.Restriction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyMachineData implements IMachineData {
+public class EnergyMachineData extends BaseMachineData {
 
-    private final String name;
-    private final FlowType flowType;
     private EnergyMachineGate storage;
 
-    public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType) {
-        this.storage = new EnergyMachineGate(capacity, transfer, transfer, 0, flowType);
-        this.flowType = flowType;
-        this.name = name;
+    public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
+        super(name, flowType, colorGetter, dataName);
+        this.storage = new EnergyMachineGate(capacity, transfer, transfer, 0);
     }
 
     @Override
-    public FlowType getFlowType() {
-        return this.flowType;
+    public Accessor getInputAccessor() {
+        return this.inputAccessor;
     }
 
-    public LazyOptional<IEnergyStorage> getEnergyStorage(boolean fromCapability) {
-        return storage.getEnergyStorage(fromCapability);
+    @Override
+    public Accessor getOutputAccessor() {
+        return this.outputAccessor;
     }
 
-    public IEnergyStorage getEnergyStorageForce(boolean fromCapability) {
-        return this.getEnergyStorage(fromCapability)
-                .orElseThrow(() -> new RuntimeException("failed to get fluid handler"));
+    public LazyOptional<IEnergyStorage> getEnergyStorageOpt(Restriction restriction) {
+        return this.storage.getEnergyStorage(restriction);
     }
 
-    public IEnergyStorage getEnergyStorageForce() {
-        return this.getEnergyStorageForce(false);
+    public IEnergyStorage getEnergyStorage(Restriction restriction) {
+        return this.getEnergyStorageOpt(restriction).orElseThrow(() -> new RuntimeException("Optional wasn't present"));
+    }
+
+    public IEnergyStorage getEnergyStorage() {
+        return this.getEnergyStorage(Restriction.UNRESTRICTED);
     }
 
     @Override
@@ -68,22 +73,12 @@ public class EnergyMachineData implements IMachineData {
         this.storage.setCapacity(buf.readInt());
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
     public int getCapacity() {
         return this.storage.getCapacity();
     }
 
     public int getEnergy() {
         return this.storage.getEnergy();
-    }
-
-    @Override
-    public boolean storeInItem() {
-        return true;
     }
 
 }

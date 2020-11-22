@@ -77,24 +77,14 @@ public abstract class MachineBlock extends Block {
         }
     }
 
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.isIn(newState.getBlock())) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-            if (tileentity instanceof MachineTileEntity) {
-                ((MachineTileEntity) tileentity).getMachine().dropInventoryItems(worldIn, pos);
-            }
-
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
-        }
-    }
-
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
         TileEntity tileEntity = worldIn.getTileEntity(pos);
         if (tileEntity instanceof MachineTileEntity) {
             Machine machine = ((MachineTileEntity) tileEntity).getMachine();
             if (!worldIn.isRemote) {
+                machine.dropInventoryItems(worldIn, pos);
                 ItemStack itemstack = new ItemStack(this);
-                CompoundNBT nbt = machine.saveItemNBT(new CompoundNBT());
+                CompoundNBT nbt = machine.write(new CompoundNBT());
                 if (!nbt.isEmpty()) {
                     itemstack.setTagInfo("BlockEntityTag", nbt);
                 }
