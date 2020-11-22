@@ -91,6 +91,7 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.back", "Back: %s");
         add("info.space.left", "Left: %s");
         add("info.space.right", "Right: %s");
+        add("jei_category.space.blast_furnace", "Blast Furnace");
     }
 
     private void addMachine(Block block, String translation) {

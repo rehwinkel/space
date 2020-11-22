@@ -24,6 +24,10 @@ public class BlastFurnaceRecipe implements IRecipe<IInventory> {
         this.duration = duration;
     }
 
+    public Ingredient getInput() {
+        return this.ingredient;
+    }
+
     public int getDuration() {
         return duration / 2;
     }
