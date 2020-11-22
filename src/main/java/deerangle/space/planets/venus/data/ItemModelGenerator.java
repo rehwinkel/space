@@ -23,6 +23,9 @@ public class ItemModelGenerator extends ItemModelProvider {
     protected void registerModels() {
         addFlatItem(VenusRegistry.MUSIC_DISC_LOVE.get());
         addFlatItem(VenusRegistry.MUSIC_DISC_SPICY_AND_SOUR.get());
+        addFlatItem(VenusRegistry.SULFUR.get());
+        addFlatItem(VenusRegistry.SLIMY_ALGAE_ITEM.get());
+        addFlatItem(VenusRegistry.SHRIEKWOOD_DOOR_ITEM.get());
     }
 
 }

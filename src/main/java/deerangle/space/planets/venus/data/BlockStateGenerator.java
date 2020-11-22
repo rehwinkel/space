@@ -36,28 +36,9 @@ public class BlockStateGenerator extends BlockStateProvider {
         return new ResourceLocation(name.getNamespace(), "venus/block/" + name.getPath());
     }
 
-    @Override
-    protected void registerStatesAndModels() {
-        basicBlock(VenusRegistry.PULCHERITE.get());
-        basicBlock(VenusRegistry.PULCHERITE_COAL.get());
-        basicBlock(VenusRegistry.PULCHERITE_SULFUR.get());
-        basicBlock(VenusRegistry.PULCHERITE_ILMENITE.get());
-        basicBlock(VenusRegistry.PULCHERITE_BRICKS.get());
-        basicBlock(VenusRegistry.POLISHED_PULCHERITE.get());
-        rotatedBlock(VenusRegistry.TURPIUM.get());
-        rotatedBlock(VenusRegistry.GLOWING_TURPIUM.get());
-        basicBlock(VenusRegistry.TURPIUM_COBBLESTONE.get());
-        basicBlock(VenusRegistry.SHRIEKWOOD_PLANKS.get());
-        venusStairsBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get(),
-                venusBlockTexture(VenusRegistry.SHRIEKWOOD_PLANKS.get()));
-        venusSlabBlock(VenusRegistry.SHRIEKWOOD_SLAB.get(), VenusRegistry.SHRIEKWOOD_PLANKS.get());
-        doorBlock((DoorBlock) VenusRegistry.SHRIEKWOOD_DOOR.get(),
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_bottom"),
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_top"));
-        venusLogBlock(VenusRegistry.SHRIEKWOOD_LOG.get());
-        venusWoodBlock(VenusRegistry.SHRIEKWOOD_WOOD.get());
-        rockBlock(VenusRegistry.TURPIUM_ROCK.get());
-        //TODO: vein model for bacteria
+    private void carpetBlock(Block block) {
+        getVariantBuilder(block).partialState().setModels(
+                new ConfiguredModel(models().carpet(block.getRegistryName().getPath(), venusBlockTexture(block))));
     }
 
     private void rockBlock(Block block) {
@@ -92,6 +73,31 @@ public class BlockStateGenerator extends BlockStateProvider {
         ModelFile stairsInner = models().stairsInner(baseName + "_inner", texture, texture, texture);
         ModelFile stairsOuter = models().stairsOuter(baseName + "_outer", texture, texture, texture);
         stairsBlock((StairsBlock) block, stairs, stairsInner, stairsOuter);
+    }
+
+    @Override
+    protected void registerStatesAndModels() {
+        basicBlock(VenusRegistry.PULCHERITE.get());
+        basicBlock(VenusRegistry.PULCHERITE_COAL.get());
+        basicBlock(VenusRegistry.PULCHERITE_SULFUR.get());
+        basicBlock(VenusRegistry.PULCHERITE_ILMENITE.get());
+        basicBlock(VenusRegistry.PULCHERITE_BRICKS.get());
+        basicBlock(VenusRegistry.POLISHED_PULCHERITE.get());
+        rotatedBlock(VenusRegistry.TURPIUM.get());
+        rotatedBlock(VenusRegistry.GLOWING_TURPIUM.get());
+        basicBlock(VenusRegistry.TURPIUM_COBBLESTONE.get());
+        basicBlock(VenusRegistry.SHRIEKWOOD_PLANKS.get());
+        venusStairsBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get(),
+                venusBlockTexture(VenusRegistry.SHRIEKWOOD_PLANKS.get()));
+        venusSlabBlock(VenusRegistry.SHRIEKWOOD_SLAB.get(), VenusRegistry.SHRIEKWOOD_PLANKS.get());
+        doorBlock((DoorBlock) VenusRegistry.SHRIEKWOOD_DOOR.get(),
+                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_bottom"),
+                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_top"));
+        venusLogBlock(VenusRegistry.SHRIEKWOOD_LOG.get());
+        venusWoodBlock(VenusRegistry.SHRIEKWOOD_WOOD.get());
+        rockBlock(VenusRegistry.TURPIUM_ROCK.get());
+        carpetBlock(VenusRegistry.SLIMY_ALGAE.get());
+        //TODO: vein model for bacteria, overgrown, slimy algee
     }
 
 }
