@@ -1,0 +1,43 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"cable": "space:block/cable",
+		"particle": "space:block/cable"
+	},
+	"elements": [
+		{
+			"from": [6, 6, 6],
+			"to": [10, 10, 10],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#cable"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#cable"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#cable"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#cable"}
+			}
+		},
+		{
+			"from": [6, 10, 6],
+			"to": [10, 16, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 8, 7]},
+			"faces": {
+				"north": {"uv": [8, 4, 14, 8], "rotation": 270, "texture": "#cable"},
+				"east": {"uv": [8, 4, 14, 8], "rotation": 270, "texture": "#cable"},
+				"south": {"uv": [8, 4, 14, 8], "rotation": 270, "texture": "#cable"},
+				"west": {"uv": [8, 4, 14, 8], "rotation": 270, "texture": "#cable"},
+				"up": {"uv": [0, 0, 4, 4], "rotation": 180, "texture": "#cable"}
+			}
+		},
+		{
+			"from": [6, 0, 6],
+			"to": [10, 6, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 8, 7]},
+			"faces": {
+				"north": {"uv": [8, 4, 14, 8], "rotation": 90, "texture": "#cable"},
+				"east": {"uv": [8, 4, 14, 8], "rotation": 90, "texture": "#cable"},
+				"south": {"uv": [8, 4, 14, 8], "rotation": 90, "texture": "#cable"},
+				"west": {"uv": [8, 4, 14, 8], "rotation": 90, "texture": "#cable"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#cable"}
+			}
+		}
+	]
+}

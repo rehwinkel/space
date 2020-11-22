@@ -69,6 +69,8 @@ public class SpaceMod {
                 .addProvider(new ItemModelGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator()
                 .addProvider(new FluidTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator()
+                .addProvider(new BlockTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));

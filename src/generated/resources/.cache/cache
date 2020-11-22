@@ -2,6 +2,7 @@
 da81b1f0046e28020ae06521683a8a612a18a657 assets/space/blockstates/aluminium_ore.json
 cb63d4aafe5ce4236995a610e197dcc0ccfb23c4 assets/space/blockstates/battery_pack.json
 af6c56f16da8ac1936f6cdaa386601c30c46b2eb assets/space/blockstates/blast_furnace.json
+d974d5437d95925a9d9957c611eb5105191a2ceb assets/space/blockstates/cable.json
 e19397369bbd3d7003d450983f5589e0c3c9f675 assets/space/blockstates/coal_generator.json
 ff8c48eb542dfeedccc0d1256ed6b2e792a3178e assets/space/blockstates/combustion_generator.json
 e0bec25a78f5a19589d0f1d648cc0979e680aec1 assets/space/blockstates/copper_block.json
@@ -16,7 +17,7 @@ c3c9d4a33aef6fcf0b06d0dd5a59482a075d4c66 assets/space/blockstates/drum.json
 ca90a4528b78bc092f9fbfffd49217333ba07790 assets/space/blockstates/rusty_dust.json
 0979db7368258fb3e6e57da647c603c74ed2e73c assets/space/blockstates/steel_block.json
 7ca4e6054bd738cd1c62186acb8f4b058a551b27 assets/space/blockstates/titanium_block.json
-e41a046f3755c2c8313d10908cd3bf8cf4e6cd8a assets/space/lang/en_us.json
+13b3570ec5dff9386b0836f731f90f10cff19bb6 assets/space/lang/en_us.json
 fa2bbb125672855ba9911b0a358af993eb35eed0 assets/space/models/block/aluminium_block.json
 bf81f202ea51f05ef86c6bae24e4fd118ca6f800 assets/space/models/block/aluminium_ore.json
 7d0367c1e5c5bdae40da9e9421fe7e80ce994b83 assets/space/models/block/copper_block.json
@@ -36,6 +37,7 @@ f1fbf6c0e2bcf7ac1522424e44d0a3b44f05496d assets/space/models/item/aluminium_plat
 d1e0e3024cb3d34f64e40b22fb241d4f369b6b2d assets/space/models/item/battery.json
 a9c4cf41db4d59f23779c30adfab39a3bb5a4f3c assets/space/models/item/battery_pack.json
 fbfc68f2e7e70097f5e7b0af9f1ab490c5ba11a6 assets/space/models/item/blast_furnace.json
+e710bcf99fd1a42a567f6f8c3d358081fabbb249 assets/space/models/item/cable.json
 7851baf8c71e51f932073dddac98876570da78bf assets/space/models/item/coal_generator.json
 4dfcbbc3cfee77d192b20a077f16954f1bba6136 assets/space/models/item/combustion_generator.json
 4f7d1bdde24a20c6131cb09d1a8fd559c66fdd78 assets/space/models/item/copper_block.json
@@ -167,3 +169,4 @@ ae15c680981556d38fc83fe4962b7e6382af4c78 data/space/recipes/steel_rod.json
 e42652d3b2fd157cba33f6ac35c969de7f4870e3 data/space/recipes/titanium_block.json
 8977c65be1af369a55ebc2204cae70d21ad0ca12 data/space/recipes/titanium_ingot.json
 a0e417dfbdf1074ba77c8d9475253042095865d3 data/space/recipes/titanium_nugget.json
+ccd8f610d472440c395245e6d705f8a7428ac4a2 data/space/tags/blocks/machines.json

@@ -22,6 +22,7 @@ public class LanguageGenerator extends LanguageProvider {
         addMachine(MachineRegistry.DRUM.get(), "Drum");
         addMachine(MachineRegistry.BATTERY_PACK.get(), "Battery Pack");
         addMachine(MachineRegistry.REFINERY.get(), "Refinery");
+        addMachine(MachineRegistry.CABLE.get(), "Cable");
         add(FluidRegistry.CRUDE_OIL_BLOCK.get(), "Crude Oil");
         add(FluidRegistry.CRUDE_OIL_BUCKET.get(), "Crude Oil Bucket");
         add(FluidRegistry.KEROSENE_BLOCK.get(), "Kerosene");

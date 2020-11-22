@@ -25,14 +25,18 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 public abstract class MachineBlock extends Block {
+
+    protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
@@ -97,9 +101,72 @@ public abstract class MachineBlock extends Block {
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
+    public boolean canConnect(BlockState state) {
+        Block block = state.getBlock();
+        return block instanceof CableBlock;
+    }
+
+    private Direction rotateByFacing(Direction facing, Direction side) {
+        if (side.getAxis() != Direction.Axis.Y) {
+            switch (facing) {
+                case NORTH:
+                    return side;
+                case SOUTH:
+                    return side.rotateY().rotateY();
+                case EAST:
+                    return side.rotateY();
+                case WEST:
+                    return side.rotateYCCW();
+            }
+        }
+        return side;
+    }
+
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+        Direction facing = context.getPlacementHorizontalFacing().getOpposite();
+        IBlockReader iblockreader = context.getWorld();
+        BlockPos blockpos = context.getPos();
+        BlockPos northPos = blockpos.offset(rotateByFacing(facing, Direction.NORTH));
+        BlockPos eastPos = blockpos.offset(rotateByFacing(facing, Direction.EAST));
+        BlockPos southPos = blockpos.offset(rotateByFacing(facing, Direction.SOUTH));
+        BlockPos westPos = blockpos.offset(rotateByFacing(facing, Direction.WEST));
+        BlockPos upPos = blockpos.up();
+        BlockPos downPos = blockpos.down();
+        BlockState northState = iblockreader.getBlockState(northPos);
+        BlockState eastState = iblockreader.getBlockState(eastPos);
+        BlockState southState = iblockreader.getBlockState(southPos);
+        BlockState westState = iblockreader.getBlockState(westPos);
+        BlockState upState = iblockreader.getBlockState(upPos);
+        BlockState downState = iblockreader.getBlockState(downPos);
+
+        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(northState))
+                .with(EAST, this.canConnect(eastState)).with(SOUTH, this.canConnect(southState))
+                .with(WEST, this.canConnect(westState)).with(UP, this.canConnect(upState))
+                .with(DOWN, this.canConnect(downState));
+    }
+
+    public BlockState updatePostPlacement(BlockState stateIn, Direction side, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        Direction facing = stateIn.get(FACING);
+        Direction rotated = side;
+        if (side.getAxis() != Direction.Axis.Y) {
+            switch (facing) {
+                case NORTH:
+                    rotated = side;
+                    break;
+                case SOUTH:
+                    rotated = side.rotateY().rotateY();
+                    break;
+                case EAST:
+                    rotated = side.rotateYCCW();
+                    break;
+                case WEST:
+                    rotated = side.rotateY();
+                    break;
+            }
+        }
+        BooleanProperty prop = FACING_TO_PROPERTY_MAP.get(rotated);
+        return stateIn.with(prop, this.canConnect(facingState));
     }
 
     @Override

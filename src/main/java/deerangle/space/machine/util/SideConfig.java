@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +140,40 @@ public class SideConfig {
         return null;
     }
 
+    public boolean isBlockedForSide(Direction facing, Direction side) {
+        switch (rotateByFacing(facing, side)) {
+            case NORTH:
+                return this.isFrontBlocked();
+            case SOUTH:
+                return this.isBackBlocked();
+            case UP:
+                return this.isTopBlocked();
+            case DOWN:
+                return this.isBottomBlocked();
+            case EAST:
+                return this.isLeftBlocked();
+            case WEST:
+                return this.isRightBlocked();
+        }
+        return true;
+    }
+
+    private Direction rotateByFacing(Direction facing, Direction side) {
+        if (side.getAxis() != Direction.Axis.Y) {
+            switch (facing) {
+                case NORTH:
+                    return side;
+                case SOUTH:
+                    return side.rotateY().rotateY();
+                case EAST:
+                    return side.rotateYCCW();
+                case WEST:
+                    return side.rotateY();
+            }
+        }
+        return side;
+    }
+
     public Accessor getNext(Accessor in, boolean forward) {
         int index = this.accessors.indexOf(in);
         int newIndex = index + (forward ? 1 : -1);
@@ -198,6 +233,10 @@ public class SideConfig {
         this.setFront(accessor);
         this.setLeft(accessor);
         this.setRight(accessor);
+    }
+
+    public boolean acceptsCableFrom(Direction facing, Direction direction) {
+        return !isBlockedForSide(facing, direction);
     }
 
 }

@@ -8,6 +8,7 @@ import deerangle.space.main.SpaceMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -48,6 +49,10 @@ public class MachineRegistry extends AbstractRegistry {
 
     public static final RegistryObject<Block> REFINERY = BLOCKS
             .register("refinery", () -> new RefineryBlock(AbstractBlock.Properties.create(Material.IRON)));
+
+    public static final RegistryObject<Block> CABLE = BLOCKS.register("cable",
+            () -> new CableBlock(AbstractBlock.Properties.create(Material.WOOL).sound(SoundType.CLOTH)));
+
     public static final RegistryObject<TileEntityType<MachineTileEntity>> MACHINE_TE = TILE_ENTITIES.register("machine",
             () -> TileEntityType.Builder.create(MachineTileEntity::new, COAL_GENERATOR.get(), BLAST_FURNACE.get(),
                     COMBUSTION_GENERATOR.get(), GAS_TANK.get(), DRUM.get(), BATTERY_PACK.get(), REFINERY.get())
@@ -64,6 +69,7 @@ public class MachineRegistry extends AbstractRegistry {
         ITEMS.register("drum", () -> new MachineItem(DRUM.get(), new Item.Properties().group(TAB)));
         ITEMS.register("battery_pack", () -> new MachineItem(BATTERY_PACK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("refinery", () -> new MachineItem(REFINERY.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("cable", () -> new MachineItem(CABLE.get(), new Item.Properties().group(TAB)));
     }
 
     private static ToIntFunction<BlockState> getRunningLightLevel(int light) {

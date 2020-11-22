@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "space:battery_pack",
+    "space:drum",
+    "space:gas_tank",
+    "space:refinery",
+    "space:coal_generator",
+    "space:combustion_generator",
+    "space:blast_furnace"
+  ]
+}
