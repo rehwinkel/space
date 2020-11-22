@@ -16,6 +16,13 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MachineTypeRegistry {
 
+    private static final ITextComponent BUCKET_TEXT = new TranslationTextComponent("info.space.element.bucket");
+    private static final ITextComponent BATTERY_TEXT = new TranslationTextComponent("info.space.element.battery");
+    private static final ITextComponent TANK_TEXT = new TranslationTextComponent("info.space.element.tank");
+    private static final ITextComponent FUEL_TEXT = new TranslationTextComponent("info.space.element.fuel");
+    private static final ITextComponent ENERGY_TEXT = new TranslationTextComponent("info.space.element.energy");
+    private static final ITextComponent INPUT_TEXT = new TranslationTextComponent("info.space.element.input");
+    private static final ITextComponent OUTPUT_TEXT = new TranslationTextComponent("info.space.element.output");
     public static MachineType<CoalGeneratorMachine> COAL_GENERATOR;
     public static MachineType<BlastFurnaceMachine> BLAST_FURNACE;
     public static MachineType<CombustionGeneratorMachine> COMBUSTION_GENERATOR;
@@ -48,14 +55,6 @@ public class MachineTypeRegistry {
     public static boolean reject(ItemStack stack) {
         return false;
     }
-
-    private static final ITextComponent BUCKET_TEXT = new TranslationTextComponent("info.space.element.bucket");
-    private static final ITextComponent BATTERY_TEXT = new TranslationTextComponent("info.space.element.battery");
-    private static final ITextComponent TANK_TEXT = new TranslationTextComponent("info.space.element.tank");
-    private static final ITextComponent FUEL_TEXT = new TranslationTextComponent("info.space.element.fuel");
-    private static final ITextComponent ENERGY_TEXT = new TranslationTextComponent("info.space.element.energy");
-    private static final ITextComponent INPUT_TEXT = new TranslationTextComponent("info.space.element.input");
-    private static final ITextComponent OUTPUT_TEXT = new TranslationTextComponent("info.space.element.output");
 
     @SubscribeEvent
     public static void registerMachineTypes(RegistryEvent.Register<MachineType<?>> event) {

@@ -35,14 +35,13 @@ public abstract class Machine implements IColorGetter {
     protected static final ITextComponent ENERGY_TEXT = new TranslationTextComponent("info.space.element.energy");
     protected static final ITextComponent INPUT_TEXT = new TranslationTextComponent("info.space.element.input");
     protected static final ITextComponent OUTPUT_TEXT = new TranslationTextComponent("info.space.element.output");
-
-    private final List<IMachineData> machineDataList = new ArrayList<>();
+    private static final int[][] COLORS = new int[][]{new int[]{0xff0000, 0xff7f00, 0xffff00}, new int[]{0x0000ff, 0x007fff, 0x00ffff}, new int[]{0xff00ff}, null};
     protected final SideConfig sideConfig;
+    private final List<IMachineData> machineDataList = new ArrayList<>();
     private final MachineType<?> type;
     private ByteBuf prevState;
     private int prevHash;
-    private int[] indices;
-    private static final int[][] COLORS = new int[][]{new int[]{0xff0000, 0xff7f00, 0xffff00}, new int[]{0x0000ff, 0x007fff, 0x00ffff}, new int[]{0xff00ff}, null};
+    private final int[] indices;
     private FlowType prevFlowType = null;
 
     public Machine(MachineType<?> machineType) {
@@ -58,6 +57,11 @@ public abstract class Machine implements IColorGetter {
         this.type = machineType;
         this.prevHash = -1;
         this.indices = new int[]{0, 0, 0, 0};
+    }
+
+    private static Restriction getRestriction(boolean fromCapability, Accessor accessor) {
+        return fromCapability ? (accessor
+                .isInput() ? Restriction.ONLY_IN : Restriction.ONLY_OUT) : Restriction.UNRESTRICTED;
     }
 
     protected <MD extends IMachineData> MD addMachineData(MD data) {
@@ -134,11 +138,6 @@ public abstract class Machine implements IColorGetter {
             return ((FluidMachineData) data).getFluidHandlerOpt(getRestriction(fromCapability, accessor));
         }
         return LazyOptional.empty();
-    }
-
-    private static Restriction getRestriction(boolean fromCapability, Accessor accessor) {
-        return fromCapability ? (accessor
-                .isInput() ? Restriction.ONLY_IN : Restriction.ONLY_OUT) : Restriction.UNRESTRICTED;
     }
 
     public void writePacket(PacketBuffer buf) {

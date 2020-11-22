@@ -14,8 +14,10 @@ public class PacketHandler {
                     PROTO_VERSION::equals);
 
     public static void registerPackets() {
-        INSTANCE.registerMessage(0, UpdateMachineMsg.class, UpdateMachineMsg::serialize, UpdateMachineMsg::deserialize, UpdateMachineMsg::handle);
-        INSTANCE.registerMessage(1, AdvanceSideMsg.class, AdvanceSideMsg::serialize, AdvanceSideMsg::deserialize, AdvanceSideMsg::handle);
+        INSTANCE.registerMessage(0, UpdateMachineMsg.class, UpdateMachineMsg::serialize, UpdateMachineMsg::deserialize,
+                UpdateMachineMsg::handle);
+        INSTANCE.registerMessage(1, AdvanceSideMsg.class, AdvanceSideMsg::serialize, AdvanceSideMsg::deserialize,
+                AdvanceSideMsg::handle);
     }
 
 }

@@ -16,18 +16,16 @@ import java.util.Map;
 
 public class RefineryMachine extends Machine {
 
+    public static final Map<Fluid, Fluid> RECIPE_MAP = ImmutableMap
+            .of(FluidRegistry.CRUDE_OIL.get(), FluidRegistry.KEROSENE.get());
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
-
     private final EnergyMachineData energy;
     private final FluidMachineData input;
     private final FluidMachineData output;
     private final ItemMachineData bucketInput;
     private final ItemMachineData bucketOutput;
     private final ProgressMachineData progress;
-
-    public static final Map<Fluid, Fluid> RECIPE_MAP = ImmutableMap
-            .of(FluidRegistry.CRUDE_OIL.get(), FluidRegistry.KEROSENE.get());
 
     public RefineryMachine() {
         super(MachineTypeRegistry.REFINERY);

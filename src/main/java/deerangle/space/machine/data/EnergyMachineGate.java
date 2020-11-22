@@ -49,28 +49,28 @@ public class EnergyMachineGate {
         return capacity.get();
     }
 
+    public void setCapacity(int cap) {
+        this.capacity.set(cap);
+    }
+
     public int getMaxExtract() {
         return maxExtract.get();
+    }
+
+    public void setMaxExtract(int ext) {
+        this.maxExtract.set(ext);
     }
 
     public int getMaxReceive() {
         return maxReceive.get();
     }
 
-    public int getEnergy() {
-        return energy.get();
-    }
-
-    public void setCapacity(int cap) {
-        this.capacity.set(cap);
-    }
-
     public void setMaxReceive(int rec) {
         this.maxReceive.set(rec);
     }
 
-    public void setMaxExtract(int ext) {
-        this.maxExtract.set(ext);
+    public int getEnergy() {
+        return energy.get();
     }
 
     public void setEnergy(int eng) {

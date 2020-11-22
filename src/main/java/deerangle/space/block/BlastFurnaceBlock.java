@@ -30,18 +30,16 @@ import java.util.Random;
 
 public class BlastFurnaceBlock extends MachineBlock {
 
+    public static final BooleanProperty TOP_HALF = BooleanProperty.create("top_half");
     private static final VoxelShape[] SHAPE = VoxelShapeUtil
             .horizontalShape(Block.makeCuboidShape(1, 0, 1, 15, 9, 13), Block.makeCuboidShape(3, 9, 2, 13, 16, 12),
                     Block.makeCuboidShape(5, 16, 4, 11, 28, 10), Block.makeCuboidShape(2, 0, 13, 4, 8, 16),
                     Block.makeCuboidShape(4, 10, 12, 6, 17, 15), Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
-
     private static final VoxelShape[] TOP_SHAPE = VoxelShapeUtil
             .horizontalShape(-1.0, Block.makeCuboidShape(1, 0, 1, 15, 9, 13),
                     Block.makeCuboidShape(3, 9, 2, 13, 16, 12), Block.makeCuboidShape(5, 16, 4, 11, 28, 10),
                     Block.makeCuboidShape(2, 0, 13, 4, 8, 16), Block.makeCuboidShape(4, 10, 12, 6, 17, 15),
                     Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
-
-    public static final BooleanProperty TOP_HALF = BooleanProperty.create("top_half");
 
     public BlastFurnaceBlock(Properties properties) {
         super(properties, () -> MachineTypeRegistry.BLAST_FURNACE, Stats.INTERACT_WITH_BLAST_FURNACE);

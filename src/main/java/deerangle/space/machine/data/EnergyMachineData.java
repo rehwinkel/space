@@ -13,7 +13,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyMachineData extends BaseMachineData {
 
-    private EnergyMachineGate storage;
+    private final EnergyMachineGate storage;
 
     public EnergyMachineData(String name, int capacity, int transfer, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
         super(name, flowType, colorGetter, dataName);

@@ -4,7 +4,6 @@ import deerangle.space.main.SpaceMod;
 import deerangle.space.registry.FluidRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;

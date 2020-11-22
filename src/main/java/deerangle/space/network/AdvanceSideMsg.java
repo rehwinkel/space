@@ -63,7 +63,7 @@ public class AdvanceSideMsg {
     }
 
     public enum Face {
-        FRONT, BACK, LEFT, RIGHT, TOP, BOTTOM;
+        FRONT, BACK, LEFT, RIGHT, TOP, BOTTOM
     }
 
 }

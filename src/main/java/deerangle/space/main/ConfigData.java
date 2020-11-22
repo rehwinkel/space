@@ -9,6 +9,9 @@ public class ConfigData {
     public static final ServerConfig SERVER;
     public static final ForgeConfigSpec SERVER_SPEC;
     public static final ForgeConfigSpec CLIENT_SPEC;
+    public static boolean spawnCopper;
+    public static boolean spawnAluminium;
+    public static boolean doMachineParticles;
 
     static {
         final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
@@ -20,9 +23,14 @@ public class ConfigData {
         CLIENT_SPEC = specPairClient.getRight();
     }
 
-    public static boolean spawnCopper;
-    public static boolean spawnAluminium;
-    public static boolean doMachineParticles;
+    public static void refreshServer() {
+        spawnCopper = SERVER.spawnCopper.get();
+        spawnAluminium = SERVER.spawnAluminium.get();
+    }
+
+    public static void refreshClient() {
+        doMachineParticles = CLIENT.doMachineParticles.get();
+    }
 
     public static class ServerConfig {
         private final ForgeConfigSpec.BooleanValue spawnCopper;
@@ -38,11 +46,6 @@ public class ConfigData {
         }
     }
 
-    public static void refreshServer() {
-        spawnCopper = SERVER.spawnCopper.get();
-        spawnAluminium = SERVER.spawnAluminium.get();
-    }
-
     private static class ClientConfig {
         private final ForgeConfigSpec.BooleanValue doMachineParticles;
 
@@ -52,10 +55,6 @@ public class ConfigData {
                     .define("do_machine_particles", true);
             builder.pop();
         }
-    }
-
-    public static void refreshClient() {
-        doMachineParticles = CLIENT.doMachineParticles.get();
     }
 
 }

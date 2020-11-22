@@ -12,10 +12,10 @@ import net.minecraft.world.World;
 
 public class BlastFurnaceRecipe implements IRecipe<IInventory> {
 
-    private final ResourceLocation recipeId;
     public final Ingredient ingredient;
     public final ItemStack result;
     public final int duration;
+    private final ResourceLocation recipeId;
 
     public BlastFurnaceRecipe(ResourceLocation recipeId, Ingredient ingredient, ItemStack result, int duration) {
         this.recipeId = recipeId;

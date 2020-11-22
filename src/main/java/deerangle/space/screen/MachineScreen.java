@@ -29,10 +29,9 @@ public class MachineScreen extends ContainerScreen<MachineContainer> {
             "textures/gui/machine/generic.png");
     public static final ResourceLocation GENERIC_EMPTY_GUI = new ResourceLocation(SpaceMod.MOD_ID,
             "textures/gui/machine/generic_empty.png");
-
+    private static final ITextComponent sideConfigText = new TranslationTextComponent("info.space.side_config");
     private final List<Element> elementList;
     private final DisplayValueReader valueReader;
-    private static final ITextComponent sideConfigText = new TranslationTextComponent("info.space.side_config");
     private final BlockPos pos;
     private boolean isMainScreen = true;
     private int sideConfigX;

@@ -55,20 +55,6 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlockItem(block, models().getExistingFile(parent));
     }
 
-    private class RotatedModel {
-
-        private final ModelFile model;
-        private final int x;
-        private final int y;
-
-        public RotatedModel(ModelFile model, int x, int y) {
-            this.model = model;
-            this.x = x;
-            this.y = y;
-        }
-
-    }
-
     // connectors: north, south, east, west, up, down
     private void machineBlockWithItem(Block block, RotatedModel[] connectors, boolean hasRunningVariant) {
         ResourceLocation blockName = block.getRegistryName();
@@ -187,6 +173,20 @@ public class BlockStateGenerator extends BlockStateProvider {
                 0), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(
                 models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_top")), 0,
                 0), new RotatedModel(connector, 90, 0)}, false);
+    }
+
+    private class RotatedModel {
+
+        private final ModelFile model;
+        private final int x;
+        private final int y;
+
+        public RotatedModel(ModelFile model, int x, int y) {
+            this.model = model;
+            this.x = x;
+            this.y = y;
+        }
+
     }
 
 }

@@ -1,7 +1,6 @@
 package deerangle.space.machine.data;
 
 import deerangle.space.machine.util.Accessor;
-import deerangle.space.machine.util.FlowType;
 import net.minecraft.nbt.FloatNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
@@ -55,12 +54,12 @@ public class ProgressMachineData implements IMachineData {
         this.progress = buf.readFloat();
     }
 
-    public void setProgress(float progress) {
-        this.progress = progress;
-    }
-
     public float getProgress() {
         return progress;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
     }
 
 }

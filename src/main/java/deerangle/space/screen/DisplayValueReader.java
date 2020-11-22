@@ -3,23 +3,16 @@ package deerangle.space.screen;
 import com.mojang.datafixers.util.Pair;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.data.*;
-import deerangle.space.machine.element.DataElement;
-import deerangle.space.machine.element.Element;
 import deerangle.space.machine.util.Accessor;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 public class DisplayValueReader {
 
-    private final Machine machine;
     private static final int DEFAULT_EMPTY_COLOR = 0x888888;
     private static final int BLOCKED_COLOR = 0x444444;
+    private final Machine machine;
 
     public DisplayValueReader(Machine machine) {
         this.machine = machine;

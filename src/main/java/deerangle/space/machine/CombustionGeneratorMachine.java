@@ -22,25 +22,16 @@ import java.util.Map;
 
 public class CombustionGeneratorMachine extends Machine {
 
+    public static final Map<Fluid, Integer> BURN_TIME_MAP = ImmutableMap
+            .of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
+    private static final int SIP_SIZE = 20;
+    private static final int RF_PER_TICK = 60;
     private final FluidMachineData fuel;
     private final EnergyMachineData energy;
     private final ItemMachineData bucket;
     private final BurnMachineData burn;
-
-    private static final int SIP_SIZE = 20;
-    private static final int RF_PER_TICK = 60;
-
-    public static final Map<Fluid, Integer> BURN_TIME_MAP = ImmutableMap
-            .of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
     private int currentBurnTime;
     private int currentMaxBurnTime;
-
-    public static int getBurnTime(FluidStack stack) {
-        if (!BURN_TIME_MAP.containsKey(stack.getFluid())) {
-            return 0;
-        }
-        return BURN_TIME_MAP.get(stack.getFluid()) * stack.getAmount();
-    }
 
     public CombustionGeneratorMachine() {
         super(MachineTypeRegistry.COMBUSTION_GENERATOR, false, false, true, true, true, false);
@@ -52,6 +43,13 @@ public class CombustionGeneratorMachine extends Machine {
         burn = addMachineData(new BurnMachineData("Burn"));
         this.sideConfig.setFront(fuel.getInputAccessor());
         this.sideConfig.setBack(energy.getOutputAccessor());
+    }
+
+    public static int getBurnTime(FluidStack stack) {
+        if (!BURN_TIME_MAP.containsKey(stack.getFluid())) {
+            return 0;
+        }
+        return BURN_TIME_MAP.get(stack.getFluid()) * stack.getAmount();
     }
 
     @Override

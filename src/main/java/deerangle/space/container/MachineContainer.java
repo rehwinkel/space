@@ -33,8 +33,8 @@ import java.util.Objects;
 public class MachineContainer extends Container {
 
     public final MachineType<?> machineType;
-    private final Machine machine;
     public final BlockPos pos;
+    private final Machine machine;
     private final int itemSlotCount;
 
     public MachineContainer(int windowId, PlayerInventory inv, PacketBuffer data) {

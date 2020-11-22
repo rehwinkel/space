@@ -24,8 +24,7 @@ public class FluidRegistry extends AbstractRegistry {
             () -> new FlowingFluidBlock(CRUDE_OIL,
                     AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement()
                             .hardnessAndResistance(100.0F)));
-    public static final RegistryObject<FlowingFluid> KEROSENE = FLUIDS
-            .register("kerosene", KeroseneFluid.Source::new);
+    public static final RegistryObject<FlowingFluid> KEROSENE = FLUIDS.register("kerosene", KeroseneFluid.Source::new);
     public static final RegistryObject<FlowingFluid> KEROSENE_FLOWING = FLUIDS
             .register("kerosene_flowing", KeroseneFluid.Flowing::new);
     public static final RegistryObject<BucketItem> KEROSENE_BUCKET = ITEMS.register("kerosene_bucket",

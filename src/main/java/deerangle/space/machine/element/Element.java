@@ -1,8 +1,8 @@
 package deerangle.space.machine.element;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import deerangle.space.screen.MachineScreen;
 import deerangle.space.screen.DisplayValueReader;
+import deerangle.space.screen.MachineScreen;
 
 public abstract class Element {
 

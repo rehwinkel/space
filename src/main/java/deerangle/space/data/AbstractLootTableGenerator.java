@@ -18,17 +18,20 @@ import java.util.HashMap;
 
 public abstract class AbstractLootTableGenerator implements IDataProvider {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private final String mod_id;
     private final DataGenerator generator;
     private final HashMap<ResourceLocation, LootTable> tables;
-
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
 
     public AbstractLootTableGenerator(DataGenerator generator, String mod_id) {
         this.generator = generator;
         this.mod_id = mod_id;
         this.tables = new HashMap<>();
+    }
+
+    private static Path getPath(Path pathIn, ResourceLocation id) {
+        return pathIn.resolve("data/" + id.getNamespace() + "/loot_tables/" + id.getPath() + ".json");
     }
 
     public void normalBlock(Block block) {
@@ -53,10 +56,6 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                 LOGGER.error("Couldn't save loot table {}", path1, ioexception);
             }
         });
-    }
-
-    private static Path getPath(Path pathIn, ResourceLocation id) {
-        return pathIn.resolve("data/" + id.getNamespace() + "/loot_tables/" + id.getPath() + ".json");
     }
 
     @Override

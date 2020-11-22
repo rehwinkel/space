@@ -9,14 +9,14 @@ import java.util.List;
 
 public class SideConfig {
 
+    private final boolean[] blocked;
+    private final List<Accessor> accessors;
     private Accessor front;
     private Accessor back;
     private Accessor left;
     private Accessor right;
     private Accessor top;
     private Accessor bottom;
-    private final boolean[] blocked;
-    private final List<Accessor> accessors;
 
     public SideConfig() {
         this(new boolean[]{false, false, false, false, false, false});

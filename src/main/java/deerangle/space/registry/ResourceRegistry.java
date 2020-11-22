@@ -12,16 +12,15 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class ResourceRegistry extends AbstractRegistry {
 
+    public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
+                    .hardnessAndResistance(3.0F, 3.0F)));
     public static final ItemGroup TAB = new ItemGroup(SpaceMod.MOD_ID + ".resource") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(COPPER_ORE.get());
         }
     };
-
-    public static final RegistryObject<Block> COPPER_ORE = BLOCKS.register("copper_ore", () -> new OreBlock(
-            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
-                    .hardnessAndResistance(3.0F, 3.0F)));
     public static final RegistryObject<Block> ALUMINIUM_ORE = BLOCKS.register("aluminium_ore", () -> new OreBlock(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().harvestLevel(1)
                     .hardnessAndResistance(3.0F, 3.0F)));
