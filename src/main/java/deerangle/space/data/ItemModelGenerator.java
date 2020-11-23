@@ -62,6 +62,8 @@ public class ItemModelGenerator extends ItemModelProvider {
         addFlatItem(ResourceRegistry.ROCKET_THRUSTER.get());
         addFlatItem(ResourceRegistry.HEATING_COIL.get());
         addFlatItem(ResourceRegistry.ISOLATING_FABRIC.get());
+        addFlatItem(ResourceRegistry.EMPTY_CAN.get());
+        addFlatItem(ResourceRegistry.ASTRONAUT_FOOD.get());
     }
 
 }

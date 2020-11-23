@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:rocket_thruster"
+    ]
+  },
+  "criteria": {
+    "has_ignition_coil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:ignition_coil"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:rocket_thruster"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ignition_coil",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:empty_can"
+    ]
+  },
+  "criteria": {
+    "has_aluminium_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:aluminium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:empty_can"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aluminium_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

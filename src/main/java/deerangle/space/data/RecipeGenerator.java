@@ -6,6 +6,7 @@ import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.RecipeRegistry;
 import deerangle.space.registry.ResourceRegistry;
+import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
@@ -30,9 +32,26 @@ public class RecipeGenerator extends RecipeProvider {
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
         addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromTag(Tags.Items.INGOTS_IRON),
                 ResourceRegistry.STEEL_INGOT.get(), 200 * 16);
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.IRON_BLOCK),
+                ResourceRegistry.STEEL_BLOCK.get().asItem(), 200 * 16 * 9);
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.SAND),
+                ResourceRegistry.QUARTZ_DUST.get(), 40 * 10);
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(ResourceRegistry.QUARTZ_SAND.get()),
+                ResourceRegistry.SILICA_TILE.get(), 40 * 30, "_from_quartz_sand");
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.QUARTZ_BLOCK),
+                ResourceRegistry.SILICA_TILE.get(), 40 * 30, "_from_quartz_block");
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.SOUL_SAND),
+                ResourceRegistry.HEAT_RESISTENT_GLASS.get(), 40 * 60);
 
         addRefineryRecipe(consumer, new FluidStack(FluidRegistry.CRUDE_OIL.get(), 2),
                 new FluidStack(FluidRegistry.KEROSENE.get(), 1), 4);
+
+        addStoneCutterRecipe(consumer, VenusRegistry.PULCHERITE.get(), VenusRegistry.POLISHED_PULCHERITE.get(), 
+                1, "polished_pulcherite_from_pulcherite");
+        addStoneCutterRecipe(consumer, VenusRegistry.PULCHERITE.get(), VenusRegistry.PULCHERITE_BRICKS.get(), 
+                1, "pulcherite_bricks_from_pulcherite");
+        addStoneCutterRecipe(consumer, VenusRegistry.POLISHED_PULCHERITE.get(), VenusRegistry.PULCHERITE_BRICKS.get(), 
+                1, "pulcherite_bricks_from_polished_pulcherite");
 
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get().asItem()),
                 ResourceRegistry.COPPER_INGOT.get(), 0.7F, 200)
@@ -45,11 +64,10 @@ public class RecipeGenerator extends RecipeProvider {
                 ResourceRegistry.TITANIUM_INGOT.get(), 2.0F, 200)
                 .addCriterion("has_ilmenite_ore", hasItem(ResourceRegistry.ILMENITE_ORE.get().asItem()))
                 .build(consumer);
-        /*TODO
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.RUSTY_DUST.get().asItem()),
-                ResourceRegistry.IRON_DUST.get(), 0.5F, 200)
-                .addCriterion("has_rusty_dust", hasItem(ResourceRegistry.RUSTY_DUST.get().asItem())).build(consumer);
-         */
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(MarsRegistry.RUSTY_DUST.get().asItem()),
+                ResourceRegistry.IRON_DUST.get(), 0.3F, 100)
+                .addCriterion("has_rusty_dust", hasItem(MarsRegistry.RUSTY_DUST.get().asItem()))
+                .build(consumer);
 
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get()),
                 ResourceRegistry.COPPER_INGOT.get(), 0.7F, 100)
@@ -155,6 +173,31 @@ public class RecipeGenerator extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(VenusRegistry.PULCHERITE_BRICKS.get(), 4).key('p', VenusRegistry.POLISHED_PULCHERITE.get())
                 .patternLine("pp ").patternLine("pp ").patternLine("   ")
                 .addCriterion("has_pulcherite", hasItem(VenusRegistry.PULCHERITE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.COMBUSTION_GENERATOR.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Items.GOLD_INGOT)
+                .key('i', Blocks.IRON_BLOCK).key('c', ResourceRegistry.COPPER_TUBE.get()).key('s', ResourceRegistry.STEEL_BLOCK.get())
+                .key('a', ResourceRegistry.CYLINDER.get()).patternLine("gcg").patternLine("asa").patternLine("ibi")
+                .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.EMPTY_CAN.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
+                .patternLine("aaa").patternLine("aaa").patternLine("   ")
+                .addCriterion("has_aluminium_ingot", hasItem(ResourceRegistry.ALUMINIUM_INGOT.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.CONTROLLER.get()).key('c', Items.COMPARATOR).key('d', Items.DIAMOND)
+                .key('b', ResourceRegistry.MACHINE_BASE.get()).key('p', ResourceRegistry.COPPER_PLATE.get())
+                .key('e', MachineRegistry.BATTERY_PACK.get()).key('t', ResourceRegistry.SILICA_TILE.get())
+                .patternLine("tct").patternLine("pde").patternLine("cbc")
+                .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_CONE.get()).key('t', ResourceRegistry.SILICA_TILE.get())
+                .key('a', ResourceRegistry.ALUMINIUM_PLATE.get()).key('c', ResourceRegistry.CONTROLLER.get())
+                .patternLine("ttt").patternLine("tat").patternLine("aca")
+                .addCriterion("has_controller", hasItem(ResourceRegistry.CONTROLLER.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_THRUSTER.get()).key('t', MachineRegistry.GAS_TANK.get())
+                .key('f', ResourceRegistry.IGNITION_COIL.get()).key('s', ResourceRegistry.SILICA_TILE.get())
+                .key('i', ResourceRegistry.TITANIUM_BLOCK.get())
+                .patternLine("sts").patternLine("ifi").patternLine("i i")
+                .addCriterion("has_ignition_coil", hasItem(ResourceRegistry.IGNITION_COIL.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.PLATED_ROCKET_BODY.get()).key('t', ResourceRegistry.SILICA_TILE.get())
+                .key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
+                .patternLine("tat").patternLine("tat").patternLine("tat")
+                .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
 
         registerIngotRecipes(ResourceRegistry.COPPER_INGOT.get(), ResourceRegistry.COPPER_BLOCK.get(),
                 ResourceRegistry.COPPER_NUGGET.get(), consumer, "copper");
@@ -172,10 +215,20 @@ public class RecipeGenerator extends RecipeProvider {
         addMachineRemoveNBTRecipe(MachineRegistry.DRUM.get(), consumer);
     }
 
+    private void addStoneCutterRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider ingredient, IItemProvider result, int count, String recipeName) {
+            SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(ingredient), result, count)
+                        .addCriterion("has_ingredient", hasItem(ingredient))
+                        .build(consumer, recipeName + "_from_stone_cutting");
+    }
+
     private void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration) {
+        addSpaceBlastFurnaceRecipe(consumer, input, result, duration, "");
+    }
+
+    private void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration, String recipeName) {
         ResourceLocation loc = result.getRegistryName();
         consumer.accept(new BlastFurnaceResult(
-                new ResourceLocation(loc.getNamespace(), loc.getPath() + "_from_space_blast_furnace"), input, result,
+                new ResourceLocation(loc.getNamespace(), loc.getPath() + recipeName + "_from_space_blast_furnace"), input, result,
                 duration));
     }
 

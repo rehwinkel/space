@@ -33,6 +33,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         rotatedBlockWithItem(MarsRegistry.RUSTY_DUST.get());
+        rotatedBlockWithItem(MarsRegistry.REGOLITH.get());
     }
 
 }

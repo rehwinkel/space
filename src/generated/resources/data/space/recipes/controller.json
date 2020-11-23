@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "tct",
+    "pde",
+    "cbc"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:comparator"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "b": {
+      "item": "space:machine_base"
+    },
+    "p": {
+      "item": "space:copper_plate"
+    },
+    "e": {
+      "item": "space:battery_pack"
+    },
+    "t": {
+      "item": "space:silica_tile"
+    }
+  },
+  "result": {
+    "item": "space:controller"
+  }
+}

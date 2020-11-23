@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ttt",
+    "tat",
+    "aca"
+  ],
+  "key": {
+    "t": {
+      "item": "space:silica_tile"
+    },
+    "a": {
+      "item": "space:aluminium_plate"
+    },
+    "c": {
+      "item": "space:controller"
+    }
+  },
+  "result": {
+    "item": "space:rocket_cone"
+  }
+}

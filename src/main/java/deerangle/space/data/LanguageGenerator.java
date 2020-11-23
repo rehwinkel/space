@@ -36,7 +36,6 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.STEEL_BLOCK.get(), "Steel Block");
         add(ResourceRegistry.TITANIUM_BLOCK.get(), "Titanium Block");
         add(ResourceRegistry.QUARTZ_SAND.get(), "Quartz Sand");
-        //TODO: add(ResourceRegistry.RUSTY_DUST.get(), "Rusty Dust");
         add(ResourceRegistry.STEEL_INGOT.get(), "Steel Ingot");
         add(ResourceRegistry.COPPER_INGOT.get(), "Copper Ingot");
         add(ResourceRegistry.TITANIUM_INGOT.get(), "Titanium Ingot");
@@ -67,6 +66,9 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.ROCKET_THRUSTER.get(), "Rocket Thruster");
         add(ResourceRegistry.HEATING_COIL.get(), "Heating Coil");
         add(ResourceRegistry.ISOLATING_FABRIC.get(), "Isolating Fabric");
+        add(ResourceRegistry.CONTROLLER.get(), "Controller");
+        add(ResourceRegistry.EMPTY_CAN.get(), "Empty Can");
+        add(ResourceRegistry.ASTRONAUT_FOOD.get(), "Astronaut Food");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
         add("itemGroup.space.extraterrestrial", "Space Planets");

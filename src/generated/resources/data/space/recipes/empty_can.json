@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "   "
+  ],
+  "key": {
+    "a": {
+      "item": "space:aluminium_ingot"
+    }
+  },
+  "result": {
+    "item": "space:empty_can"
+  }
+}

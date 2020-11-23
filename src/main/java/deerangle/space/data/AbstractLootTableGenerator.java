@@ -7,6 +7,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.SurvivesExplosion;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -44,6 +45,12 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                 LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(drop))
                         .acceptCondition(SurvivesExplosion.builder())).build();
         tables.put(block.getRegistryName(), value);
+    }
+
+    public void slabBlock(Block block) {
+        LootTable value = LootTable.builder().addLootPool(
+            LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))
+                .acceptCondition(BlockStateProperty.builder(block))).build();
     }
 
     protected abstract void populate();

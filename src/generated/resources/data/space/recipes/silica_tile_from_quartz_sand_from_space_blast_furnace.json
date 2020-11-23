@@ -1,0 +1,8 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "item": "space:quartz_sand"
+  },
+  "result": "space:silica_tile",
+  "duration": 1200
+}

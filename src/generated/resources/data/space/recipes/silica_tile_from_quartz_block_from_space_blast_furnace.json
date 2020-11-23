@@ -1,0 +1,8 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": "space:silica_tile",
+  "duration": 1200
+}

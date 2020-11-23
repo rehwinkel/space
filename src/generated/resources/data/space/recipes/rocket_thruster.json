@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sts",
+    "ifi",
+    "i i"
+  ],
+  "key": {
+    "t": {
+      "item": "space:gas_tank"
+    },
+    "f": {
+      "item": "space:ignition_coil"
+    },
+    "s": {
+      "item": "space:silica_tile"
+    },
+    "i": {
+      "item": "space:titanium_block"
+    }
+  },
+  "result": {
+    "item": "space:rocket_thruster"
+  }
+}

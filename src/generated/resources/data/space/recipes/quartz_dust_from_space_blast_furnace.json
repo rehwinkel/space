@@ -1,0 +1,8 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "item": "minecraft:sand"
+  },
+  "result": "space:quartz_dust",
+  "duration": 400
+}

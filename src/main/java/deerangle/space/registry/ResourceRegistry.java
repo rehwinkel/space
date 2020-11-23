@@ -4,11 +4,10 @@ import deerangle.space.main.SpaceMod;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.TreeFeature;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -44,6 +43,8 @@ public class ResourceRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
                     .hardnessAndResistance(1.0F, 1.0F)));
+    public static final RegistryObject<Block> CONTROLLER = BLOCKS.register("controller", () -> new Block(
+            AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 6.0F)));
 
     public static final RegistryObject<Item> ALUMINIUM_INGOT = ITEMS
             .register("aluminium_ingot", () -> new Item(new Item.Properties().group(TAB)));
@@ -105,6 +106,11 @@ public class ResourceRegistry extends AbstractRegistry {
             .register("heating_coil", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> ISOLATING_FABRIC = ITEMS
             .register("isolating_fabric", () -> new Item(new Item.Properties().group(TAB)));
+    public static final RegistryObject<Item> EMPTY_CAN = ITEMS
+            .register("empty_can", () -> new Item(new Item.Properties().group(TAB)));
+    public static final RegistryObject<Item> ASTRONAUT_FOOD = ITEMS
+            .register("astronaut_food", () -> new Item(new Item.Properties().group(TAB)
+            .food(new Food.Builder().hunger(8).saturation(0.2F).build())));
 
     static {
         ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(TAB)));
@@ -115,6 +121,7 @@ public class ResourceRegistry extends AbstractRegistry {
         ITEMS.register("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("titanium_block", () -> new BlockItem(TITANIUM_BLOCK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("quartz_sand", () -> new BlockItem(QUARTZ_SAND.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("controller", () -> new BlockItem(CONTROLLER.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gcg",
+    "asa",
+    "ibi"
+  ],
+  "key": {
+    "b": {
+      "item": "space:machine_base"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "c": {
+      "item": "space:copper_tube"
+    },
+    "s": {
+      "item": "space:steel_block"
+    },
+    "a": {
+      "item": "space:cylinder"
+    }
+  },
+  "result": {
+    "item": "space:combustion_generator"
+  }
+}

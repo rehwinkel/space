@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "tat",
+    "tat",
+    "tat"
+  ],
+  "key": {
+    "t": {
+      "item": "space:silica_tile"
+    },
+    "a": {
+      "item": "space:aluminium_ingot"
+    }
+  },
+  "result": {
+    "item": "space:plated_rocket_body"
+  }
+}

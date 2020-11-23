@@ -1,0 +1,8 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "item": "minecraft:soul_sand"
+  },
+  "result": "space:heat_resistent_glass",
+  "duration": 2400
+}

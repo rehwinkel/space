@@ -134,6 +134,15 @@ public class BlockStateGenerator extends BlockStateProvider {
                         "block/" + block.getRegistryName().getPath() + "_still"))));
     }
 
+    private void blockWithTopAndBottomTexture(Block block) {
+        ResourceLocation base = blockTexture(block);
+        ModelFile baseModel = models().cubeBottomTop(block.getRegistryName().getPath(), new ResourceLocation(base.getNamespace(), base.getPath() + "_side"), 
+                new ResourceLocation(base.getNamespace(), base.getPath() + "_bottom"),
+                new ResourceLocation(base.getNamespace(), base.getPath() + "_top"));
+                getVariantBuilder(block).partialState().setModels(new ConfiguredModel(baseModel));
+        simpleBlockItem(block, baseModel);
+    }
+
     private String blockName(Block block) {
         return block.getRegistryName().getNamespace() + ":block/" + block.getRegistryName().getPath();
     }
@@ -152,6 +161,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlockWithItem(ResourceRegistry.STEEL_BLOCK.get());
         simpleBlockWithItem(ResourceRegistry.TITANIUM_BLOCK.get());
         simpleBlockWithItem(ResourceRegistry.QUARTZ_SAND.get());
+        blockWithTopAndBottomTexture(ResourceRegistry.CONTROLLER.get());
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
         fluidBlock(FluidRegistry.KEROSENE.get());
         cableBlockWithItem(MachineRegistry.CABLE.get());

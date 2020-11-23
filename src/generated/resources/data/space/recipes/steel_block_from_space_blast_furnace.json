@@ -1,0 +1,8 @@
+{
+  "type": "space:blast_furnace",
+  "ingredient": {
+    "item": "minecraft:iron_block"
+  },
+  "result": "space:steel_block",
+  "duration": 28800
+}
