@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "space:block/shriekwood_slab_top"
+    },
+    "type=bottom": {
+      "model": "space:block/shriekwood_slab"
+    },
+    "type=double": {
+      "model": "space:block/shriekwood_planks"
+    }
+  }
+}

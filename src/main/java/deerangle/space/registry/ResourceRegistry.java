@@ -42,9 +42,6 @@ public class ResourceRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
                     .hardnessAndResistance(1.0F, 1.0F)));
-    public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new FallingBlock(
-            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
-                    .hardnessAndResistance(1.0F, 1.0F)));
 
     public static final RegistryObject<Item> ALUMINIUM_INGOT = ITEMS
             .register("aluminium_ingot", () -> new Item(new Item.Properties().group(TAB)));
@@ -112,7 +109,6 @@ public class ResourceRegistry extends AbstractRegistry {
         ITEMS.register("steel_block", () -> new BlockItem(STEEL_BLOCK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("titanium_block", () -> new BlockItem(TITANIUM_BLOCK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("quartz_sand", () -> new BlockItem(QUARTZ_SAND.get(), new Item.Properties().group(TAB)));
-        ITEMS.register("rusty_dust", () -> new BlockItem(RUSTY_DUST.get(), new Item.Properties().group(TAB)));
     }
 
     public static void register() {

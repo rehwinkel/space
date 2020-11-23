@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/turpium_rock"
+      },
+      {
+        "model": "space:block/turpium_rock",
+        "y": 90
+      },
+      {
+        "model": "space:block/turpium_rock_secondary"
+      },
+      {
+        "model": "space:block/turpium_rock_secondary",
+        "y": 90
+      }
+    ]
+  }
+}

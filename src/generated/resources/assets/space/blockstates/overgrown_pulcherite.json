@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/overgrown_pulcherite"
+      },
+      {
+        "model": "space:block/overgrown_pulcherite",
+        "y": 90
+      },
+      {
+        "model": "space:block/overgrown_pulcherite",
+        "y": 180
+      },
+      {
+        "model": "space:block/overgrown_pulcherite",
+        "y": 270
+      }
+    ]
+  }
+}

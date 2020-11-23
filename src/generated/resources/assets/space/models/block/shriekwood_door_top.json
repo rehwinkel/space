@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top",
+  "textures": {
+    "bottom": "space:venus/block/shriekwood_door_bottom",
+    "top": "space:venus/block/shriekwood_door_top"
+  }
+}

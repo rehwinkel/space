@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "space:venus/block/shriekwood_planks",
+    "bottom": "space:venus/block/shriekwood_planks",
+    "top": "space:venus/block/shriekwood_planks"
+  }
+}

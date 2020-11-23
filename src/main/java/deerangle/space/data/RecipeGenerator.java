@@ -44,9 +44,11 @@ public class RecipeGenerator extends RecipeProvider {
                 ResourceRegistry.TITANIUM_INGOT.get(), 2.0F, 200)
                 .addCriterion("has_ilmenite_ore", hasItem(ResourceRegistry.ILMENITE_ORE.get().asItem()))
                 .build(consumer);
+        /*TODO
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.RUSTY_DUST.get().asItem()),
                 ResourceRegistry.IRON_DUST.get(), 0.5F, 200)
                 .addCriterion("has_rusty_dust", hasItem(ResourceRegistry.RUSTY_DUST.get().asItem())).build(consumer);
+         */
 
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get()),
                 ResourceRegistry.COPPER_INGOT.get(), 0.7F, 100)

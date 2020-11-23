@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/turpium"
+      },
+      {
+        "model": "space:block/turpium",
+        "y": 90
+      },
+      {
+        "model": "space:block/turpium",
+        "y": 180
+      },
+      {
+        "model": "space:block/turpium",
+        "y": 270
+      }
+    ]
+  }
+}

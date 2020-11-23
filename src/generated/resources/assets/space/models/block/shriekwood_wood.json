@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "space:venus/block/shriekwood_log",
+    "end": "space:venus/block/shriekwood_log"
+  }
+}

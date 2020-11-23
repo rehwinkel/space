@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "space:venus/block/overgrown_pulcherite",
+    "bottom": "space:venus/block/pulcherite",
+    "top": "space:venus/block/overgrown_pulcherite_top"
+  }
+}

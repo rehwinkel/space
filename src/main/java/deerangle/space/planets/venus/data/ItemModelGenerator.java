@@ -1,6 +1,7 @@
 package deerangle.space.planets.venus.data;
 
 import deerangle.space.planets.venus.VenusRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +20,12 @@ public class ItemModelGenerator extends ItemModelProvider {
                         item.getRegistryName().getNamespace() + ":venus/item/" + item.getRegistryName().getPath());
     }
 
+    private void addFlatItemForBlock(Block block) {
+        getBuilder(block.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated")))
+                .texture("layer0",
+                        block.getRegistryName().getNamespace() + ":venus/block/" + block.getRegistryName().getPath());
+    }
+
     @Override
     protected void registerModels() {
         addFlatItem(VenusRegistry.MUSIC_DISC_LOVE.get());
@@ -26,6 +33,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         addFlatItem(VenusRegistry.SULFUR.get());
         addFlatItem(VenusRegistry.SLIMY_ALGAE_ITEM.get());
         addFlatItem(VenusRegistry.SHRIEKWOOD_DOOR_ITEM.get());
+        addFlatItemForBlock(VenusRegistry.SHRIEKGRASS.get());
     }
 
 }

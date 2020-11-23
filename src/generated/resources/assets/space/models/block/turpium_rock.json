@@ -1,0 +1,6 @@
+{
+  "parent": "space:venus/block/rock",
+  "textures": {
+    "all": "space:venus/block/turpium"
+  }
+}

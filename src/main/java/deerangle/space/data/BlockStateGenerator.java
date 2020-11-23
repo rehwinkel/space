@@ -39,16 +39,6 @@ public class BlockStateGenerator extends BlockStateProvider {
                 new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath())));
     }
 
-    private void rotatedBlockWithItem(Block block) {
-        ModelFile model = cubeAll(block);
-        getVariantBuilder(block).partialState()
-                .setModels(new ConfiguredModel(model, 0, 90, false), new ConfiguredModel(model, 0, 180, false),
-                        new ConfiguredModel(model, 0, 270, false), new ConfiguredModel(model, 0, 0, false));
-        ResourceLocation blockName = block.getRegistryName();
-        simpleBlockItem(block, models().getExistingFile(
-                new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath())));
-    }
-
     private void existingBlockWithItem(Block block) {
         ResourceLocation blockName = block.getRegistryName();
         ResourceLocation parent = new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath());
@@ -162,7 +152,6 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlockWithItem(ResourceRegistry.STEEL_BLOCK.get());
         simpleBlockWithItem(ResourceRegistry.TITANIUM_BLOCK.get());
         simpleBlockWithItem(ResourceRegistry.QUARTZ_SAND.get());
-        rotatedBlockWithItem(ResourceRegistry.RUSTY_DUST.get());
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
         fluidBlock(FluidRegistry.KEROSENE.get());
         cableBlockWithItem(MachineRegistry.CABLE.get());

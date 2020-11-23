@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "space:block/rusty_dust"
+    "all": "space:mars/block/rusty_dust"
   }
 }

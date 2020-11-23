@@ -19,7 +19,7 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
         normalBlock(ResourceRegistry.STEEL_BLOCK.get());
         normalBlock(ResourceRegistry.TITANIUM_BLOCK.get());
         normalBlock(ResourceRegistry.QUARTZ_SAND.get());
-        normalBlock(ResourceRegistry.RUSTY_DUST.get());
+        //TODO: normalBlock(ResourceRegistry.RUSTY_DUST.get());
     }
 
 }

@@ -35,7 +35,7 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.STEEL_BLOCK.get(), "Steel Block");
         add(ResourceRegistry.TITANIUM_BLOCK.get(), "Titanium Block");
         add(ResourceRegistry.QUARTZ_SAND.get(), "Quartz Sand");
-        add(ResourceRegistry.RUSTY_DUST.get(), "Rusty Dust");
+        //TODO: add(ResourceRegistry.RUSTY_DUST.get(), "Rusty Dust");
         add(ResourceRegistry.STEEL_INGOT.get(), "Steel Ingot");
         add(ResourceRegistry.COPPER_INGOT.get(), "Copper Ingot");
         add(ResourceRegistry.TITANIUM_INGOT.get(), "Titanium Ingot");

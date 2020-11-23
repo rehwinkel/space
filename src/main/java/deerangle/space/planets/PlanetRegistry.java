@@ -1,6 +1,7 @@
 package deerangle.space.planets;
 
 import deerangle.space.main.SpaceMod;
+import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -17,9 +18,16 @@ public class PlanetRegistry {
 
     public static void register() {
         VenusRegistry.register();
+        MarsRegistry.register();
     }
 
     public static void registerData(GatherDataEvent event) {
         VenusRegistry.registerData(event);
+        MarsRegistry.registerData(event);
+    }
+
+    public static void registerClient() {
+        VenusRegistry.registerClient();
+        MarsRegistry.registerClient();
     }
 }

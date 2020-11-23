@@ -2,13 +2,13 @@ package deerangle.space.planets.venus;
 
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.PlanetRegistry;
-import deerangle.space.planets.venus.block.AlgeeBlock;
-import deerangle.space.planets.venus.block.GlowingBlock;
-import deerangle.space.planets.venus.block.OvergrownBlock;
-import deerangle.space.planets.venus.block.RockBlock;
+import deerangle.space.planets.venus.block.*;
 import deerangle.space.planets.venus.data.BlockStateGenerator;
+import deerangle.space.planets.venus.data.ItemModelGenerator;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -36,7 +36,7 @@ public class VenusRegistry {
     public static final RegistryObject<Block> OVERGROWN_PULCHERITE = BLOCKS
             .register("overgrown_pulcherite", () -> new OvergrownBlock(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> SHRIEKGRASS = BLOCKS
-            .register("shriekgrass", () -> new TallGrassBlock(AbstractBlock.Properties.create(Material.ROCK)));
+            .register("shriekgrass", () -> new ShriekGrassBlock(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> PULCHERITE_BRICKS = BLOCKS
             .register("pulcherite_bricks", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> POLISHED_PULCHERITE = BLOCKS
@@ -56,7 +56,9 @@ public class VenusRegistry {
     public static final RegistryObject<Block> SHRIEKWOOD_WOOD = BLOCKS
             .register("shriekwood_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD)));
     public static final RegistryObject<Block> SHRIEKWOOD_LEAVES = BLOCKS.register("shriekwood_leaves",
-            () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.LEAVES)));
+            () -> new RotatedPillarBlock(
+                    AbstractBlock.Properties.create(Material.LEAVES).notSolid().hardnessAndResistance(0.2F)
+                            .setBlocksVision((state, reader, pos) -> false).tickRandomly()));
     public static final RegistryObject<Block> SHRIEKWOOD_PLANKS = BLOCKS
             .register("shriekwood_planks", () -> new Block(AbstractBlock.Properties.create(Material.WOOD)));
     public static final RegistryObject<Block> SHRIEKWOOD_STAIRS = BLOCKS.register("shriekwood_stairs",
@@ -66,8 +68,8 @@ public class VenusRegistry {
             .register("shriekwood_slab", () -> new SlabBlock(AbstractBlock.Properties.create(Material.WOOD)));
     public static final RegistryObject<Block> SHRIEKWOOD_DOOR = BLOCKS
             .register("shriekwood_door", () -> new DoorBlock(AbstractBlock.Properties.create(Material.WOOD)));
-    public static final RegistryObject<Block> SLIMY_ALGAE = BLOCKS
-            .register("slimy_algae", () -> new AlgeeBlock(AbstractBlock.Properties.create(Material.WOOD)));
+    public static final RegistryObject<Block> SLIMY_ALGAE = BLOCKS.register("slimy_algae", () -> new AlgeeBlock(
+            AbstractBlock.Properties.create(Material.WOOD).setBlocksVision((state, reader, pos) -> false)));
 
     public static final RegistryObject<Item> MUSIC_DISC_SPICY_AND_SOUR = ITEMS.register("music_disc_spicy_and_sour",
             () -> new MusicDiscItem(1, () -> null, new Item.Properties().group(PlanetRegistry.TAB).maxStackSize(1)));
@@ -86,6 +88,7 @@ public class VenusRegistry {
                     .food(new Food.Builder().fastToEat().hunger(2).saturation(0.2F).build())));
 
     //TODO: add mobs and their drops
+    //TODO: acid fluid
 
     static {
         ITEMS.register("pulcherite",
@@ -102,7 +105,7 @@ public class VenusRegistry {
                 () -> new BlockItem(SHRIEKGRASS.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("pulcherite_bricks",
                 () -> new BlockItem(PULCHERITE_BRICKS.get(), new Item.Properties().group(PlanetRegistry.TAB)));
-        ITEMS.register("polished_pulcherite_bricks",
+        ITEMS.register("polished_pulcherite",
                 () -> new BlockItem(POLISHED_PULCHERITE.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("turpium", () -> new BlockItem(TURPIUM.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("glowing_turpium",
@@ -129,11 +132,21 @@ public class VenusRegistry {
 
     public static void register() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void registerData(GatherDataEvent event) {
         event.getGenerator().addProvider(
                 new BlockStateGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(
+                new ItemModelGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
+    }
+
+    public static void registerClient() {
+        RenderTypeLookup.setRenderLayer(SLIMY_ALGAE.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(SHRIEKWOOD_DOOR.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(SHRIEKGRASS.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(SHRIEKWOOD_LEAVES.get(), RenderType.getCutoutMipped());
     }
 
 }
