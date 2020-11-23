@@ -6,6 +6,7 @@ import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.RecipeRegistry;
 import deerangle.space.registry.ResourceRegistry;
+import deerangle.space.planets.venus.VenusRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
@@ -124,6 +125,36 @@ public class RecipeGenerator extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(MachineRegistry.REFINERY.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Blocks.GLASS).key('c', ResourceRegistry.COPPER_TUBE.get())
                 .patternLine("c c").patternLine("ggc").patternLine("cbc")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ISOLATING_FABRIC.get()).key('w', Blocks.WHITE_WOOL).key('s', ResourceRegistry.SILICA_TILE.get())
+                .patternLine("ss ").patternLine("ww ").patternLine("   ")
+                .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_WOOD.get(), 3).key('l', VenusRegistry.SHRIEKWOOD_LOG.get())
+                .patternLine("ll ").patternLine("ll ").patternLine("   ")
+                .addCriterion("has_shriekwood_log", hasItem(VenusRegistry.SHRIEKWOOD_LOG.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.GAS_TANK.get()).key('s', ResourceRegistry.STEEL_INGOT.get()).key('g', Items.GOLD_INGOT)
+                .patternLine("sgs").patternLine("s s").patternLine("sss")
+                .addCriterion("has_steel_ingot", hasItem(ResourceRegistry.STEEL_INGOT.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_PLANKS.get(), 4).key('l', VenusRegistry.SHRIEKWOOD_LOG.get())
+                .patternLine("l  ").patternLine("   ").patternLine("   ")
+                .addCriterion("has_shriekwood_log", hasItem(VenusRegistry.SHRIEKWOOD_LOG.get())).build(consumer, "shriekwood_planks_from_shriekwood_log");
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_PLANKS.get(), 4).key('w', VenusRegistry.SHRIEKWOOD_WOOD.get())
+                .patternLine("w  ").patternLine("   ").patternLine("   ")
+                .addCriterion("has_shriekwood_wood", hasItem(VenusRegistry.SHRIEKWOOD_WOOD.get())).build(consumer, "shriekwood_planks_from_shriekwood_wood");
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_STAIRS.get(), 4).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
+                .patternLine("p  ").patternLine("pp ").patternLine("ppp")
+                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_DOOR.get(), 3).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
+                .patternLine("pp ").patternLine("pp ").patternLine("pp ")
+                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_SLAB.get(), 6).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
+                .patternLine("ppp").patternLine("   ").patternLine("   ")
+                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.POLISHED_PULCHERITE.get(), 4).key('p', VenusRegistry.PULCHERITE.get())
+                .patternLine("pp ").patternLine("pp ").patternLine("   ")
+                .addCriterion("has_pulcherite", hasItem(VenusRegistry.PULCHERITE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.PULCHERITE_BRICKS.get(), 4).key('p', VenusRegistry.POLISHED_PULCHERITE.get())
+                .patternLine("pp ").patternLine("pp ").patternLine("   ")
+                .addCriterion("has_pulcherite", hasItem(VenusRegistry.PULCHERITE.get())).build(consumer);
 
         registerIngotRecipes(ResourceRegistry.COPPER_INGOT.get(), ResourceRegistry.COPPER_BLOCK.get(),
                 ResourceRegistry.COPPER_NUGGET.get(), consumer, "copper");
