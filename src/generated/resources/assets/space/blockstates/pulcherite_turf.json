@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/pulcherite_turf"
+      },
+      {
+        "model": "space:block/pulcherite_turf",
+        "y": 90
+      },
+      {
+        "model": "space:block/pulcherite_turf",
+        "y": 180
+      },
+      {
+        "model": "space:block/pulcherite_turf",
+        "y": 270
+      }
+    ]
+  }
+}

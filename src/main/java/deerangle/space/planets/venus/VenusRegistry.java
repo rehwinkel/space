@@ -18,6 +18,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -25,6 +26,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class VenusRegistry {
+
+    public static final RegistryKey<Biome> VENUS_HILLS = RegistryKey
+            .getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"));
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister
             .create(ForgeRegistries.BLOCKS, SpaceMod.MOD_ID);
@@ -44,39 +48,45 @@ public class VenusRegistry {
             .register("music_disc_spicy_and_sour",
                     () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.spicy_and_sour")));
 
-    public static final RegistryObject<Block> PULCHERITE = BLOCKS
-            .register("pulcherite", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> PULCHERITE_COAL = BLOCKS
-            .register("pulcherite_coal", () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
-    public static final RegistryObject<Block> PULCHERITE_SULFUR = BLOCKS
-            .register("pulcherite_sulfur", () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
-    public static final RegistryObject<Block> PULCHERITE_ILMENITE = BLOCKS
-            .register("pulcherite_ilmenite", () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestLevel(2)));
+    public static final RegistryObject<Block> PULCHERITE = BLOCKS.register("pulcherite",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> PULCHERITE_TURF = BLOCKS.register("pulcherite_turf", () -> new Block(
+            AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.GROUND).hardnessAndResistance(0.3f)
+                    .harvestTool(ToolType.SHOVEL)));
+    public static final RegistryObject<Block> PULCHERITE_COAL = BLOCKS.register("pulcherite_coal",
+            () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> PULCHERITE_SULFUR = BLOCKS.register("pulcherite_sulfur",
+            () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
+    public static final RegistryObject<Block> PULCHERITE_ILMENITE = BLOCKS.register("pulcherite_ilmenite",
+            () -> new OreBlock(
+                    AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestLevel(2)));
     public static final RegistryObject<Block> OVERGROWN_PULCHERITE = BLOCKS.register("overgrown_pulcherite",
-            () -> new OvergrownBlock(AbstractBlock.Properties.create(Material.ROCK).tickRandomly().hardnessAndResistance(1.5F, 6.0F)));
+            () -> new OvergrownBlock(
+                    AbstractBlock.Properties.create(Material.ROCK).tickRandomly().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> SHRIEKGRASS = BLOCKS.register("shriekgrass", () -> new ShriekGrassBlock(
             AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().zeroHardnessAndResistance()
                     .notSolid().sound(SoundType.PLANT)));
-    public static final RegistryObject<Block> PULCHERITE_BRICKS = BLOCKS
-            .register("pulcherite_bricks", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> POLISHED_PULCHERITE = BLOCKS
-            .register("polished_pulcherite", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> TURPIUM = BLOCKS
-            .register("turpium", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> PULCHERITE_BRICKS = BLOCKS.register("pulcherite_bricks",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> POLISHED_PULCHERITE = BLOCKS.register("polished_pulcherite",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> TURPIUM = BLOCKS.register("turpium",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> GLOWING_TURPIUM = BLOCKS.register("glowing_turpium",
             () -> new GlowingBlock(
-                    AbstractBlock.Properties.create(Material.ROCK).tickRandomly().setLightLevel(state -> 7).hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> TURPIUM_COBBLESTONE = BLOCKS
-            .register("turpium_cobblestone", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 6.0F)));
-    public static final RegistryObject<Block> TURPIUM_ROCK = BLOCKS
-            .register("turpium_rock", () -> new RockBlock(AbstractBlock.Properties.create(Material.ROCK).notSolid().hardnessAndResistance(1.5F, 6.0F)));
+                    AbstractBlock.Properties.create(Material.ROCK).tickRandomly().setLightLevel(state -> 7)
+                            .hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> TURPIUM_COBBLESTONE = BLOCKS.register("turpium_cobblestone",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 6.0F)));
+    public static final RegistryObject<Block> TURPIUM_ROCK = BLOCKS.register("turpium_rock", () -> new RockBlock(
+            AbstractBlock.Properties.create(Material.ROCK).notSolid().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> VENUS_BACTERIA = BLOCKS.register("venus_bacteria", () -> new VineBlock(
             AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly()
                     .hardnessAndResistance(0.2F).sound(SoundType.SLIME)));
-    public static final RegistryObject<Block> SHRIEKWOOD_LOG = BLOCKS
-            .register("shriekwood_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)));
-    public static final RegistryObject<Block> SHRIEKWOOD_WOOD = BLOCKS
-            .register("shriekwood_wood", () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)));
+    public static final RegistryObject<Block> SHRIEKWOOD_LOG = BLOCKS.register("shriekwood_log",
+            () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)));
+    public static final RegistryObject<Block> SHRIEKWOOD_WOOD = BLOCKS.register("shriekwood_wood",
+            () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)));
     public static final RegistryObject<Block> SHRIEKWOOD_LEAVES = BLOCKS.register("shriekwood_leaves",
             () -> new RotatedPillarBlock(
                     AbstractBlock.Properties.create(Material.LEAVES).notSolid().hardnessAndResistance(0.2F)
@@ -114,6 +124,8 @@ public class VenusRegistry {
     static {
         ITEMS.register("pulcherite",
                 () -> new BlockItem(PULCHERITE.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("pulcherite_turf",
+                () -> new BlockItem(PULCHERITE_TURF.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("pulcherite_coal",
                 () -> new BlockItem(PULCHERITE_COAL.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("pulcherite_sulfur",
@@ -180,6 +192,7 @@ public class VenusRegistry {
 
     public static void registerLanguage(LanguageGenerator gen) {
         gen.add(PULCHERITE.get(), "Pulcherite");
+        gen.add(PULCHERITE_TURF.get(), "Pulcherite Turf");
         gen.add(PULCHERITE_COAL.get(), "Pulcherite Coal Ore");
         gen.add(PULCHERITE_SULFUR.get(), "Pulcherite Sulfur Ore");
         gen.add(PULCHERITE_ILMENITE.get(), "Pulcherite Ilmenite Ore");
