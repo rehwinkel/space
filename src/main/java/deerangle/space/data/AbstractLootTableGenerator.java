@@ -8,6 +8,7 @@ import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.SurvivesExplosion;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,8 +36,12 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
     }
 
     public void normalBlock(Block block) {
+        normalBlock(block, block);
+    }
+
+    public void normalBlock(Block block, IItemProvider drop) {
         LootTable value = LootTable.builder().addLootPool(
-                LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))
+                LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(drop))
                         .acceptCondition(SurvivesExplosion.builder())).build();
         tables.put(block.getRegistryName(), value);
     }
