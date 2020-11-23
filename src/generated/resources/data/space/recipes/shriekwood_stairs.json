@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "p  ",
+    "pp ",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "item": "space:shriekwood_planks"
+    }
+  },
+  "result": {
+    "item": "space:shriekwood_stairs",
+    "count": 4
+  }
+}

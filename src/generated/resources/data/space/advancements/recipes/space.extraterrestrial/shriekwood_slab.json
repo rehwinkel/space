@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:shriekwood_slab"
+    ]
+  },
+  "criteria": {
+    "has_shriekwood_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:shriekwood_planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:shriekwood_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shriekwood_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

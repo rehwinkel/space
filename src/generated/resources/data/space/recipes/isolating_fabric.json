@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ss ",
+    "ww ",
+    "   "
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:white_wool"
+    },
+    "s": {
+      "item": "space:silica_tile"
+    }
+  },
+  "result": {
+    "item": "space:isolating_fabric"
+  }
+}

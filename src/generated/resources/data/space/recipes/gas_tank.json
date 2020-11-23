@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sgs",
+    "s s",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "space:steel_ingot"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "space:gas_tank"
+  }
+}
