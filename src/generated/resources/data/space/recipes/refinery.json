@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "c c",
+    "ggc",
+    "cbc"
+  ],
+  "key": {
+    "b": {
+      "item": "space:machine_base"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "c": {
+      "item": "space:copper_tube"
+    }
+  },
+  "result": {
+    "item": "space:refinery"
+  }
+}

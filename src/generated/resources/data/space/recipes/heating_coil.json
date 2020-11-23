@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "csc",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "item": "space:copper_ingot"
+    },
+    "s": {
+      "item": "space:steel_rod"
+    }
+  },
+  "result": {
+    "item": "space:heating_coil"
+  }
+}

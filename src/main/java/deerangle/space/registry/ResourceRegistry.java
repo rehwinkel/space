@@ -99,6 +99,8 @@ public class ResourceRegistry extends AbstractRegistry {
             .register("rocket_fin", () -> new Item(new Item.Properties().group(TAB)));
     public static final RegistryObject<Item> ROCKET_THRUSTER = ITEMS
             .register("rocket_thruster", () -> new Item(new Item.Properties().group(TAB)));
+    public static final RegistryObject<Item> HEATING_COIL = ITEMS
+            .register("heating_coil", () -> new Item(new Item.Properties().group(TAB)));
 
     static {
         ITEMS.register("copper_ore", () -> new BlockItem(COPPER_ORE.get(), new Item.Properties().group(TAB)));

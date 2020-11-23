@@ -65,6 +65,7 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.ROCKET_CONE.get(), "Rocket Cone");
         add(ResourceRegistry.ROCKET_FIN.get(), "Rocket Fin");
         add(ResourceRegistry.ROCKET_THRUSTER.get(), "Rocket Thruster");
+        add(ResourceRegistry.HEATING_COIL.get(), "Heating Coil");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
         add("itemGroup.space.extraterrestrial", "Space Planets");
