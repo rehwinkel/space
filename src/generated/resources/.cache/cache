@@ -37,7 +37,7 @@ cc46d55ba069611b0ae3e8e2fd65ba5cf948a7f2 assets/space/blockstates/slimy_algae.js
 d5396c73099d3a8c50002f1358a4ce89c12c89ec assets/space/blockstates/turpium.json
 e7b52f3dc19243cf80e5d7754e00126107e94f3e assets/space/blockstates/turpium_cobblestone.json
 ab1f7dc68e1adc00cc381daa07998736b2e0460a assets/space/blockstates/turpium_rock.json
-e12659db83b1f393e1150f04ac938ed552a42233 assets/space/lang/en_us.json
+4f55461b64ecae00188eb51e70cb7604c123b8b2 assets/space/lang/en_us.json
 fa2bbb125672855ba9911b0a358af993eb35eed0 assets/space/models/block/aluminium_block.json
 bf81f202ea51f05ef86c6bae24e4fd118ca6f800 assets/space/models/block/aluminium_ore.json
 7d0367c1e5c5bdae40da9e9421fe7e80ce994b83 assets/space/models/block/copper_block.json
@@ -71,7 +71,7 @@ c3a8fb6ffb9673ac763d0fae58b618aa9b2203a3 assets/space/models/block/shriekwood_le
 e1e45b86d1b0226da3db86f1051d852655f4f6be assets/space/models/block/shriekwood_stairs_outer.json
 70485a7c4d0db7f51c001a663e2b01d87cc98ce0 assets/space/models/block/shriekwood_wood.json
 11141b0602a5660dafc7ef4f5b089cdd3c191bbf assets/space/models/block/shriekwood_wood_horizontal.json
-b0699dc3a2c1c856e39047c640c4870703afb923 assets/space/models/block/slimy_algae.json
+edfbfb34f037096b934031a83c6d03421ddc339a assets/space/models/block/slimy_algae.json
 d7aa2611849f210cefc2ceabe5bb37d97c56bf59 assets/space/models/block/steel_block.json
 cd0cd9e4246aace6499bb391ea7d48d8d4007bab assets/space/models/block/titanium_block.json
 3c2aad3108ad9017ee8639477da894bbe679668e assets/space/models/block/turpium.json
@@ -240,3 +240,5 @@ e42652d3b2fd157cba33f6ac35c969de7f4870e3 data/space/recipes/titanium_block.json
 8977c65be1af369a55ebc2204cae70d21ad0ca12 data/space/recipes/titanium_ingot.json
 a0e417dfbdf1074ba77c8d9475253042095865d3 data/space/recipes/titanium_nugget.json
 ccd8f610d472440c395245e6d705f8a7428ac4a2 data/space/tags/blocks/machines.json
+ef9bd4a1a718553b3ccbccf9963233445d7e0bbb data/space/tags/blocks/venus_ground.json
+fba37138d9963dec98b39b8fb89a94057250965e data/space/tags/blocks/venus_overgrowable.json

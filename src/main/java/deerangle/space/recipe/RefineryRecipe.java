@@ -30,21 +30,19 @@ public class RefineryRecipe implements IRecipe<IInventory> {
         return false;
     }
 
-    //TODO: fix npe
-
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     public boolean canFit(int width, int height) {
-        return true;
+        return false;
     }
 
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override

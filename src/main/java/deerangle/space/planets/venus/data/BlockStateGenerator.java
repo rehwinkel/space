@@ -36,9 +36,10 @@ public class BlockStateGenerator extends BlockStateProvider {
         return new ResourceLocation(name.getNamespace(), "venus/block/" + name.getPath());
     }
 
-    private void carpetBlock(Block block) {
-        getVariantBuilder(block).partialState().setModels(
-                new ConfiguredModel(models().carpet(block.getRegistryName().getPath(), venusBlockTexture(block))));
+    private void algaeBlock(Block block) {
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(
+                models().singleTexture(block.getRegistryName().getPath(),
+                        new ResourceLocation("space", "venus/block/slimy_algae"), "algae", venusBlockTexture(block))));
     }
 
     private void rockBlock(Block block, ResourceLocation texture) {
@@ -131,7 +132,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         basicBlockItem(VenusRegistry.SHRIEKWOOD_WOOD.get());
         rockBlock(VenusRegistry.TURPIUM_ROCK.get(), venusBlockTexture(VenusRegistry.TURPIUM.get()));
         basicBlockItem(VenusRegistry.TURPIUM_ROCK.get());
-        carpetBlock(VenusRegistry.SLIMY_ALGAE.get());
+        algaeBlock(VenusRegistry.SLIMY_ALGAE.get());
         //TODO: vein model for bacteria, overgrown
     }
 

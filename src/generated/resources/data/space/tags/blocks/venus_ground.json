@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "space:turpium",
+    "space:turpium_cobblestone",
+    "space:pulcherite",
+    "space:overgrown_pulcherite",
+    "space:glowing_turpium"
+  ]
+}

@@ -1,7 +1,9 @@
 package deerangle.space.planets.mars;
 
+import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.PlanetRegistry;
+import deerangle.space.planets.mars.data.BlockStateGenerator;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
@@ -38,11 +40,14 @@ public class MarsRegistry {
 
     public static void registerData(GatherDataEvent event) {
         event.getGenerator().addProvider(
-                new deerangle.space.planets.mars.data.BlockStateGenerator(event.getGenerator(), SpaceMod.MOD_ID,
-                        event.getExistingFileHelper()));
+                new BlockStateGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
     }
 
     public static void registerClient() {
+    }
+
+    public static void registerLanguage(LanguageGenerator gen) {
+        gen.add(RUSTY_DUST.get(), "Rusty Dust");
     }
 
 }

@@ -1,5 +1,6 @@
 package deerangle.space.planets;
 
+import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
@@ -30,4 +31,10 @@ public class PlanetRegistry {
         VenusRegistry.registerClient();
         MarsRegistry.registerClient();
     }
+
+    public static void registerLanguage(LanguageGenerator languageGenerator) {
+        VenusRegistry.registerLanguage(languageGenerator);
+        MarsRegistry.registerLanguage(languageGenerator);
+    }
+
 }

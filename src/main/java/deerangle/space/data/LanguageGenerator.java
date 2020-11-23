@@ -1,5 +1,6 @@
 package deerangle.space.data;
 
+import deerangle.space.planets.PlanetRegistry;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
@@ -66,6 +67,7 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.ROCKET_THRUSTER.get(), "Rocket Thruster");
         add("itemGroup.space.resource", "Space Resources");
         add("itemGroup.space.machine", "Space Machines");
+        add("itemGroup.space.extraterrestrial", "Space Planets");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");
         add("info.space.blocked", "Blocked");
@@ -93,6 +95,7 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.left", "Left: %s");
         add("info.space.right", "Right: %s");
         add("jei_category.space.blast_furnace", "Blast Furnace");
+        PlanetRegistry.registerLanguage(this);
     }
 
     private void addMachine(Block block, String translation) {

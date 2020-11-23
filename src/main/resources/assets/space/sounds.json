@@ -1,0 +1,18 @@
+{
+  "music_disc.love": {
+    "sounds": [
+      {
+        "name": "space:music_disc/love",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.spicy_and_sour": {
+    "sounds": [
+      {
+        "name": "space:music_disc/spicy_and_sour",
+        "stream": true
+      }
+    ]
+  }
+}

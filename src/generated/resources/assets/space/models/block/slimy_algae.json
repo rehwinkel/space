@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/carpet",
+  "parent": "space:venus/block/slimy_algae",
   "textures": {
-    "wool": "space:venus/block/slimy_algae"
+    "algae": "space:venus/block/slimy_algae"
   }
 }
