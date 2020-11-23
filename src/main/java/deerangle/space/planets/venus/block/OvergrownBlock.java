@@ -20,10 +20,11 @@ public class OvergrownBlock extends Block {
         BlockState blockstate = this.getDefaultState();
 
         for (int i = 0; i < 4; ++i) {
-            //TODO: only when no block on top
             BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
             if (worldIn.getBlockState(blockpos).isIn(BlockTags.VENUS_OVERGROWABLE)) {
-                worldIn.setBlockState(blockpos, blockstate);
+                if (!worldIn.getBlockState(blockpos.up()).isSolid()) {
+                    worldIn.setBlockState(blockpos, blockstate);
+                }
             }
         }
     }
