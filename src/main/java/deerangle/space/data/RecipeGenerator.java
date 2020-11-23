@@ -109,6 +109,21 @@ public class RecipeGenerator extends RecipeProvider {
                 .key('b', Items.BLAZE_ROD).key('s', ResourceRegistry.STEEL_NUGGET.get()).patternLine("sss")
                 .patternLine("dbd").patternLine("sss")
                 .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.HEATING_COIL.get()).key('c', ResourceRegistry.COPPER_INGOT.get()).key('s', ResourceRegistry.STEEL_ROD.get())
+                .patternLine("ccc").patternLine("csc").patternLine("ccc")
+                .addCriterion("has_copper_ingot", hasItem(ResourceRegistry.COPPER_INGOT.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.CABLE.get()).key('w', Blocks.BLACK_WOOL).key('r', Items.REDSTONE)
+                .patternLine("wrw").patternLine("rrr").patternLine("wrw")
+                .addCriterion("has_redstone_ingot", hasItem(Items.REDSTONE)).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.DRUM.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get()).key('p', ResourceRegistry.ALUMINIUM_PLATE.get())
+                .patternLine("apa").patternLine("a a").patternLine("apa")
+                .addCriterion("has_aluminium_plate", hasItem(ResourceRegistry.ALUMINIUM_PLATE.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.BATTERY_PACK.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('i', Items.IRON_BARS).key('a', ResourceRegistry.BATTERY.get())
+                .patternLine("ibi").patternLine("aaa").patternLine("ibi")
+                .addCriterion("has_battery", hasItem(ResourceRegistry.BATTERY.get())).build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.REFINERY.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Blocks.GLASS).key('c', ResourceRegistry.COPPER_TUBE.get())
+                .patternLine("c c").patternLine("ggc").patternLine("cbc")
+                .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
 
         registerIngotRecipes(ResourceRegistry.COPPER_INGOT.get(), ResourceRegistry.COPPER_BLOCK.get(),
                 ResourceRegistry.COPPER_NUGGET.get(), consumer, "copper");

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ibi",
+    "aaa",
+    "ibi"
+  ],
+  "key": {
+    "b": {
+      "item": "space:machine_base"
+    },
+    "i": {
+      "item": "minecraft:iron_bars"
+    },
+    "a": {
+      "item": "space:battery"
+    }
+  },
+  "result": {
+    "item": "space:battery_pack"
+  }
+}

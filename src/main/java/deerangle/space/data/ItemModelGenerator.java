@@ -60,6 +60,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         addFlatItem(ResourceRegistry.ROCKET_CONE.get());
         addFlatItem(ResourceRegistry.ROCKET_FIN.get());
         addFlatItem(ResourceRegistry.ROCKET_THRUSTER.get());
+        addFlatItem(ResourceRegistry.HEATING_COIL.get());
     }
 
 }

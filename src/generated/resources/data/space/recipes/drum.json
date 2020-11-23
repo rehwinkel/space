@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "apa",
+    "a a",
+    "apa"
+  ],
+  "key": {
+    "a": {
+      "item": "space:aluminium_ingot"
+    },
+    "p": {
+      "item": "space:aluminium_plate"
+    }
+  },
+  "result": {
+    "item": "space:drum"
+  }
+}
