@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "space:rusty_dust"
-  },
-  "result": "space:iron_dust",
-  "experience": 0.3,
-  "cookingtime": 100
-}
