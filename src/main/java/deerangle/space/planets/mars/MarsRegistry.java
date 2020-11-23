@@ -4,6 +4,7 @@ import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.PlanetRegistry;
 import deerangle.space.planets.mars.data.BlockStateGenerator;
+import deerangle.space.planets.mars.data.RecipeGenerator;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.FallingBlock;
@@ -28,12 +29,13 @@ public class MarsRegistry {
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
                     .hardnessAndResistance(1.0F, 1.0F)));
     public static final RegistryObject<Block> REGOLITH = BLOCKS.register("regolith", () -> new Block(
-            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool()
-                    .hardnessAndResistance(1.5F, 4.0F)));
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 4.0F)));
 
     static {
-        ITEMS.register("rusty_dust", () -> new BlockItem(RUSTY_DUST.get(), new Item.Properties().group(PlanetRegistry.TAB)));
-        ITEMS.register("regolith", () -> new BlockItem(REGOLITH.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("rusty_dust",
+                () -> new BlockItem(RUSTY_DUST.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("regolith",
+                () -> new BlockItem(REGOLITH.get(), new Item.Properties().group(PlanetRegistry.TAB)));
     }
 
     public static void register() {
@@ -44,6 +46,7 @@ public class MarsRegistry {
     public static void registerData(GatherDataEvent event) {
         event.getGenerator().addProvider(
                 new BlockStateGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
     }
 
     public static void registerClient() {

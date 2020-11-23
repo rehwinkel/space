@@ -4,9 +4,7 @@ import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.PlanetRegistry;
 import deerangle.space.planets.venus.block.*;
-import deerangle.space.planets.venus.data.BlockStateGenerator;
-import deerangle.space.planets.venus.data.BlockTagsGenerator;
-import deerangle.space.planets.venus.data.ItemModelGenerator;
+import deerangle.space.planets.venus.data.*;
 import deerangle.space.planets.venus.world.ShriekwoodTree;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -184,6 +182,8 @@ public class VenusRegistry {
                 new ItemModelGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(
                 new BlockTagsGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), SpaceMod.MOD_ID));
+        event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
     }
 
     public static void registerClient() {
