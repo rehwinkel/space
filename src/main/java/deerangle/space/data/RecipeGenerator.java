@@ -213,6 +213,7 @@ public class RecipeGenerator extends RecipeProvider {
         addMachineRemoveNBTRecipe(MachineRegistry.COMBUSTION_GENERATOR.get(), consumer);
         addMachineRemoveNBTRecipe(MachineRegistry.GAS_TANK.get(), consumer);
         addMachineRemoveNBTRecipe(MachineRegistry.DRUM.get(), consumer);
+        addMachineRemoveNBTRecipe(MachineRegistry.REFINERY.get(), consumer);
     }
 
     private void addStoneCutterRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider ingredient, IItemProvider result, int count, String recipeName) {

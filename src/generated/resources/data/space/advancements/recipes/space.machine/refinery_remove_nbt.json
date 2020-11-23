@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "space:refinery_remove_nbt"
+    ]
+  },
+  "criteria": {
+    "has_refinery": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "space:refinery"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "space:refinery_remove_nbt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_refinery",
+      "has_the_recipe"
+    ]
+  ]
+}

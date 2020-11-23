@@ -79,7 +79,7 @@ public class BlockStateGenerator extends BlockStateProvider {
                 .getExistingFile(new ResourceLocation(blockLoc.getNamespace(), "block/" + blockLoc.getPath())));
     }
 
-    private void grassBlock(Block block) {
+    private void crossBlock(Block block) {
         getVariantBuilder(block).partialState().setModels(
                 new ConfiguredModel(models().cross(block.getRegistryName().getPath(), venusBlockTexture(block))));
     }
@@ -117,7 +117,8 @@ public class BlockStateGenerator extends BlockStateProvider {
         basicBlockItem(VenusRegistry.SHRIEKWOOD_PLANKS.get());
         basicBlock(VenusRegistry.SHRIEKWOOD_LEAVES.get());
         basicBlockItem(VenusRegistry.SHRIEKWOOD_LEAVES.get());
-        grassBlock(VenusRegistry.SHRIEKGRASS.get());
+        crossBlock(VenusRegistry.SHRIEKGRASS.get());
+        crossBlock(VenusRegistry.SHRIEKWOOD_SAPLING.get());
         vineBlock(VenusRegistry.VENUS_BACTERIA.get(), venusBlockTexture(VenusRegistry.VENUS_BACTERIA.get()));
         overgrownBlock(VenusRegistry.OVERGROWN_PULCHERITE.get(), venusBlockTexture(VenusRegistry.PULCHERITE.get()));
         basicBlockItem(VenusRegistry.OVERGROWN_PULCHERITE.get());

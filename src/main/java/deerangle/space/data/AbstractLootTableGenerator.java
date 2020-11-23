@@ -2,13 +2,25 @@ package deerangle.space.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.advancements.criterion.EnchantmentPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Items;
 import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.SurvivesExplosion;
+import net.minecraft.loot.conditions.*;
+import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.loot.functions.ExplosionDecay;
+import net.minecraft.loot.functions.SetCount;
+import net.minecraft.state.properties.DoubleBlockHalf;
+import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -48,9 +60,60 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
     }
 
     public void slabBlock(Block block) {
-        LootTable value = LootTable.builder().addLootPool(
-            LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block))
-                .acceptCondition(BlockStateProperty.builder(block))).build();
+        LootTable value = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(
+                ItemLootEntry.builder(block).acceptFunction(ExplosionDecay.builder()).acceptFunction(
+                        SetCount.builder(ConstantRange.of(2)).acceptCondition(BlockStateProperty.builder(block)
+                                .fromProperties(StatePropertiesPredicate.Builder.newBuilder()
+                                        .withProp(SlabBlock.TYPE, SlabType.DOUBLE)))))).build();
+        tables.put(block.getRegistryName(), value);
+    }
+
+    public void grassBlock(Block block) {
+        LootTable value = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(
+                AlternativesLootEntry.builder(ItemLootEntry.builder(block)
+                        .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().item(Items.SHEARS))))))
+                .build();
+        tables.put(block.getRegistryName(), value);
+    }
+
+    protected void oreBlock(Block block, IItemProvider result) {
+        LootTable value = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(
+                AlternativesLootEntry.builder(ItemLootEntry.builder(block).acceptCondition(MatchTool.builder(
+                        ItemPredicate.Builder.create().enchantment(
+                                new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))),
+                        ItemLootEntry.builder(result).acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))
+                                .acceptFunction(ExplosionDecay.builder())))).build();
+        tables.put(block.getRegistryName(), value);
+    }
+
+    protected void doorBlock(Block block, IItemProvider doorItem) {
+        LootTable value = LootTable.builder().addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(
+                ItemLootEntry.builder(doorItem).acceptCondition(BlockStateProperty.builder(block).fromProperties(
+                        StatePropertiesPredicate.Builder.newBuilder().withProp(DoorBlock.HALF, DoubleBlockHalf.LOWER))))
+                .acceptCondition(SurvivesExplosion.builder())).build();
+        tables.put(block.getRegistryName(), value);
+    }
+
+    protected void leavesBlock(Block block, IItemProvider sapling) {
+        LootTable.Builder builder = LootTable.builder().setParameterSet(LootParameterSets.BLOCK).addLootPool(
+                LootPool.builder().rolls(ConstantRange.of(1)).addEntry(AlternativesLootEntry.builder(
+                        ItemLootEntry.builder(block).acceptCondition(Alternative
+                                .builder(MatchTool.builder(ItemPredicate.Builder.create().item(Items.SHEARS)), MatchTool
+                                        .builder(ItemPredicate.Builder.create().enchantment(
+                                                new EnchantmentPredicate(Enchantments.SILK_TOUCH,
+                                                        MinMaxBounds.IntBound.atLeast(1)))))),
+                        ItemLootEntry.builder(sapling).acceptCondition(SurvivesExplosion.builder()).acceptCondition(
+                                TableBonus.builder(Enchantments.FORTUNE, 1f / 20f, 1f / 16f, 1f / 12f, 1f / 10f)))))
+                .addLootPool(LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(Items.STICK)
+                        .acceptCondition(TableBonus
+                                .builder(Enchantments.FORTUNE, 1f / 50f, 1f / 45f, 1f / 40f, 1f / 30f, 1f / 10f))
+                        .acceptFunction(SetCount.builder(RandomValueRange.of(1.0f, 2.0f)))
+                        .acceptFunction(ExplosionDecay.builder())).acceptCondition(Inverted.builder(Alternative
+                        .builder(MatchTool.builder(ItemPredicate.Builder.create().item(Items.SHEARS)), MatchTool
+                                .builder(ItemPredicate.Builder.create().enchantment(
+                                        new EnchantmentPredicate(Enchantments.SILK_TOUCH,
+                                                MinMaxBounds.IntBound.atLeast(1))))))));
+        this.tables.put(block.getRegistryName(), builder.build());
     }
 
     protected abstract void populate();

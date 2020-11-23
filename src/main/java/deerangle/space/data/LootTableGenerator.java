@@ -4,6 +4,7 @@ import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.Items;
 
 public class LootTableGenerator extends AbstractLootTableGenerator {
 
@@ -35,9 +36,16 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
         normalBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get());
         normalBlock(VenusRegistry.TURPIUM_ROCK.get());
         normalBlock(VenusRegistry.PULCHERITE_ILMENITE.get());
+        normalBlock(VenusRegistry.SLIMY_ALGAE.get());
+        slabBlock(VenusRegistry.SHRIEKWOOD_SLAB.get());
+        grassBlock(VenusRegistry.SHRIEKGRASS.get());
+        oreBlock(VenusRegistry.PULCHERITE_COAL.get(), Items.COAL);
+        oreBlock(VenusRegistry.PULCHERITE_SULFUR.get(), VenusRegistry.SULFUR.get());
+        doorBlock(VenusRegistry.SHRIEKWOOD_DOOR.get(), VenusRegistry.SHRIEKWOOD_DOOR_ITEM.get());
         normalBlock(VenusRegistry.OVERGROWN_PULCHERITE.get(), VenusRegistry.PULCHERITE.get());
         normalBlock(VenusRegistry.TURPIUM.get(), VenusRegistry.TURPIUM_COBBLESTONE.get());
-        //TODO: Shriekwood slab, door, leaves, sapling; shriekgrass, slimy algae, pulcherite coal and sulfur ore
+        normalBlock(VenusRegistry.SHRIEKWOOD_SAPLING.get());
+        leavesBlock(VenusRegistry.SHRIEKWOOD_LEAVES.get(), VenusRegistry.SHRIEKWOOD_SAPLING.get());
     }
 
 }

@@ -7,6 +7,7 @@ import deerangle.space.planets.venus.block.*;
 import deerangle.space.planets.venus.data.BlockStateGenerator;
 import deerangle.space.planets.venus.data.BlockTagsGenerator;
 import deerangle.space.planets.venus.data.ItemModelGenerator;
+import deerangle.space.planets.venus.world.ShriekwoodTree;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
@@ -37,9 +38,6 @@ public class VenusRegistry {
             .create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
     private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister
             .create(ForgeRegistries.FEATURES, SpaceMod.MOD_ID);
-
-    public static final RegistryKey<Biome> venus_hills = RegistryKey
-            .getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"));
 
     public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love",
             () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
@@ -93,6 +91,10 @@ public class VenusRegistry {
                             .setBlocksVision((state, reader, pos) -> false).tickRandomly()));
     public static final RegistryObject<Block> SHRIEKWOOD_PLANKS = BLOCKS
             .register("shriekwood_planks", () -> new Block(AbstractBlock.Properties.create(Material.WOOD)));
+    public static final RegistryObject<Block> SHRIEKWOOD_SAPLING = BLOCKS.register("shriekwood_sapling",
+            () -> new SaplingBlock(new ShriekwoodTree(),
+                    AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly()
+                            .zeroHardnessAndResistance().sound(SoundType.PLANT)));
     public static final RegistryObject<Block> SHRIEKWOOD_STAIRS = BLOCKS.register("shriekwood_stairs",
             () -> new StairsBlock(() -> SHRIEKWOOD_PLANKS.get().getDefaultState(),
                     AbstractBlock.Properties.create(Material.WOOD)));
@@ -164,6 +166,8 @@ public class VenusRegistry {
         ITEMS.register("slimy_algae", () -> new BlockItem(SLIMY_ALGAE.get(),
                 new Item.Properties().group(PlanetRegistry.TAB)
                         .food(new Food.Builder().fastToEat().hunger(1).saturation(0.05F).build())));
+        ITEMS.register("shriekwood_sapling",
+                () -> new BlockItem(SHRIEKWOOD_SAPLING.get(), new Item.Properties().group(PlanetRegistry.TAB)));
     }
 
     public static void register() {
@@ -208,6 +212,7 @@ public class VenusRegistry {
         gen.add(SHRIEKWOOD_LOG.get(), "Shriekwood Log");
         gen.add(SHRIEKWOOD_WOOD.get(), "Shriekwood");
         gen.add(SHRIEKWOOD_LEAVES.get(), "Shriekwood Leaves");
+        gen.add(SHRIEKWOOD_SAPLING.get(), "Shriekwood Sapling");
         gen.add(SHRIEKWOOD_PLANKS.get(), "Shriekwood Planks");
         gen.add(SHRIEKWOOD_STAIRS.get(), "Shriekwood Stairs");
         gen.add(SHRIEKWOOD_SLAB.get(), "Shriekwood Slab");
