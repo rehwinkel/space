@@ -1,29 +1,18 @@
 package deerangle.space.data;
 
-import com.google.gson.JsonObject;
-import deerangle.space.recipe.RefineryRecipeSerializer;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
-import deerangle.space.registry.RecipeRegistry;
 import deerangle.space.registry.ResourceRegistry;
-import deerangle.space.planets.mars.MarsRegistry;
-import deerangle.space.planets.venus.VenusRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
-public class RecipeGenerator extends RecipeProvider {
+public class RecipeGenerator extends AbstractRecipeGenerator {
 
     public RecipeGenerator(DataGenerator generatorIn) {
         super(generatorIn);
@@ -46,13 +35,6 @@ public class RecipeGenerator extends RecipeProvider {
         addRefineryRecipe(consumer, new FluidStack(FluidRegistry.CRUDE_OIL.get(), 2),
                 new FluidStack(FluidRegistry.KEROSENE.get(), 1), 4);
 
-        addStoneCutterRecipe(consumer, VenusRegistry.PULCHERITE.get(), VenusRegistry.POLISHED_PULCHERITE.get(), 
-                1, "polished_pulcherite_from_pulcherite");
-        addStoneCutterRecipe(consumer, VenusRegistry.PULCHERITE.get(), VenusRegistry.PULCHERITE_BRICKS.get(), 
-                1, "pulcherite_bricks_from_pulcherite");
-        addStoneCutterRecipe(consumer, VenusRegistry.POLISHED_PULCHERITE.get(), VenusRegistry.PULCHERITE_BRICKS.get(), 
-                1, "pulcherite_bricks_from_polished_pulcherite");
-
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get().asItem()),
                 ResourceRegistry.COPPER_INGOT.get(), 0.7F, 200)
                 .addCriterion("has_copper_ore", hasItem(ResourceRegistry.COPPER_ORE.get().asItem())).build(consumer);
@@ -63,10 +45,6 @@ public class RecipeGenerator extends RecipeProvider {
         CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ResourceRegistry.ILMENITE_ORE.get().asItem()),
                 ResourceRegistry.TITANIUM_INGOT.get(), 2.0F, 200)
                 .addCriterion("has_ilmenite_ore", hasItem(ResourceRegistry.ILMENITE_ORE.get().asItem()))
-                .build(consumer);
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(MarsRegistry.RUSTY_DUST.get().asItem()),
-                ResourceRegistry.IRON_DUST.get(), 0.3F, 100)
-                .addCriterion("has_rusty_dust", hasItem(MarsRegistry.RUSTY_DUST.get().asItem()))
                 .build(consumer);
 
         CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(ResourceRegistry.COPPER_ORE.get()),
@@ -146,33 +124,9 @@ public class RecipeGenerator extends RecipeProvider {
         ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ISOLATING_FABRIC.get()).key('w', Blocks.WHITE_WOOL).key('s', ResourceRegistry.SILICA_TILE.get())
                 .patternLine("ss ").patternLine("ww ").patternLine("   ")
                 .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_WOOD.get(), 3).key('l', VenusRegistry.SHRIEKWOOD_LOG.get())
-                .patternLine("ll ").patternLine("ll ").patternLine("   ")
-                .addCriterion("has_shriekwood_log", hasItem(VenusRegistry.SHRIEKWOOD_LOG.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(MachineRegistry.GAS_TANK.get()).key('s', ResourceRegistry.STEEL_INGOT.get()).key('g', Items.GOLD_INGOT)
                 .patternLine("sgs").patternLine("s s").patternLine("sss")
                 .addCriterion("has_steel_ingot", hasItem(ResourceRegistry.STEEL_INGOT.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_PLANKS.get(), 4).key('l', VenusRegistry.SHRIEKWOOD_LOG.get())
-                .patternLine("l  ").patternLine("   ").patternLine("   ")
-                .addCriterion("has_shriekwood_log", hasItem(VenusRegistry.SHRIEKWOOD_LOG.get())).build(consumer, "shriekwood_planks_from_shriekwood_log");
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_PLANKS.get(), 4).key('w', VenusRegistry.SHRIEKWOOD_WOOD.get())
-                .patternLine("w  ").patternLine("   ").patternLine("   ")
-                .addCriterion("has_shriekwood_wood", hasItem(VenusRegistry.SHRIEKWOOD_WOOD.get())).build(consumer, "shriekwood_planks_from_shriekwood_wood");
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_STAIRS.get(), 4).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
-                .patternLine("p  ").patternLine("pp ").patternLine("ppp")
-                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_DOOR.get(), 3).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
-                .patternLine("pp ").patternLine("pp ").patternLine("pp ")
-                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.SHRIEKWOOD_SLAB.get(), 6).key('p', VenusRegistry.SHRIEKWOOD_PLANKS.get())
-                .patternLine("ppp").patternLine("   ").patternLine("   ")
-                .addCriterion("has_shriekwood_planks", hasItem(VenusRegistry.SHRIEKWOOD_PLANKS.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.POLISHED_PULCHERITE.get(), 4).key('p', VenusRegistry.PULCHERITE.get())
-                .patternLine("pp ").patternLine("pp ").patternLine("   ")
-                .addCriterion("has_pulcherite", hasItem(VenusRegistry.PULCHERITE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VenusRegistry.PULCHERITE_BRICKS.get(), 4).key('p', VenusRegistry.POLISHED_PULCHERITE.get())
-                .patternLine("pp ").patternLine("pp ").patternLine("   ")
-                .addCriterion("has_pulcherite", hasItem(VenusRegistry.PULCHERITE.get())).build(consumer);
         ShapedRecipeBuilder.shapedRecipe(MachineRegistry.COMBUSTION_GENERATOR.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Items.GOLD_INGOT)
                 .key('i', Blocks.IRON_BLOCK).key('c', ResourceRegistry.COPPER_TUBE.get()).key('s', ResourceRegistry.STEEL_BLOCK.get())
                 .key('a', ResourceRegistry.CYLINDER.get()).patternLine("gcg").patternLine("asa").patternLine("ibi")
@@ -215,131 +169,4 @@ public class RecipeGenerator extends RecipeProvider {
         addMachineRemoveNBTRecipe(MachineRegistry.DRUM.get(), consumer);
         addMachineRemoveNBTRecipe(MachineRegistry.REFINERY.get(), consumer);
     }
-
-    private void addStoneCutterRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider ingredient, IItemProvider result, int count, String recipeName) {
-            SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(ingredient), result, count)
-                        .addCriterion("has_ingredient", hasItem(ingredient))
-                        .build(consumer, recipeName + "_from_stone_cutting");
-    }
-
-    private void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration) {
-        addSpaceBlastFurnaceRecipe(consumer, input, result, duration, "");
-    }
-
-    private void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration, String recipeName) {
-        ResourceLocation loc = result.getRegistryName();
-        consumer.accept(new BlastFurnaceResult(
-                new ResourceLocation(loc.getNamespace(), loc.getPath() + recipeName + "_from_space_blast_furnace"), input, result,
-                duration));
-    }
-
-    private void addRefineryRecipe(Consumer<IFinishedRecipe> consumer, FluidStack input, FluidStack result, int duration) {
-        ResourceLocation loc = result.getFluid().getRegistryName();
-        consumer.accept(
-                new RefineryResult(new ResourceLocation(loc.getNamespace(), loc.getPath() + "_from_refinery"), input,
-                        result, duration));
-    }
-
-    private void addMachineRemoveNBTRecipe(Block block, Consumer<IFinishedRecipe> consumer) {
-        String name = block.getRegistryName().getPath();
-        ShapelessRecipeBuilder.shapelessRecipe(block).addIngredient(block).addCriterion("has_" + name, hasItem(block))
-                .build(consumer, block.getRegistryName().getNamespace() + ":" + name + "_remove_nbt");
-    }
-
-    private void registerIngotRecipes(Item itemIngot, Block itemBlock, Item itemNugget, Consumer<IFinishedRecipe> consumer, String name) {
-        ShapelessRecipeBuilder.shapelessRecipe(itemIngot, 9).addIngredient(itemBlock)
-                .addCriterion("has_ingot", hasItem(itemIngot)).build(consumer, name + "_ingot_from_" + name + "_block");
-        ShapelessRecipeBuilder.shapelessRecipe(itemBlock).addIngredient(itemIngot, 9)
-                .addCriterion("has_ingot", hasItem(itemIngot)).build(consumer);
-        ShapelessRecipeBuilder.shapelessRecipe(itemIngot).addIngredient(itemNugget, 9)
-                .addCriterion("has_ingot", hasItem(itemIngot))
-                .build(consumer, name + "_ingot_from_" + name + "_nugget");
-        ShapelessRecipeBuilder.shapelessRecipe(itemNugget, 9).addIngredient(itemIngot)
-                .addCriterion("has_ingot", hasItem(itemIngot)).build(consumer);
-    }
-
-    private class BlastFurnaceResult implements IFinishedRecipe {
-        private final ResourceLocation recipeId;
-        private final Ingredient ingredient;
-        private final Item result;
-        private final int duration;
-
-        public BlastFurnaceResult(ResourceLocation recipeId, Ingredient ingredient, Item result, int duration) {
-            this.recipeId = recipeId;
-            this.ingredient = ingredient;
-            this.result = result;
-            this.duration = duration;
-        }
-
-        @Override
-        public void serialize(JsonObject json) {
-            json.add("ingredient", this.ingredient.serialize());
-            json.addProperty("result", Registry.ITEM.getKey(this.result).toString());
-            json.addProperty("duration", this.duration);
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return this.recipeId;
-        }
-
-        @Override
-        public IRecipeSerializer<?> getSerializer() {
-            return RecipeRegistry.BLAST_FURNACE.get();
-        }
-
-        @Override
-        public JsonObject getAdvancementJson() {
-            return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementID() {
-            return null;
-        }
-
-    }
-
-    private class RefineryResult implements IFinishedRecipe {
-        private final ResourceLocation recipeId;
-        private final FluidStack input;
-        private final FluidStack result;
-        private final int duration;
-
-        public RefineryResult(ResourceLocation recipeId, FluidStack input, FluidStack result, int duration) {
-            this.recipeId = recipeId;
-            this.input = input;
-            this.result = result;
-            this.duration = duration;
-        }
-
-        @Override
-        public void serialize(JsonObject json) {
-            json.add("input", RefineryRecipeSerializer.writeFluidStack(this.input));
-            json.add("result", RefineryRecipeSerializer.writeFluidStack(this.result));
-            json.addProperty("duration", this.duration);
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return this.recipeId;
-        }
-
-        @Override
-        public IRecipeSerializer<?> getSerializer() {
-            return RecipeRegistry.REFINERY.get();
-        }
-
-        @Override
-        public JsonObject getAdvancementJson() {
-            return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementID() {
-            return null;
-        }
-
-    }
-
 }

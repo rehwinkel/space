@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "space:polished_pulcherite"
-  },
-  "result": "space:pulcherite_bricks",
-  "count": 1
-}
