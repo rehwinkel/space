@@ -14,6 +14,9 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -47,7 +50,7 @@ public class VenusRegistry {
             () -> new OvergrownBlock(AbstractBlock.Properties.create(Material.ROCK).tickRandomly()));
     public static final RegistryObject<Block> SHRIEKGRASS = BLOCKS.register("shriekgrass", () -> new ShriekGrassBlock(
             AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().zeroHardnessAndResistance()
-                    .sound(SoundType.PLANT)));
+                    .notSolid().sound(SoundType.PLANT)));
     public static final RegistryObject<Block> PULCHERITE_BRICKS = BLOCKS
             .register("pulcherite_bricks", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> POLISHED_PULCHERITE = BLOCKS
