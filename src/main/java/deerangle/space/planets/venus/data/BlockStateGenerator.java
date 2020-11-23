@@ -116,6 +116,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         basicBlock(VenusRegistry.SHRIEKWOOD_LEAVES.get());
         basicBlockItem(VenusRegistry.SHRIEKWOOD_LEAVES.get());
         grassBlock(VenusRegistry.SHRIEKGRASS.get());
+        vineBlock(VenusRegistry.VENUS_BACTERIA.get(), venusBlockTexture(VenusRegistry.VENUS_BACTERIA.get()));
         overgrownBlock(VenusRegistry.OVERGROWN_PULCHERITE.get(), venusBlockTexture(VenusRegistry.PULCHERITE.get()));
         basicBlockItem(VenusRegistry.OVERGROWN_PULCHERITE.get());
         venusStairsBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get(),
@@ -133,7 +134,62 @@ public class BlockStateGenerator extends BlockStateProvider {
         rockBlock(VenusRegistry.TURPIUM_ROCK.get(), venusBlockTexture(VenusRegistry.TURPIUM.get()));
         basicBlockItem(VenusRegistry.TURPIUM_ROCK.get());
         algaeBlock(VenusRegistry.SLIMY_ALGAE.get());
-        //TODO: vein model for bacteria, overgrown
+    }
+
+    private void vineBlock(Block block, ResourceLocation texture) {
+        ResourceLocation base = block.getRegistryName();
+        getVariantBuilder(block).forAllStates(blockState -> {
+            boolean up = blockState.get(VineBlock.UP);
+            boolean opposite = blockState.get(VineBlock.EAST) == blockState.get(VineBlock.WEST) && blockState
+                    .get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState
+                    .get(VineBlock.EAST) != blockState.get(VineBlock.NORTH);
+            int i = (blockState.get(VineBlock.WEST) ? 1 : 0) + (blockState.get(VineBlock.EAST) ? 1 : 0) + (blockState
+                    .get(VineBlock.NORTH) ? 1 : 0) + (blockState.get(VineBlock.SOUTH) ? 1 : 0);
+            String appendix = "_" + i + (up ? "u" : "") + ((opposite && i != 4) ? "_opposite" : "");
+            if (i == 0) {
+                if (up) {
+                    appendix = "_u";
+                } else {
+                    appendix = "_1";
+                }
+            }
+            ResourceLocation loc = new ResourceLocation(base.getNamespace(), base.getPath() + appendix);
+            ResourceLocation parent = new ResourceLocation(SpaceMod.MOD_ID, "block/vinelike" + appendix);
+            int yRot = 0;
+            if (i == 1) {
+                if (blockState.get(VineBlock.NORTH)) {
+                    yRot = 180;
+                } else if (blockState.get(VineBlock.EAST)) {
+                    yRot = 270;
+                } else if (blockState.get(VineBlock.WEST)) {
+                    yRot = 90;
+                }
+            } else if (i == 2) {
+                if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState
+                        .get(VineBlock.NORTH)) {
+                    yRot = 90;
+                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.EAST) && blockState
+                        .get(VineBlock.SOUTH)) {
+                    yRot = 90;
+                } else if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.WEST) && blockState
+                        .get(VineBlock.NORTH)) {
+                    yRot = 270;
+                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.WEST) && blockState
+                        .get(VineBlock.SOUTH)) {
+                    yRot = 180;
+                }
+            } else if (i == 3) {
+                if (!blockState.get(VineBlock.NORTH)) {
+                    yRot = 90;
+                } else if (!blockState.get(VineBlock.SOUTH)) {
+                    yRot = 270;
+                } else if (!blockState.get(VineBlock.EAST)) {
+                    yRot = 180;
+                }
+            }
+            return new ConfiguredModel[]{new ConfiguredModel(
+                    models().singleTexture(loc.getPath(), parent, "texture", texture), 0, yRot, false)};
+        });
     }
 
 }

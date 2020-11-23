@@ -37,8 +37,8 @@
     },
     {
       "when": {
-        "facing": "north",
-        "north": "true"
+        "north": "true",
+        "facing": "north"
       },
       "apply": {
         "model": "space:block/refinery_connector_north"
@@ -46,8 +46,8 @@
     },
     {
       "when": {
-        "facing": "south",
-        "north": "true"
+        "north": "true",
+        "facing": "south"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -56,8 +56,8 @@
     },
     {
       "when": {
-        "facing": "east",
-        "north": "true"
+        "north": "true",
+        "facing": "east"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -66,8 +66,8 @@
     },
     {
       "when": {
-        "facing": "west",
-        "north": "true"
+        "north": "true",
+        "facing": "west"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -76,8 +76,8 @@
     },
     {
       "when": {
-        "facing": "north",
-        "south": "true"
+        "south": "true",
+        "facing": "north"
       },
       "apply": {
         "model": "space:block/refinery_connector_south"
@@ -85,8 +85,8 @@
     },
     {
       "when": {
-        "facing": "south",
-        "south": "true"
+        "south": "true",
+        "facing": "south"
       },
       "apply": {
         "model": "space:block/refinery_connector_south",
@@ -95,8 +95,8 @@
     },
     {
       "when": {
-        "facing": "east",
-        "south": "true"
+        "south": "true",
+        "facing": "east"
       },
       "apply": {
         "model": "space:block/refinery_connector_south",
@@ -105,8 +105,8 @@
     },
     {
       "when": {
-        "facing": "west",
-        "south": "true"
+        "south": "true",
+        "facing": "west"
       },
       "apply": {
         "model": "space:block/refinery_connector_south",
@@ -155,8 +155,8 @@
     },
     {
       "when": {
-        "facing": "north",
-        "west": "true"
+        "west": "true",
+        "facing": "north"
       },
       "apply": {
         "model": "space:block/connector",
@@ -165,8 +165,8 @@
     },
     {
       "when": {
-        "facing": "south",
-        "west": "true"
+        "west": "true",
+        "facing": "south"
       },
       "apply": {
         "model": "space:block/connector",
@@ -175,8 +175,8 @@
     },
     {
       "when": {
-        "facing": "east",
-        "west": "true"
+        "west": "true",
+        "facing": "east"
       },
       "apply": {
         "model": "space:block/connector",
@@ -185,8 +185,8 @@
     },
     {
       "when": {
-        "facing": "west",
-        "west": "true"
+        "west": "true",
+        "facing": "west"
       },
       "apply": {
         "model": "space:block/connector",

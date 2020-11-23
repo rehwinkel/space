@@ -1,0 +1,6 @@
+{
+  "parent": "space:block/vinelike_4",
+  "textures": {
+    "texture": "space:venus/block/venus_bacteria"
+  }
+}

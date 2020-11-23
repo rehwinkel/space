@@ -12,11 +12,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.*;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -30,6 +31,11 @@ public class VenusRegistry {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister
             .create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
+    private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister
+            .create(ForgeRegistries.FEATURES, SpaceMod.MOD_ID);
+
+    public static final RegistryKey<Biome> venus_hills = RegistryKey
+            .getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"));
 
     public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love",
             () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
@@ -63,9 +69,10 @@ public class VenusRegistry {
     public static final RegistryObject<Block> TURPIUM_COBBLESTONE = BLOCKS
             .register("turpium_cobblestone", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
     public static final RegistryObject<Block> TURPIUM_ROCK = BLOCKS
-            .register("turpium_rock", () -> new RockBlock(AbstractBlock.Properties.create(Material.ROCK)));
-    public static final RegistryObject<Block> VENUS_BACTERIA = BLOCKS
-            .register("venus_bacteria", () -> new VineBlock(AbstractBlock.Properties.create(Material.PLANTS)));
+            .register("turpium_rock", () -> new RockBlock(AbstractBlock.Properties.create(Material.ROCK).notSolid()));
+    public static final RegistryObject<Block> VENUS_BACTERIA = BLOCKS.register("venus_bacteria", () -> new VineBlock(
+            AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly()
+                    .hardnessAndResistance(0.2F).sound(SoundType.SLIME)));
     public static final RegistryObject<Block> SHRIEKWOOD_LOG = BLOCKS
             .register("shriekwood_log", () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD)));
     public static final RegistryObject<Block> SHRIEKWOOD_WOOD = BLOCKS
@@ -151,6 +158,7 @@ public class VenusRegistry {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void registerData(GatherDataEvent event) {
@@ -167,6 +175,7 @@ public class VenusRegistry {
         RenderTypeLookup.setRenderLayer(SHRIEKWOOD_DOOR.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(SHRIEKGRASS.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(SHRIEKWOOD_LEAVES.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(VENUS_BACTERIA.get(), RenderType.getCutoutMipped());
     }
 
     public static void registerLanguage(LanguageGenerator gen) {

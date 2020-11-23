@@ -34,6 +34,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         addFlatItem(VenusRegistry.SLIMY_ALGAE.get().asItem());
         addFlatItem(VenusRegistry.SHRIEKWOOD_DOOR_ITEM.get());
         addFlatItemForBlock(VenusRegistry.SHRIEKGRASS.get());
+        addFlatItemForBlock(VenusRegistry.VENUS_BACTERIA.get());
     }
 
 }

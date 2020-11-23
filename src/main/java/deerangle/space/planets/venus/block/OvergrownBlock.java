@@ -1,5 +1,6 @@
 package deerangle.space.planets.venus.block;
 
+import deerangle.space.planets.venus.VenusRegistry;
 import deerangle.space.planets.venus.tags.BlockTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -17,6 +18,9 @@ public class OvergrownBlock extends Block {
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        if (worldIn.getBlockState(pos.up()).isSolid()) {
+            worldIn.setBlockState(pos, VenusRegistry.PULCHERITE.get().getDefaultState());
+        }
         BlockState blockstate = this.getDefaultState();
 
         for (int i = 0; i < 4; ++i) {
