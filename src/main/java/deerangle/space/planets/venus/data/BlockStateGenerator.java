@@ -95,6 +95,8 @@ public class BlockStateGenerator extends BlockStateProvider {
     protected void registerStatesAndModels() {
         basicBlock(VenusRegistry.PULCHERITE.get());
         basicBlockItem(VenusRegistry.PULCHERITE.get());
+        rotatedBlock(VenusRegistry.PULCHERITE_TURF.get());
+        basicBlockItem(VenusRegistry.PULCHERITE_TURF.get());
         basicBlock(VenusRegistry.PULCHERITE_COAL.get());
         basicBlockItem(VenusRegistry.PULCHERITE_COAL.get());
         basicBlock(VenusRegistry.PULCHERITE_SULFUR.get());
