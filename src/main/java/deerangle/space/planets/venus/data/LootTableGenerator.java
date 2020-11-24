@@ -1,11 +1,10 @@
 package deerangle.space.planets.venus.data;
 
 import deerangle.space.data.AbstractLootTableGenerator;
-import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
-import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Items;
+import net.minecraft.world.gen.feature.Feature;
 
 public class LootTableGenerator extends AbstractLootTableGenerator {
 
@@ -16,6 +15,7 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
     @Override
     protected void populate() {
         normalBlock(VenusRegistry.PULCHERITE.get());
+        normalBlock(VenusRegistry.PULCHERITE_TURF.get());
         normalBlock(VenusRegistry.PULCHERITE_BRICKS.get());
         normalBlock(VenusRegistry.POLISHED_PULCHERITE.get());
         normalBlock(VenusRegistry.GLOWING_TURPIUM.get());

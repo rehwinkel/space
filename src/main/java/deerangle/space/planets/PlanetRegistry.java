@@ -2,11 +2,13 @@ package deerangle.space.planets;
 
 import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
+import deerangle.space.planets.feature.Features;
 import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class PlanetRegistry {
 
@@ -20,6 +22,7 @@ public class PlanetRegistry {
     public static void register() {
         VenusRegistry.register();
         MarsRegistry.register();
+        Features.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void registerData(GatherDataEvent event) {

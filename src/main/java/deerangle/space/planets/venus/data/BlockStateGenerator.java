@@ -2,8 +2,10 @@ package deerangle.space.planets.venus.data;
 
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.venus.VenusRegistry;
+import deerangle.space.planets.venus.block.CrystalBlock;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -119,7 +121,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         basicBlockItem(VenusRegistry.SHRIEKWOOD_LEAVES.get());
         crossBlock(VenusRegistry.SHRIEKGRASS.get());
         crossBlock(VenusRegistry.SHRIEKWOOD_SAPLING.get());
-        crossBlock(VenusRegistry.CRYSTAL.get());
+        directionalCrossBlock(VenusRegistry.CRYSTAL.get());
         basicBlock(VenusRegistry.CRYSTAL_BLOCK.get());
         basicBlockItem(VenusRegistry.CRYSTAL_BLOCK.get());
         vineBlock(VenusRegistry.VENUS_BACTERIA.get(), venusBlockTexture(VenusRegistry.VENUS_BACTERIA.get()));
@@ -140,6 +142,18 @@ public class BlockStateGenerator extends BlockStateProvider {
         rockBlock(VenusRegistry.TURPIUM_ROCK.get(), venusBlockTexture(VenusRegistry.TURPIUM.get()));
         basicBlockItem(VenusRegistry.TURPIUM_ROCK.get());
         algaeBlock(VenusRegistry.SLIMY_ALGAE.get());
+    }
+
+    private void directionalCrossBlock(Block block) {
+        ModelFile model = models().cross(block.getRegistryName().getPath(), venusBlockTexture(block));
+        getVariantBuilder(block).partialState().with(CrystalBlock.FACING, Direction.UP).modelForState().modelFile(model)
+                .addModel().partialState().with(CrystalBlock.FACING, Direction.DOWN).modelForState().modelFile(model)
+                .rotationX(180).addModel().partialState().with(CrystalBlock.FACING, Direction.EAST).modelForState()
+                .modelFile(model).rotationX(90).rotationY(90).addModel().partialState()
+                .with(CrystalBlock.FACING, Direction.WEST).modelForState().modelFile(model).rotationX(90).rotationY(270)
+                .addModel().partialState().with(CrystalBlock.FACING, Direction.NORTH).modelForState().modelFile(model)
+                .rotationX(90).addModel().partialState().with(CrystalBlock.FACING, Direction.SOUTH).modelForState()
+                .modelFile(model).rotationX(90).rotationY(180).addModel();
     }
 
     private void vineBlock(Block block, ResourceLocation texture) {

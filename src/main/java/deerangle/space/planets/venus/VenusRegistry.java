@@ -5,7 +5,6 @@ import deerangle.space.main.SpaceMod;
 import deerangle.space.planets.PlanetRegistry;
 import deerangle.space.planets.venus.block.*;
 import deerangle.space.planets.venus.data.*;
-import deerangle.space.planets.venus.world.ShriekwoodTree;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
@@ -16,8 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -34,8 +31,6 @@ public class VenusRegistry {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister
             .create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
-    private static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister
-            .create(ForgeRegistries.FEATURES, SpaceMod.MOD_ID);
 
     public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love",
             () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
@@ -44,38 +39,37 @@ public class VenusRegistry {
             .register("music_disc_spicy_and_sour",
                     () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.spicy_and_sour")));
 
-    public static final RegistryObject<Block> PULCHERITE = BLOCKS.register("pulcherite",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> PULCHERITE = BLOCKS.register("pulcherite", () -> new Block(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> PULCHERITE_TURF = BLOCKS.register("pulcherite_turf", () -> new Block(
-            AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.GROUND).hardnessAndResistance(0.3f)
-                    .harvestTool(ToolType.SHOVEL)));
-    public static final RegistryObject<Block> PULCHERITE_COAL = BLOCKS.register("pulcherite_coal",
-            () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
+            AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.GROUND).hardnessAndResistance(1.0f, 2.0f)));
+    public static final RegistryObject<Block> PULCHERITE_COAL = BLOCKS.register("pulcherite_coal", () -> new OreBlock(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0F, 3.0F)));
     public static final RegistryObject<Block> PULCHERITE_SULFUR = BLOCKS.register("pulcherite_sulfur",
-            () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F)));
+            () -> new OreBlock(AbstractBlock.Properties.create(Material.ROCK).setRequiresTool()
+                    .hardnessAndResistance(3.0F, 3.0F)));
     public static final RegistryObject<Block> PULCHERITE_ILMENITE = BLOCKS.register("pulcherite_ilmenite",
             () -> new OreBlock(
-                    AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.0F, 3.0F).harvestLevel(2)));
+                    AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(3.0F, 3.0F)
+                            .harvestLevel(2)));
     public static final RegistryObject<Block> OVERGROWN_PULCHERITE = BLOCKS.register("overgrown_pulcherite",
             () -> new OvergrownBlock(
-                    AbstractBlock.Properties.create(Material.ROCK).tickRandomly().hardnessAndResistance(1.5F, 6.0F)));
+                    AbstractBlock.Properties.from(VenusRegistry.PULCHERITE.get()).hardnessAndResistance(2.0F, 6.0F)));
     public static final RegistryObject<Block> SHRIEKGRASS = BLOCKS.register("shriekgrass", () -> new ShriekGrassBlock(
             AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().zeroHardnessAndResistance()
                     .notSolid().sound(SoundType.PLANT)));
     public static final RegistryObject<Block> PULCHERITE_BRICKS = BLOCKS.register("pulcherite_bricks",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+            () -> new Block(AbstractBlock.Properties.from(VenusRegistry.PULCHERITE.get())));
     public static final RegistryObject<Block> POLISHED_PULCHERITE = BLOCKS.register("polished_pulcherite",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> TURPIUM = BLOCKS.register("turpium",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F)));
+            () -> new Block(AbstractBlock.Properties.from(VenusRegistry.PULCHERITE.get())));
+    public static final RegistryObject<Block> TURPIUM = BLOCKS.register("turpium", () -> new Block(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> GLOWING_TURPIUM = BLOCKS.register("glowing_turpium",
-            () -> new GlowingBlock(
-                    AbstractBlock.Properties.create(Material.ROCK).tickRandomly().setLightLevel(state -> 7)
-                            .hardnessAndResistance(1.5F, 6.0F)));
+            () -> new GlowingBlock(AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get())));
     public static final RegistryObject<Block> TURPIUM_COBBLESTONE = BLOCKS.register("turpium_cobblestone",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(2.0F, 6.0F)));
+            () -> new Block(AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get())));
     public static final RegistryObject<Block> TURPIUM_ROCK = BLOCKS.register("turpium_rock", () -> new RockBlock(
-            AbstractBlock.Properties.create(Material.ROCK).notSolid().hardnessAndResistance(1.5F, 6.0F)));
+            AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get()).hardnessAndResistance(0.3F, 3.0F)));
     public static final RegistryObject<Block> VENUS_BACTERIA = BLOCKS.register("venus_bacteria", () -> new VineBlock(
             AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly()
                     .hardnessAndResistance(0.2F).sound(SoundType.SLIME)));
@@ -84,25 +78,29 @@ public class VenusRegistry {
     public static final RegistryObject<Block> SHRIEKWOOD_WOOD = BLOCKS.register("shriekwood_wood",
             () -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)));
     public static final RegistryObject<Block> SHRIEKWOOD_LEAVES = BLOCKS.register("shriekwood_leaves",
-            () -> new RotatedPillarBlock(
+            () -> new LeavesBlock(
                     AbstractBlock.Properties.create(Material.LEAVES).notSolid().hardnessAndResistance(0.2F)
-                            .setBlocksVision((state, reader, pos) -> false).tickRandomly()));
-    public static final RegistryObject<Block> SHRIEKWOOD_PLANKS = BLOCKS
-            .register("shriekwood_planks", () -> new Block(AbstractBlock.Properties.create(Material.WOOD)));
+                            .setBlocksVision((state, reader, pos) -> false).tickRandomly().sound(SoundType.PLANT)));
+    public static final RegistryObject<Block> SHRIEKWOOD_PLANKS = BLOCKS.register("shriekwood_planks", () -> new Block(
+            AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> SHRIEKWOOD_SAPLING = BLOCKS.register("shriekwood_sapling",
-            () -> new SaplingBlock(new ShriekwoodTree(),
+            () -> new ShriekwoodSaplingBlock(
                     AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly()
                             .zeroHardnessAndResistance().sound(SoundType.PLANT)));
     public static final RegistryObject<Block> SHRIEKWOOD_STAIRS = BLOCKS.register("shriekwood_stairs",
             () -> new StairsBlock(() -> SHRIEKWOOD_PLANKS.get().getDefaultState(),
-                    AbstractBlock.Properties.create(Material.WOOD)));
+                    AbstractBlock.Properties.from(SHRIEKWOOD_PLANKS.get())));
     public static final RegistryObject<Block> SHRIEKWOOD_SLAB = BLOCKS
-            .register("shriekwood_slab", () -> new SlabBlock(AbstractBlock.Properties.create(Material.WOOD)));
+            .register("shriekwood_slab", () -> new SlabBlock(AbstractBlock.Properties.from(SHRIEKWOOD_PLANKS.get())));
     public static final RegistryObject<Block> SHRIEKWOOD_DOOR = BLOCKS
-            .register("shriekwood_door", () -> new DoorBlock(AbstractBlock.Properties.create(Material.WOOD)));
+            .register("shriekwood_door", () -> new DoorBlock(AbstractBlock.Properties.from(SHRIEKWOOD_PLANKS.get())));
     public static final RegistryObject<Block> SLIMY_ALGAE = BLOCKS.register("slimy_algae", () -> new AlgaeBlock(
             AbstractBlock.Properties.create(Material.WOOD).setBlocksVision((state, reader, pos) -> false).tickRandomly()
                     .sound(SoundType.SLIME).hardnessAndResistance(0.1F).speedFactor(0.5F)));
+    public static final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",
+            () -> new CrystalBlock(AbstractBlock.Properties.create(Material.GLASS).notSolid().doesNotBlockMovement()));
+    public static final RegistryObject<Block> CRYSTAL_BLOCK = BLOCKS
+            .register("crystal_block", () -> new CrystalCubeBlock(AbstractBlock.Properties.create(Material.GLASS)));
 
     public static final RegistryObject<Item> MUSIC_DISC_SPICY_AND_SOUR = ITEMS.register("music_disc_spicy_and_sour",
             () -> new MusicDiscItem(1, MUSIC_SPICY_AND_SOUR,
@@ -117,11 +115,6 @@ public class VenusRegistry {
 
     public static final RegistryObject<Item> SHRIEKWOOD_DOOR_ITEM = ITEMS.register("shriekwood_door",
             () -> new BlockItem(SHRIEKWOOD_DOOR.get(), new Item.Properties().group(PlanetRegistry.TAB)));
-
-    public static final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal", () -> new Crystal(
-            AbstractBlock.Properties.create(Material.GLASS).notSolid()));
-    public static final RegistryObject<Block> CRYSTAL_BLOCK = BLOCKS.register("crystal_block", () -> new CrystalBlock(
-            AbstractBlock.Properties.create(Material.GLASS)));
 
     //TODO: add mobs and their drops
     //TODO: acid fluid
@@ -173,15 +166,13 @@ public class VenusRegistry {
                 () -> new BlockItem(SHRIEKWOOD_SAPLING.get(), new Item.Properties().group(PlanetRegistry.TAB)));
         ITEMS.register("crystal_block",
                 () -> new BlockItem(CRYSTAL_BLOCK.get(), new Item.Properties().group(PlanetRegistry.TAB)));
-        ITEMS.register("crystal",
-                () -> new BlockItem(CRYSTAL.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("crystal", () -> new BlockItem(CRYSTAL.get(), new Item.Properties().group(PlanetRegistry.TAB)));
     }
 
     public static void register() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void registerData(GatherDataEvent event) {
@@ -193,6 +184,7 @@ public class VenusRegistry {
                 new BlockTagsGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), SpaceMod.MOD_ID));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
+        event.getGenerator().addProvider(new BiomeGenerator(event.getGenerator()));
     }
 
     public static void registerClient() {
@@ -201,6 +193,7 @@ public class VenusRegistry {
         RenderTypeLookup.setRenderLayer(SHRIEKGRASS.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(SHRIEKWOOD_LEAVES.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(VENUS_BACTERIA.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(SHRIEKWOOD_SAPLING.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(CRYSTAL.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(CRYSTAL_BLOCK.get(), RenderType.getTranslucent());
     }

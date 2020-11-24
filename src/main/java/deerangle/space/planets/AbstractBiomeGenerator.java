@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import net.minecraft.block.BushBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -64,7 +65,7 @@ public abstract class AbstractBiomeGenerator implements IDataProvider {
     protected abstract void addBiomes(Map<RegistryKey<Biome>, Biome> biomeMap);
 
     private static Path getPath(Path path, ResourceLocation biomeLocation) {
-        return path.resolve("reports/" + biomeLocation.getNamespace() + "/biomes/" + biomeLocation.getPath() + ".json");
+        return path.resolve("data/" + biomeLocation.getNamespace() + "/worldgen/biome/" + biomeLocation.getPath() + ".json");
     }
 
     public String getName() {

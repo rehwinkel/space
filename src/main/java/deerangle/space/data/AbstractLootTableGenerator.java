@@ -56,7 +56,7 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
         LootTable value = LootTable.builder().addLootPool(
                 LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(drop))
                         .acceptCondition(SurvivesExplosion.builder())).build();
-        tables.put(block.getRegistryName(), value);
+        putBlock(block.getRegistryName(), value);
     }
 
     public void slabBlock(Block block) {
@@ -65,7 +65,7 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                         SetCount.builder(ConstantRange.of(2)).acceptCondition(BlockStateProperty.builder(block)
                                 .fromProperties(StatePropertiesPredicate.Builder.newBuilder()
                                         .withProp(SlabBlock.TYPE, SlabType.DOUBLE)))))).build();
-        tables.put(block.getRegistryName(), value);
+        putBlock(block.getRegistryName(), value);
     }
 
     public void grassBlock(Block block) {
@@ -73,7 +73,7 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                 AlternativesLootEntry.builder(ItemLootEntry.builder(block)
                         .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().item(Items.SHEARS))))))
                 .build();
-        tables.put(block.getRegistryName(), value);
+        putBlock(block.getRegistryName(), value);
     }
 
     protected void oreBlock(Block block, IItemProvider result) {
@@ -83,7 +83,7 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                                 new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))),
                         ItemLootEntry.builder(result).acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))
                                 .acceptFunction(ExplosionDecay.builder())))).build();
-        tables.put(block.getRegistryName(), value);
+        putBlock(block.getRegistryName(), value);
     }
 
     protected void doorBlock(Block block, IItemProvider doorItem) {
@@ -91,7 +91,7 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                 ItemLootEntry.builder(doorItem).acceptCondition(BlockStateProperty.builder(block).fromProperties(
                         StatePropertiesPredicate.Builder.newBuilder().withProp(DoorBlock.HALF, DoubleBlockHalf.LOWER))))
                 .acceptCondition(SurvivesExplosion.builder())).build();
-        tables.put(block.getRegistryName(), value);
+        putBlock(block.getRegistryName(), value);
     }
 
     protected void leavesBlock(Block block, IItemProvider sapling) {
@@ -113,7 +113,12 @@ public abstract class AbstractLootTableGenerator implements IDataProvider {
                                 .builder(ItemPredicate.Builder.create().enchantment(
                                         new EnchantmentPredicate(Enchantments.SILK_TOUCH,
                                                 MinMaxBounds.IntBound.atLeast(1))))))));
-        this.tables.put(block.getRegistryName(), builder.build());
+        putBlock(block.getRegistryName(), builder.build());
+    }
+
+    private void putBlock(ResourceLocation registryName, LootTable lootTable) {
+        this.tables
+                .put(new ResourceLocation(registryName.getNamespace(), "blocks/" + registryName.getPath()), lootTable);
     }
 
     protected abstract void populate();
