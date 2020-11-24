@@ -30,7 +30,7 @@ public class GlowingBlock extends Block {
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-        if (worldIn.getBlockState(pos.up()).isAir(worldIn, pos.up())) {
+        if (worldIn.isAirBlock(pos.up())) {
             if (rand.nextFloat() < 0.1f) {
                 worldIn.setBlockState(pos.up(), Blocks.FIRE.getDefaultState());
             }

@@ -25,7 +25,22 @@
     },
     "type": "minecraft:default"
   },
-  "carvers": {},
+  "carvers": {
+    "air": [
+      {
+        "config": {
+          "probability": 0.14285715
+        },
+        "type": "minecraft:cave"
+      },
+      {
+        "config": {
+          "probability": 0.02
+        },
+        "type": "minecraft:canyon"
+      }
+    ]
+  },
   "features": [
     [],
     [],
@@ -81,6 +96,50 @@
               "feature": {
                 "config": {
                   "block_provider": {
+                    "state": {
+                      "Name": "space:crystal_block"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "width": {
+                    "base": 1,
+                    "spread": 1
+                  }
+                },
+                "type": "space:boulder"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
+                    "config": {},
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
+                  }
+                },
+                "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "chance": 20
+            },
+            "type": "minecraft:chance"
+          }
+        },
+        "type": "minecraft:decorated"
+      },
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "block_provider": {
                     "entries": [
                       {
                         "weight": 2,
@@ -123,6 +182,65 @@
           "decorator": {
             "config": {
               "chance": 5
+            },
+            "type": "minecraft:chance"
+          }
+        },
+        "type": "minecraft:decorated"
+      },
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "depth": {
+                    "base": 2,
+                    "spread": 4
+                  },
+                  "edge_height": {
+                    "base": 1,
+                    "spread": 1
+                  },
+                  "fill_height": 0.0,
+                  "fill_provider": {
+                    "state": {
+                      "Name": "minecraft:air"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "edge_provider": {
+                    "state": {
+                      "Name": "space:pulcherite_turf"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "radius": {
+                    "base": 3,
+                    "spread": 6
+                  }
+                },
+                "type": "space:crater"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
+                    "config": {},
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
+                  }
+                },
+                "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "chance": 10
             },
             "type": "minecraft:chance"
           }
@@ -378,6 +496,97 @@
           }
         },
         "type": "minecraft:decorated"
+      },
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "state": {
+                    "Name": "space:glowing_turpium"
+                  },
+                  "radius": {
+                    "base": 2,
+                    "spread": 2
+                  },
+                  "half_height": 2,
+                  "targets": [
+                    {
+                      "Name": "space:pulcherite_turf"
+                    },
+                    {
+                      "Name": "space:pulcherite"
+                    }
+                  ]
+                },
+                "type": "space:disk"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
+                    "config": {},
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
+                  }
+                },
+                "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "count": 1
+            },
+            "type": "minecraft:count"
+          }
+        },
+        "type": "minecraft:decorated"
+      }
+    ],
+    [],
+    [
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "size": {
+                    "base": 2,
+                    "spread": 1
+                  }
+                },
+                "type": "space:algae_patch"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
+                    "config": {},
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
+                  }
+                },
+                "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "count": 2
+            },
+            "type": "minecraft:count"
+          }
+        },
+        "type": "minecraft:decorated"
       }
     ]
   ],
@@ -396,6 +605,6 @@
   "temperature": 0.9,
   "downfall": 2.0,
   "category": "none",
-  "depth": 0.6,
-  "scale": 0.1
+  "depth": 0.7,
+  "scale": 0.4
 }

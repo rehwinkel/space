@@ -21,7 +21,7 @@
         "sampling": {
           "xz_scale": 1.0,
           "y_scale": 1.0,
-          "xz_factor": 80.0,
+          "xz_factor": 1000.0,
           "y_factor": 160.0
         },
         "top_slide": {

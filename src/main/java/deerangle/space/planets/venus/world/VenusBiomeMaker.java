@@ -1,6 +1,9 @@
 package deerangle.space.planets.venus.world;
 
+import com.google.common.collect.ImmutableList;
+import deerangle.space.planets.feature.AlgaePathFeatureConfig;
 import deerangle.space.planets.feature.BoulderFeatureConfig;
+import deerangle.space.planets.feature.CraterFeatureConfig;
 import deerangle.space.planets.venus.VenusRegistry;
 import deerangle.space.planets.venus.tags.BlockTags;
 import net.minecraft.world.biome.*;
@@ -16,8 +19,8 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 public class VenusBiomeMaker {
 
     public static Biome makeHillsBiome() {
-        float depth = 0.6f;
-        float scale = 0.1f;
+        float depth = 0.7f;
+        float scale = 0.4f;
         MobSpawnInfo.Builder mobSpawnSettings = new MobSpawnInfo.Builder();
         BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder().withSurfaceBuilder(
                 SurfaceBuilder.DEFAULT.func_242929_a(
@@ -49,22 +52,44 @@ public class VenusBiomeMaker {
                         .chance(2));
         builder.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS,
                 deerangle.space.planets.feature.Features.BOULDER.get().withConfiguration(new BoulderFeatureConfig(
+                        new SimpleBlockStateProvider(VenusRegistry.CRYSTAL_BLOCK.get().getDefaultState()),
+                        FeatureSpread.func_242253_a(1, 1))).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+                        .chance(20));
+        builder.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS,
+                deerangle.space.planets.feature.Features.BOULDER.get().withConfiguration(new BoulderFeatureConfig(
                         new WeightedBlockStateProvider()
                                 .addWeightedBlockstate(VenusRegistry.TURPIUM.get().getDefaultState(), 2)
                                 .addWeightedBlockstate(VenusRegistry.GLOWING_TURPIUM.get().getDefaultState(), 1),
                         FeatureSpread.func_242253_a(2, 1))).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
                         .chance(5));
+        builder.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS,
+                deerangle.space.planets.feature.Features.CRATER.get().withConfiguration(new CraterFeatureConfig(
+                        new SimpleBlockStateProvider(VenusRegistry.PULCHERITE_TURF.get().getDefaultState()),
+                        FeatureSpread.func_242253_a(3, 6), FeatureSpread.func_242253_a(2, 4),
+                        FeatureSpread.func_242253_a(1, 1))).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
+                        .chance(10));
         builder.withFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Feature.FLOWER.withConfiguration(
                 (new BlockClusterFeatureConfig.Builder(
                         new SimpleBlockStateProvider(VenusRegistry.TURPIUM_ROCK.get().getDefaultState()),
                         SimpleBlockPlacer.PLACER)).tries(40).build())
                 .withPlacement(Features.Placements.VEGETATION_PLACEMENT)
                 .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(4));
+        builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES,
+                deerangle.space.planets.feature.Features.DISK.get().withConfiguration(
+                        new SphereReplaceConfig(VenusRegistry.GLOWING_TURPIUM.get().getDefaultState(),
+                                FeatureSpread.func_242253_a(2, 2), 2, ImmutableList
+                                .of(VenusRegistry.PULCHERITE_TURF.get().getDefaultState(),
+                                        VenusRegistry.PULCHERITE.get().getDefaultState())))
+                        .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(1));
+        builder.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
+                deerangle.space.planets.feature.Features.ALGAE_PATCH.get()
+                        .withConfiguration(new AlgaePathFeatureConfig(FeatureSpread.func_242253_a(2, 1)))
+                        .withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2));
+        DefaultBiomeFeatures.withCavesAndCanyons(builder);
         // DefaultBiomeFeatures.withMooshroomsAndBats(mobSpawnSettings);
         /*
         DefaultBiomeFeatures.withStrongholdAndMineshaft(generationSettings);
         generationSettings.withStructure(StructureFeatures.RUINED_PORTAL);
-        DefaultBiomeFeatures.withCavesAndCanyons(generationSettings);
         DefaultBiomeFeatures.withLavaAndWaterLakes(generationSettings);
         DefaultBiomeFeatures.withMonsterRoom(generationSettings);
         DefaultBiomeFeatures.withCommonOverworldBlocks(generationSettings);

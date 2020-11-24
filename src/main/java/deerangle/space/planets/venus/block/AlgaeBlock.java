@@ -23,6 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class AlgaeBlock extends Block {
+    public static final int HAPPY_LIGHT_LEVEL = 6;
     protected static final VoxelShape SMALL_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
     protected static final VoxelShape LARGE_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     private static final int TRIES = 3;
@@ -76,17 +77,16 @@ public class AlgaeBlock extends Block {
             for (int i = 0; i < TRIES; i++) {
                 Direction growDirection = Direction.Plane.HORIZONTAL.random(rand);
                 BlockPos growPos = pos.offset(growDirection);
-                if (worldIn.getBlockState(growPos).isAir(worldIn, growPos)) {
+                if (worldIn.isAirBlock(growPos)) {
                     if (this.isValidPosition(null, worldIn, growPos)) {
                         worldIn.setBlockState(growPos, this.getDefaultState());
                         break;
-                    } else if (worldIn.getBlockState(growPos.down()).isAir(worldIn, growPos.down()) && this
+                    } else if (worldIn.isAirBlock(growPos.down()) && this
                             .isValidPosition(null, worldIn, growPos.down())) {
                         worldIn.setBlockState(growPos.down(), this.getDefaultState());
                         break;
                     }
-                } else if (worldIn.getBlockState(growPos.up()).isAir(worldIn, growPos.up()) && this
-                        .isValidPosition(null, worldIn, growPos.up())) {
+                } else if (worldIn.isAirBlock(growPos.up()) && this.isValidPosition(null, worldIn, growPos.up())) {
                     worldIn.setBlockState(growPos.up(), this.getDefaultState());
                     break;
                 }

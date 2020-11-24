@@ -96,7 +96,7 @@ public class VenusRegistry {
             .register("shriekwood_door", () -> new DoorBlock(AbstractBlock.Properties.from(SHRIEKWOOD_PLANKS.get())));
     public static final RegistryObject<Block> SLIMY_ALGAE = BLOCKS.register("slimy_algae", () -> new AlgaeBlock(
             AbstractBlock.Properties.create(Material.WOOD).setBlocksVision((state, reader, pos) -> false).tickRandomly()
-                    .sound(SoundType.SLIME).hardnessAndResistance(0.1F).speedFactor(0.5F)));
+                    .notSolid().sound(SoundType.SLIME).hardnessAndResistance(0.1F).speedFactor(0.5F)));
     public static final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal",
             () -> new CrystalBlock(AbstractBlock.Properties.create(Material.GLASS).notSolid().doesNotBlockMovement()));
     public static final RegistryObject<Block> CRYSTAL_BLOCK = BLOCKS
