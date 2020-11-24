@@ -119,6 +119,9 @@ public class BlockStateGenerator extends BlockStateProvider {
         basicBlockItem(VenusRegistry.SHRIEKWOOD_LEAVES.get());
         crossBlock(VenusRegistry.SHRIEKGRASS.get());
         crossBlock(VenusRegistry.SHRIEKWOOD_SAPLING.get());
+        crossBlock(VenusRegistry.CRYSTAL.get());
+        basicBlock(VenusRegistry.CRYSTAL_BLOCK.get());
+        basicBlockItem(VenusRegistry.CRYSTAL_BLOCK.get());
         vineBlock(VenusRegistry.VENUS_BACTERIA.get(), venusBlockTexture(VenusRegistry.VENUS_BACTERIA.get()));
         overgrownBlock(VenusRegistry.OVERGROWN_PULCHERITE.get(), venusBlockTexture(VenusRegistry.PULCHERITE.get()));
         basicBlockItem(VenusRegistry.OVERGROWN_PULCHERITE.get());

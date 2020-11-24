@@ -9,6 +9,7 @@ public class BlockTags {
 
     public static final Tags.IOptionalNamedTag<Block> VENUS_GROUND = tag("venus_ground");
     public static final Tags.IOptionalNamedTag<Block> VENUS_OVERGROWABLE = tag("venus_overgrowable");
+    public static final Tags.IOptionalNamedTag<Block> CRYSTAL_GROUND = tag("crystal_ground");
 
     private static Tags.IOptionalNamedTag<Block> tag(String name) {
         return net.minecraft.tags.BlockTags.createOptional(new ResourceLocation(SpaceMod.MOD_ID, name));

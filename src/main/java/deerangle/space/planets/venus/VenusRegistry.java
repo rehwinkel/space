@@ -118,6 +118,11 @@ public class VenusRegistry {
     public static final RegistryObject<Item> SHRIEKWOOD_DOOR_ITEM = ITEMS.register("shriekwood_door",
             () -> new BlockItem(SHRIEKWOOD_DOOR.get(), new Item.Properties().group(PlanetRegistry.TAB)));
 
+    public static final RegistryObject<Block> CRYSTAL = BLOCKS.register("crystal", () -> new Crystal(
+            AbstractBlock.Properties.create(Material.GLASS).notSolid()));
+    public static final RegistryObject<Block> CRYSTAL_BLOCK = BLOCKS.register("crystal_block", () -> new CrystalBlock(
+            AbstractBlock.Properties.create(Material.GLASS)));
+
     //TODO: add mobs and their drops
     //TODO: acid fluid
 
@@ -166,6 +171,10 @@ public class VenusRegistry {
                         .food(new Food.Builder().fastToEat().hunger(1).saturation(0.05F).build())));
         ITEMS.register("shriekwood_sapling",
                 () -> new BlockItem(SHRIEKWOOD_SAPLING.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("crystal_block",
+                () -> new BlockItem(CRYSTAL_BLOCK.get(), new Item.Properties().group(PlanetRegistry.TAB)));
+        ITEMS.register("crystal",
+                () -> new BlockItem(CRYSTAL.get(), new Item.Properties().group(PlanetRegistry.TAB)));
     }
 
     public static void register() {
@@ -192,6 +201,8 @@ public class VenusRegistry {
         RenderTypeLookup.setRenderLayer(SHRIEKGRASS.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(SHRIEKWOOD_LEAVES.get(), RenderType.getCutoutMipped());
         RenderTypeLookup.setRenderLayer(VENUS_BACTERIA.get(), RenderType.getCutoutMipped());
+        RenderTypeLookup.setRenderLayer(CRYSTAL.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(CRYSTAL_BLOCK.get(), RenderType.getTranslucent());
     }
 
     public static void registerLanguage(LanguageGenerator gen) {
@@ -223,6 +234,8 @@ public class VenusRegistry {
         gen.add(MUSIC_DISC_SPICY_AND_SOUR.get().getTranslationKey() + ".desc", "Ian Rehwinkel - Spicy and Sour");
         gen.add(MUSIC_DISC_LOVE.get().getTranslationKey() + ".desc", "Ian Rehwinkel - Love");
         gen.add(SULFUR.get(), "Sulfur");
+        gen.add(CRYSTAL.get(), "Crystal");
+        gen.add(CRYSTAL_BLOCK.get(), "Crystal Block");
     }
 
 }

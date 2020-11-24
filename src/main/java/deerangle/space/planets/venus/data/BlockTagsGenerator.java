@@ -22,6 +22,7 @@ public class BlockTagsGenerator extends TagsProvider<Block> {
                 .add(VenusRegistry.TURPIUM_COBBLESTONE.get()).add(VenusRegistry.PULCHERITE.get())
                 .add(VenusRegistry.OVERGROWN_PULCHERITE.get()).add(VenusRegistry.GLOWING_TURPIUM.get());
         this.getOrCreateBuilder(BlockTags.VENUS_OVERGROWABLE).add(VenusRegistry.PULCHERITE.get());
+        this.getOrCreateBuilder(BlockTags.CRYSTAL_GROUND).add(VenusRegistry.CRYSTAL_BLOCK.get());
     }
 
     protected Path makePath(ResourceLocation id) {
