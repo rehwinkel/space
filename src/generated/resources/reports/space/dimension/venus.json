@@ -1,0 +1,156 @@
+{
+  "type": {
+    "logical_height": 256,
+    "infiniburn": "minecraft:infiniburn_overworld",
+    "effects": "space:venus",
+    "ambient_light": 0.0,
+    "bed_works": false,
+    "respawn_anchor_works": true,
+    "has_raids": false,
+    "ultrawarm": true,
+    "natural": false,
+    "coordinate_scale": 1.0,
+    "piglin_safe": false,
+    "has_skylight": true,
+    "has_ceiling": false
+  },
+  "generator": {
+    "biome_source": {
+      "seed": 0,
+      "river_biome": {
+        "effects": {
+          "sky_color": 0,
+          "fog_color": 0,
+          "water_color": 0,
+          "water_fog_color": 0
+        },
+        "surface_builder": {
+          "config": {
+            "top_material": {
+              "Name": "minecraft:stone"
+            },
+            "under_material": {
+              "Name": "minecraft:stone"
+            },
+            "underwater_material": {
+              "Name": "minecraft:gravel"
+            }
+          },
+          "type": "minecraft:nope"
+        },
+        "carvers": {},
+        "features": [],
+        "starts": [],
+        "spawners": {
+          "monster": [],
+          "creature": [],
+          "ambient": [],
+          "water_creature": [],
+          "water_ambient": [],
+          "misc": []
+        },
+        "spawn_costs": {},
+        "player_spawn_friendly": false,
+        "forge:registry_name": "space:venus_lava_river",
+        "precipitation": "none",
+        "temperature": 0.0,
+        "downfall": 0.0,
+        "category": "none",
+        "depth": 0.0,
+        "scale": 0.0
+      },
+      "biomes": [
+        {
+          "effects": {
+            "sky_color": 0,
+            "fog_color": 0,
+            "water_color": 0,
+            "water_fog_color": 0
+          },
+          "surface_builder": {
+            "config": {
+              "top_material": {
+                "Name": "minecraft:stone"
+              },
+              "under_material": {
+                "Name": "minecraft:stone"
+              },
+              "underwater_material": {
+                "Name": "minecraft:gravel"
+              }
+            },
+            "type": "minecraft:nope"
+          },
+          "carvers": {},
+          "features": [],
+          "starts": [],
+          "spawners": {
+            "monster": [],
+            "creature": [],
+            "ambient": [],
+            "water_creature": [],
+            "water_ambient": [],
+            "misc": []
+          },
+          "spawn_costs": {},
+          "player_spawn_friendly": false,
+          "forge:registry_name": "space:venus_hills",
+          "precipitation": "none",
+          "temperature": 0.0,
+          "downfall": 0.0,
+          "category": "none",
+          "depth": 0.0,
+          "scale": 0.0
+        }
+      ],
+      "biome_weights": [
+        1
+      ],
+      "type": "space:venus_provider"
+    },
+    "seed": -1,
+    "settings": {
+      "bedrock_roof_position": -10,
+      "bedrock_floor_position": 0,
+      "sea_level": 70,
+      "disable_mob_generation": false,
+      "structures": {
+        "structures": {}
+      },
+      "noise": {
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "simplex_surface_noise": true,
+        "bottom_slide": {
+          "target": -30,
+          "size": 0,
+          "offset": 0
+        },
+        "size_horizontal": 1,
+        "size_vertical": 2,
+        "height": 256,
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 1.0,
+          "xz_factor": 1000.0,
+          "y_factor": 160.0
+        },
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        }
+      },
+      "default_block": {
+        "Name": "space:pulcherite"
+      },
+      "default_fluid": {
+        "Properties": {
+          "level": "0"
+        },
+        "Name": "minecraft:lava"
+      }
+    },
+    "type": "minecraft:noise"
+  }
+}

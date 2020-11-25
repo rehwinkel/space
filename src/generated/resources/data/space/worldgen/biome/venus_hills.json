@@ -43,7 +43,57 @@
   },
   "features": [
     [],
-    [],
+    [
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "fluid_provider": {
+                    "state": {
+                      "Properties": {
+                        "level": "0"
+                      },
+                      "Name": "space:acid"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "edge_provider": {
+                    "state": {
+                      "Name": "space:turpium"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  }
+                },
+                "type": "space:better_lake"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
+                    "config": {},
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
+                  }
+                },
+                "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "chance": 5
+            },
+            "type": "minecraft:chance"
+          }
+        },
+        "type": "minecraft:decorated"
+      }
+    ],
     [
       {
         "config": {
@@ -83,50 +133,6 @@
           "decorator": {
             "config": {
               "chance": 2
-            },
-            "type": "minecraft:chance"
-          }
-        },
-        "type": "minecraft:decorated"
-      },
-      {
-        "config": {
-          "feature": {
-            "config": {
-              "feature": {
-                "config": {
-                  "block_provider": {
-                    "state": {
-                      "Name": "space:crystal_block"
-                    },
-                    "type": "minecraft:simple_state_provider"
-                  },
-                  "width": {
-                    "base": 1,
-                    "spread": 1
-                  }
-                },
-                "type": "space:boulder"
-              },
-              "decorator": {
-                "config": {
-                  "outer": {
-                    "config": {},
-                    "type": "minecraft:square"
-                  },
-                  "inner": {
-                    "config": {},
-                    "type": "minecraft:heightmap"
-                  }
-                },
-                "type": "minecraft:decorated"
-              }
-            },
-            "type": "minecraft:decorated"
-          },
-          "decorator": {
-            "config": {
-              "chance": 20
             },
             "type": "minecraft:chance"
           }
@@ -217,7 +223,7 @@
                   },
                   "radius": {
                     "base": 3,
-                    "spread": 6
+                    "spread": 4
                   }
                 },
                 "type": "space:crater"
@@ -240,7 +246,7 @@
           },
           "decorator": {
             "config": {
-              "chance": 10
+              "chance": 6
             },
             "type": "minecraft:chance"
           }
@@ -253,35 +259,85 @@
             "config": {
               "feature": {
                 "config": {
-                  "feature": {
-                    "config": {
-                      "can_replace": false,
-                      "project": true,
-                      "need_water": false,
-                      "xspread": 7,
-                      "yspread": 3,
-                      "zspread": 7,
-                      "whitelist": [],
-                      "blacklist": [],
-                      "tries": 40,
-                      "state_provider": {
-                        "state": {
-                          "Name": "space:turpium_rock"
-                        },
-                        "type": "minecraft:simple_state_provider"
-                      },
-                      "block_placer": {
-                        "type": "minecraft:simple_block_placer"
-                      }
-                    },
-                    "type": "minecraft:flower"
+                  "depth": {
+                    "base": 5,
+                    "spread": 4
                   },
-                  "decorator": {
+                  "edge_height": {
+                    "base": 1,
+                    "spread": 2
+                  },
+                  "fill_height": 0.0,
+                  "fill_provider": {
+                    "state": {
+                      "Name": "minecraft:air"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "edge_provider": {
+                    "state": {
+                      "Name": "space:pulcherite_turf"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "radius": {
+                    "base": 7,
+                    "spread": 5
+                  }
+                },
+                "type": "space:crater"
+              },
+              "decorator": {
+                "config": {
+                  "outer": {
                     "config": {},
-                    "type": "minecraft:spread_32_above"
+                    "type": "minecraft:square"
+                  },
+                  "inner": {
+                    "config": {},
+                    "type": "minecraft:heightmap"
                   }
                 },
                 "type": "minecraft:decorated"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          "decorator": {
+            "config": {
+              "chance": 30
+            },
+            "type": "minecraft:chance"
+          }
+        },
+        "type": "minecraft:decorated"
+      },
+      {
+        "config": {
+          "feature": {
+            "config": {
+              "feature": {
+                "config": {
+                  "can_replace": false,
+                  "project": true,
+                  "need_water": false,
+                  "xspread": 7,
+                  "yspread": 3,
+                  "zspread": 7,
+                  "whitelist": [],
+                  "blacklist": [],
+                  "tries": 6,
+                  "state_provider": {
+                    "state": {
+                      "Name": "space:turpium_rock"
+                    },
+                    "type": "minecraft:simple_state_provider"
+                  },
+                  "block_placer": {
+                    "type": "minecraft:simple_block_placer"
+                  }
+                },
+                "type": "minecraft:flower"
               },
               "decorator": {
                 "config": {
@@ -602,7 +658,7 @@
   "spawn_costs": {},
   "player_spawn_friendly": false,
   "precipitation": "none",
-  "temperature": 0.9,
+  "temperature": 0.8,
   "downfall": 2.0,
   "category": "none",
   "depth": 0.7,

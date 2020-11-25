@@ -1,4 +1,5 @@
 {
+  "block.space.acid": "Sulfuric Acid",
   "block.space.aluminium_block": "Aluminium Block",
   "block.space.aluminium_ore": "Aluminium Ore",
   "block.space.battery_pack": "Battery Pack",
@@ -73,6 +74,7 @@
   "info.space.side_config": "Side Config",
   "info.space.top": "Up: %s",
   "info.space.top_letter": "U",
+  "item.space.acid_bucket": "Sulfuric Acid Bucket",
   "item.space.aluminium_ingot": "Aluminium Ingot",
   "item.space.aluminium_nugget": "Aluminium Nugget",
   "item.space.aluminium_plate": "Aluminium Plate",

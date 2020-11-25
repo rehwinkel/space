@@ -15,6 +15,8 @@ public class ClientProxy implements IProxy {
         ScreenManager.registerFactory(MachineRegistry.MACHINE_CONTAINER.get(), MachineScreen::new);
         RenderTypeLookup.setRenderLayer(FluidRegistry.KEROSENE.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(FluidRegistry.KEROSENE_FLOWING.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(FluidRegistry.ACID.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(FluidRegistry.ACID_FLOWING.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(MachineRegistry.REFINERY.get(), RenderType.getCutoutMipped());
         PlanetRegistry.registerClient();
     }

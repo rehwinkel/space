@@ -1,7 +1,9 @@
 package deerangle.space.registry;
 
+import deerangle.space.fluid.AcidFluid;
 import deerangle.space.fluid.CrudeOilFluid;
 import deerangle.space.fluid.KeroseneFluid;
+import deerangle.space.machine.util.Ref;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
@@ -31,6 +33,15 @@ public class FluidRegistry extends AbstractRegistry {
             () -> new BucketItem(KEROSENE, new Item.Properties().group(ResourceRegistry.TAB).maxStackSize(1)));
     public static final RegistryObject<Block> KEROSENE_BLOCK = BLOCKS.register("kerosene",
             () -> new FlowingFluidBlock(KEROSENE,
+                    AbstractBlock.Properties.create(Material.LAVA, MaterialColor.RED).doesNotBlockMovement()
+                            .hardnessAndResistance(100.0F)));
+    public static final RegistryObject<FlowingFluid> ACID = FLUIDS.register("acid", AcidFluid.Source::new);
+    public static final RegistryObject<FlowingFluid> ACID_FLOWING = FLUIDS
+            .register("acid_flowing", AcidFluid.Flowing::new);
+    public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket",
+            () -> new BucketItem(ACID, new Item.Properties().group(ResourceRegistry.TAB).maxStackSize(1)));
+    public static final RegistryObject<Block> ACID_BLOCK = BLOCKS.register("acid",
+            () -> new FlowingFluidBlock(ACID,
                     AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement()
                             .hardnessAndResistance(100.0F)));
 

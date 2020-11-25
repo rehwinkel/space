@@ -39,7 +39,7 @@ public class CraterFeature extends Feature<CraterFeatureConfig> {
                     if (x * x + y * y + z * z < randoRad) {
                         placePos.setAndOffset(pos, x, -y + (int) yStart, z);
                         if (y > scanRadius - waterHeight) {
-                            reader.setBlockState(placePos, Blocks.WATER.getDefaultState(), 2);
+                            reader.setBlockState(placePos, config.fillBlock.getBlockState(rand, placePos), 2);
                         } else {
                             reader.setBlockState(placePos, Blocks.AIR.getDefaultState(), 2);
                         }

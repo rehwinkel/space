@@ -24,4 +24,7 @@ public class Features {
     public static final RegistryObject<Feature<AlgaePathFeatureConfig>> ALGAE_PATCH = FEATURES
             .register("algae_patch", () -> new AlgaePatchFeature(AlgaePathFeatureConfig.CODEC));
 
+    public static final RegistryObject<Feature<BetterLakeFeatureConfig>> LAKE = FEATURES
+            .register("better_lake", () -> new BetterLakeFeature(BetterLakeFeatureConfig.CODEC));
+
 }

@@ -4,6 +4,8 @@
     "space:crude_oil",
     "space:crude_oil_flowing",
     "space:kerosene",
-    "space:kerosene_flowing"
+    "space:kerosene_flowing",
+    "space:acid",
+    "space:acid_flowing"
   ]
 }

@@ -1,4 +1,4 @@
-package deerangle.space.planets;
+package deerangle.space.planets.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,0 +1,47 @@
+{
+  "effects": {
+    "mood_sound": {
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    },
+    "sky_color": 12763774,
+    "fog_color": 14074198,
+    "water_color": 5731653,
+    "water_fog_color": 4894006
+  },
+  "surface_builder": {
+    "config": {
+      "top_material": {
+        "Name": "space:turpium"
+      },
+      "under_material": {
+        "Name": "space:pulcherite"
+      },
+      "underwater_material": {
+        "Name": "space:turpium"
+      }
+    },
+    "type": "minecraft:default"
+  },
+  "carvers": {},
+  "features": [],
+  "starts": [],
+  "spawners": {
+    "monster": [],
+    "creature": [],
+    "ambient": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "player_spawn_friendly": false,
+  "precipitation": "none",
+  "temperature": 0.8,
+  "downfall": 2.0,
+  "category": "river",
+  "depth": -0.6,
+  "scale": 0.0
+}

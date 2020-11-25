@@ -14,6 +14,7 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Dimension;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -25,6 +26,10 @@ public class VenusRegistry {
 
     public static final RegistryKey<Biome> VENUS_HILLS = RegistryKey
             .getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"));
+    public static final RegistryKey<Biome> VENUS_LAVA_RIVER = RegistryKey
+            .getOrCreateKey(Registry.BIOME_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus_lava_river"));
+    public static final RegistryKey<Dimension> DIMENSION = RegistryKey
+            .getOrCreateKey(Registry.DIMENSION_KEY, new ResourceLocation(SpaceMod.MOD_ID, "venus"));
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister
             .create(ForgeRegistries.BLOCKS, SpaceMod.MOD_ID);
@@ -65,7 +70,8 @@ public class VenusRegistry {
     public static final RegistryObject<Block> TURPIUM = BLOCKS.register("turpium", () -> new Block(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> GLOWING_TURPIUM = BLOCKS.register("glowing_turpium",
-            () -> new GlowingBlock(AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get())));
+            () -> new GlowingBlock(AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get()).setLightLevel(value -> 8)
+                    .tickRandomly()));
     public static final RegistryObject<Block> TURPIUM_COBBLESTONE = BLOCKS.register("turpium_cobblestone",
             () -> new Block(AbstractBlock.Properties.from(VenusRegistry.TURPIUM.get())));
     public static final RegistryObject<Block> TURPIUM_ROCK = BLOCKS.register("turpium_rock", () -> new RockBlock(

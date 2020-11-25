@@ -1,6 +1,6 @@
 package deerangle.space.planets.venus.data;
 
-import deerangle.space.planets.AbstractBiomeGenerator;
+import deerangle.space.planets.util.AbstractBiomeGenerator;
 import deerangle.space.planets.venus.VenusRegistry;
 import deerangle.space.planets.venus.world.VenusBiomeMaker;
 import net.minecraft.data.DataGenerator;
@@ -18,6 +18,7 @@ public class BiomeGenerator extends AbstractBiomeGenerator {
     @Override
     protected void addBiomes(Map<RegistryKey<Biome>, Biome> biomeMap) {
         biomeMap.put(VenusRegistry.VENUS_HILLS, VenusBiomeMaker.makeHillsBiome());
+        biomeMap.put(VenusRegistry.VENUS_LAVA_RIVER, VenusBiomeMaker.makeRiverBiome());
     }
 
 }

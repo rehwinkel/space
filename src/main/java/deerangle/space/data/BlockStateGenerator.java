@@ -9,6 +9,7 @@ import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.LavaFluid;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -165,6 +166,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         blockWithTopAndBottomTexture(ResourceRegistry.CONTROLLER.get());
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
         fluidBlock(FluidRegistry.KEROSENE.get());
+        fluidBlock(FluidRegistry.ACID.get());
         cableBlockWithItem(MachineRegistry.CABLE.get());
         cableBlockWithItem(MachineRegistry.TRANSPORTER.get());
         cableBlockWithItem(MachineRegistry.PIPE.get());
