@@ -3,6 +3,7 @@ package deerangle.space.block;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.element.MachineType;
+import deerangle.space.tags.BlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
@@ -103,7 +104,9 @@ public abstract class MachineBlock extends Block {
 
     public boolean canConnect(BlockState state) {
         Block block = state.getBlock();
-        return block instanceof CableBlock;
+        return (this.isIn(BlockTags.ENERGY_MACHINES) && block instanceof CableBlock) || (this
+                .isIn(BlockTags.ITEM_MACHINES) && block instanceof TransporterBlock) || (this
+                .isIn(BlockTags.FLUID_MACHINES) && block instanceof PipeBlock);
     }
 
     private Direction rotateByFacing(Direction facing, Direction side) {

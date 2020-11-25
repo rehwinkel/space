@@ -5,20 +5,20 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.tags.ITag;
 
-public class CableBlock extends DuctBlock {
+public class TransporterBlock extends DuctBlock {
 
-    public CableBlock(AbstractBlock.Properties properties) {
+    public TransporterBlock(AbstractBlock.Properties properties) {
         super(properties);
     }
 
     @Override
     protected ITag<Block> getMachineTag() {
-        return BlockTags.ENERGY_MACHINES;
+        return BlockTags.ITEM_MACHINES;
     }
 
     @Override
     protected boolean canConnectDuct(Block block) {
-        return block instanceof CableBlock;
+        return block instanceof TransporterBlock;
     }
 
 }

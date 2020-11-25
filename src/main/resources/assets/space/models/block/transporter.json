@@ -1,9 +1,7 @@
 {
-	"credit": "Made with Blockbench",
-	"parent": "block/block",
 	"textures": {
-		"0": "space:block/item_transporter",
-		"particle": "space:block/item_transporter"
+		"0": "space:block/transporter",
+		"particle": "space:block/transporter"
 	},
 	"elements": [
 		{

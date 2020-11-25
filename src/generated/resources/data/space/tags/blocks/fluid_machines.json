@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "space:drum",
+    "space:gas_tank",
+    "space:refinery",
+    "space:combustion_generator"
+  ]
+}

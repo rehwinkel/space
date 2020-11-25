@@ -1,6 +1,6 @@
 package deerangle.space.data;
 
-import deerangle.space.block.CableBlock;
+import deerangle.space.block.DuctBlock;
 import deerangle.space.block.MachineBlock;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.registry.FluidRegistry;
@@ -102,12 +102,12 @@ public class BlockStateGenerator extends BlockStateProvider {
 
         MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
         builder.part().modelFile(baseModel).addModel().end().part().modelFile(connector).rotationY(0).addModel()
-                .condition(CableBlock.NORTH, true).end().part().modelFile(connector).rotationY(180).addModel()
-                .condition(CableBlock.SOUTH, true).end().part().modelFile(connector).rotationY(90).addModel()
-                .condition(CableBlock.EAST, true).end().part().modelFile(connector).rotationY(270).addModel()
-                .condition(CableBlock.WEST, true).end().part().modelFile(connector).rotationX(270).addModel()
-                .condition(CableBlock.UP, true).end().part().modelFile(connector).rotationX(90).addModel()
-                .condition(CableBlock.DOWN, true).end();
+                .condition(DuctBlock.NORTH, true).end().part().modelFile(connector).rotationY(180).addModel()
+                .condition(DuctBlock.SOUTH, true).end().part().modelFile(connector).rotationY(90).addModel()
+                .condition(DuctBlock.EAST, true).end().part().modelFile(connector).rotationY(270).addModel()
+                .condition(DuctBlock.WEST, true).end().part().modelFile(connector).rotationX(270).addModel()
+                .condition(DuctBlock.UP, true).end().part().modelFile(connector).rotationX(90).addModel()
+                .condition(DuctBlock.DOWN, true).end();
 
         ModelFile inventoryModel = models().getExistingFile(
                 new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_inventory"));
@@ -136,10 +136,11 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void blockWithTopAndBottomTexture(Block block) {
         ResourceLocation base = blockTexture(block);
-        ModelFile baseModel = models().cubeBottomTop(block.getRegistryName().getPath(), new ResourceLocation(base.getNamespace(), base.getPath() + "_side"), 
+        ModelFile baseModel = models().cubeBottomTop(block.getRegistryName().getPath(),
+                new ResourceLocation(base.getNamespace(), base.getPath() + "_side"),
                 new ResourceLocation(base.getNamespace(), base.getPath() + "_bottom"),
                 new ResourceLocation(base.getNamespace(), base.getPath() + "_top"));
-                getVariantBuilder(block).partialState().setModels(new ConfiguredModel(baseModel));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(baseModel));
         simpleBlockItem(block, baseModel);
     }
 
@@ -165,6 +166,8 @@ public class BlockStateGenerator extends BlockStateProvider {
         fluidBlock(FluidRegistry.CRUDE_OIL.get());
         fluidBlock(FluidRegistry.KEROSENE.get());
         cableBlockWithItem(MachineRegistry.CABLE.get());
+        cableBlockWithItem(MachineRegistry.TRANSPORTER.get());
+        cableBlockWithItem(MachineRegistry.PIPE.get());
         machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(),
                 new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0,
                         90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270,

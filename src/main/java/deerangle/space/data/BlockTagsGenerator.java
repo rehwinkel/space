@@ -18,10 +18,14 @@ public class BlockTagsGenerator extends TagsProvider<Block> {
     }
 
     protected void registerTags() {
-        this.getOrCreateBuilder(BlockTags.MACHINES).add(MachineRegistry.BATTERY_PACK.get())
-                .add(MachineRegistry.DRUM.get()).add(MachineRegistry.GAS_TANK.get()).add(MachineRegistry.REFINERY.get())
-                .add(MachineRegistry.COAL_GENERATOR.get()).add(MachineRegistry.COMBUSTION_GENERATOR.get())
+        this.getOrCreateBuilder(BlockTags.ENERGY_MACHINES).add(MachineRegistry.BATTERY_PACK.get())
+                .add(MachineRegistry.REFINERY.get()).add(MachineRegistry.COAL_GENERATOR.get())
+                .add(MachineRegistry.COMBUSTION_GENERATOR.get());
+        this.getOrCreateBuilder(BlockTags.ITEM_MACHINES).add(MachineRegistry.COAL_GENERATOR.get())
                 .add(MachineRegistry.BLAST_FURNACE.get());
+        this.getOrCreateBuilder(BlockTags.FLUID_MACHINES).add(MachineRegistry.DRUM.get())
+                .add(MachineRegistry.GAS_TANK.get()).add(MachineRegistry.REFINERY.get())
+                .add(MachineRegistry.COMBUSTION_GENERATOR.get());
     }
 
     protected Path makePath(ResourceLocation id) {

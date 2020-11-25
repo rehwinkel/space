@@ -1,5 +1,4 @@
 {
-	"parent": "block/block",
 	"textures": {
 		"0": "space:block/cable",
 		"particle": "space:block/cable"

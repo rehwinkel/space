@@ -51,7 +51,13 @@ public class MachineRegistry extends AbstractRegistry {
             .register("refinery", () -> new RefineryBlock(AbstractBlock.Properties.create(Material.IRON)));
 
     public static final RegistryObject<Block> CABLE = BLOCKS.register("cable",
-            () -> new CableBlock(AbstractBlock.Properties.create(Material.WOOL).sound(SoundType.CLOTH)));
+            () -> new CableBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).sound(SoundType.CLOTH)));
+
+    public static final RegistryObject<Block> PIPE = BLOCKS.register("pipe",
+            () -> new PipeBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).sound(SoundType.METAL)));
+
+    public static final RegistryObject<Block> TRANSPORTER = BLOCKS.register("transporter",
+            () -> new TransporterBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).sound(SoundType.METAL)));
 
     public static final RegistryObject<TileEntityType<MachineTileEntity>> MACHINE_TE = TILE_ENTITIES.register("machine",
             () -> TileEntityType.Builder.create(MachineTileEntity::new, COAL_GENERATOR.get(), BLAST_FURNACE.get(),
@@ -70,6 +76,8 @@ public class MachineRegistry extends AbstractRegistry {
         ITEMS.register("battery_pack", () -> new MachineItem(BATTERY_PACK.get(), new Item.Properties().group(TAB)));
         ITEMS.register("refinery", () -> new MachineItem(REFINERY.get(), new Item.Properties().group(TAB)));
         ITEMS.register("cable", () -> new MachineItem(CABLE.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("pipe", () -> new MachineItem(PIPE.get(), new Item.Properties().group(TAB)));
+        ITEMS.register("transporter", () -> new MachineItem(TRANSPORTER.get(), new Item.Properties().group(TAB)));
     }
 
     private static ToIntFunction<BlockState> getRunningLightLevel(int light) {
