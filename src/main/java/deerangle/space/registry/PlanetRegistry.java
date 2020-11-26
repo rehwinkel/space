@@ -3,6 +3,7 @@ package deerangle.space.registry;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planet.DimensionMaker;
 import deerangle.space.planet.Planet;
+import deerangle.space.planet.planets.mars.world.MarsBiomeMaker;
 import deerangle.space.planet.planets.venus.render.VenusAtmosphereRenderer;
 import deerangle.space.planet.planets.venus.world.VenusBiomeMaker;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +16,7 @@ public class PlanetRegistry {
 
     public static Planet SUN;
     public static Planet VENUS;
+    public static Planet MARS;
 
     @SubscribeEvent
     public static void registerPlanets(RegistryEvent.Register<Planet> event) {
@@ -25,7 +27,13 @@ public class PlanetRegistry {
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"), VenusBiomeMaker::makeHillsBiome)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_lava_river"), VenusBiomeMaker::makeRiverBiome)
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "venus"));
-        event.getRegistry().registerAll(VENUS);
+        //TODO: settings for mars
+        MARS = Planet.builder().addPlanetInSky(() -> SUN).dayLength(24000)
+                .dimensionMaker(DimensionMaker::makeMarsDimension).atmosphere(VenusAtmosphereRenderer::new)
+                .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "mars_desert"),
+                        () -> MarsBiomeMaker.makeDesertBiome(0.25F, 0.025F))
+                .build(new ResourceLocation(SpaceMod.MOD_ID, "mars"));
+        event.getRegistry().registerAll(VENUS, MARS);
     }
 
 }

@@ -26,8 +26,5 @@ public abstract class AbstractRegistry {
             .create(ForgeRegistries.RECIPE_SERIALIZERS, SpaceMod.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister
             .create(ForgeRegistries.FLUIDS, SpaceMod.MOD_ID);
-    public static final DeferredRegister<Biome> BIOMES = DeferredRegister
-            .create(ForgeRegistries.BIOMES, SpaceMod.MOD_ID);
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister
-            .create(ForgeRegistries.FEATURES, SpaceMod.MOD_ID);
+
 }

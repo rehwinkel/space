@@ -2,6 +2,7 @@ package deerangle.space.planet.feature;
 
 import deerangle.space.main.SpaceMod;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.SphereReplaceConfig;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,5 +27,8 @@ public class Features {
 
     public static final RegistryObject<Feature<BetterLakeFeatureConfig>> LAKE = FEATURES
             .register("better_lake", () -> new BetterLakeFeature(BetterLakeFeatureConfig.CODEC));
+
+    public static final RegistryObject<RockFeature> ROCK = FEATURES
+            .register("rock", () -> new RockFeature(RockFeatureConfig.CODEC));
 
 }

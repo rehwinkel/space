@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class VenusAtmosphereRenderer extends AtmosphereRenderer {
+    //TODO: generalize
 
     private final float[] sunsetColor = new float[4];
 
