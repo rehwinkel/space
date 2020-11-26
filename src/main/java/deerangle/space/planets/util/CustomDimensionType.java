@@ -14,4 +14,9 @@ public class CustomDimensionType extends DimensionType {
                 bedWorks, respawnAnchorWorks, hasRaids, logicalHeight, magnifier, infiniburn, effects, ambientLight);
     }
 
+    @Override
+    public float getCelestrialAngleByTime(long dayTime) {
+        return super.getCelestrialAngleByTime(dayTime);
+    }
+
 }

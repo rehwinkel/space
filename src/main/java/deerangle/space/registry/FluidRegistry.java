@@ -3,7 +3,6 @@ package deerangle.space.registry;
 import deerangle.space.fluid.AcidFluid;
 import deerangle.space.fluid.CrudeOilFluid;
 import deerangle.space.fluid.KeroseneFluid;
-import deerangle.space.machine.util.Ref;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;

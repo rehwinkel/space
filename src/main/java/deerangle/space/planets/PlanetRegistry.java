@@ -6,8 +6,9 @@ import deerangle.space.planets.data.DimensionGenerator;
 import deerangle.space.planets.feature.Features;
 import deerangle.space.planets.mars.MarsRegistry;
 import deerangle.space.planets.venus.VenusRegistry;
+import deerangle.space.planets.venus.render.CustomDimensionRenderInfo;
+import deerangle.space.planets.venus.render.VenusAtmosphereRenderer;
 import deerangle.space.planets.venus.world.VenusBiomeProvider;
-import deerangle.space.planets.venus.world.VenusDimensionRenderInfo;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.item.ItemGroup;
@@ -24,14 +25,13 @@ public class PlanetRegistry {
         Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(SpaceMod.MOD_ID, "venus_provider"),
                 VenusBiomeProvider.CODEC);
 
-        DimensionRenderInfo.field_239208_a_ = Util.make(new Object2ObjectArrayMap<>(), (p_239214_0_) -> {
+        DimensionRenderInfo.field_239208_a_ = Util.make(new Object2ObjectArrayMap<>(), (map) -> {
             DimensionRenderInfo.Overworld overworld = new DimensionRenderInfo.Overworld();
-            p_239214_0_.defaultReturnValue(overworld);
+            map.defaultReturnValue(overworld);
             for (ResourceLocation key : DimensionRenderInfo.field_239208_a_.keySet()) {
-                p_239214_0_.put(key, DimensionRenderInfo.field_239208_a_.get(key));
+                map.put(key, DimensionRenderInfo.field_239208_a_.get(key));
             }
-            p_239214_0_.put(DimensionMaker.VENUS_DIMENSION_TYPE,
-                    new VenusDimensionRenderInfo(Float.NaN, true, DimensionRenderInfo.FogType.NORMAL, false, false));
+            map.put(DimensionMaker.VENUS_DIMENSION_TYPE, new CustomDimensionRenderInfo(new VenusAtmosphereRenderer()));
         });
     }
 
