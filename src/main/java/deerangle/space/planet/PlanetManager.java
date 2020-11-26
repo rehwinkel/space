@@ -17,6 +17,7 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -51,22 +52,24 @@ public class PlanetManager {
         event.getGenerator().addProvider(new BiomeGenerator(event.getGenerator()));
     }
 
-    public static void registerClient() {
+    public static void registerClient(FMLClientSetupEvent event) {
         VenusRegistry.registerClient();
         MarsRegistry.registerClient();
 
         // Set dimension render info for custom dimensions
-        DimensionRenderInfo.field_239208_a_ = Util.make(new Object2ObjectArrayMap<>(), (map) -> {
-            DimensionRenderInfo.Overworld overworld = new DimensionRenderInfo.Overworld();
-            map.defaultReturnValue(overworld);
-            for (ResourceLocation key : DimensionRenderInfo.field_239208_a_.keySet()) {
-                map.put(key, DimensionRenderInfo.field_239208_a_.get(key));
-            }
-            IForgeRegistry<Planet> planetRegistry = RegistryManager.ACTIVE.getRegistry(Planet.class);
-            for (Map.Entry<RegistryKey<Planet>, Planet> entry : planetRegistry.getEntries()) {
-                map.put(entry.getKey().getLocation(), new CustomDimensionRenderInfo(
-                        entry.getValue().getAtmosphereRenderer().apply(entry.getValue())));
-            }
+        event.enqueueWork(() -> {
+            DimensionRenderInfo.field_239208_a_ = Util.make(new Object2ObjectArrayMap<>(), (map) -> {
+                DimensionRenderInfo.Overworld overworld = new DimensionRenderInfo.Overworld();
+                map.defaultReturnValue(overworld);
+                for (ResourceLocation key : DimensionRenderInfo.field_239208_a_.keySet()) {
+                    map.put(key, DimensionRenderInfo.field_239208_a_.get(key));
+                }
+                IForgeRegistry<Planet> planetRegistry = RegistryManager.ACTIVE.getRegistry(Planet.class);
+                for (Map.Entry<RegistryKey<Planet>, Planet> entry : planetRegistry.getEntries()) {
+                    map.put(entry.getKey().getLocation(), new CustomDimensionRenderInfo(
+                            entry.getValue().getAtmosphereRenderer().apply(entry.getValue())));
+                }
+            });
         });
     }
 

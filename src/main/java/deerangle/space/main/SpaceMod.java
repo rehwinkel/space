@@ -89,7 +89,7 @@ public class SpaceMod {
     }
 
     public void clientSetup(FMLClientSetupEvent event) {
-        proxy.clientSetup();
+        proxy.clientSetup(event);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
