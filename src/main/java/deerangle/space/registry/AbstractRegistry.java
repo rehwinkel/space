@@ -1,12 +1,15 @@
 package deerangle.space.registry;
 
 import deerangle.space.main.SpaceMod;
+import io.netty.resolver.DefaultHostsFileEntriesResolver;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -23,5 +26,8 @@ public abstract class AbstractRegistry {
             .create(ForgeRegistries.RECIPE_SERIALIZERS, SpaceMod.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister
             .create(ForgeRegistries.FLUIDS, SpaceMod.MOD_ID);
-
+    public static final DeferredRegister<Biome> BIOMES = DeferredRegister
+            .create(ForgeRegistries.BIOMES, SpaceMod.MOD_ID);
+    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister
+            .create(ForgeRegistries.FEATURES, SpaceMod.MOD_ID);
 }
