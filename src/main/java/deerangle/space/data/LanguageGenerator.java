@@ -1,6 +1,6 @@
 package deerangle.space.data;
 
-import deerangle.space.planets.PlanetRegistry;
+import deerangle.space.planet.PlanetManager;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
@@ -103,7 +103,7 @@ public class LanguageGenerator extends LanguageProvider {
         add("info.space.left", "Left: %s");
         add("info.space.right", "Right: %s");
         add("jei_category.space.blast_furnace", "Blast Furnace");
-        PlanetRegistry.registerLanguage(this);
+        PlanetManager.registerLanguage(this);
     }
 
     private void addMachine(Block block, String translation) {

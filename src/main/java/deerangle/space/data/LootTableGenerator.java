@@ -1,10 +1,8 @@
 package deerangle.space.data;
 
-import deerangle.space.planets.mars.MarsRegistry;
-import deerangle.space.planets.venus.VenusRegistry;
+import deerangle.space.planet.planets.mars.MarsRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Items;
 
 public class LootTableGenerator extends AbstractLootTableGenerator {
 

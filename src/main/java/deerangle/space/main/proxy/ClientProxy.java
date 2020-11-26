@@ -1,6 +1,6 @@
 package deerangle.space.main.proxy;
 
-import deerangle.space.planets.PlanetRegistry;
+import deerangle.space.planet.PlanetManager;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.screen.MachineScreen;
@@ -18,7 +18,7 @@ public class ClientProxy implements IProxy {
         RenderTypeLookup.setRenderLayer(FluidRegistry.ACID.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(FluidRegistry.ACID_FLOWING.get(), RenderType.getTranslucent());
         RenderTypeLookup.setRenderLayer(MachineRegistry.REFINERY.get(), RenderType.getCutoutMipped());
-        PlanetRegistry.registerClient();
+        PlanetManager.registerClient();
     }
 
 }

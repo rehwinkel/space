@@ -38,6 +38,7 @@
   },
   "spawn_costs": {},
   "player_spawn_friendly": false,
+  "forge:registry_name": "space:venus_lava_river",
   "precipitation": "none",
   "temperature": 0.8,
   "downfall": 2.0,

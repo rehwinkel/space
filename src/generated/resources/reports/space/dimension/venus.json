@@ -4,7 +4,7 @@
     "infiniburn": "minecraft:infiniburn_overworld",
     "effects": "space:venus",
     "ambient_light": 0.0,
-    "bed_works": false,
+    "bed_works": true,
     "respawn_anchor_works": true,
     "has_raids": false,
     "ultrawarm": true,
@@ -19,10 +19,16 @@
       "seed": 0,
       "river_biome": {
         "effects": {
-          "sky_color": 0,
-          "fog_color": 0,
-          "water_color": 0,
-          "water_fog_color": 0
+          "mood_sound": {
+            "sound": "minecraft:ambient.cave",
+            "tick_delay": 6000,
+            "block_search_extent": 8,
+            "offset": 2.0
+          },
+          "sky_color": 8103167,
+          "fog_color": 12638463,
+          "water_color": 4159204,
+          "water_fog_color": 329011
         },
         "surface_builder": {
           "config": {
@@ -39,7 +45,23 @@
           "type": "minecraft:nope"
         },
         "carvers": {},
-        "features": [],
+        "features": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            {
+              "config": {},
+              "type": "minecraft:void_start_platform"
+            }
+          ]
+        ],
         "starts": [],
         "spawners": {
           "monster": [],
@@ -51,58 +73,15 @@
         },
         "spawn_costs": {},
         "player_spawn_friendly": false,
-        "forge:registry_name": "space:venus_lava_river",
+        "forge:registry_name": "minecraft:the_void",
         "precipitation": "none",
-        "temperature": 0.0,
-        "downfall": 0.0,
+        "temperature": 0.5,
+        "downfall": 0.5,
         "category": "none",
-        "depth": 0.0,
-        "scale": 0.0
+        "depth": 0.1,
+        "scale": 0.2
       },
-      "biomes": [
-        {
-          "effects": {
-            "sky_color": 0,
-            "fog_color": 0,
-            "water_color": 0,
-            "water_fog_color": 0
-          },
-          "surface_builder": {
-            "config": {
-              "top_material": {
-                "Name": "minecraft:stone"
-              },
-              "under_material": {
-                "Name": "minecraft:stone"
-              },
-              "underwater_material": {
-                "Name": "minecraft:gravel"
-              }
-            },
-            "type": "minecraft:nope"
-          },
-          "carvers": {},
-          "features": [],
-          "starts": [],
-          "spawners": {
-            "monster": [],
-            "creature": [],
-            "ambient": [],
-            "water_creature": [],
-            "water_ambient": [],
-            "misc": []
-          },
-          "spawn_costs": {},
-          "player_spawn_friendly": false,
-          "forge:registry_name": "space:venus_hills",
-          "precipitation": "none",
-          "temperature": 0.0,
-          "downfall": 0.0,
-          "category": "none",
-          "depth": 0.0,
-          "scale": 0.0
-        }
-      ],
+      "biomes": [],
       "biome_weights": [
         1
       ],

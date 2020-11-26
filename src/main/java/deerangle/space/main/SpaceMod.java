@@ -6,18 +6,15 @@ import deerangle.space.main.proxy.ClientProxy;
 import deerangle.space.main.proxy.IProxy;
 import deerangle.space.main.proxy.ServerProxy;
 import deerangle.space.network.PacketHandler;
-import deerangle.space.planets.PlanetRegistry;
-import deerangle.space.planets.venus.VenusRegistry;
+import deerangle.space.planet.Planet;
+import deerangle.space.planet.PlanetManager;
 import deerangle.space.registry.AbstractRegistry;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import deerangle.space.stats.Stats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.DimensionType;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -48,7 +45,7 @@ public class SpaceMod {
         ResourceRegistry.register();
         FluidRegistry.register();
         Stats.register();
-        PlanetRegistry.register();
+        PlanetManager.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigData.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigData.CLIENT_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -79,7 +76,7 @@ public class SpaceMod {
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
-        PlanetRegistry.registerData(event);
+        PlanetManager.registerData(event);
     }
 
     private static <T> Class<T> c(Class<?> cls) {
@@ -90,6 +87,8 @@ public class SpaceMod {
     public static void newRegistries(RegistryEvent.NewRegistry event) {
         new RegistryBuilder<MachineType<?>>().setType(c(MachineType.class))
                 .setName(new ResourceLocation(MOD_ID, "machine")).setMaxID(Integer.MAX_VALUE - 1).create();
+        new RegistryBuilder<Planet>().setType(Planet.class).setName(new ResourceLocation(MOD_ID, "planet"))
+                .setMaxID(Integer.MAX_VALUE - 1).create();
     }
 
     public void clientSetup(FMLClientSetupEvent event) {
