@@ -4,9 +4,9 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public class CustomDimensionRenderInfo extends net.minecraft.client.world.DimensionRenderInfo {
 
-    private final AtmosphereRenderer atmosphereRenderer;
+    private final AbstractAtmosphereRenderer atmosphereRenderer;
 
-    public CustomDimensionRenderInfo(AtmosphereRenderer atmosphereRenderer) {
+    public CustomDimensionRenderInfo(AbstractAtmosphereRenderer atmosphereRenderer) {
         super(atmosphereRenderer.cloudHeight, true, FogType.NORMAL, false, false);
         this.atmosphereRenderer = atmosphereRenderer;
         this.setCloudRenderHandler(this.atmosphereRenderer);

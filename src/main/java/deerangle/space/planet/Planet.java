@@ -1,14 +1,16 @@
 package deerangle.space.planet;
 
-import deerangle.space.planet.render.AtmosphereRenderer;
+import deerangle.space.planet.render.AbstractAtmosphereRenderer;
 import deerangle.space.planet.util.CustomDimensionType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.Dimension;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -24,10 +26,12 @@ public class Planet extends ForgeRegistryEntry<Planet> {
     private final boolean natural;
     private final long dayLength;
     private final float ambientLight;
-    private final Function<Planet, AtmosphereRenderer> atmosphereRenderer;
+    private final Function<Planet, AbstractAtmosphereRenderer> atmosphereRenderer;
     private final Supplier<Dimension> dimensionMaker;
     private final Collection<Supplier<Biome>> biomeMakers;
     private final Collection<Supplier<Planet>> skyPlanets;
+    private final BiConsumer<Float, float[]> sunsetColors;
+    private final OptionalDouble sunsetAlpha;
 
     private Planet(ResourceLocation location, Builder builder) {
         this.setRegistryName(location);
@@ -46,6 +50,8 @@ public class Planet extends ForgeRegistryEntry<Planet> {
                 .map(entry -> (Supplier<Biome>) () -> entry.getValue().get().setRegistryName(entry.getKey()))
                 .collect(Collectors.toList());
         this.skyPlanets = builder.skyPlanets;
+        this.sunsetColors = builder.sunsetColors;
+        this.sunsetAlpha = builder.sunsetAlpha;
     }
 
     public Collection<Supplier<Planet>> getSkyPlanets() {
@@ -76,7 +82,7 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         return new CustomDimensionType(hasSkyLight, superhot, natural, this.getRegistryName(), ambientLight, dayLength);
     }
 
-    public Function<Planet, AtmosphereRenderer> getAtmosphereRenderer() {
+    public Function<Planet, AbstractAtmosphereRenderer> getAtmosphereRenderer() {
         return this.atmosphereRenderer;
     }
 
@@ -96,8 +102,18 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         return this.dayLength;
     }
 
+    public BiConsumer<Float, float[]> getSunsetColors() {
+        return this.sunsetColors;
+    }
+
+    public OptionalDouble getSunsetAlpha() {
+        return this.sunsetAlpha;
+    }
+
     public static class Builder {
 
+        public BiConsumer<Float, float[]> sunsetColors;
+        public OptionalDouble sunsetAlpha;
         private ResourceLocation skyTextureLocation;
         private final Map<ResourceLocation, Supplier<Biome>> biomeMakers;
         private final List<Supplier<Planet>> skyPlanets;
@@ -110,7 +126,7 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         private float orbitAngle;
         private float orbitTilt;
         private int skySize;
-        private Function<Planet, AtmosphereRenderer> atmosphereRenderer;
+        private Function<Planet, AbstractAtmosphereRenderer> atmosphereRenderer;
 
         private Builder() {
             this.biomeMakers = new HashMap<>();
@@ -125,6 +141,12 @@ public class Planet extends ForgeRegistryEntry<Planet> {
             this.orbitAngle = -90.0f;
             this.orbitTilt = 0.0f;
             this.atmosphereRenderer = null;
+            this.sunsetAlpha = OptionalDouble.empty();
+            this.sunsetColors = (factor, array) -> {
+                array[0] = factor * 0.3F + 0.7F;
+                array[1] = factor * factor * 0.7F + 0.2F;
+                array[2] = factor * factor * 0.0F + 0.2F;
+            };
         }
 
         public Planet build(ResourceLocation location) {
@@ -133,6 +155,36 @@ public class Planet extends ForgeRegistryEntry<Planet> {
 
         public Builder addPlanetInSky(Supplier<Planet> planetSupplier) {
             this.skyPlanets.add(planetSupplier);
+            return this;
+        }
+
+        public Builder noSunset() {
+            this.sunsetAlpha = OptionalDouble.of(0.0);
+            this.sunsetColors = (factor, array) -> {
+                array[0] = 0;
+                array[1] = 0;
+                array[2] = 0;
+            };
+            return this;
+        }
+
+        public Builder fullSunset(Vector3f color) {
+            this.sunsetAlpha = OptionalDouble.of(1.0);
+            this.sunsetColors = (factor, array) -> {
+                array[0] = color.getX();
+                array[1] = color.getY();
+                array[2] = color.getZ();
+            };
+            return this;
+        }
+
+        public Builder fadingSunset(Vector3f color) {
+            this.sunsetAlpha = OptionalDouble.empty();
+            this.sunsetColors = (factor, array) -> {
+                array[0] = color.getX();
+                array[1] = color.getY();
+                array[2] = color.getZ();
+            };
             return this;
         }
 
@@ -183,7 +235,7 @@ public class Planet extends ForgeRegistryEntry<Planet> {
             return this;
         }
 
-        public Builder atmosphere(Function<Planet, AtmosphereRenderer> renderer) {
+        public Builder atmosphere(Function<Planet, AbstractAtmosphereRenderer> renderer) {
             this.atmosphereRenderer = renderer;
             return this;
         }

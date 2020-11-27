@@ -4,9 +4,10 @@ import deerangle.space.main.SpaceMod;
 import deerangle.space.planet.DimensionMaker;
 import deerangle.space.planet.Planet;
 import deerangle.space.planet.planets.mars.world.MarsBiomeMaker;
-import deerangle.space.planet.planets.venus.render.VenusAtmosphereRenderer;
 import deerangle.space.planet.planets.venus.world.VenusBiomeMaker;
+import deerangle.space.planet.render.AtmosphereRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,13 +24,14 @@ public class PlanetRegistry {
         SUN = Planet.builder().skyTexture(new ResourceLocation("textures/environment/sun.png"), 30)
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "sun"));
         VENUS = Planet.builder().addPlanetInSky(() -> SUN).dayLength(118 * 24000).superhot()
-                .dimensionMaker(DimensionMaker::makeVenusDimension).atmosphere(VenusAtmosphereRenderer::new)
+                .fadingSunset(new Vector3f(0.90f, 0.67f, 0.22f)).dimensionMaker(DimensionMaker::makeVenusDimension)
+                .atmosphere(AtmosphereRenderer::new)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"), VenusBiomeMaker::makeHillsBiome)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_lava_river"), VenusBiomeMaker::makeRiverBiome)
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "venus"));
         //TODO: settings for mars
-        MARS = Planet.builder().addPlanetInSky(() -> SUN).dayLength(24000)
-                .dimensionMaker(DimensionMaker::makeMarsDimension).atmosphere(VenusAtmosphereRenderer::new)
+        MARS = Planet.builder().addPlanetInSky(() -> SUN).dayLength(24000).fullSunset(new Vector3f(1, 0, 1))
+                .dimensionMaker(DimensionMaker::makeMarsDimension).atmosphere(AtmosphereRenderer::new)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "mars_desert"),
                         () -> MarsBiomeMaker.makeDesertBiome(0.25F, 0.025F))
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "mars"));
