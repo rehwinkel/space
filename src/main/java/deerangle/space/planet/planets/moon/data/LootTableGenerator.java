@@ -1,7 +1,7 @@
-package deerangle.space.planet.planets.mercury.data;
+package deerangle.space.planet.planets.moon.data;
 
 import deerangle.space.data.AbstractLootTableGenerator;
-import deerangle.space.planet.planets.mercury.MercuryRegistry;
+import deerangle.space.planet.planets.moon.MoonRegistry;
 import net.minecraft.data.DataGenerator;
 
 public class LootTableGenerator extends AbstractLootTableGenerator {
@@ -11,8 +11,6 @@ public class LootTableGenerator extends AbstractLootTableGenerator {
 
     @Override
     protected void populate() {
-        normalBlock(MercuryRegistry.FIRESTONE.get());
-        normalBlock(MercuryRegistry.LAVA_GEYSIR.get());
-        normalBlock(MercuryRegistry.PLANET_CORE.get());
+        normalBlock(MoonRegistry.DUST.get());
     }
 }

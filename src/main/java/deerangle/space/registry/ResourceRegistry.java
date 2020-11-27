@@ -1,9 +1,7 @@
 package deerangle.space.registry;
 
 import deerangle.space.main.SpaceMod;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.*;
 import net.minecraftforge.common.ToolType;
@@ -38,8 +36,8 @@ public class ResourceRegistry extends AbstractRegistry {
     public static final RegistryObject<Block> TITANIUM_BLOCK = BLOCKS.register("titanium_block", () -> new Block(
             AbstractBlock.Properties.create(Material.IRON).setRequiresTool().harvestLevel(3)
                     .hardnessAndResistance(6.0F, 6.0F)));
-    public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new Block(
-            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL)
+    public static final RegistryObject<Block> QUARTZ_SAND = BLOCKS.register("quartz_sand", () -> new FallingBlock(
+            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
                     .hardnessAndResistance(1.0F, 1.0F)));
     public static final RegistryObject<Block> CONTROLLER = BLOCKS.register("controller",
             () -> new Block(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 6.0F)));

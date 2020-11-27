@@ -1,7 +1,7 @@
-package deerangle.space.planet.planets.mercury.data;
+package deerangle.space.planet.planets.moon.data;
 
-import deerangle.space.planet.planets.mercury.MercuryRegistry;
-import net.minecraft.block.Block;
+import deerangle.space.planet.planets.moon.MoonRegistry;
+import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -16,7 +16,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private ResourceLocation mercuryBlockTexture(Block block) {
         ResourceLocation name = block.getRegistryName();
-        return new ResourceLocation(name.getNamespace(), "mercury/block/" + name.getPath());
+        return new ResourceLocation(name.getNamespace(), "moon/block/" + name.getPath());
     }
 
     private void rotatedBlockWithItem(Block block) {
@@ -31,8 +31,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        rotatedBlockWithItem(MercuryRegistry.FIRESTONE.get());
-        rotatedBlockWithItem(MercuryRegistry.LAVA_GEYSIR.get());
-        rotatedBlockWithItem(MercuryRegistry.PLANET_CORE.get());
+        rotatedBlockWithItem(MoonRegistry.DUST.get());
     }
 }

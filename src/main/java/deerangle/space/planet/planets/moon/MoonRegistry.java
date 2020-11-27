@@ -1,37 +1,32 @@
-package deerangle.space.planet.planets.mercury;
+package deerangle.space.planet.planets.moon;
 
 import deerangle.space.data.LanguageGenerator;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.planet.PlanetManager;
-import deerangle.space.planet.planets.mercury.data.BlockStateGenerator;
-import deerangle.space.planet.planets.mercury.data.LootTableGenerator;
+import deerangle.space.planet.planets.moon.data.BlockStateGenerator;
+import deerangle.space.planet.planets.moon.data.LootTableGenerator;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.*;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class MercuryRegistry {
+public class MoonRegistry {
+
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister
             .create(ForgeRegistries.BLOCKS, SpaceMod.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
 
-    public static final RegistryObject<Block> FIRESTONE = BLOCKS.register("firestone", () -> new Block(
-            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
-    public static final RegistryObject<Block> LAVA_GEYSIR = BLOCKS.register("lava_geysir", () -> new Block(
-            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(4.0F, 12.0F)
-            .harvestLevel(3)));
-    //TODO: bedrock-like
-    public static final RegistryObject<Block> PLANET_CORE = BLOCKS.register("planet_core", () -> new Block(
-            AbstractBlock.Properties.create(Material.ROCK)));
+    public static final RegistryObject<Block> DUST = BLOCKS.register("dust", () -> new FallingBlock(
+            AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
+            .hardnessAndResistance(1.5F, 6.0F)));
 
     static {
-        ITEMS.register("firestone", () -> new BlockItem(FIRESTONE.get(), new Item.Properties().group(PlanetManager.TAB)));
-        ITEMS.register("lava_geysir", () -> new BlockItem(LAVA_GEYSIR.get(), new Item.Properties().group(PlanetManager.TAB)));
-        ITEMS.register("planet_core", () -> new BlockItem(PLANET_CORE.get(), new Item.Properties().group(PlanetManager.TAB)));
+        ITEMS.register("dust", () -> new BlockItem(DUST.get(), new Item.Properties().group(PlanetManager.TAB)));
     }
 
     public static void register() {
@@ -45,12 +40,11 @@ public class MercuryRegistry {
     }
 
     public static void registerLanguage(LanguageGenerator gen) {
-        gen.add(FIRESTONE.get(), "Firestone");
-        gen.add(LAVA_GEYSIR.get(), "Lava Geysir");
-        gen.add(PLANET_CORE.get(), "Planet Core");
+        gen.add(DUST.get(), "Dust");
     }
 
     public static void registerClient() {
 
     }
+
 }
