@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.settings.CloudOption;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -684,8 +685,8 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
     // TODO: proper sunset colors, proper sky with dynamic moons and suns, lighting for world, day length settings,
     // TODO: beds that work and advance time partially, meteors
-    // TODO: acid rain, acid damage, (clouds?)
     // TODO: gravity
+    // TODO: acid rain, (clouds?)
 
     @Override
     public float[] getSunsetColor(float sunAngle, float partialTicks) {

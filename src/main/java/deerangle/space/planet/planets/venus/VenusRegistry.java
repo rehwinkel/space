@@ -107,7 +107,6 @@ public class VenusRegistry {
             () -> new BlockItem(SHRIEKWOOD_DOOR.get(), new Item.Properties().group(PlanetManager.TAB)));
 
     //TODO: add mobs and their drops
-    //TODO: acid fluid
 
     static {
         ITEMS.register("pulcherite",

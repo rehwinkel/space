@@ -114,4 +114,7 @@ public class VenusBiomeMaker {
                 .withMobSpawnSettings(spawnSettings.copy()).withGenerationSettings(builder.build()).build();
     }
 
+    // TODO: add caves to venus
+    // TODO: add vulcanos
+
 }

@@ -32,6 +32,8 @@ public abstract class DuctBlock extends Block {
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
+    // TODO: connect transporters to vanilla and other mods
+
     protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
     private final VoxelShape[] SHAPES = makeShapes(4);
 

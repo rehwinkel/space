@@ -43,6 +43,9 @@ public class FluidRegistry extends AbstractRegistry {
             AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement()
                     .hardnessAndResistance(100.0F)));
 
+    // TODO: acid damage
+    // TODO: place acid in venus without evapotrating
+
     public static void register() {
     }
 
