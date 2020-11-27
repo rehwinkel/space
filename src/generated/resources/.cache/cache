@@ -370,7 +370,9 @@ eae78d0dbfe645cfeeab1fd325b3af27ec2b01ec data/space/tags/blocks/item_machines.js
 ef9bd4a1a718553b3ccbccf9963233445d7e0bbb data/space/tags/blocks/venus_ground.json
 fba37138d9963dec98b39b8fb89a94057250965e data/space/tags/blocks/venus_overgrowable.json
 6025eb0364eab677c3c23621937746f2976532fe data/space/worldgen/biome/mars_desert.json
+8f5a01b9e0ba372c51b3f80d18d9bcd0b1a380b3 data/space/worldgen/biome/mercury_vast.json
 ef7dd4f83957b52e7c299916a874c4ae7dca42b7 data/space/worldgen/biome/venus_hills.json
 a71fdc8f0a4ecab3d50ba4314fdde026d0cde4f9 data/space/worldgen/biome/venus_lava_river.json
 73bc2cf7b57547f6777f2f09723488cb8265025d reports/space/dimension/mars.json
+b946ab15123d7d0a6ad61a01f483a9b417b2b169 reports/space/dimension/mercury.json
 b8b9137a2bccfd4c462c3ed4fdbe65e4b39aaca9 reports/space/dimension/venus.json

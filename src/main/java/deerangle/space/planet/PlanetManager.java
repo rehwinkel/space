@@ -6,6 +6,7 @@ import deerangle.space.planet.data.BiomeGenerator;
 import deerangle.space.planet.data.DimensionGenerator;
 import deerangle.space.planet.feature.Features;
 import deerangle.space.planet.planets.mars.MarsRegistry;
+import deerangle.space.planet.planets.mercury.MercuryRegistry;
 import deerangle.space.planet.planets.venus.VenusRegistry;
 import deerangle.space.planet.planets.venus.world.VenusBiomeProvider;
 import deerangle.space.planet.render.CustomDimensionRenderInfo;
@@ -42,12 +43,14 @@ public class PlanetManager {
     public static void register() {
         VenusRegistry.register();
         MarsRegistry.register();
+        MercuryRegistry.register();
         Features.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void registerData(GatherDataEvent event) {
         VenusRegistry.registerData(event);
         MarsRegistry.registerData(event);
+        MercuryRegistry.registerData(event);
         event.getGenerator().addProvider(new DimensionGenerator(event.getGenerator()));
         event.getGenerator().addProvider(new BiomeGenerator(event.getGenerator()));
     }
@@ -55,6 +58,7 @@ public class PlanetManager {
     public static void registerClient(FMLClientSetupEvent event) {
         VenusRegistry.registerClient();
         MarsRegistry.registerClient();
+        MercuryRegistry.registerClient();
 
         // Set dimension render info for custom dimensions
         event.enqueueWork(() -> {
@@ -76,6 +80,7 @@ public class PlanetManager {
     public static void registerLanguage(LanguageGenerator languageGenerator) {
         VenusRegistry.registerLanguage(languageGenerator);
         MarsRegistry.registerLanguage(languageGenerator);
+        MercuryRegistry.registerLanguage(languageGenerator);
     }
 
 }
