@@ -25,7 +25,7 @@ public class PlanetRegistry {
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "sun"));
         VENUS = Planet.builder().addPlanetInSky(() -> SUN).dayLength(118 * 24000).superhot()
                 .fadingSunset(new Vector3f(0.90f, 0.67f, 0.22f)).dimensionMaker(DimensionMaker::makeVenusDimension)
-                .atmosphere(AtmosphereRenderer::new)
+                .atmosphere(AtmosphereRenderer::new).cloudHeight(80f)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_hills"), VenusBiomeMaker::makeHillsBiome)
                 .addBiome(new ResourceLocation(SpaceMod.MOD_ID, "venus_lava_river"), VenusBiomeMaker::makeRiverBiome)
                 .build(new ResourceLocation(SpaceMod.MOD_ID, "venus"));
