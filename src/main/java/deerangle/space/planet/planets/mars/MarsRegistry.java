@@ -23,19 +23,17 @@ public class MarsRegistry {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister
             .create(ForgeRegistries.BLOCKS, SpaceMod.MOD_ID);
-    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
-
     public static final RegistryObject<Block> RUSTY_DUST = BLOCKS.register("rusty_dust", () -> new FallingBlock(
             AbstractBlock.Properties.create(Material.SAND).harvestTool(ToolType.SHOVEL).sound(SoundType.SAND)
                     .hardnessAndResistance(1.0F, 1.0F)));
     public static final RegistryObject<Block> REGOLITH = BLOCKS.register("regolith", () -> new Block(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 4.0F)));
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
 
     static {
         ITEMS.register("rusty_dust",
                 () -> new BlockItem(RUSTY_DUST.get(), new Item.Properties().group(PlanetManager.TAB)));
-        ITEMS.register("regolith",
-                () -> new BlockItem(REGOLITH.get(), new Item.Properties().group(PlanetManager.TAB)));
+        ITEMS.register("regolith", () -> new BlockItem(REGOLITH.get(), new Item.Properties().group(PlanetManager.TAB)));
     }
 
     public static void register() {

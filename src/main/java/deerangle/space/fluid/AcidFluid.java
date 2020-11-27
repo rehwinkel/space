@@ -86,8 +86,7 @@ public class AcidFluid extends FlowingFluid {
 
     @Override
     protected BlockState getBlockState(FluidState state) {
-        return FluidRegistry.ACID_BLOCK.get().getDefaultState()
-                .with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
+        return FluidRegistry.ACID_BLOCK.get().getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
     }
 
     @Override

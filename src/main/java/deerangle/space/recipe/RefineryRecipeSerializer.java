@@ -15,18 +15,6 @@ import net.minecraftforge.registries.RegistryManager;
 
 public class RefineryRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RefineryRecipe> {
 
-    @Override
-    public RefineryRecipe read(ResourceLocation recipeId, JsonObject json) {
-        if (!json.has("input"))
-            throw new JsonSyntaxException("Missing input, expected to find an object");
-        FluidStack input = readFluidStack(JSONUtils.getJsonObject(json, "input"));
-        if (!json.has("result"))
-            throw new JsonSyntaxException("Missing result, expected to find an object");
-        FluidStack result = readFluidStack(JSONUtils.getJsonObject(json, "result"));
-        int duration = JSONUtils.getInt(json, "duration");
-        return new RefineryRecipe(recipeId, input, result, duration);
-    }
-
     private static FluidStack readFluidStack(JsonObject result) {
         int amount = JSONUtils.getInt(result, "amount", 1);
         String fluidName = JSONUtils.getString(result, "fluid");
@@ -41,6 +29,18 @@ public class RefineryRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
         el.addProperty("fluid", stack.getFluid().getRegistryName().toString());
         el.addProperty("amount", stack.getAmount());
         return el;
+    }
+
+    @Override
+    public RefineryRecipe read(ResourceLocation recipeId, JsonObject json) {
+        if (!json.has("input"))
+            throw new JsonSyntaxException("Missing input, expected to find an object");
+        FluidStack input = readFluidStack(JSONUtils.getJsonObject(json, "input"));
+        if (!json.has("result"))
+            throw new JsonSyntaxException("Missing result, expected to find an object");
+        FluidStack result = readFluidStack(JSONUtils.getJsonObject(json, "result"));
+        int duration = JSONUtils.getInt(json, "duration");
+        return new RefineryRecipe(recipeId, input, result, duration);
     }
 
     @Override

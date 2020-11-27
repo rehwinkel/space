@@ -1,17 +1,10 @@
 package deerangle.space.data;
 
-import java.util.function.Consumer;
-
 import com.google.gson.JsonObject;
-
 import deerangle.space.recipe.RefineryRecipeSerializer;
 import deerangle.space.registry.RecipeRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.data.SingleItemRecipeBuilder;
+import net.minecraft.data.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -19,6 +12,8 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.function.Consumer;
 
 public class AbstractRecipeGenerator extends RecipeProvider {
 
@@ -28,8 +23,8 @@ public class AbstractRecipeGenerator extends RecipeProvider {
 
     protected void addStoneCutterRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider ingredient, IItemProvider result, int count, String recipeName) {
         SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(ingredient), result, count)
-                    .addCriterion("has_ingredient", hasItem(ingredient))
-                    .build(consumer, recipeName + "_from_stone_cutting");
+                .addCriterion("has_ingredient", hasItem(ingredient))
+                .build(consumer, recipeName + "_from_stone_cutting");
     }
 
     protected void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration) {
@@ -39,8 +34,8 @@ public class AbstractRecipeGenerator extends RecipeProvider {
     protected void addSpaceBlastFurnaceRecipe(Consumer<IFinishedRecipe> consumer, Ingredient input, Item result, int duration, String recipeName) {
         ResourceLocation loc = result.getRegistryName();
         consumer.accept(new BlastFurnaceResult(
-                new ResourceLocation(loc.getNamespace(), loc.getPath() + recipeName + "_from_space_blast_furnace"), input, result,
-                duration));
+                new ResourceLocation(loc.getNamespace(), loc.getPath() + recipeName + "_from_space_blast_furnace"),
+                input, result, duration));
     }
 
     protected void addRefineryRecipe(Consumer<IFinishedRecipe> consumer, FluidStack input, FluidStack result, int duration) {
@@ -151,5 +146,5 @@ public class AbstractRecipeGenerator extends RecipeProvider {
         }
 
     }
-    
+
 }

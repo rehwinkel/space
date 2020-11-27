@@ -37,8 +37,6 @@ import java.util.function.Supplier;
 
 public abstract class MachineBlock extends Block {
 
-    protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
-
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty NORTH = SixWayBlock.NORTH;
     public static final BooleanProperty EAST = SixWayBlock.EAST;
@@ -47,6 +45,7 @@ public abstract class MachineBlock extends Block {
     public static final BooleanProperty UP = SixWayBlock.UP;
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
+    protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
     protected final ResourceLocation interactStat;
     protected final Supplier<MachineType<?>> machineType;
 

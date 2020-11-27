@@ -22,17 +22,6 @@ public class VenusRegistry {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister
             .create(ForgeRegistries.BLOCKS, SpaceMod.MOD_ID);
-    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
-    private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister
-            .create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
-
-    public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love",
-            () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
-
-    public static final RegistryObject<SoundEvent> MUSIC_SPICY_AND_SOUR = SOUND_EVENTS
-            .register("music_disc_spicy_and_sour",
-                    () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.spicy_and_sour")));
-
     public static final RegistryObject<Block> PULCHERITE = BLOCKS.register("pulcherite", () -> new Block(
             AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
     public static final RegistryObject<Block> PULCHERITE_TURF = BLOCKS.register("pulcherite_turf", () -> new Block(
@@ -96,20 +85,24 @@ public class VenusRegistry {
             () -> new CrystalBlock(AbstractBlock.Properties.create(Material.GLASS).notSolid().doesNotBlockMovement()));
     public static final RegistryObject<Block> CRYSTAL_BLOCK = BLOCKS
             .register("crystal_block", () -> new CrystalCubeBlock(AbstractBlock.Properties.create(Material.GLASS)));
-
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
     public static final RegistryObject<Item> MUSIC_DISC_SPICY_AND_SOUR = ITEMS.register("music_disc_spicy_and_sour",
             () -> new MusicDiscItem(1, MUSIC_SPICY_AND_SOUR,
                     new Item.Properties().group(PlanetManager.TAB).rarity(Rarity.RARE).maxStackSize(1)));
-
     public static final RegistryObject<Item> MUSIC_DISC_LOVE = ITEMS.register("music_disc_love",
             () -> new MusicDiscItem(2, MUSIC_LOVE,
                     new Item.Properties().group(PlanetManager.TAB).rarity(Rarity.RARE).maxStackSize(1)));
-
     public static final RegistryObject<Item> SULFUR = ITEMS
             .register("sulfur", () -> new Item(new Item.Properties().group(PlanetManager.TAB)));
-
     public static final RegistryObject<Item> SHRIEKWOOD_DOOR_ITEM = ITEMS.register("shriekwood_door",
             () -> new BlockItem(SHRIEKWOOD_DOOR.get(), new Item.Properties().group(PlanetManager.TAB)));
+    private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister
+            .create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
+    public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love",
+            () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
+    public static final RegistryObject<SoundEvent> MUSIC_SPICY_AND_SOUR = SOUND_EVENTS
+            .register("music_disc_spicy_and_sour",
+                    () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.spicy_and_sour")));
 
     //TODO: add mobs and their drops
     //TODO: acid fluid

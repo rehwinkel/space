@@ -29,6 +29,11 @@ public abstract class AbstractDimensionGenerator implements IDataProvider {
         this.generator = generator;
     }
 
+    private static Path getPath(Path path, ResourceLocation dimensionLocation) {
+        return path.resolve(
+                "reports/" + dimensionLocation.getNamespace() + "/dimension/" + dimensionLocation.getPath() + ".json");
+    }
+
     public void act(DirectoryCache cache) {
         Path path = this.generator.getOutputFolder();
 
@@ -56,11 +61,6 @@ public abstract class AbstractDimensionGenerator implements IDataProvider {
     }
 
     protected abstract void addDimensions(Map<ResourceLocation, Dimension> dimensionMap);
-
-    private static Path getPath(Path path, ResourceLocation dimensionLocation) {
-        return path.resolve(
-                "reports/" + dimensionLocation.getNamespace() + "/dimension/" + dimensionLocation.getPath() + ".json");
-    }
 
     public String getName() {
         return "Modded Dimensions";

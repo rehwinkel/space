@@ -27,17 +27,17 @@ import java.util.Map;
 
 public class PlanetManager {
 
-    static {
-        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(SpaceMod.MOD_ID, "venus_provider"),
-                VenusBiomeProvider.CODEC);
-    }
-
     public static final ItemGroup TAB = new ItemGroup(SpaceMod.MOD_ID + ".extraterrestrial") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(VenusRegistry.PULCHERITE.get());
         }
     };
+
+    static {
+        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(SpaceMod.MOD_ID, "venus_provider"),
+                VenusBiomeProvider.CODEC);
+    }
 
     public static void register() {
         VenusRegistry.register();

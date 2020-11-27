@@ -61,6 +61,10 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         this.cloudHeight = builder.cloudHeight;
     }
 
+    public static Planet.Builder builder() {
+        return new Builder();
+    }
+
     public Collection<Supplier<Planet>> getSkyPlanets() {
         return skyPlanets;
     }
@@ -101,10 +105,6 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         return this.biomeMakers;
     }
 
-    public static Planet.Builder builder() {
-        return new Builder();
-    }
-
     public float getDayLength() {
         return this.dayLength;
     }
@@ -127,13 +127,13 @@ public class Planet extends ForgeRegistryEntry<Planet> {
 
     public static class Builder {
 
+        private final Map<ResourceLocation, Supplier<Biome>> biomeMakers;
+        private final List<Supplier<Planet>> skyPlanets;
         public BiConsumer<Float, float[]> sunsetColors;
         public OptionalDouble sunsetAlpha;
         public BiFunction<Float, Float, Vector3d> cloudColor;
         public float cloudHeight;
         private ResourceLocation skyTextureLocation;
-        private final Map<ResourceLocation, Supplier<Biome>> biomeMakers;
-        private final List<Supplier<Planet>> skyPlanets;
         private Supplier<Dimension> dimensionMaker;
         private int dayLength;
         private boolean skyLight;

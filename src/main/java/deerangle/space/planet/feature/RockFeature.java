@@ -14,6 +14,13 @@ public class RockFeature extends Feature<RockFeatureConfig> {
         super(codec);
     }
 
+    private static float getHeight(float relX, float relZ, float aX, float aZ, float offX, float offZ) {
+        float parX = -aX * (relX - offX) * (relX - offX) + 1;
+        float parZ = -aZ * (relZ - offZ) * (relZ - offZ) + 1;
+
+        return (parX >= 0 && parZ >= 0) ? parX * parZ : 0;
+    }
+
     @Override
     public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, RockFeatureConfig config) {
         float aX = 0.75f + rand.nextFloat() * 1.5f;
@@ -22,7 +29,7 @@ public class RockFeature extends Feature<RockFeatureConfig> {
         float offX = (rand.nextFloat() - rand.nextFloat()) / 4;
         float offZ = (rand.nextFloat() - rand.nextFloat()) / 4;
 
-        float height_multiplier = config.heightMultiplier.func_242259_a(rand) ;
+        float height_multiplier = config.heightMultiplier.func_242259_a(rand);
 
         BlockPos.Mutable placementPos = new BlockPos.Mutable();
         for (int x = -4; x <= 4; x++) {
@@ -40,13 +47,6 @@ public class RockFeature extends Feature<RockFeatureConfig> {
             }
         }
         return true;
-    }
-
-    private static float getHeight(float relX, float relZ, float aX, float aZ, float offX, float offZ) {
-        float parX = -aX * (relX - offX) * (relX - offX) + 1;
-        float parZ = -aZ * (relZ - offZ) * (relZ - offZ) + 1;
-
-        return (parX >= 0 && parZ >= 0) ? parX * parZ : 0;
     }
 
 }

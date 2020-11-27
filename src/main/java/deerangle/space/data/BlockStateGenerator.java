@@ -9,7 +9,6 @@ import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.LavaFluid;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;

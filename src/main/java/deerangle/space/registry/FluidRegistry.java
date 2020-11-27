@@ -39,10 +39,9 @@ public class FluidRegistry extends AbstractRegistry {
             .register("acid_flowing", AcidFluid.Flowing::new);
     public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket",
             () -> new BucketItem(ACID, new Item.Properties().group(ResourceRegistry.TAB).maxStackSize(1)));
-    public static final RegistryObject<Block> ACID_BLOCK = BLOCKS.register("acid",
-            () -> new FlowingFluidBlock(ACID,
-                    AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F)));
+    public static final RegistryObject<Block> ACID_BLOCK = BLOCKS.register("acid", () -> new FlowingFluidBlock(ACID,
+            AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement()
+                    .hardnessAndResistance(100.0F)));
 
     public static void register() {
     }

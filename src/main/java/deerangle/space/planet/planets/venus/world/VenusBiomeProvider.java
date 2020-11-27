@@ -27,10 +27,10 @@ public class VenusBiomeProvider extends BiomeProvider {
                     .apply(providerInstance, VenusBiomeProvider::new));
 
     private final SimplexNoiseGenerator simplexRng;
-    private long seed;
-    private Supplier<Biome> riverBiome;
-    private List<Supplier<Biome>> otherBiomes;
-    private int[] weights;
+    private final long seed;
+    private final Supplier<Biome> riverBiome;
+    private final List<Supplier<Biome>> otherBiomes;
+    private final int[] weights;
 
     public VenusBiomeProvider(long seed, Supplier<Biome> riverBiome, List<Supplier<Biome>> biomes, IntStream weights) {
         this(seed, riverBiome, biomes, weights.toArray());

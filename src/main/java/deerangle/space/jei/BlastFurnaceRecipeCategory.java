@@ -25,13 +25,12 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceRecipe> {
 
-    private final String localizedName;
-    private IDrawable background;
-    private IDrawable icon;
-
     protected final IDrawableStatic staticFlame;
     protected final IDrawableAnimated animatedFlame;
+    private final String localizedName;
     private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
+    private final IDrawable background;
+    private final IDrawable icon;
 
     public BlastFurnaceRecipeCategory(IGuiHelper guiHelper) {
         this.localizedName = I18n.format("jei_category.space.blast_furnace");

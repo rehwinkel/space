@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

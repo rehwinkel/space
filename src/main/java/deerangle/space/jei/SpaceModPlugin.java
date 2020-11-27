@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 

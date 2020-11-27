@@ -4,7 +4,10 @@ import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.*;
+import net.minecraft.data.CookingRecipeBuilder;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
@@ -23,8 +26,8 @@ public class RecipeGenerator extends AbstractRecipeGenerator {
                 ResourceRegistry.STEEL_INGOT.get(), 200 * 16);
         addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.IRON_BLOCK),
                 ResourceRegistry.STEEL_BLOCK.get().asItem(), 200 * 16 * 9);
-        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.SAND),
-                ResourceRegistry.QUARTZ_DUST.get(), 40 * 10);
+        addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.SAND), ResourceRegistry.QUARTZ_DUST.get(),
+                40 * 10);
         addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(ResourceRegistry.QUARTZ_SAND.get()),
                 ResourceRegistry.SILICA_TILE.get(), 40 * 30, "_from_quartz_sand");
         addSpaceBlastFurnaceRecipe(consumer, Ingredient.fromItems(Blocks.QUARTZ_BLOCK),
@@ -106,50 +109,56 @@ public class RecipeGenerator extends AbstractRecipeGenerator {
                 .key('b', Items.BLAZE_ROD).key('s', ResourceRegistry.STEEL_NUGGET.get()).patternLine("sss")
                 .patternLine("dbd").patternLine("sss")
                 .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.HEATING_COIL.get()).key('c', ResourceRegistry.COPPER_INGOT.get()).key('s', ResourceRegistry.STEEL_ROD.get())
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.HEATING_COIL.get())
+                .key('c', ResourceRegistry.COPPER_INGOT.get()).key('s', ResourceRegistry.STEEL_ROD.get())
                 .patternLine("ccc").patternLine("csc").patternLine("ccc")
                 .addCriterion("has_copper_ingot", hasItem(ResourceRegistry.COPPER_INGOT.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.CABLE.get()).key('w', Blocks.BLACK_WOOL).key('r', Items.REDSTONE)
-                .patternLine("wrw").patternLine("rrr").patternLine("wrw")
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.CABLE.get()).key('w', Blocks.BLACK_WOOL)
+                .key('r', Items.REDSTONE).patternLine("wrw").patternLine("rrr").patternLine("wrw")
                 .addCriterion("has_redstone_ingot", hasItem(Items.REDSTONE)).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.DRUM.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get()).key('p', ResourceRegistry.ALUMINIUM_PLATE.get())
-                .patternLine("apa").patternLine("a a").patternLine("apa")
-                .addCriterion("has_aluminium_plate", hasItem(ResourceRegistry.ALUMINIUM_PLATE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.BATTERY_PACK.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('i', Items.IRON_BARS).key('a', ResourceRegistry.BATTERY.get())
-                .patternLine("ibi").patternLine("aaa").patternLine("ibi")
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.DRUM.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
+                .key('p', ResourceRegistry.ALUMINIUM_PLATE.get()).patternLine("apa").patternLine("a a")
+                .patternLine("apa").addCriterion("has_aluminium_plate", hasItem(ResourceRegistry.ALUMINIUM_PLATE.get()))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.BATTERY_PACK.get())
+                .key('b', ResourceRegistry.MACHINE_BASE.get()).key('i', Items.IRON_BARS)
+                .key('a', ResourceRegistry.BATTERY.get()).patternLine("ibi").patternLine("aaa").patternLine("ibi")
                 .addCriterion("has_battery", hasItem(ResourceRegistry.BATTERY.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.REFINERY.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Blocks.GLASS).key('c', ResourceRegistry.COPPER_TUBE.get())
-                .patternLine("c c").patternLine("ggc").patternLine("cbc")
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.REFINERY.get()).key('b', ResourceRegistry.MACHINE_BASE.get())
+                .key('g', Blocks.GLASS).key('c', ResourceRegistry.COPPER_TUBE.get()).patternLine("c c")
+                .patternLine("ggc").patternLine("cbc")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ISOLATING_FABRIC.get()).key('w', Blocks.WHITE_WOOL).key('s', ResourceRegistry.SILICA_TILE.get())
-                .patternLine("ss ").patternLine("ww ").patternLine("   ")
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ISOLATING_FABRIC.get()).key('w', Blocks.WHITE_WOOL)
+                .key('s', ResourceRegistry.SILICA_TILE.get()).patternLine("ss ").patternLine("ww ").patternLine("   ")
                 .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.GAS_TANK.get()).key('s', ResourceRegistry.STEEL_INGOT.get()).key('g', Items.GOLD_INGOT)
-                .patternLine("sgs").patternLine("s s").patternLine("sss")
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.GAS_TANK.get()).key('s', ResourceRegistry.STEEL_INGOT.get())
+                .key('g', Items.GOLD_INGOT).patternLine("sgs").patternLine("s s").patternLine("sss")
                 .addCriterion("has_steel_ingot", hasItem(ResourceRegistry.STEEL_INGOT.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.COMBUSTION_GENERATOR.get()).key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Items.GOLD_INGOT)
-                .key('i', Blocks.IRON_BLOCK).key('c', ResourceRegistry.COPPER_TUBE.get()).key('s', ResourceRegistry.STEEL_BLOCK.get())
+        ShapedRecipeBuilder.shapedRecipe(MachineRegistry.COMBUSTION_GENERATOR.get())
+                .key('b', ResourceRegistry.MACHINE_BASE.get()).key('g', Items.GOLD_INGOT).key('i', Blocks.IRON_BLOCK)
+                .key('c', ResourceRegistry.COPPER_TUBE.get()).key('s', ResourceRegistry.STEEL_BLOCK.get())
                 .key('a', ResourceRegistry.CYLINDER.get()).patternLine("gcg").patternLine("asa").patternLine("ibi")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.EMPTY_CAN.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
-                .patternLine("aaa").patternLine("aaa").patternLine("   ")
-                .addCriterion("has_aluminium_ingot", hasItem(ResourceRegistry.ALUMINIUM_INGOT.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.CONTROLLER.get()).key('c', Items.COMPARATOR).key('d', Items.DIAMOND)
-                .key('b', ResourceRegistry.MACHINE_BASE.get()).key('p', ResourceRegistry.COPPER_PLATE.get())
-                .key('e', MachineRegistry.BATTERY_PACK.get()).key('t', ResourceRegistry.SILICA_TILE.get())
-                .patternLine("tct").patternLine("pde").patternLine("cbc")
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.EMPTY_CAN.get())
+                .key('a', ResourceRegistry.ALUMINIUM_INGOT.get()).patternLine("aaa").patternLine("aaa")
+                .patternLine("   ").addCriterion("has_aluminium_ingot", hasItem(ResourceRegistry.ALUMINIUM_INGOT.get()))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.CONTROLLER.get()).key('c', Items.COMPARATOR)
+                .key('d', Items.DIAMOND).key('b', ResourceRegistry.MACHINE_BASE.get())
+                .key('p', ResourceRegistry.COPPER_PLATE.get()).key('e', MachineRegistry.BATTERY_PACK.get())
+                .key('t', ResourceRegistry.SILICA_TILE.get()).patternLine("tct").patternLine("pde").patternLine("cbc")
                 .addCriterion("has_machine_base", hasItem(ResourceRegistry.MACHINE_BASE.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_CONE.get()).key('t', ResourceRegistry.SILICA_TILE.get())
-                .key('a', ResourceRegistry.ALUMINIUM_PLATE.get()).key('c', ResourceRegistry.CONTROLLER.get())
-                .patternLine("ttt").patternLine("tat").patternLine("aca")
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_CONE.get())
+                .key('t', ResourceRegistry.SILICA_TILE.get()).key('a', ResourceRegistry.ALUMINIUM_PLATE.get())
+                .key('c', ResourceRegistry.CONTROLLER.get()).patternLine("ttt").patternLine("tat").patternLine("aca")
                 .addCriterion("has_controller", hasItem(ResourceRegistry.CONTROLLER.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_THRUSTER.get()).key('t', MachineRegistry.GAS_TANK.get())
-                .key('f', ResourceRegistry.IGNITION_COIL.get()).key('s', ResourceRegistry.SILICA_TILE.get())
-                .key('i', ResourceRegistry.TITANIUM_BLOCK.get())
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.ROCKET_THRUSTER.get())
+                .key('t', MachineRegistry.GAS_TANK.get()).key('f', ResourceRegistry.IGNITION_COIL.get())
+                .key('s', ResourceRegistry.SILICA_TILE.get()).key('i', ResourceRegistry.TITANIUM_BLOCK.get())
                 .patternLine("sts").patternLine("ifi").patternLine("i i")
                 .addCriterion("has_ignition_coil", hasItem(ResourceRegistry.IGNITION_COIL.get())).build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.PLATED_ROCKET_BODY.get()).key('t', ResourceRegistry.SILICA_TILE.get())
-                .key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
+        ShapedRecipeBuilder.shapedRecipe(ResourceRegistry.PLATED_ROCKET_BODY.get())
+                .key('t', ResourceRegistry.SILICA_TILE.get()).key('a', ResourceRegistry.ALUMINIUM_INGOT.get())
                 .patternLine("tat").patternLine("tat").patternLine("tat")
                 .addCriterion("has_silica_tile", hasItem(ResourceRegistry.SILICA_TILE.get())).build(consumer);
 

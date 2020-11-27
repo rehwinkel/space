@@ -39,9 +39,9 @@ public abstract class Machine implements IColorGetter {
     protected final SideConfig sideConfig;
     private final List<IMachineData> machineDataList = new ArrayList<>();
     private final MachineType<?> type;
+    private final int[] indices;
     private ByteBuf prevState;
     private int prevHash;
-    private final int[] indices;
     private FlowType prevFlowType = null;
 
     public Machine(MachineType<?> machineType) {

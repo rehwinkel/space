@@ -38,23 +38,20 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     private static final ResourceLocation SNOW_TEXTURES = new ResourceLocation("textures/environment/snow.png");
 
     private final VertexFormat skyVertexFormat = DefaultVertexFormats.POSITION;
-    private VertexBuffer skyVBO;
-    private VertexBuffer sky2VBO;
-    private VertexBuffer starVBO;
     private final float[] sunsetColor = new float[4];
     private final BiConsumer<Float, float[]> sunsetColorSetter;
     private final OptionalDouble fixedSunsetAlpha;
-
     private final List<Planet> orbitingPlanets;
-
+    private final BiFunction<Float, Float, Vector3d> cloudColor;
+    private final float[] rainSizeX = new float[1024];
+    private final float[] rainSizeZ = new float[1024];
+    private VertexBuffer skyVBO;
+    private VertexBuffer sky2VBO;
+    private VertexBuffer starVBO;
     private VertexBuffer cloudsVBO;
     private CloudOption cloudOption;
     private boolean cloudsNeedUpdate;
     private Vector3d cloudsCheckColor = Vector3d.ZERO;
-    private final BiFunction<Float, Float, Vector3d> cloudColor;
-
-    private final float[] rainSizeX = new float[1024];
-    private final float[] rainSizeZ = new float[1024];
 
     public AtmosphereRenderer(Planet planet) {
         this.orbitingPlanets = planet.getSkyPlanets().stream().map(Supplier::get).collect(Collectors.toList());
@@ -74,6 +71,25 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
                 this.rainSizeX[i << 5 | j] = -f1 / f2;
                 this.rainSizeZ[i << 5 | j] = f / f2;
             }
+        }
+    }
+
+    public static int getCombinedLight(IBlockDisplayReader lightReaderIn, BlockPos blockPosIn) {
+        return getPackedLightmapCoords(lightReaderIn, lightReaderIn.getBlockState(blockPosIn), blockPosIn);
+    }
+
+    public static int getPackedLightmapCoords(IBlockDisplayReader lightReaderIn, BlockState blockStateIn, BlockPos blockPosIn) {
+        if (blockStateIn.isEmissiveRendering(lightReaderIn, blockPosIn)) {
+            return 15728880;
+        } else {
+            int i = lightReaderIn.getLightFor(LightType.SKY, blockPosIn);
+            int j = lightReaderIn.getLightFor(LightType.BLOCK, blockPosIn);
+            int k = blockStateIn.getLightValue(lightReaderIn, blockPosIn);
+            if (j < k) {
+                j = k;
+            }
+
+            return i << 20 | j << 4;
         }
     }
 
@@ -663,25 +679,6 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             RenderSystem.defaultAlphaFunc();
             RenderSystem.disableAlphaTest();
             lightmapIn.disableLightmap();
-        }
-    }
-
-    public static int getCombinedLight(IBlockDisplayReader lightReaderIn, BlockPos blockPosIn) {
-        return getPackedLightmapCoords(lightReaderIn, lightReaderIn.getBlockState(blockPosIn), blockPosIn);
-    }
-
-    public static int getPackedLightmapCoords(IBlockDisplayReader lightReaderIn, BlockState blockStateIn, BlockPos blockPosIn) {
-        if (blockStateIn.isEmissiveRendering(lightReaderIn, blockPosIn)) {
-            return 15728880;
-        } else {
-            int i = lightReaderIn.getLightFor(LightType.SKY, blockPosIn);
-            int j = lightReaderIn.getLightFor(LightType.BLOCK, blockPosIn);
-            int k = blockStateIn.getLightValue(lightReaderIn, blockPosIn);
-            if (j < k) {
-                j = k;
-            }
-
-            return i << 20 | j << 4;
         }
     }
 

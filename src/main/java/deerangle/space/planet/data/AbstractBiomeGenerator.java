@@ -30,6 +30,11 @@ public abstract class AbstractBiomeGenerator implements IDataProvider {
         this.generator = generator;
     }
 
+    private static Path getPath(Path path, ResourceLocation biomeLocation) {
+        return path.resolve(
+                "data/" + biomeLocation.getNamespace() + "/worldgen/biome/" + biomeLocation.getPath() + ".json");
+    }
+
     public void act(DirectoryCache cache) {
         Path path = this.generator.getOutputFolder();
 
@@ -57,11 +62,6 @@ public abstract class AbstractBiomeGenerator implements IDataProvider {
     }
 
     protected abstract void addBiomes(Map<ResourceLocation, Biome> biomeMap);
-
-    private static Path getPath(Path path, ResourceLocation biomeLocation) {
-        return path.resolve(
-                "data/" + biomeLocation.getNamespace() + "/worldgen/biome/" + biomeLocation.getPath() + ".json");
-    }
 
     public String getName() {
         return "Modded Biomes";
