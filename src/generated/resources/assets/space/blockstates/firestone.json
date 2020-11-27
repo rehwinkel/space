@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/firestone",
+        "y": 90
+      },
+      {
+        "model": "space:block/firestone",
+        "y": 180
+      },
+      {
+        "model": "space:block/firestone",
+        "y": 270
+      },
+      {
+        "model": "space:block/firestone"
+      }
+    ]
+  }
+}

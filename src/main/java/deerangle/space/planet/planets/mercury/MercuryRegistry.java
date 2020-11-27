@@ -36,7 +36,6 @@ public class MercuryRegistry {
     }
 
     public static void registerData(GatherDataEvent event) {
-        //instanciate data generators from mercury/data/
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), SpaceMod.MOD_ID));
         event.getGenerator().addProvider(new BlockStateGenerator(event.getGenerator(), SpaceMod.MOD_ID, event.getExistingFileHelper()));
     }
@@ -45,4 +44,9 @@ public class MercuryRegistry {
         gen.add(FIRESTONE.get(), "Firestone");
         gen.add(PLANET_CORE.get(), "Planet Core");
     }
+
+    public static void registerClient() {
+
+    }
+
 }

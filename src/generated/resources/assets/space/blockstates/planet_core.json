@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/planet_core",
+        "y": 90
+      },
+      {
+        "model": "space:block/planet_core",
+        "y": 180
+      },
+      {
+        "model": "space:block/planet_core",
+        "y": 270
+      },
+      {
+        "model": "space:block/planet_core"
+      }
+    ]
+  }
+}
