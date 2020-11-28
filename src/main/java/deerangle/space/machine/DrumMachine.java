@@ -20,10 +20,8 @@ public class DrumMachine extends Machine {
     public DrumMachine() {
         super(MachineTypeRegistry.DRUM);
         tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true, FlowType.INOUT, this, TANK_TEXT));
-        input = addMachineData(
-                new ItemMachineData("Input", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
-        output = addMachineData(
-                new ItemMachineData("Output", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        input = addMachineData(new ItemMachineData("Input", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        output = addMachineData(new ItemMachineData("Output", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         this.sideConfig.setAll(tank.getOutputAccessor());
     }
 

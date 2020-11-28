@@ -65,8 +65,7 @@ public class MachineContainer extends Container {
                 } else {
                     itemHandler = new ItemStackHandler();
                 }
-                this.addSlot(
-                        new MachineSlot(itemHandler, 0, el.getX() + 1, el.getY() + 1, ((ItemElement) el)::isValid));
+                this.addSlot(new MachineSlot(itemHandler, 0, el.getX() + 1, el.getY() + 1, ((ItemElement) el)::isValid));
             }
         }
 
@@ -87,8 +86,7 @@ public class MachineContainer extends Container {
         for (IContainerListener listener : this.listeners) {
             if (listener instanceof ServerPlayerEntity) {
                 if (this.machine.shouldSync()) {
-                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener),
-                            new UpdateMachineMsg(this.pos, this.machine));
+                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener), new UpdateMachineMsg(this.pos, this.machine));
                 }
             }
         }
@@ -96,8 +94,7 @@ public class MachineContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-                (double) this.pos.getZ() + 0.5D) <= 64.0D;
+        return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
     public Machine getMachine() {

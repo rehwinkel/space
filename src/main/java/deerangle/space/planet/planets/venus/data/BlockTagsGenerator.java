@@ -18,16 +18,13 @@ public class BlockTagsGenerator extends TagsProvider<Block> {
     }
 
     protected void registerTags() {
-        this.getOrCreateBuilder(BlockTags.VENUS_GROUND).add(VenusRegistry.TURPIUM.get())
-                .add(VenusRegistry.TURPIUM_COBBLESTONE.get()).add(VenusRegistry.PULCHERITE.get())
-                .add(VenusRegistry.OVERGROWN_PULCHERITE.get()).add(VenusRegistry.GLOWING_TURPIUM.get());
+        this.getOrCreateBuilder(BlockTags.VENUS_GROUND).add(VenusRegistry.TURPIUM.get()).add(VenusRegistry.TURPIUM_COBBLESTONE.get()).add(VenusRegistry.PULCHERITE.get()).add(VenusRegistry.OVERGROWN_PULCHERITE.get()).add(VenusRegistry.GLOWING_TURPIUM.get());
         this.getOrCreateBuilder(BlockTags.VENUS_OVERGROWABLE).add(VenusRegistry.PULCHERITE.get());
         this.getOrCreateBuilder(BlockTags.CRYSTAL_GROUND).add(VenusRegistry.CRYSTAL_BLOCK.get());
     }
 
     protected Path makePath(ResourceLocation id) {
-        return this.generator.getOutputFolder()
-                .resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
+        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
     }
 
     public String getName() {

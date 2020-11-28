@@ -35,8 +35,7 @@ public class RockFeature extends Feature<RockFeatureConfig> {
         for (int x = -4; x <= 4; x++) {
             for (int z = -4; z <= 4; z++) {
                 if (x * x + z * z < 5f * 5f) {
-                    int height = (int) (getHeight(x / 4f, z / 4f, aX, aZ, offX, offZ) * height_multiplier + rand
-                            .nextFloat() * 0.5f);
+                    int height = (int) (getHeight(x / 4f, z / 4f, aX, aZ, offX, offZ) * height_multiplier + rand.nextFloat() * 0.5f);
                     if (height > 0) {
                         for (int y = -height; y < height; y++) {
                             placementPos.setAndOffset(pos, x, y, z);

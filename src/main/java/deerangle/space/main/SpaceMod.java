@@ -65,14 +65,10 @@ public class SpaceMod {
 
     @SubscribeEvent
     public static void registerData(GatherDataEvent event) {
-        event.getGenerator()
-                .addProvider(new BlockStateGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
-        event.getGenerator()
-                .addProvider(new ItemModelGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
-        event.getGenerator()
-                .addProvider(new FluidTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
-        event.getGenerator()
-                .addProvider(new BlockTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new BlockStateGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new ItemModelGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new FluidTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(new BlockTagsGenerator(event.getGenerator(), MOD_ID, event.getExistingFileHelper()));
         event.getGenerator().addProvider(new LootTableGenerator(event.getGenerator(), MOD_ID));
         event.getGenerator().addProvider(new LanguageGenerator(event.getGenerator(), MOD_ID, "en_us"));
         event.getGenerator().addProvider(new RecipeGenerator(event.getGenerator()));
@@ -85,10 +81,8 @@ public class SpaceMod {
 
     @SubscribeEvent
     public static void newRegistries(RegistryEvent.NewRegistry event) {
-        new RegistryBuilder<MachineType<?>>().setType(c(MachineType.class))
-                .setName(new ResourceLocation(MOD_ID, "machine")).setMaxID(Integer.MAX_VALUE - 1).create();
-        new RegistryBuilder<Planet>().setType(Planet.class).setName(new ResourceLocation(MOD_ID, "planet"))
-                .setMaxID(Integer.MAX_VALUE - 1).create();
+        new RegistryBuilder<MachineType<?>>().setType(c(MachineType.class)).setName(new ResourceLocation(MOD_ID, "machine")).setMaxID(Integer.MAX_VALUE - 1).create();
+        new RegistryBuilder<Planet>().setType(Planet.class).setName(new ResourceLocation(MOD_ID, "planet")).setMaxID(Integer.MAX_VALUE - 1).create();
     }
 
     public void clientSetup(FMLClientSetupEvent event) {

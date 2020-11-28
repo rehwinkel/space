@@ -23,8 +23,7 @@ public class SpaceModPlugin implements IModPlugin {
 
     public static final ResourceLocation BLAST_FURNACE = new ResourceLocation(SpaceMod.MOD_ID, "blast_furnace");
     public static final ResourceLocation JEI_BACKGROUND = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
-    public static final ResourceLocation SPACE_BACKGROUND = new ResourceLocation(SpaceMod.MOD_ID,
-            "textures/jei/gui.png");
+    public static final ResourceLocation SPACE_BACKGROUND = new ResourceLocation(SpaceMod.MOD_ID, "textures/jei/gui.png");
 
     private BlastFurnaceRecipeCategory blastFurnaceCategory;
 

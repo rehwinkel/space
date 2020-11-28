@@ -30,8 +30,7 @@ public abstract class AbstractDimensionGenerator implements IDataProvider {
     }
 
     private static Path getPath(Path path, ResourceLocation dimensionLocation) {
-        return path.resolve(
-                "reports/" + dimensionLocation.getNamespace() + "/dimension/" + dimensionLocation.getPath() + ".json");
+        return path.resolve("reports/" + dimensionLocation.getNamespace() + "/dimension/" + dimensionLocation.getPath() + ".json");
     }
 
     public void act(DirectoryCache cache) {

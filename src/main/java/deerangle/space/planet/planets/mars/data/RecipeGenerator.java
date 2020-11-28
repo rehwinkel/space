@@ -17,9 +17,7 @@ public class RecipeGenerator extends AbstractRecipeGenerator {
     }
 
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(MarsRegistry.RUSTY_DUST.get().asItem()),
-                ResourceRegistry.IRON_DUST.get(), 0.3F, 100)
-                .addCriterion("has_rusty_dust", hasItem(MarsRegistry.RUSTY_DUST.get().asItem())).build(consumer);
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(MarsRegistry.RUSTY_DUST.get().asItem()), ResourceRegistry.IRON_DUST.get(), 0.3F, 100).addCriterion("has_rusty_dust", hasItem(MarsRegistry.RUSTY_DUST.get().asItem())).build(consumer);
     }
 
 }

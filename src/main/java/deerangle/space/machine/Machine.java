@@ -60,8 +60,7 @@ public abstract class Machine implements IColorGetter {
     }
 
     private static Restriction getRestriction(boolean fromCapability, Accessor accessor) {
-        return fromCapability ? (accessor
-                .isInput() ? Restriction.ONLY_IN : Restriction.ONLY_OUT) : Restriction.UNRESTRICTED;
+        return fromCapability ? (accessor.isInput() ? Restriction.ONLY_IN : Restriction.ONLY_OUT) : Restriction.UNRESTRICTED;
     }
 
     protected <MD extends IMachineData> MD addMachineData(MD data) {
@@ -180,8 +179,7 @@ public abstract class Machine implements IColorGetter {
             if (slot instanceof ItemMachineData) {
                 IItemHandler itemHandler = ((ItemMachineData) slot).getItemHandler(Restriction.UNRESTRICTED);
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
-                    InventoryHelper.spawnItemStack(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(),
-                            itemHandler.getStackInSlot(i));
+                    InventoryHelper.spawnItemStack(world, dropPos.getX(), dropPos.getY(), dropPos.getZ(), itemHandler.getStackInSlot(i));
                 }
             }
         }

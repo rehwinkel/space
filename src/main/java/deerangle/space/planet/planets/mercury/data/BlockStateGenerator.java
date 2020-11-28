@@ -21,12 +21,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void rotatedBlockWithItem(Block block) {
         ModelFile model = models().cubeAll(block.getRegistryName().getPath(), mercuryBlockTexture(block));
-        getVariantBuilder(block).partialState()
-                .setModels(new ConfiguredModel(model, 0, 90, false), new ConfiguredModel(model, 0, 180, false),
-                        new ConfiguredModel(model, 0, 270, false), new ConfiguredModel(model, 0, 0, false));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(model, 0, 90, false), new ConfiguredModel(model, 0, 180, false), new ConfiguredModel(model, 0, 270, false), new ConfiguredModel(model, 0, 0, false));
         ResourceLocation blockName = block.getRegistryName();
-        simpleBlockItem(block, models().getExistingFile(
-                new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath())));
+        simpleBlockItem(block, models().getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath())));
     }
 
     @Override

@@ -31,8 +31,7 @@ public abstract class AbstractBiomeGenerator implements IDataProvider {
     }
 
     private static Path getPath(Path path, ResourceLocation biomeLocation) {
-        return path.resolve(
-                "data/" + biomeLocation.getNamespace() + "/worldgen/biome/" + biomeLocation.getPath() + ".json");
+        return path.resolve("data/" + biomeLocation.getNamespace() + "/worldgen/biome/" + biomeLocation.getPath() + ".json");
     }
 
     public void act(DirectoryCache cache) {
@@ -44,8 +43,7 @@ public abstract class AbstractBiomeGenerator implements IDataProvider {
         for (Map.Entry<ResourceLocation, Biome> entry : biomeMap.entrySet()) {
             Path path1 = getPath(path, entry.getKey());
             Biome biome = entry.getValue();
-            Function<Supplier<Biome>, DataResult<JsonElement>> function = JsonOps.INSTANCE
-                    .withEncoder(Biome.BIOME_CODEC);
+            Function<Supplier<Biome>, DataResult<JsonElement>> function = JsonOps.INSTANCE.withEncoder(Biome.BIOME_CODEC);
 
             try {
                 Optional<JsonElement> optional = function.apply(() -> biome).result();

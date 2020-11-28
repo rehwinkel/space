@@ -8,10 +8,7 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 
 public class RockFeatureConfig implements IFeatureConfig {
 
-    public static final Codec<RockFeatureConfig> CODEC = RecordCodecBuilder.create(instance -> instance
-            .group(BlockStateProvider.CODEC.fieldOf("block").forGetter(config -> config.block),
-                    FeatureSpread.CODEC.fieldOf("height").forGetter(config -> config.heightMultiplier))
-            .apply(instance, RockFeatureConfig::new));
+    public static final Codec<RockFeatureConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(BlockStateProvider.CODEC.fieldOf("block").forGetter(config -> config.block), FeatureSpread.CODEC.fieldOf("height").forGetter(config -> config.heightMultiplier)).apply(instance, RockFeatureConfig::new));
 
     public BlockStateProvider block;
     public FeatureSpread heightMultiplier;

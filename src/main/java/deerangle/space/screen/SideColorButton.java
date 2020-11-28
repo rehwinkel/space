@@ -28,9 +28,7 @@ public class SideColorButton extends Button {
 
     private void setOverlayColor() {
         int overlay = this.color;
-        RenderSystem
-                .color4f(((overlay >> 16) & 0xFF) / 255.0F, ((overlay >> 8) & 0xFF) / 255.0F, (overlay & 0xFF) / 255.0F,
-                        this.alpha);
+        RenderSystem.color4f(((overlay >> 16) & 0xFF) / 255.0F, ((overlay >> 8) & 0xFF) / 255.0F, (overlay & 0xFF) / 255.0F, this.alpha);
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -66,8 +64,7 @@ public class SideColorButton extends Button {
         this.blit(matrixStack, this.x + 1, this.y + 1, 71, (i - 1) * 20 + 1, 18, 18);
         this.renderBg(matrixStack, minecraft, mouseX, mouseY);
         int j = getFGColor();
-        drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2,
-                this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
     }
 
     public void drawTooltip(Screen screen, MatrixStack matrixStack, int mouseX, int mouseY) {

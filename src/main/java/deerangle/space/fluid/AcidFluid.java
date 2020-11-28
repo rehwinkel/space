@@ -23,11 +23,7 @@ public class AcidFluid extends FlowingFluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/acid_still"),
-                new ResourceLocation(SpaceMod.MOD_ID, "block/acid_flow"))
-                .overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/acid_overlay")).translationKey("block.space.acid")
-                .density(1200).viscosity(1400).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
-                .color(0xffddff30).build(this);
+        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/acid_still"), new ResourceLocation(SpaceMod.MOD_ID, "block/acid_flow")).overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/acid_overlay")).translationKey("block.space.acid").density(1200).viscosity(1400).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY).color(0xffddff30).build(this);
     }
 
     @Override

@@ -19,8 +19,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void basicBlock(Block block) {
-        getVariantBuilder(block).partialState().setModels(
-                new ConfiguredModel(models().cubeAll(block.getRegistryName().getPath(), venusBlockTexture(block))));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().cubeAll(block.getRegistryName().getPath(), venusBlockTexture(block))));
     }
 
     private void rotatedBlock(Block block) {
@@ -28,9 +27,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void rotatedBlock(Block block, ModelFile baseModel) {
-        getVariantBuilder(block).partialState()
-                .setModels(new ConfiguredModel(baseModel, 0, 0, false), new ConfiguredModel(baseModel, 0, 90, false),
-                        new ConfiguredModel(baseModel, 0, 180, false), new ConfiguredModel(baseModel, 0, 270, false));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(baseModel, 0, 0, false), new ConfiguredModel(baseModel, 0, 90, false), new ConfiguredModel(baseModel, 0, 180, false), new ConfiguredModel(baseModel, 0, 270, false));
     }
 
     private ResourceLocation venusBlockTexture(Block block) {
@@ -39,19 +36,13 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void algaeBlock(Block block) {
-        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(
-                models().singleTexture(block.getRegistryName().getPath(),
-                        new ResourceLocation("space", "venus/block/slimy_algae"), "algae", venusBlockTexture(block))));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().singleTexture(block.getRegistryName().getPath(), new ResourceLocation("space", "venus/block/slimy_algae"), "algae", venusBlockTexture(block))));
     }
 
     private void rockBlock(Block block, ResourceLocation texture) {
-        ModelFile firstModel = models().singleTexture(block.getRegistryName().getPath(),
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/rock"), "all", texture);
-        ModelFile secondModel = models().singleTexture(block.getRegistryName().getPath() + "_secondary",
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/rock_secondary"), "all", texture);
-        getVariantBuilder(block).partialState()
-                .setModels(new ConfiguredModel(firstModel, 0, 0, false), new ConfiguredModel(firstModel, 0, 90, false),
-                        new ConfiguredModel(secondModel, 0, 0, false), new ConfiguredModel(secondModel, 0, 90, false));
+        ModelFile firstModel = models().singleTexture(block.getRegistryName().getPath(), new ResourceLocation(SpaceMod.MOD_ID, "venus/block/rock"), "all", texture);
+        ModelFile secondModel = models().singleTexture(block.getRegistryName().getPath() + "_secondary", new ResourceLocation(SpaceMod.MOD_ID, "venus/block/rock_secondary"), "all", texture);
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(firstModel, 0, 0, false), new ConfiguredModel(firstModel, 0, 90, false), new ConfiguredModel(secondModel, 0, 0, false), new ConfiguredModel(secondModel, 0, 90, false));
     }
 
     private void venusLogBlock(Block block) {
@@ -77,19 +68,16 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void basicBlockItem(Block block) {
         ResourceLocation blockLoc = block.getRegistryName();
-        itemModels().getBuilder(blockLoc.getPath()).parent(models()
-                .getExistingFile(new ResourceLocation(blockLoc.getNamespace(), "block/" + blockLoc.getPath())));
+        itemModels().getBuilder(blockLoc.getPath()).parent(models().getExistingFile(new ResourceLocation(blockLoc.getNamespace(), "block/" + blockLoc.getPath())));
     }
 
     private void crossBlock(Block block) {
-        getVariantBuilder(block).partialState().setModels(
-                new ConfiguredModel(models().cross(block.getRegistryName().getPath(), venusBlockTexture(block))));
+        getVariantBuilder(block).partialState().setModels(new ConfiguredModel(models().cross(block.getRegistryName().getPath(), venusBlockTexture(block))));
     }
 
     private void overgrownBlock(Block block, ResourceLocation bottomTexture) {
         ResourceLocation base = venusBlockTexture(block);
-        ModelFile baseModel = models().cubeBottomTop(block.getRegistryName().getPath(), base, bottomTexture,
-                new ResourceLocation(base.getNamespace(), base.getPath() + "_top"));
+        ModelFile baseModel = models().cubeBottomTop(block.getRegistryName().getPath(), base, bottomTexture, new ResourceLocation(base.getNamespace(), base.getPath() + "_top"));
         rotatedBlock(block, baseModel);
     }
 
@@ -127,14 +115,11 @@ public class BlockStateGenerator extends BlockStateProvider {
         vineBlock(VenusRegistry.VENUS_BACTERIA.get(), venusBlockTexture(VenusRegistry.VENUS_BACTERIA.get()));
         overgrownBlock(VenusRegistry.OVERGROWN_PULCHERITE.get(), venusBlockTexture(VenusRegistry.PULCHERITE.get()));
         basicBlockItem(VenusRegistry.OVERGROWN_PULCHERITE.get());
-        venusStairsBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get(),
-                venusBlockTexture(VenusRegistry.SHRIEKWOOD_PLANKS.get()));
+        venusStairsBlock(VenusRegistry.SHRIEKWOOD_STAIRS.get(), venusBlockTexture(VenusRegistry.SHRIEKWOOD_PLANKS.get()));
         basicBlockItem(VenusRegistry.SHRIEKWOOD_STAIRS.get());
         venusSlabBlock(VenusRegistry.SHRIEKWOOD_SLAB.get(), VenusRegistry.SHRIEKWOOD_PLANKS.get());
         basicBlockItem(VenusRegistry.SHRIEKWOOD_SLAB.get());
-        doorBlock((DoorBlock) VenusRegistry.SHRIEKWOOD_DOOR.get(),
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_bottom"),
-                new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_top"));
+        doorBlock((DoorBlock) VenusRegistry.SHRIEKWOOD_DOOR.get(), new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_bottom"), new ResourceLocation(SpaceMod.MOD_ID, "venus/block/shriekwood_door_top"));
         venusLogBlock(VenusRegistry.SHRIEKWOOD_LOG.get());
         basicBlockItem(VenusRegistry.SHRIEKWOOD_LOG.get());
         venusWoodBlock(VenusRegistry.SHRIEKWOOD_WOOD.get(), venusBlockTexture(VenusRegistry.SHRIEKWOOD_LOG.get()));
@@ -146,25 +131,15 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void directionalCrossBlock(Block block) {
         ModelFile model = models().cross(block.getRegistryName().getPath(), venusBlockTexture(block));
-        getVariantBuilder(block).partialState().with(CrystalBlock.FACING, Direction.UP).modelForState().modelFile(model)
-                .addModel().partialState().with(CrystalBlock.FACING, Direction.DOWN).modelForState().modelFile(model)
-                .rotationX(180).addModel().partialState().with(CrystalBlock.FACING, Direction.EAST).modelForState()
-                .modelFile(model).rotationX(90).rotationY(90).addModel().partialState()
-                .with(CrystalBlock.FACING, Direction.WEST).modelForState().modelFile(model).rotationX(90).rotationY(270)
-                .addModel().partialState().with(CrystalBlock.FACING, Direction.NORTH).modelForState().modelFile(model)
-                .rotationX(90).addModel().partialState().with(CrystalBlock.FACING, Direction.SOUTH).modelForState()
-                .modelFile(model).rotationX(90).rotationY(180).addModel();
+        getVariantBuilder(block).partialState().with(CrystalBlock.FACING, Direction.UP).modelForState().modelFile(model).addModel().partialState().with(CrystalBlock.FACING, Direction.DOWN).modelForState().modelFile(model).rotationX(180).addModel().partialState().with(CrystalBlock.FACING, Direction.EAST).modelForState().modelFile(model).rotationX(90).rotationY(90).addModel().partialState().with(CrystalBlock.FACING, Direction.WEST).modelForState().modelFile(model).rotationX(90).rotationY(270).addModel().partialState().with(CrystalBlock.FACING, Direction.NORTH).modelForState().modelFile(model).rotationX(90).addModel().partialState().with(CrystalBlock.FACING, Direction.SOUTH).modelForState().modelFile(model).rotationX(90).rotationY(180).addModel();
     }
 
     private void vineBlock(Block block, ResourceLocation texture) {
         ResourceLocation base = block.getRegistryName();
         getVariantBuilder(block).forAllStates(blockState -> {
             boolean up = blockState.get(VineBlock.UP);
-            boolean opposite = blockState.get(VineBlock.EAST) == blockState.get(VineBlock.WEST) && blockState
-                    .get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState
-                    .get(VineBlock.EAST) != blockState.get(VineBlock.NORTH);
-            int i = (blockState.get(VineBlock.WEST) ? 1 : 0) + (blockState.get(VineBlock.EAST) ? 1 : 0) + (blockState
-                    .get(VineBlock.NORTH) ? 1 : 0) + (blockState.get(VineBlock.SOUTH) ? 1 : 0);
+            boolean opposite = blockState.get(VineBlock.EAST) == blockState.get(VineBlock.WEST) && blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState.get(VineBlock.EAST) != blockState.get(VineBlock.NORTH);
+            int i = (blockState.get(VineBlock.WEST) ? 1 : 0) + (blockState.get(VineBlock.EAST) ? 1 : 0) + (blockState.get(VineBlock.NORTH) ? 1 : 0) + (blockState.get(VineBlock.SOUTH) ? 1 : 0);
             String appendix = "_" + i + (up ? "u" : "") + ((opposite && i != 4) ? "_opposite" : "");
             if (i == 0) {
                 if (up) {
@@ -185,17 +160,13 @@ public class BlockStateGenerator extends BlockStateProvider {
                     yRot = 90;
                 }
             } else if (i == 2) {
-                if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState
-                        .get(VineBlock.NORTH)) {
+                if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.SOUTH) && blockState.get(VineBlock.NORTH)) {
                     yRot = 90;
-                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.EAST) && blockState
-                        .get(VineBlock.SOUTH)) {
+                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.EAST) && blockState.get(VineBlock.SOUTH)) {
                     yRot = 90;
-                } else if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.WEST) && blockState
-                        .get(VineBlock.NORTH)) {
+                } else if (blockState.get(VineBlock.NORTH) == blockState.get(VineBlock.WEST) && blockState.get(VineBlock.NORTH)) {
                     yRot = 270;
-                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.WEST) && blockState
-                        .get(VineBlock.SOUTH)) {
+                } else if (blockState.get(VineBlock.SOUTH) == blockState.get(VineBlock.WEST) && blockState.get(VineBlock.SOUTH)) {
                     yRot = 180;
                 }
             } else if (i == 3) {
@@ -207,8 +178,7 @@ public class BlockStateGenerator extends BlockStateProvider {
                     yRot = 180;
                 }
             }
-            return new ConfiguredModel[]{new ConfiguredModel(
-                    models().singleTexture(loc.getPath(), parent, "texture", texture), 0, yRot, false)};
+            return new ConfiguredModel[]{new ConfiguredModel(models().singleTexture(loc.getPath(), parent, "texture", texture), 0, yRot, false)};
         });
     }
 

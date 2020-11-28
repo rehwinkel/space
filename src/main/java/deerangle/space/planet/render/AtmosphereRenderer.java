@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.settings.CloudOption;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -21,10 +20,12 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.Random;
 import java.util.function.BiConsumer;
@@ -32,11 +33,13 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("deprecation")
 public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
+
+    //TODO: do thing about time setting (new command?)
 
     private static final ResourceLocation CLOUDS_TEXTURES = new ResourceLocation("textures/environment/clouds.png");
     private static final ResourceLocation RAIN_TEXTURES = new ResourceLocation("textures/environment/rain.png");
-    private static final ResourceLocation SNOW_TEXTURES = new ResourceLocation("textures/environment/snow.png");
 
     private final VertexFormat skyVertexFormat = DefaultVertexFormats.POSITION;
     private final float[] sunsetColor = new float[4];
@@ -53,6 +56,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     private CloudOption cloudOption;
     private boolean cloudsNeedUpdate;
     private Vector3d cloudsCheckColor = Vector3d.ZERO;
+    private final float dayLength;
 
     public AtmosphereRenderer(Planet planet) {
         this.orbitingPlanets = planet.getSkyPlanets().stream().map(Supplier::get).collect(Collectors.toList());
@@ -60,6 +64,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         this.fixedSunsetAlpha = planet.getSunsetAlpha();
         this.cloudColor = planet.getCloudColor();
         this.cloudHeight = planet.getCloudHeight();
+        this.dayLength = planet.getDayLength();
         generateSky();
         generateSky2();
         generateStars();
@@ -76,12 +81,12 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     }
 
     public static int getCombinedLight(IBlockDisplayReader lightReaderIn, BlockPos blockPosIn) {
-        return getPackedLightmapCoords(lightReaderIn, lightReaderIn.getBlockState(blockPosIn), blockPosIn);
+        return getPackedLightMapCoordinates(lightReaderIn, lightReaderIn.getBlockState(blockPosIn), blockPosIn);
     }
 
-    public static int getPackedLightmapCoords(IBlockDisplayReader lightReaderIn, BlockState blockStateIn, BlockPos blockPosIn) {
+    public static int getPackedLightMapCoordinates(IBlockDisplayReader lightReaderIn, BlockState blockStateIn, BlockPos blockPosIn) {
         if (blockStateIn.isEmissiveRendering(lightReaderIn, blockPosIn)) {
-            return 15728880;
+            return 0xf000f0;
         } else {
             int i = lightReaderIn.getLightFor(LightType.SKY, blockPosIn);
             int j = lightReaderIn.getLightFor(LightType.BLOCK, blockPosIn);
@@ -221,100 +226,52 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
                     float f18 = (float) (k * 8);
                     float f19 = (float) (l * 8);
                     if (f17 > -5.0F) {
-                        bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + 8.0F))
-                                .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                .color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + 8.0F))
-                                .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                .color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + 0.0F))
-                                .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                .color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + 0.0F))
-                                .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                .color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + 8.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + 8.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + 0.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + 0.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f11, f12, f13, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
                     }
 
                     if (f17 <= 5.0F) {
-                        bufferIn.pos((f18 + 0.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 8.0F))
-                                .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                .color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 8.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 8.0F))
-                                .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                .color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 8.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 0.0F))
-                                .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                .color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
-                        bufferIn.pos((f18 + 0.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 0.0F))
-                                .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                .color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 0.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 8.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 8.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 8.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 8.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 0.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                        bufferIn.pos((f18 + 0.0F), (f17 + 4.0F - 9.765625E-4F), (f19 + 0.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, 1.0F, 0.0F).endVertex();
                     }
 
                     if (k > -1) {
                         for (int i1 = 0; i1 < 8; ++i1) {
-                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 0.0F), (f19 + 8.0F))
-                                    .tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 4.0F), (f19 + 8.0F))
-                                    .tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 4.0F), (f19 + 0.0F))
-                                    .tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 0.0F), (f19 + 0.0F))
-                                    .tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 0.0F), (f19 + 8.0F)).tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 4.0F), (f19 + 8.0F)).tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 4.0F), (f19 + 0.0F)).tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) i1 + 0.0F), (f17 + 0.0F), (f19 + 0.0F)).tex((f18 + (float) i1 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(-1.0F, 0.0F, 0.0F).endVertex();
                         }
                     }
 
                     if (k <= 1) {
                         for (int j2 = 0; j2 < 8; ++j2) {
-                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 0.0F), (f19 + 8.0F))
-                                    .tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 4.0F), (f19 + 8.0F))
-                                    .tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 4.0F), (f19 + 0.0F))
-                                    .tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
-                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 0.0F), (f19 + 0.0F))
-                                    .tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4)
-                                    .color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 0.0F), (f19 + 8.0F)).tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 4.0F), (f19 + 8.0F)).tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 8.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 4.0F), (f19 + 0.0F)).tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
+                            bufferIn.pos((f18 + (float) j2 + 1.0F - 9.765625E-4F), (f17 + 0.0F), (f19 + 0.0F)).tex((f18 + (float) j2 + 0.5F) * 0.00390625F + f3, (f19 + 0.0F) * 0.00390625F + f4).color(f8, f9, f10, 0.8F).normal(1.0F, 0.0F, 0.0F).endVertex();
                         }
                     }
 
                     if (l > -1) {
                         for (int k2 = 0; k2 < 8; ++k2) {
-                            bufferIn.pos((f18 + 0.0F), (f17 + 4.0F), (f19 + (float) k2 + 0.0F))
-                                    .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
-                            bufferIn.pos((f18 + 8.0F), (f17 + 4.0F), (f19 + (float) k2 + 0.0F))
-                                    .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
-                            bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + (float) k2 + 0.0F))
-                                    .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
-                            bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + (float) k2 + 0.0F))
-                                    .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                            bufferIn.pos((f18 + 0.0F), (f17 + 4.0F), (f19 + (float) k2 + 0.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                            bufferIn.pos((f18 + 8.0F), (f17 + 4.0F), (f19 + (float) k2 + 0.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                            bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + (float) k2 + 0.0F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
+                            bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + (float) k2 + 0.0F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) k2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, -1.0F).endVertex();
                         }
                     }
 
                     if (l <= 1) {
                         for (int l2 = 0; l2 < 8; ++l2) {
-                            bufferIn.pos((f18 + 0.0F), (f17 + 4.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F))
-                                    .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
-                            bufferIn.pos((f18 + 8.0F), (f17 + 4.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F))
-                                    .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
-                            bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F))
-                                    .tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
-                            bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F))
-                                    .tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4)
-                                    .color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
+                            bufferIn.pos((f18 + 0.0F), (f17 + 4.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
+                            bufferIn.pos((f18 + 8.0F), (f17 + 4.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
+                            bufferIn.pos((f18 + 8.0F), (f17 + 0.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F)).tex((f18 + 8.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
+                            bufferIn.pos((f18 + 0.0F), (f17 + 0.0F), (f19 + (float) l2 + 1.0F - 9.765625E-4F)).tex((f18 + 0.0F) * 0.00390625F + f3, (f19 + (float) l2 + 0.5F) * 0.00390625F + f4).color(f14, f15, f16, 0.8F).normal(0.0F, 0.0F, 1.0F).endVertex();
                         }
                     }
                 }
@@ -322,21 +279,60 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         } else {
             for (int l1 = -32; l1 < 32; l1 += 32) {
                 for (int i2 = -32; i2 < 32; i2 += 32) {
-                    bufferIn.pos(l1, f17, (i2 + 32))
-                            .tex((float) (l1) * 0.00390625F + f3, (float) (i2 + 32) * 0.00390625F + f4)
-                            .color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    bufferIn.pos(l1 + 32, f17, (i2 + 32))
-                            .tex((float) (l1 + 32) * 0.00390625F + f3, (float) (i2 + 32) * 0.00390625F + f4)
-                            .color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    bufferIn.pos(l1 + 32, f17, (i2))
-                            .tex((float) (l1 + 32) * 0.00390625F + f3, (float) (i2) * 0.00390625F + f4)
-                            .color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
-                    bufferIn.pos(l1, f17, (i2)).tex((float) (l1) * 0.00390625F + f3, (float) (i2) * 0.00390625F + f4)
-                            .color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                    bufferIn.pos(l1, f17, (i2 + 32)).tex((float) (l1) * 0.00390625F + f3, (float) (i2 + 32) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                    bufferIn.pos(l1 + 32, f17, (i2 + 32)).tex((float) (l1 + 32) * 0.00390625F + f3, (float) (i2 + 32) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                    bufferIn.pos(l1 + 32, f17, (i2)).tex((float) (l1 + 32) * 0.00390625F + f3, (float) (i2) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
+                    bufferIn.pos(l1, f17, (i2)).tex((float) (l1) * 0.00390625F + f3, (float) (i2) * 0.00390625F + f4).color(f5, f6, f7, 0.8F).normal(0.0F, -1.0F, 0.0F).endVertex();
                 }
             }
         }
 
+    }
+
+
+    private float getCelestialAngleByTime(World world) {
+        double d0 = MathHelper.frac((double) world.func_241851_ab() / ((double) this.dayLength) - 0.25D);
+        double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
+        return (float) (d0 * 2.0D + d1) / 3.0F;
+    }
+
+    private float getStarBrightness(World world) {
+        float f = getCelestialAngleByTime(world);
+        float f1 = 1.0F - (MathHelper.cos(f * ((float) Math.PI * 2F)) * 2.0F + 0.25F);
+        f1 = MathHelper.clamp(f1, 0.0F, 1.0F);
+        return f1 * f1 * 0.5F;
+    }
+
+    private float getCelestialAngleRadians(World world) {
+        float f = this.getCelestialAngleByTime(world);
+        return f * ((float) Math.PI * 2F);
+    }
+
+    private Vector3d getSkyColor(World world, BlockPos blockPosIn) {
+        float f1 = MathHelper.cos(getCelestialAngleByTime(world) * ((float) Math.PI * 2F)) * 2.0F + 0.5F;
+        f1 = MathHelper.clamp(f1, 0.0F, 1.0F);
+        Biome biome = world.getBiome(blockPosIn);
+        int i = biome.getSkyColor();
+        float x = (float) (i >> 16 & 255) / 255.0F;
+        float y = (float) (i >> 8 & 255) / 255.0F;
+        float z = (float) (i & 255) / 255.0F;
+        x = x * f1;
+        y = y * f1;
+        z = z * f1;
+        float f5 = getRainStrength(world);
+        if (f5 > 0.0F) {
+            float f6 = (x * 0.3F + y * 0.59F + z * 0.11F) * 0.6F;
+            float f7 = 1.0F - f5 * 0.75F;
+            x = x * f7 + f6 * (1.0F - f7);
+            y = y * f7 + f6 * (1.0F - f7);
+            z = z * f7 + f6 * (1.0F - f7);
+        }
+
+        return new Vector3d(x, y, z);
+    }
+
+    private float getRainStrength(World world) {
+        return 1.0f;
     }
 
     @Override
@@ -348,9 +344,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             RenderSystem.enableAlphaTest();
             RenderSystem.enableDepthTest();
             RenderSystem.defaultAlphaFunc();
-            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-                    GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-                    GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.enableFog();
             RenderSystem.depthMask(true);
             double d1 = (((float) ticks + partialTicks) * 0.03F);
@@ -362,13 +356,11 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             float f3 = (float) (d2 - (double) MathHelper.floor(d2));
             float f4 = (float) (d3 / 4.0D - (double) MathHelper.floor(d3 / 4.0D)) * 4.0F;
             float f5 = (float) (d4 - (double) MathHelper.floor(d4));
-            Vector3d vector3d = this.cloudColor.apply(partialTicks, world.func_242415_f(partialTicks));
+            Vector3d vector3d = this.cloudColor.apply(partialTicks, getCelestialAngleByTime(world));
             int i = (int) Math.floor(d2);
             int j = (int) Math.floor(d3 / 4.0D);
             int k = (int) Math.floor(d4);
-            if (i != cloudsCheckX || j != cloudsCheckY || k != cloudsCheckZ || mc.gameSettings
-                    .getCloudOption() != this.cloudOption || this.cloudsCheckColor
-                    .squareDistanceTo(vector3d) > 2.0E-4D) {
+            if (i != cloudsCheckX || j != cloudsCheckY || k != cloudsCheckZ || mc.gameSettings.getCloudOption() != this.cloudOption || this.cloudsCheckColor.squareDistanceTo(vector3d) > 2.0E-4D) {
                 this.cloudsCheckColor = vector3d;
                 this.cloudOption = mc.gameSettings.getCloudOption();
                 this.cloudsNeedUpdate = true;
@@ -422,7 +414,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     @Override
     protected void renderSky(int ticks, float partialTicks, MatrixStack matrixStackIn, ClientWorld world, Minecraft mc) {
         RenderSystem.disableTexture();
-        Vector3d vector3d = world.getSkyColor(mc.gameRenderer.getActiveRenderInfo().getBlockPos(), partialTicks);
+        Vector3d vector3d = getSkyColor(world, mc.gameRenderer.getActiveRenderInfo().getBlockPos());
         float f = (float) vector3d.x;
         float f1 = (float) vector3d.y;
         float f2 = (float) vector3d.z;
@@ -440,29 +432,27 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         RenderSystem.disableAlphaTest();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-
-        float[] sunsetColor = world.func_239132_a_().func_230492_a_(world.func_242415_f(partialTicks), partialTicks);
-        if (sunsetColor != null) {
+        float[] sunset = this.getSunsetColor(getCelestialAngleByTime(world), partialTicks);
+        if (sunset != null) {
             RenderSystem.disableTexture();
             RenderSystem.shadeModel(7425);
             matrixStackIn.push();
             matrixStackIn.rotate(Vector3f.XP.rotationDegrees(90.0F));
-            float f3 = MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F;
+            float f3 = MathHelper.sin(getCelestialAngleRadians(world)) < 0.0F ? 180.0F : 0.0F;
             matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(f3));
             matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(90.0F));
-            float f4 = sunsetColor[0];
-            float f5 = sunsetColor[1];
-            float f6 = sunsetColor[2];
+            float sunsetRed = sunset[0];
+            float sunsetGreen = sunset[1];
+            float sunsetBlue = sunset[2];
             Matrix4f matrix4f = matrixStackIn.getLast().getMatrix();
             bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
-            bufferbuilder.pos(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunsetColor[3]).endVertex();
+            bufferbuilder.pos(matrix4f, 0.0F, 100.0F, 0.0F).color(sunsetRed, sunsetGreen, sunsetBlue, sunset[3]).endVertex();
 
             for (int j = 0; j <= 16; ++j) {
                 float f7 = (float) j * ((float) Math.PI * 2F) / 16.0F;
                 float f8 = MathHelper.sin(f7);
                 float f9 = MathHelper.cos(f7);
-                bufferbuilder.pos(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunsetColor[3])
-                        .color(sunsetColor[0], sunsetColor[1], sunsetColor[2], 0.0F).endVertex();
+                bufferbuilder.pos(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunset[3]).color(sunset[0], sunset[1], sunset[2], 0.0F).endVertex();
             }
 
             bufferbuilder.finishDrawing();
@@ -472,21 +462,18 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         }
 
         RenderSystem.enableTexture();
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE,
-                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         matrixStackIn.push();
-        float oneMinusRainStrength = 1.0F - world.getRainStrength(partialTicks);
+        float oneMinusRain = 1.0F - getRainStrength(world);
 
-        for (Planet planet : this.orbitingPlanets) {
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, oneMinusRainStrength);
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(planet.getOrbitDirection()));
-            matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(planet.getOrbitTilt()));
-            matrixStackIn.rotate(Vector3f.XP
-                    .rotationDegrees(planet.getSkyPosition(world.func_242415_f(partialTicks) * 360.0F)));
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, oneMinusRain);
+        for (Planet p : this.orbitingPlanets) {
+            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(p.getOrbitDirection()));
+            matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(p.getOrbitTilt()));
+            matrixStackIn.rotate(Vector3f.XP.rotationDegrees(getCelestialAngleByTime(world) * 360.0F));
             Matrix4f matrix4f1 = matrixStackIn.getLast().getMatrix();
-            float planetSize = planet.getSizeInSky();
-            mc.textureManager.bindTexture(planet.getSkyTexture());
+            float planetSize = p.getSizeInSky();
+            mc.textureManager.bindTexture(p.getSkyTexture());
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
             bufferbuilder.pos(matrix4f1, -planetSize, 100.0F, -planetSize).tex(0.0F, 0.0F).endVertex();
             bufferbuilder.pos(matrix4f1, planetSize, 100.0F, -planetSize).tex(1.0F, 0.0F).endVertex();
@@ -497,7 +484,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         }
 
         RenderSystem.disableTexture();
-        float f10 = world.getStarBrightness(partialTicks) * oneMinusRainStrength;
+        float f10 = getStarBrightness(world) * oneMinusRain;
         if (f10 > 0.0F) {
             RenderSystem.color4f(f10, f10, f10, f10);
             this.starVBO.bindBuffer();
@@ -512,12 +499,10 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         RenderSystem.enableAlphaTest();
         RenderSystem.enableFog();
         matrixStackIn.pop();
-
-
         RenderSystem.disableTexture();
         RenderSystem.color3f(0.0F, 0.0F, 0.0F);
-        double d0 = mc.player.getEyePosition(partialTicks).y - world.getWorldInfo().getVoidFogHeight();
-        if (d0 < 0.0D) {
+        double viewerEyeHeight = Objects.requireNonNull(mc.player).getEyePosition(partialTicks).y - world.getWorldInfo().getVoidFogHeight();
+        if (viewerEyeHeight < 0.0D) {
             matrixStackIn.push();
             matrixStackIn.translate(0.0D, 12.0D, 0.0D);
             this.sky2VBO.bindBuffer();
@@ -528,11 +513,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             matrixStackIn.pop();
         }
 
-        if (world.func_239132_a_().func_239216_b_()) {
-            RenderSystem.color3f(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
-        } else {
-            RenderSystem.color3f(f, f1, f2);
-        }
+        RenderSystem.color3f(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
 
         RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
@@ -540,10 +521,10 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     }
 
     @Override
-    protected void renderWeather(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightmapIn, double xIn, double yIn, double zIn) {
-        float f = 0;//world.getRainStrength(partialTicks);
+    protected void renderWeather(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightMapIn, double xIn, double yIn, double zIn) {
+        float f = getRainStrength(world);
         if (!(f <= 0.0F)) {
-            lightmapIn.enableLightmap();
+            lightMapIn.enableLightmap();
             int i = MathHelper.floor(xIn);
             int j = MathHelper.floor(yIn);
             int k = MathHelper.floor(zIn);
@@ -556,130 +537,67 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             RenderSystem.defaultBlendFunc();
             RenderSystem.defaultAlphaFunc();
             RenderSystem.enableDepthTest();
-            int l = 5;
+            int rainGridSize = 5;
             if (Minecraft.isFancyGraphicsEnabled()) {
-                l = 10;
+                rainGridSize = 10;
             }
 
             RenderSystem.depthMask(Minecraft.isFabulousGraphicsEnabled());
-            int i1 = -1;
-            float f1 = (float) ticks + partialTicks;
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
-            for (int j1 = k - l; j1 <= k + l; ++j1) {
-                for (int k1 = i - l; k1 <= i + l; ++k1) {
-                    int l1 = (j1 - k + 16) * 32 + k1 - i + 16;
+            for (int posZ = k - rainGridSize; posZ <= k + rainGridSize; ++posZ) {
+                for (int posX = i - rainGridSize; posX <= i + rainGridSize; ++posX) {
+                    int l1 = (posZ - k + 16) * 32 + posX - i + 16;
                     double d0 = (double) this.rainSizeX[l1] * 0.5D;
                     double d1 = (double) this.rainSizeZ[l1] * 0.5D;
-                    blockpos$mutable.setPos(k1, 0, j1);
-                    Biome biome = world.getBiome(blockpos$mutable);
-                    if (true) {//biome.getPrecipitation() != Biome.RainType.NONE) {
-                        int i2 = world.getHeight(Heightmap.Type.MOTION_BLOCKING, blockpos$mutable).getY();
-                        int j2 = j - l;
-                        int k2 = j + l;
-                        if (j2 < i2) {
-                            j2 = i2;
-                        }
+                    blockPos.setPos(posX, 0, posZ);
+                    int i2 = world.getHeight(Heightmap.Type.MOTION_BLOCKING, blockPos).getY();
+                    int posY = j - rainGridSize;
+                    int k2 = j + rainGridSize;
+                    if (posY < i2) {
+                        posY = i2;
+                    }
 
-                        if (k2 < i2) {
-                            k2 = i2;
-                        }
+                    if (k2 < i2) {
+                        k2 = i2;
+                    }
 
-                        int l2 = i2;
-                        if (i2 < j) {
-                            l2 = j;
-                        }
+                    int l2 = i2;
+                    if (i2 < j) {
+                        l2 = j;
+                    }
 
-                        if (j2 != k2) {
-                            Random random = new Random(
-                                    (k1 * k1 * 3121 + k1 * 45238971 ^ j1 * j1 * 418711 + j1 * 13761));
-                            blockpos$mutable.setPos(k1, j2, j1);
-                            float f2 = biome.getTemperature(blockpos$mutable);
-                            if (f2 >= 0.15F) {
-                                if (i1 != 0) {
-                                    if (i1 >= 0) {
-                                        tessellator.draw();
-                                    }
+                    if (posY != k2) {
+                        //TODO: other weathers
+                        Random random = new Random((posX * posX * 3121 + posX * 45238971 ^ posZ * posZ * 418711 + posZ * 13761));
+                        blockPos.setPos(posX, posY, posZ);
+                        mc.getTextureManager().bindTexture(RAIN_TEXTURES);
+                        bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-                                    i1 = 0;
-                                    mc.getTextureManager().bindTexture(RAIN_TEXTURES);
-                                    bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-                                }
-
-                                int i3 = ticks + k1 * k1 * 3121 + k1 * 45238971 + j1 * j1 * 418711 + j1 * 13761 & 31;
-                                float f3 = -((float) i3 + partialTicks) / 32.0F * (3.0F + random.nextFloat());
-                                double d2 = (double) ((float) k1 + 0.5F) - xIn;
-                                double d4 = (double) ((float) j1 + 0.5F) - zIn;
-                                float f4 = MathHelper.sqrt(d2 * d2 + d4 * d4) / (float) l;
-                                float f5 = ((1.0F - f4 * f4) * 0.5F + 0.5F) * f;
-                                blockpos$mutable.setPos(k1, l2, j1);
-                                int j3 = getCombinedLight(world, blockpos$mutable);
-                                bufferbuilder.pos((double) k1 - xIn - d0 + 0.5D, (double) k2 - yIn,
-                                        (double) j1 - zIn - d1 + 0.5D).tex(0.0F, (float) j2 * 0.25F + f3)
-                                        .color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn + d0 + 0.5D, (double) k2 - yIn,
-                                        (double) j1 - zIn + d1 + 0.5D).tex(1.0F, (float) j2 * 0.25F + f3)
-                                        .color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn + d0 + 0.5D, (double) j2 - yIn,
-                                        (double) j1 - zIn + d1 + 0.5D).tex(1.0F, (float) k2 * 0.25F + f3)
-                                        .color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn - d0 + 0.5D, (double) j2 - yIn,
-                                        (double) j1 - zIn - d1 + 0.5D).tex(0.0F, (float) k2 * 0.25F + f3)
-                                        .color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                            } else {
-                                if (i1 != 1) {
-                                    if (i1 >= 0) {
-                                        tessellator.draw();
-                                    }
-
-                                    i1 = 1;
-                                    mc.getTextureManager().bindTexture(SNOW_TEXTURES);
-                                    bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-                                }
-
-                                float f6 = -((float) (ticks & 511) + partialTicks) / 512.0F;
-                                float f7 = (float) (random.nextDouble() + (double) f1 * 0.01D * (double) ((float) random
-                                        .nextGaussian()));
-                                float f8 = (float) (random.nextDouble() + (double) (f1 * (float) random
-                                        .nextGaussian()) * 0.001D);
-                                double d3 = (double) ((float) k1 + 0.5F) - xIn;
-                                double d5 = (double) ((float) j1 + 0.5F) - zIn;
-                                float f9 = MathHelper.sqrt(d3 * d3 + d5 * d5) / (float) l;
-                                float f10 = ((1.0F - f9 * f9) * 0.3F + 0.5F) * f;
-                                blockpos$mutable.setPos(k1, l2, j1);
-                                int k3 = getCombinedLight(world, blockpos$mutable);
-                                int l3 = k3 >> 16 & '\uffff';
-                                int i4 = (k3 & '\uffff') * 3;
-                                int j4 = (l3 * 3 + 240) / 4;
-                                int k4 = (i4 * 3 + 240) / 4;
-                                bufferbuilder.pos((double) k1 - xIn - d0 + 0.5D, (double) k2 - yIn,
-                                        (double) j1 - zIn - d1 + 0.5D).tex(0.0F + f7, (float) j2 * 0.25F + f6 + f8)
-                                        .color(1.0F, 1.0F, 1.0F, f10).lightmap(k4, j4).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn + d0 + 0.5D, (double) k2 - yIn,
-                                        (double) j1 - zIn + d1 + 0.5D).tex(1.0F + f7, (float) j2 * 0.25F + f6 + f8)
-                                        .color(1.0F, 1.0F, 1.0F, f10).lightmap(k4, j4).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn + d0 + 0.5D, (double) j2 - yIn,
-                                        (double) j1 - zIn + d1 + 0.5D).tex(1.0F + f7, (float) k2 * 0.25F + f6 + f8)
-                                        .color(1.0F, 1.0F, 1.0F, f10).lightmap(k4, j4).endVertex();
-                                bufferbuilder.pos((double) k1 - xIn - d0 + 0.5D, (double) j2 - yIn,
-                                        (double) j1 - zIn - d1 + 0.5D).tex(0.0F + f7, (float) k2 * 0.25F + f6 + f8)
-                                        .color(1.0F, 1.0F, 1.0F, f10).lightmap(k4, j4).endVertex();
-                            }
-                        }
+                        int i3 = ticks + posX * posX * 3121 + posX * 45238971 + posZ * posZ * 418711 + posZ * 13761 & 31;
+                        float f3 = -((float) i3 + partialTicks) / 32.0F * (3.0F + random.nextFloat());
+                        double d2 = (double) ((float) posX + 0.5F) - xIn;
+                        double d4 = (double) ((float) posZ + 0.5F) - zIn;
+                        float f4 = MathHelper.sqrt(d2 * d2 + d4 * d4) / (float) rainGridSize;
+                        float f5 = ((1.0F - f4 * f4) * 0.5F + 0.5F) * f;
+                        blockPos.setPos(posX, l2, posZ);
+                        int j3 = getCombinedLight(world, blockPos);
+                        bufferbuilder.pos((double) posX - xIn - d0 + 0.5D, (double) k2 - yIn, (double) posZ - zIn - d1 + 0.5D).tex(0.0F, (float) posY * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) posX - xIn + d0 + 0.5D, (double) k2 - yIn, (double) posZ - zIn + d1 + 0.5D).tex(1.0F, (float) posY * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) posX - xIn + d0 + 0.5D, (double) posY - yIn, (double) posZ - zIn + d1 + 0.5D).tex(1.0F, (float) k2 * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) posX - xIn - d0 + 0.5D, (double) posY - yIn, (double) posZ - zIn - d1 + 0.5D).tex(0.0F, (float) k2 * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.finishDrawing();
+                        tessellator.draw();
                     }
                 }
-            }
-
-            if (i1 >= 0) {
-                tessellator.draw();
             }
 
             RenderSystem.enableCull();
             RenderSystem.disableBlend();
             RenderSystem.defaultAlphaFunc();
             RenderSystem.disableAlphaTest();
-            lightmapIn.disableLightmap();
+            lightMapIn.disableLightmap();
         }
     }
 

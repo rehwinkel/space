@@ -28,8 +28,7 @@ public class FluidElement extends TooltipElement {
         Pair<FluidStack, Integer> fluidAndCap = reader.getFluidData(this.getIndex());
         FluidStack fluid = fluidAndCap.getFirst();
         int cap = fluidAndCap.getSecond();
-        drawFluidBar(screen, matrixStack, reader, fluid.getFluid(), guiLeft + this.getX(), guiTop + this.getY(),
-                fluid.getAmount() / (float) cap);
+        drawFluidBar(screen, matrixStack, reader, fluid.getFluid(), guiLeft + this.getX(), guiTop + this.getY(), fluid.getAmount() / (float) cap);
     }
 
     @Override
@@ -64,8 +63,7 @@ public class FluidElement extends TooltipElement {
         if (bottomUp) {
             for (int i = height; i > 0; i -= 16) {
                 int drawHeight = 16 - Math.min(i, 16);
-                blitSprite(matrixStack, x, y + i + drawHeight - 16, screen.getBlitOffset(), 0, drawHeight, 16, 16, 16,
-                        16, sprite);
+                blitSprite(matrixStack, x, y + i + drawHeight - 16, screen.getBlitOffset(), 0, drawHeight, 16, 16, 16, 16, sprite);
             }
         } else {
             for (int i = 0; i < height; i += 16) {

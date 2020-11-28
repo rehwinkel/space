@@ -36,8 +36,7 @@ public class PlanetManager {
     };
 
     static {
-        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(SpaceMod.MOD_ID, "venus_provider"),
-                VenusBiomeProvider.CODEC);
+        Registry.register(Registry.BIOME_PROVIDER_CODEC, new ResourceLocation(SpaceMod.MOD_ID, "venus_provider"), VenusBiomeProvider.CODEC);
     }
 
     public static void register() {
@@ -70,8 +69,7 @@ public class PlanetManager {
                 }
                 IForgeRegistry<Planet> planetRegistry = RegistryManager.ACTIVE.getRegistry(Planet.class);
                 for (Map.Entry<RegistryKey<Planet>, Planet> entry : planetRegistry.getEntries()) {
-                    map.put(entry.getKey().getLocation(), new CustomDimensionRenderInfo(
-                            entry.getValue().getAtmosphereRenderer().apply(entry.getValue())));
+                    map.put(entry.getKey().getLocation(), new CustomDimensionRenderInfo(entry.getValue().getAtmosphereRenderer().apply(entry.getValue())));
                 }
             });
         });

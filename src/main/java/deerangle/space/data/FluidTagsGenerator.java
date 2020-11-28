@@ -18,15 +18,11 @@ public class FluidTagsGenerator extends TagsProvider<Fluid> {
     }
 
     protected void registerTags() {
-        this.getOrCreateBuilder(FluidTags.WATER)
-                .add(FluidRegistry.CRUDE_OIL.get(), FluidRegistry.CRUDE_OIL_FLOWING.get())
-                .add(FluidRegistry.KEROSENE.get(), FluidRegistry.KEROSENE_FLOWING.get())
-                .add(FluidRegistry.ACID.get(), FluidRegistry.ACID_FLOWING.get());
+        this.getOrCreateBuilder(FluidTags.WATER).add(FluidRegistry.CRUDE_OIL.get(), FluidRegistry.CRUDE_OIL_FLOWING.get()).add(FluidRegistry.KEROSENE.get(), FluidRegistry.KEROSENE_FLOWING.get()).add(FluidRegistry.ACID.get(), FluidRegistry.ACID_FLOWING.get());
     }
 
     protected Path makePath(ResourceLocation id) {
-        return this.generator.getOutputFolder()
-                .resolve("data/" + id.getNamespace() + "/tags/fluids/" + id.getPath() + ".json");
+        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/fluids/" + id.getPath() + ".json");
     }
 
     public String getName() {

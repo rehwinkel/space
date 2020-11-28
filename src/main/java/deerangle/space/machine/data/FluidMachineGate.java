@@ -20,12 +20,9 @@ public class FluidMachineGate {
     public FluidMachineGate(int capacity, Predicate<FluidStack> validPredicate) {
         this.capacity = new Ref<>(capacity);
         this.fluidStack = new Ref<>(FluidStack.EMPTY);
-        unrestricted = LazyOptional.of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate,
-                Restriction.UNRESTRICTED));
-        only_out = LazyOptional.of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate,
-                Restriction.ONLY_OUT));
-        only_in = LazyOptional
-                .of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate, Restriction.ONLY_IN));
+        unrestricted = LazyOptional.of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate, Restriction.UNRESTRICTED));
+        only_out = LazyOptional.of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate, Restriction.ONLY_OUT));
+        only_in = LazyOptional.of(() -> new MachineFluidHandler(this.fluidStack, this.capacity, validPredicate, Restriction.ONLY_IN));
     }
 
     public LazyOptional<IFluidHandler> getFluidHandler(Restriction restriction) {

@@ -15,15 +15,11 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void addFlatItem(Item item) {
-        getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated")))
-                .texture("layer0",
-                        item.getRegistryName().getNamespace() + ":venus/item/" + item.getRegistryName().getPath());
+        getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated"))).texture("layer0", item.getRegistryName().getNamespace() + ":venus/item/" + item.getRegistryName().getPath());
     }
 
     private void addFlatItemForBlock(Block block) {
-        getBuilder(block.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated")))
-                .texture("layer0",
-                        block.getRegistryName().getNamespace() + ":venus/block/" + block.getRegistryName().getPath());
+        getBuilder(block.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated"))).texture("layer0", block.getRegistryName().getNamespace() + ":venus/block/" + block.getRegistryName().getPath());
     }
 
     @Override

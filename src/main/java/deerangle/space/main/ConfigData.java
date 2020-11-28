@@ -17,8 +17,7 @@ public class ConfigData {
         final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         SERVER = specPair.getLeft();
         SERVER_SPEC = specPair.getRight();
-        final Pair<ClientConfig, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder()
-                .configure(ClientConfig::new);
+        final Pair<ClientConfig, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
         CLIENT = specPairClient.getLeft();
         CLIENT_SPEC = specPairClient.getRight();
     }
@@ -38,10 +37,8 @@ public class ConfigData {
 
         private ServerConfig(ForgeConfigSpec.Builder builder) {
             builder.push("worldgen");
-            spawnCopper = builder.comment("Determines whether or not copper ore should spawn.")
-                    .define("spawn_copper", true);
-            spawnAluminium = builder.comment("Determines whether or not aluminium ore should spawn.")
-                    .define("spawn_aluminium", true);
+            spawnCopper = builder.comment("Determines whether or not copper ore should spawn.").define("spawn_copper", true);
+            spawnAluminium = builder.comment("Determines whether or not aluminium ore should spawn.").define("spawn_aluminium", true);
             builder.pop();
         }
     }
@@ -51,8 +48,7 @@ public class ConfigData {
 
         private ClientConfig(ForgeConfigSpec.Builder builder) {
             builder.push("rendering");
-            doMachineParticles = builder.comment("Determines whether or not machines should emit particles.")
-                    .define("do_machine_particles", true);
+            doMachineParticles = builder.comment("Determines whether or not machines should emit particles.").define("do_machine_particles", true);
             builder.pop();
         }
     }

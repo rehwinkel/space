@@ -17,8 +17,7 @@ public class BlastFurnaceRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
 
     @Override
     public BlastFurnaceRecipe read(ResourceLocation recipeId, JsonObject json) {
-        JsonElement jsonelement = JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils
-                .getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient");
+        JsonElement jsonelement = JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient");
         Ingredient ingredient = Ingredient.deserialize(jsonelement);
         if (!json.has("result"))
             throw new JsonSyntaxException("Missing result, expected to find a string or object");
@@ -28,8 +27,7 @@ public class BlastFurnaceRecipeSerializer extends ForgeRegistryEntry<IRecipeSeri
         else {
             String result = JSONUtils.getString(json, "result");
             ResourceLocation resourcelocation = new ResourceLocation(result);
-            resultStack = new ItemStack(Registry.ITEM.getOptional(resourcelocation)
-                    .orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
+            resultStack = new ItemStack(Registry.ITEM.getOptional(resourcelocation).orElseThrow(() -> new IllegalStateException("Item: " + result + " does not exist")));
         }
         int duration = JSONUtils.getInt(json, "duration", 0);
         return new BlastFurnaceRecipe(recipeId, ingredient, resultStack, duration);

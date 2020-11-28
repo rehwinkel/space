@@ -21,8 +21,7 @@ public class GlowingBlock extends Block {
     }
 
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
-        if (!entityIn.isImmuneToFire() && entityIn instanceof LivingEntity && !EnchantmentHelper
-                .hasFrostWalker((LivingEntity) entityIn)) {
+        if (!entityIn.isImmuneToFire() && entityIn instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entityIn)) {
             entityIn.attackEntityFrom(DamageSource.HOT_FLOOR, 1.0F);
         }
         super.onEntityWalk(worldIn, pos, entityIn);

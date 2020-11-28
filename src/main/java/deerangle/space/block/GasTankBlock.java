@@ -9,8 +9,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 
 public class GasTankBlock extends MachineBlock {
 
-    private static final VoxelShape[] SHAPE = VoxelShapeUtil
-            .horizontalShape(Block.makeCuboidShape(3, 0, 3, 13, 15, 13), Block.makeCuboidShape(1, 11, 5, 15, 14, 11));
+    private static final VoxelShape[] SHAPE = VoxelShapeUtil.horizontalShape(Block.makeCuboidShape(3, 0, 3, 13, 15, 13), Block.makeCuboidShape(1, 11, 5, 15, 14, 11));
 
     public GasTankBlock(Properties properties) {
         super(properties, () -> MachineTypeRegistry.GAS_TANK, Stats.INTERACT_WITH_GAS_TANK);

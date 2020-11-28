@@ -10,11 +10,20 @@ import java.util.OptionalLong;
 
 public class CustomDimensionType extends DimensionType {
 
+    /*
+    public static final Codec<CustomDimensionType> CODEC = RecordCodecBuilder.create((builder) -> builder
+            .group(Codec.BOOL.fieldOf("has_skylight").forGetter(DimensionType::hasSkyLight),
+                    Codec.BOOL.fieldOf("ultrawarm").forGetter(DimensionType::isUltrawarm),
+                    Codec.BOOL.fieldOf("natural").forGetter(DimensionType::isNatural),
+                    ResourceLocation.CODEC.fieldOf("effects").forGetter(DimensionType::getEffects),
+                    Codec.LONG.fieldOf("day_length").forGetter(type -> type.dayLength))
+            .apply(builder, CustomDimensionType::new));
+    */
+
     private final long dayLength;
 
-    public CustomDimensionType(boolean hasSkyLight, boolean ultrawarm, boolean natural, ResourceLocation effects, float ambientLight, long dayLength) {
-        super(OptionalLong.empty(), hasSkyLight, false, ultrawarm, natural, 1.0D, false, false, true, true, false, 256,
-                ColumnFuzzedBiomeMagnifier.INSTANCE, BlockTags.INFINIBURN_OVERWORLD.getName(), effects, ambientLight);
+    public CustomDimensionType(boolean hasSkyLight, boolean ultrawarm, boolean natural, ResourceLocation effects, long dayLength) {
+        super(OptionalLong.empty(), hasSkyLight, false, ultrawarm, natural, 1.0D, false, false, true, true, false, 256, ColumnFuzzedBiomeMagnifier.INSTANCE, BlockTags.INFINIBURN_OVERWORLD.getName(), effects, 0.0F);
         this.dayLength = dayLength;
     }
 

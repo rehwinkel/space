@@ -23,8 +23,7 @@ public class CoalGeneratorMachine extends Machine {
 
     public CoalGeneratorMachine() {
         super(MachineTypeRegistry.COAL_GENERATOR, true, false, false, false, false, false);
-        fuel = addMachineData(
-                new ItemMachineData("Fuel", MachineTypeRegistry::isFuel, FlowType.INPUT, this, FUEL_TEXT));
+        fuel = addMachineData(new ItemMachineData("Fuel", MachineTypeRegistry::isFuel, FlowType.INPUT, this, FUEL_TEXT));
         energy = addMachineData(new EnergyMachineData("Eng", 30000, 1000, FlowType.OUTPUT, this, ENERGY_TEXT));
         burn = addMachineData(new BurnMachineData("Burn"));
         this.sideConfig.setTop(fuel.getInputAccessor());

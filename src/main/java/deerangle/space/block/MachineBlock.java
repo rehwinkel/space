@@ -53,9 +53,7 @@ public abstract class MachineBlock extends Block {
         super(properties);
         this.machineType = machineType;
         this.interactStat = interactStat;
-        this.setDefaultState(
-                this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false)
-                        .with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false));
     }
 
     protected abstract VoxelShape[] getMachineShape(BlockState state);
@@ -72,8 +70,7 @@ public abstract class MachineBlock extends Block {
         } else {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             if (tileEntity instanceof MachineTileEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity,
-                        ((MachineTileEntity) tileEntity)::writeGuiPacket);
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, ((MachineTileEntity) tileEntity)::writeGuiPacket);
                 player.addStat(interactStat);
             }
             return ActionResultType.CONSUME;
@@ -92,8 +89,7 @@ public abstract class MachineBlock extends Block {
                     itemstack.setTagInfo("BlockEntityTag", nbt);
                 }
 
-                ItemEntity itemEntity = new ItemEntity(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D,
-                        (double) pos.getZ() + 0.5D, itemstack);
+                ItemEntity itemEntity = new ItemEntity(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemstack);
                 itemEntity.setDefaultPickupDelay();
                 worldIn.addEntity(itemEntity);
             }
@@ -103,9 +99,7 @@ public abstract class MachineBlock extends Block {
 
     public boolean canConnect(BlockState state) {
         Block block = state.getBlock();
-        return (this.isIn(BlockTags.ENERGY_MACHINES) && block instanceof CableBlock) || (this
-                .isIn(BlockTags.ITEM_MACHINES) && block instanceof TransporterBlock) || (this
-                .isIn(BlockTags.FLUID_MACHINES) && block instanceof PipeBlock);
+        return (this.isIn(BlockTags.ENERGY_MACHINES) && block instanceof CableBlock) || (this.isIn(BlockTags.ITEM_MACHINES) && block instanceof TransporterBlock) || (this.isIn(BlockTags.FLUID_MACHINES) && block instanceof PipeBlock);
     }
 
     private Direction rotateByFacing(Direction facing, Direction side) {
@@ -142,10 +136,7 @@ public abstract class MachineBlock extends Block {
         BlockState upState = iblockreader.getBlockState(upPos);
         BlockState downState = iblockreader.getBlockState(downPos);
 
-        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(northState))
-                .with(EAST, this.canConnect(eastState)).with(SOUTH, this.canConnect(southState))
-                .with(WEST, this.canConnect(westState)).with(UP, this.canConnect(upState))
-                .with(DOWN, this.canConnect(downState));
+        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(northState)).with(EAST, this.canConnect(eastState)).with(SOUTH, this.canConnect(southState)).with(WEST, this.canConnect(westState)).with(UP, this.canConnect(upState)).with(DOWN, this.canConnect(downState));
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction side, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {

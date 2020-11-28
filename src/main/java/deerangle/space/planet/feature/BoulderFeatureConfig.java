@@ -8,10 +8,7 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 
 public class BoulderFeatureConfig implements IFeatureConfig {
 
-    public static final Codec<BoulderFeatureConfig> CODEC = RecordCodecBuilder.create((builder) -> builder
-            .group(BlockStateProvider.CODEC.fieldOf("block_provider").forGetter(inst -> inst.blockProvider),
-                    FeatureSpread.CODEC.fieldOf("width").forGetter(inst -> inst.width))
-            .apply(builder, BoulderFeatureConfig::new));
+    public static final Codec<BoulderFeatureConfig> CODEC = RecordCodecBuilder.create((builder) -> builder.group(BlockStateProvider.CODEC.fieldOf("block_provider").forGetter(inst -> inst.blockProvider), FeatureSpread.CODEC.fieldOf("width").forGetter(inst -> inst.width)).apply(builder, BoulderFeatureConfig::new));
 
     public BlockStateProvider blockProvider;
     public FeatureSpread width;

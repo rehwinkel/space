@@ -15,8 +15,7 @@ public class Accessor {
         this.data = associatedData;
         this.input = isInput;
         this.color = color;
-        this.name = isInput ? new TranslationTextComponent("info.space.in", name) : new TranslationTextComponent(
-                "info.space.out", name);
+        this.name = isInput ? new TranslationTextComponent("info.space.in", name) : new TranslationTextComponent("info.space.out", name);
     }
 
     public int getColor() {

@@ -37,9 +37,7 @@ public class BlastFurnaceMachine extends Machine {
 
     public BlastFurnaceMachine() {
         super(MachineTypeRegistry.BLAST_FURNACE, true, false, false, false, true, false);
-        fuel = addMachineData(
-                new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL), FlowType.INPUT, this,
-                        FUEL_TEXT));
+        fuel = addMachineData(new ItemMachineData("Fuel", stack -> stack.getItem().equals(Items.COAL), FlowType.INPUT, this, FUEL_TEXT));
         input = addMachineData(new ItemMachineData("Input", FlowType.INPUT, this, INPUT_TEXT));
         output = addMachineData(new ItemMachineData("Output", FlowType.OUTPUT, this, OUTPUT_TEXT));
         burn = addMachineData(new BurnMachineData("Burn"));
@@ -53,10 +51,8 @@ public class BlastFurnaceMachine extends Machine {
     public void update(World world, BlockPos pos) {
         boolean wasBurning = this.isBurning();
 
-        Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE,
-                new StackInventory(this.input.getItemHandler().getStackInSlot(0)), world);
-        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandler()
-                .insertItem(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
+        Optional<BlastFurnaceRecipe> recipeOpt = world.getRecipeManager().getRecipe(RecipeRegistry.BLAST_FURNACE_TYPE, new StackInventory(this.input.getItemHandler().getStackInSlot(0)), world);
+        boolean shouldUseFuel = recipeOpt.isPresent() && this.output.getItemHandler().insertItem(0, recipeOpt.get().getCraftingResult(null), true) == ItemStack.EMPTY;
         if (this.currentRecipe != null && this.currentProgress == 1) {
             shouldUseFuel = false;
         }

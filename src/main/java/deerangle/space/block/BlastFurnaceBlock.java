@@ -31,22 +31,12 @@ import java.util.Random;
 public class BlastFurnaceBlock extends MachineBlock {
 
     public static final BooleanProperty TOP_HALF = BooleanProperty.create("top_half");
-    private static final VoxelShape[] SHAPE = VoxelShapeUtil
-            .horizontalShape(Block.makeCuboidShape(1, 0, 1, 15, 9, 13), Block.makeCuboidShape(3, 9, 2, 13, 16, 12),
-                    Block.makeCuboidShape(5, 16, 4, 11, 28, 10), Block.makeCuboidShape(2, 0, 13, 4, 8, 16),
-                    Block.makeCuboidShape(4, 10, 12, 6, 17, 15), Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
-    private static final VoxelShape[] TOP_SHAPE = VoxelShapeUtil
-            .horizontalShape(-1.0, Block.makeCuboidShape(1, 0, 1, 15, 9, 13),
-                    Block.makeCuboidShape(3, 9, 2, 13, 16, 12), Block.makeCuboidShape(5, 16, 4, 11, 28, 10),
-                    Block.makeCuboidShape(2, 0, 13, 4, 8, 16), Block.makeCuboidShape(4, 10, 12, 6, 17, 15),
-                    Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
+    private static final VoxelShape[] SHAPE = VoxelShapeUtil.horizontalShape(Block.makeCuboidShape(1, 0, 1, 15, 9, 13), Block.makeCuboidShape(3, 9, 2, 13, 16, 12), Block.makeCuboidShape(5, 16, 4, 11, 28, 10), Block.makeCuboidShape(2, 0, 13, 4, 8, 16), Block.makeCuboidShape(4, 10, 12, 6, 17, 15), Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
+    private static final VoxelShape[] TOP_SHAPE = VoxelShapeUtil.horizontalShape(-1.0, Block.makeCuboidShape(1, 0, 1, 15, 9, 13), Block.makeCuboidShape(3, 9, 2, 13, 16, 12), Block.makeCuboidShape(5, 16, 4, 11, 28, 10), Block.makeCuboidShape(2, 0, 13, 4, 8, 16), Block.makeCuboidShape(4, 10, 12, 6, 17, 15), Block.makeCuboidShape(11, 21, 6, 14, 32, 8));
 
     public BlastFurnaceBlock(Properties properties) {
         super(properties, () -> MachineTypeRegistry.BLAST_FURNACE, Stats.INTERACT_WITH_BLAST_FURNACE);
-        this.setDefaultState(
-                this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false)
-                        .with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false)
-                        .with(TOP_HALF, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(RUNNING, false).with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false).with(TOP_HALF, false));
     }
 
     @Override
@@ -69,8 +59,7 @@ public class BlastFurnaceBlock extends MachineBlock {
                 tileEntity = worldIn.getTileEntity(pos);
             }
             if (tileEntity instanceof MachineTileEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity,
-                        ((MachineTileEntity) tileEntity)::writeGuiPacket);
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, ((MachineTileEntity) tileEntity)::writeGuiPacket);
                 player.addStat(interactStat);
             }
             return ActionResultType.CONSUME;
@@ -119,8 +108,7 @@ public class BlastFurnaceBlock extends MachineBlock {
                 double baseY = pos.getY() + 0.125D;
                 double baseZ = (double) pos.getZ() + 0.5D;
                 if (rand.nextDouble() < 0.1D) {
-                    worldIn.playSound(baseX, baseY, baseZ, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS,
-                            1.0F, 1.0F, false);
+                    worldIn.playSound(baseX, baseY, baseZ, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
                 }
 
                 Direction direction = stateIn.get(FACING);
@@ -129,12 +117,10 @@ public class BlastFurnaceBlock extends MachineBlock {
                 double fireOffX = axis == Direction.Axis.X ? (double) direction.getXOffset() * 0.52D : n;
                 double fireOffY = rand.nextDouble() * 6.0D / 16.0D;
                 double fireOffZ = axis == Direction.Axis.Z ? (double) direction.getZOffset() * 0.52D : n;
-                worldIn.addParticle(ParticleTypes.FLAME, baseX + fireOffX, baseY + fireOffY, baseZ + fireOffZ, 0.0D,
-                        0.0D, 0.0D);
+                worldIn.addParticle(ParticleTypes.FLAME, baseX + fireOffX, baseY + fireOffY, baseZ + fireOffZ, 0.0D, 0.0D, 0.0D);
 
                 for (int i = 0; i < 4; i++) {
-                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.LARGE_SMOKE, baseX,
-                            baseY + 1.8D, baseZ, 0, 0);
+                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.LARGE_SMOKE, baseX, baseY + 1.8D, baseZ, 0, 0);
                 }
             }
         }

@@ -18,14 +18,11 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void addFlatItem(Item item) {
-        getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated")))
-                .texture("layer0", item.getRegistryName().getNamespace() + ":item/" + item.getRegistryName().getPath());
+        getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(new ResourceLocation("item/generated"))).texture("layer0", item.getRegistryName().getNamespace() + ":item/" + item.getRegistryName().getPath());
     }
 
     private void addBucketItem(BucketItem item) {
-        getBuilder(item.getRegistryName().getPath())
-                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("forge", "item/bucket")))
-                .customLoader(DynamicBucketModelBuilder::begin).fluid(item.getFluid());
+        getBuilder(item.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(new ResourceLocation("forge", "item/bucket"))).customLoader(DynamicBucketModelBuilder::begin).fluid(item.getFluid());
     }
 
     @Override

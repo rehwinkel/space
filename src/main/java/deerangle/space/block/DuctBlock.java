@@ -39,8 +39,7 @@ public abstract class DuctBlock extends Block {
 
     public DuctBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(UP, false).with(NORTH, false).with(SOUTH, false)
-                .with(EAST, false).with(WEST, false).with(DOWN, false).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false).with(WATERLOGGED, false));
     }
 
     private VoxelShape[] makeShapes(int width) {
@@ -79,8 +78,7 @@ public abstract class DuctBlock extends Block {
     }
 
     private int getIndex(BlockState state) {
-        return (state.get(NORTH) ? 0b1 : 0) | (state.get(SOUTH) ? 0b10 : 0) | (state.get(EAST) ? 0b100 : 0) | (state
-                .get(WEST) ? 0b1000 : 0) | (state.get(UP) ? 0b10000 : 0) | (state.get(DOWN) ? 0b100000 : 0);
+        return (state.get(NORTH) ? 0b1 : 0) | (state.get(SOUTH) ? 0b10 : 0) | (state.get(EAST) ? 0b100 : 0) | (state.get(WEST) ? 0b1000 : 0) | (state.get(UP) ? 0b10000 : 0) | (state.get(DOWN) ? 0b100000 : 0);
     }
 
     @Override
@@ -120,14 +118,7 @@ public abstract class DuctBlock extends Block {
         BlockState upState = iblockreader.getBlockState(upPos);
         BlockState downState = iblockreader.getBlockState(downPos);
 
-        return super.getStateForPlacement(context)
-                .with(NORTH, this.canConnect(northState, iblockreader, northPos, Direction.SOUTH))
-                .with(EAST, this.canConnect(eastState, iblockreader, eastPos, Direction.WEST))
-                .with(SOUTH, this.canConnect(southState, iblockreader, southPos, Direction.NORTH))
-                .with(WEST, this.canConnect(westState, iblockreader, westPos, Direction.EAST))
-                .with(UP, this.canConnect(upState, iblockreader, upPos, Direction.DOWN))
-                .with(DOWN, this.canConnect(downState, iblockreader, downPos, Direction.UP))
-                .with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
+        return super.getStateForPlacement(context).with(NORTH, this.canConnect(northState, iblockreader, northPos, Direction.SOUTH)).with(EAST, this.canConnect(eastState, iblockreader, eastPos, Direction.WEST)).with(SOUTH, this.canConnect(southState, iblockreader, southPos, Direction.NORTH)).with(WEST, this.canConnect(westState, iblockreader, westPos, Direction.EAST)).with(UP, this.canConnect(upState, iblockreader, upPos, Direction.DOWN)).with(DOWN, this.canConnect(downState, iblockreader, downPos, Direction.UP)).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
@@ -135,8 +126,7 @@ public abstract class DuctBlock extends Block {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
         }
 
-        return stateIn.with(FACING_TO_PROPERTY_MAP.get(facing),
-                this.canConnect(facingState, worldIn, currentPos.offset(facing), facing.getOpposite()));
+        return stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), this.canConnect(facingState, worldIn, currentPos.offset(facing), facing.getOpposite()));
     }
 
     @Override

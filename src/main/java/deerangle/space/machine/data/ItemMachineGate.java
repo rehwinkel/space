@@ -18,8 +18,7 @@ public class ItemMachineGate {
 
     public ItemMachineGate(Predicate<ItemStack> validPredicate) {
         stack = new Ref<>(ItemStack.EMPTY);
-        unrestricted = LazyOptional
-                .of(() -> new MachineItemHandler(this.stack, validPredicate, Restriction.UNRESTRICTED));
+        unrestricted = LazyOptional.of(() -> new MachineItemHandler(this.stack, validPredicate, Restriction.UNRESTRICTED));
         only_out = LazyOptional.of(() -> new MachineItemHandler(this.stack, validPredicate, Restriction.ONLY_OUT));
         only_in = LazyOptional.of(() -> new MachineItemHandler(this.stack, validPredicate, Restriction.ONLY_IN));
     }

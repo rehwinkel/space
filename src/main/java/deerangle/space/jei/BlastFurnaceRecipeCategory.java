@@ -37,15 +37,12 @@ public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceR
         this.background = guiHelper.createDrawable(SpaceModPlugin.JEI_BACKGROUND, 0, 114, 82, 54);
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(MachineRegistry.BLAST_FURNACE.get()));
         this.staticFlame = guiHelper.createDrawable(SpaceModPlugin.JEI_BACKGROUND, 82, 114, 14, 14);
-        this.animatedFlame = guiHelper
-                .createAnimatedDrawable(this.staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
-        this.cachedArrows = CacheBuilder.newBuilder().maximumSize(25L)
-                .build(new CacheLoader<Integer, IDrawableAnimated>() {
-                    public IDrawableAnimated load(Integer cookTime) {
-                        return guiHelper.drawableBuilder(SpaceModPlugin.JEI_BACKGROUND, 82, 128, 24, 17)
-                                .buildAnimated(cookTime, IDrawableAnimated.StartDirection.LEFT, false);
-                    }
-                });
+        this.animatedFlame = guiHelper.createAnimatedDrawable(this.staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);
+        this.cachedArrows = CacheBuilder.newBuilder().maximumSize(25L).build(new CacheLoader<Integer, IDrawableAnimated>() {
+            public IDrawableAnimated load(Integer cookTime) {
+                return guiHelper.drawableBuilder(SpaceModPlugin.JEI_BACKGROUND, 82, 128, 24, 17).buildAnimated(cookTime, IDrawableAnimated.StartDirection.LEFT, false);
+            }
+        });
     }
 
     @Override
@@ -65,13 +62,11 @@ public class BlastFurnaceRecipeCategory implements IRecipeCategory<BlastFurnaceR
         int cookTime = recipe.getDuration();
         if (cookTime > 0) {
             int cookTimeSeconds = cookTime / 20;
-            TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.smelting.time.seconds",
-                    cookTimeSeconds);
+            TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.smelting.time.seconds", cookTimeSeconds);
             Minecraft minecraft = Minecraft.getInstance();
             FontRenderer fontRenderer = minecraft.fontRenderer;
             int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-            fontRenderer.func_243248_b(matrixStack, timeString, (float) (this.background.getWidth() - stringWidth),
-                    (float) y, -8355712);
+            fontRenderer.func_243248_b(matrixStack, timeString, (float) (this.background.getWidth() - stringWidth), (float) y, -8355712);
         }
 
     }

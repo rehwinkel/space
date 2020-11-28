@@ -55,8 +55,7 @@ public class AlgaeBlock extends Block {
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super
-                .updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
@@ -81,8 +80,7 @@ public class AlgaeBlock extends Block {
                     if (this.isValidPosition(null, worldIn, growPos)) {
                         worldIn.setBlockState(growPos, this.getDefaultState());
                         break;
-                    } else if (worldIn.isAirBlock(growPos.down()) && this
-                            .isValidPosition(null, worldIn, growPos.down())) {
+                    } else if (worldIn.isAirBlock(growPos.down()) && this.isValidPosition(null, worldIn, growPos.down())) {
                         worldIn.setBlockState(growPos.down(), this.getDefaultState());
                         break;
                     }
@@ -96,8 +94,7 @@ public class AlgaeBlock extends Block {
 
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-        worldIn.addParticle(new BlockParticleData(ParticleTypes.BLOCK, stateIn), pos.getX() + rand.nextDouble(),
-                pos.getY() + 0.125D, pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(new BlockParticleData(ParticleTypes.BLOCK, stateIn), pos.getX() + rand.nextDouble(), pos.getY() + 0.125D, pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
     }
 
 }

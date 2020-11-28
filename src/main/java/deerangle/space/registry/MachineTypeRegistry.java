@@ -58,39 +58,14 @@ public class MachineTypeRegistry {
 
     @SubscribeEvent
     public static void registerMachineTypes(RegistryEvent.Register<MachineType<?>> event) {
-        COAL_GENERATOR = register("coal_generator", MachineType.builder(CoalGeneratorMachine::new)
-                .add(new ItemElement(79, 47, 0, FUEL_TEXT, MachineTypeRegistry::isFuel))
-                .add(new EnergyElement(17, 17, 1, ENERGY_TEXT)).add(new BurnElement(79, 29, 2)));
-        BLAST_FURNACE = register("blast_furnace", MachineType.builder(BlastFurnaceMachine::new)
-                .add(new ItemElement(55, 52, 0, FUEL_TEXT, MachineTypeRegistry::isCoal))
-                .add(new ItemElement(55, 16, 1, INPUT_TEXT, MachineTypeRegistry::accept))
-                .add(new ItemElement(110, 34, 2, OUTPUT_TEXT, MachineTypeRegistry::reject))
-                .add(new BurnElement(55, 34, 3)).add(new ProgressElement(79, 33, 4)));
-        COMBUSTION_GENERATOR = register("combustion_generator",
-                MachineType.builder(CombustionGeneratorMachine::new).add(new FluidElement(89, 17, 0, FUEL_TEXT))
-                        .add(new EnergyElement(17, 17, 1, ENERGY_TEXT))
-                        .add(new ItemElement(69, 48, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid))
-                        .add(new BurnElement(69, 29, 3)));
-        GAS_TANK = register("gas_tank",
-                MachineType.builder(GasTankMachine::new).add(new FluidElement(79, 17, 0, TANK_TEXT))
-                        .add(new ItemElement(79 - 20, 17, 1, BUCKET_TEXT, MachineTypeRegistry::holdsFluid))
-                        .add(new ItemElement(79 + 20, 17, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)));
-        DRUM = register("drum", MachineType.builder(DrumMachine::new).add(new FluidElement(79, 17, 0, TANK_TEXT))
-                .add(new ItemElement(79 - 20, 17, 1, BUCKET_TEXT, MachineTypeRegistry::holdsFluid))
-                .add(new ItemElement(79 + 20, 17, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)));
-        BATTERY_PACK = register("battery_pack",
-                MachineType.builder(BatteryPackMachine::new).add(new EnergyElement(79 + 4, 17, 0, ENERGY_TEXT))
-                        .add(new ItemElement(79 - 20, 17, 1, BATTERY_TEXT, MachineTypeRegistry::holdsEnergy))
-                        .add(new ItemElement(79 + 20, 17, 2, BATTERY_TEXT, MachineTypeRegistry::holdsEnergy)));
-        REFINERY = register("refinery",
-                MachineType.builder(RefineryMachine::new).add(new EnergyElement(17, 17, 0, ENERGY_TEXT))
-                        .add(new FluidElement(29, 17, 1, INPUT_TEXT)).add(new FluidElement(129, 17, 2, OUTPUT_TEXT))
-                        .add(new ItemElement(49, 48, 3, BUCKET_TEXT, MachineTypeRegistry::holdsFluid))
-                        .add(new ItemElement(109, 48, 4, BUCKET_TEXT, MachineTypeRegistry::holdsFluid))
-                        .add(new ProgressElement(76, 30, 5)));
-        event.getRegistry()
-                .registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK,
-                        REFINERY);
+        COAL_GENERATOR = register("coal_generator", MachineType.builder(CoalGeneratorMachine::new).add(new ItemElement(79, 47, 0, FUEL_TEXT, MachineTypeRegistry::isFuel)).add(new EnergyElement(17, 17, 1, ENERGY_TEXT)).add(new BurnElement(79, 29, 2)));
+        BLAST_FURNACE = register("blast_furnace", MachineType.builder(BlastFurnaceMachine::new).add(new ItemElement(55, 52, 0, FUEL_TEXT, MachineTypeRegistry::isCoal)).add(new ItemElement(55, 16, 1, INPUT_TEXT, MachineTypeRegistry::accept)).add(new ItemElement(110, 34, 2, OUTPUT_TEXT, MachineTypeRegistry::reject)).add(new BurnElement(55, 34, 3)).add(new ProgressElement(79, 33, 4)));
+        COMBUSTION_GENERATOR = register("combustion_generator", MachineType.builder(CombustionGeneratorMachine::new).add(new FluidElement(89, 17, 0, FUEL_TEXT)).add(new EnergyElement(17, 17, 1, ENERGY_TEXT)).add(new ItemElement(69, 48, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)).add(new BurnElement(69, 29, 3)));
+        GAS_TANK = register("gas_tank", MachineType.builder(GasTankMachine::new).add(new FluidElement(79, 17, 0, TANK_TEXT)).add(new ItemElement(79 - 20, 17, 1, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)).add(new ItemElement(79 + 20, 17, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)));
+        DRUM = register("drum", MachineType.builder(DrumMachine::new).add(new FluidElement(79, 17, 0, TANK_TEXT)).add(new ItemElement(79 - 20, 17, 1, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)).add(new ItemElement(79 + 20, 17, 2, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)));
+        BATTERY_PACK = register("battery_pack", MachineType.builder(BatteryPackMachine::new).add(new EnergyElement(79 + 4, 17, 0, ENERGY_TEXT)).add(new ItemElement(79 - 20, 17, 1, BATTERY_TEXT, MachineTypeRegistry::holdsEnergy)).add(new ItemElement(79 + 20, 17, 2, BATTERY_TEXT, MachineTypeRegistry::holdsEnergy)));
+        REFINERY = register("refinery", MachineType.builder(RefineryMachine::new).add(new EnergyElement(17, 17, 0, ENERGY_TEXT)).add(new FluidElement(29, 17, 1, INPUT_TEXT)).add(new FluidElement(129, 17, 2, OUTPUT_TEXT)).add(new ItemElement(49, 48, 3, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)).add(new ItemElement(109, 48, 4, BUCKET_TEXT, MachineTypeRegistry::holdsFluid)).add(new ProgressElement(76, 30, 5)));
+        event.getRegistry().registerAll(COAL_GENERATOR, BLAST_FURNACE, COMBUSTION_GENERATOR, GAS_TANK, DRUM, BATTERY_PACK, REFINERY);
     }
 
     private static <M extends Machine> MachineType<M> register(String name, MachineType.Builder<M> builder) {

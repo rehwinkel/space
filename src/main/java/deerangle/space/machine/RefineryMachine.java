@@ -40,14 +40,10 @@ public class RefineryMachine extends Machine {
     public RefineryMachine() {
         super(MachineTypeRegistry.REFINERY);
         energy = addMachineData(new EnergyMachineData("Energy", 15000, 1000, FlowType.INPUT, this, ENERGY_TEXT));
-        input = addMachineData(
-                new FluidMachineData("Input", 4000, fluidStack -> true, FlowType.INPUT, this, INPUT_TEXT));
-        output = addMachineData(
-                new FluidMachineData("Output", 4000, fluidStack -> true, FlowType.OUTPUT, this, OUTPUT_TEXT));
-        bucketInput = addMachineData(
-                new ItemMachineData("InBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
-        bucketOutput = addMachineData(
-                new ItemMachineData("OutBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        input = addMachineData(new FluidMachineData("Input", 4000, fluidStack -> true, FlowType.INPUT, this, INPUT_TEXT));
+        output = addMachineData(new FluidMachineData("Output", 4000, fluidStack -> true, FlowType.OUTPUT, this, OUTPUT_TEXT));
+        bucketInput = addMachineData(new ItemMachineData("InBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        bucketOutput = addMachineData(new ItemMachineData("OutBuck", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         progress = addMachineData(new ProgressMachineData("Progress"));
         this.sideConfig.setFront(energy.getInputAccessor());
         this.sideConfig.setBack(energy.getInputAccessor());
@@ -107,9 +103,7 @@ public class RefineryMachine extends Machine {
                 int energyRequired = toProcess * recipe.getDuration() * RF_PER_TICK;
                 if (this.energy.getEnergy() >= energyRequired) {
                     int resultAmount = recipes * recipe.getResultFluid().getAmount();
-                    int simFill = this.output.getFluidHandler()
-                            .fill(new FluidStack(recipe.getResultFluid().getFluid(), resultAmount),
-                                    IFluidHandler.FluidAction.SIMULATE);
+                    int simFill = this.output.getFluidHandler().fill(new FluidStack(recipe.getResultFluid().getFluid(), resultAmount), IFluidHandler.FluidAction.SIMULATE);
                     if (simFill == resultAmount) {
                         this.recipeCount = recipes;
                         this.currentMaxProgress = toProcess * recipe.getDuration();
@@ -121,9 +115,7 @@ public class RefineryMachine extends Machine {
             }
         } else {
             if (this.currentProgress == 0) {
-                this.output.getFluidHandler().fill(new FluidStack(this.currentRecipe.getResultFluid().getFluid(),
-                                this.recipeCount * this.currentRecipe.getResultFluid().getAmount()),
-                        IFluidHandler.FluidAction.EXECUTE);
+                this.output.getFluidHandler().fill(new FluidStack(this.currentRecipe.getResultFluid().getFluid(), this.recipeCount * this.currentRecipe.getResultFluid().getAmount()), IFluidHandler.FluidAction.EXECUTE);
                 this.currentRecipe = null;
                 this.recipeCount = 0;
                 this.currentMaxProgress = 0;
@@ -156,8 +148,7 @@ public class RefineryMachine extends Machine {
     }
 
     private Optional<RefineryRecipe> getRecipe(World world, Fluid input) {
-        List<RefineryRecipe> refineryRecipeList = world.getRecipeManager()
-                .getRecipesForType(RecipeRegistry.REFINERY_TYPE);
+        List<RefineryRecipe> refineryRecipeList = world.getRecipeManager().getRecipesForType(RecipeRegistry.REFINERY_TYPE);
         return refineryRecipeList.stream().filter(recipe -> recipe.matchesFluid(input)).findFirst();
     }
 

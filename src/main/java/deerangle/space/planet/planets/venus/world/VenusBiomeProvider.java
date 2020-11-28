@@ -15,16 +15,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class VenusBiomeProvider extends BiomeProvider {
-    public static final Codec<VenusBiomeProvider> CODEC = RecordCodecBuilder
-            .create((providerInstance) -> providerInstance
-                    .group(Codec.LONG.fieldOf("seed").forGetter(biomeProvider -> biomeProvider.seed),
-                            Biome.BIOME_CODEC.fieldOf("river_biome")
-                                    .forGetter(biomeProvider -> biomeProvider.riverBiome),
-                            Biome.BIOMES_CODEC.fieldOf("biomes")
-                                    .forGetter((checkerProvider) -> checkerProvider.otherBiomes),
-                            Codec.INT_STREAM.fieldOf("biome_weights")
-                                    .forGetter((biomeProvider) -> Arrays.stream(biomeProvider.weights.clone())))
-                    .apply(providerInstance, VenusBiomeProvider::new));
+    public static final Codec<VenusBiomeProvider> CODEC = RecordCodecBuilder.create((providerInstance) -> providerInstance.group(Codec.LONG.fieldOf("seed").forGetter(biomeProvider -> biomeProvider.seed), Biome.BIOME_CODEC.fieldOf("river_biome").forGetter(biomeProvider -> biomeProvider.riverBiome), Biome.BIOMES_CODEC.fieldOf("biomes").forGetter((checkerProvider) -> checkerProvider.otherBiomes), Codec.INT_STREAM.fieldOf("biome_weights").forGetter((biomeProvider) -> Arrays.stream(biomeProvider.weights.clone()))).apply(providerInstance, VenusBiomeProvider::new));
 
     private final SimplexNoiseGenerator simplexRng;
     private final long seed;

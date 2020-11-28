@@ -9,14 +9,7 @@ import net.minecraft.world.gen.feature.FeatureSpread;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 
 public class CraterFeatureConfig implements IFeatureConfig {
-    public static final Codec<CraterFeatureConfig> CODEC = RecordCodecBuilder.create((builder) -> builder
-            .group(BlockStateProvider.CODEC.fieldOf("fill_provider").forGetter(inst -> inst.fillBlock),
-                    BlockStateProvider.CODEC.fieldOf("edge_provider").forGetter(inst -> inst.edgeBlock),
-                    FeatureSpread.CODEC.fieldOf("radius").forGetter(inst -> inst.radius),
-                    FeatureSpread.CODEC.fieldOf("depth").forGetter(inst -> inst.depth),
-                    FeatureSpread.CODEC.fieldOf("edge_height").forGetter(inst -> inst.edgeHeight),
-                    Codec.DOUBLE.fieldOf("fill_height").forGetter(inst -> inst.fillHeight))
-            .apply(builder, CraterFeatureConfig::new));
+    public static final Codec<CraterFeatureConfig> CODEC = RecordCodecBuilder.create((builder) -> builder.group(BlockStateProvider.CODEC.fieldOf("fill_provider").forGetter(inst -> inst.fillBlock), BlockStateProvider.CODEC.fieldOf("edge_provider").forGetter(inst -> inst.edgeBlock), FeatureSpread.CODEC.fieldOf("radius").forGetter(inst -> inst.radius), FeatureSpread.CODEC.fieldOf("depth").forGetter(inst -> inst.depth), FeatureSpread.CODEC.fieldOf("edge_height").forGetter(inst -> inst.edgeHeight), Codec.DOUBLE.fieldOf("fill_height").forGetter(inst -> inst.fillHeight)).apply(builder, CraterFeatureConfig::new));
 
     public FeatureSpread radius;
     public FeatureSpread depth;
@@ -39,8 +32,7 @@ public class CraterFeatureConfig implements IFeatureConfig {
     }
 
     public CraterFeatureConfig(FeatureSpread radius, FeatureSpread depth, FeatureSpread edgeHeight) {
-        this(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()),
-                new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), radius, depth, edgeHeight, 0.0f);
+        this(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), radius, depth, edgeHeight, 0.0f);
     }
 
 }

@@ -22,8 +22,7 @@ import java.util.Map;
 
 public class CombustionGeneratorMachine extends Machine {
 
-    public static final Map<Fluid, Integer> BURN_TIME_MAP = ImmutableMap
-            .of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
+    public static final Map<Fluid, Integer> BURN_TIME_MAP = ImmutableMap.of(FluidRegistry.CRUDE_OIL.get(), 2, FluidRegistry.KEROSENE.get(), 5);
     private static final int SIP_SIZE = 20;
     private static final int RF_PER_TICK = 60;
     private final FluidMachineData fuel;
@@ -35,11 +34,9 @@ public class CombustionGeneratorMachine extends Machine {
 
     public CombustionGeneratorMachine() {
         super(MachineTypeRegistry.COMBUSTION_GENERATOR, false, false, true, true, true, false);
-        fuel = addMachineData(
-                new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT, this, FUEL_TEXT));
+        fuel = addMachineData(new FluidMachineData("Fuel", 4000, stack -> getBurnTime(stack) > 0, FlowType.INPUT, this, FUEL_TEXT));
         energy = addMachineData(new EnergyMachineData("Eng", 60000, 1000, FlowType.OUTPUT, this, ENERGY_TEXT));
-        bucket = addMachineData(
-                new ItemMachineData("Bucket", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
+        bucket = addMachineData(new ItemMachineData("Bucket", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         burn = addMachineData(new BurnMachineData("Burn"));
         this.sideConfig.setFront(fuel.getInputAccessor());
         this.sideConfig.setBack(energy.getOutputAccessor());

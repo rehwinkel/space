@@ -21,15 +21,9 @@ public class EnergyMachineGate {
         this.maxReceive = new Ref<>(maxReceive);
         this.maxExtract = new Ref<>(maxExtract);
         this.energy = new Ref<>(energy);
-        unrestricted = LazyOptional
-                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
-                        Restriction.UNRESTRICTED));
-        only_out = LazyOptional
-                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
-                        Restriction.ONLY_OUT));
-        only_in = LazyOptional
-                .of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy,
-                        Restriction.ONLY_IN));
+        unrestricted = LazyOptional.of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy, Restriction.UNRESTRICTED));
+        only_out = LazyOptional.of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy, Restriction.ONLY_OUT));
+        only_in = LazyOptional.of(() -> new MachineEnergyStorage(this.capacity, this.maxReceive, this.maxExtract, this.energy, Restriction.ONLY_IN));
 
     }
 

@@ -70,9 +70,7 @@ public class BetterLakeFeature extends Feature<BetterLakeFeatureConfig> {
                                     return false;
                                 }
 
-                                if (k < 4 && !material.isSolid() && reader
-                                        .getBlockState(pos.add(k1, k, l2)) != config.fluidBlock
-                                        .getBlockState(rand, pos.add(k1, k, l2))) {
+                                if (k < 4 && !material.isSolid() && reader.getBlockState(pos.add(k1, k, l2)) != config.fluidBlock.getBlockState(rand, pos.add(k1, k, l2))) {
                                     return false;
                                 }
                             }
@@ -84,8 +82,7 @@ public class BetterLakeFeature extends Feature<BetterLakeFeatureConfig> {
                     for (int i3 = 0; i3 < 16; ++i3) {
                         for (int i4 = 0; i4 < 8; ++i4) {
                             if (aboolean[(l1 * 16 + i3) * 8 + i4]) {
-                                reader.setBlockState(pos.add(l1, i4, i3),
-                                        i4 >= 4 ? AIR : config.fluidBlock.getBlockState(rand, pos.add(l1, i4, i3)), 2);
+                                reader.setBlockState(pos.add(l1, i4, i3), i4 >= 4 ? AIR : config.fluidBlock.getBlockState(rand, pos.add(l1, i4, i3)), 2);
                             }
                         }
                     }
@@ -95,10 +92,8 @@ public class BetterLakeFeature extends Feature<BetterLakeFeatureConfig> {
                     for (int k3 = 0; k3 < 16; ++k3) {
                         for (int k4 = 0; k4 < 8; ++k4) {
                             boolean flag1 = !aboolean[(j2 * 16 + k3) * 8 + k4] && (j2 < 15 && aboolean[((j2 + 1) * 16 + k3) * 8 + k4] || j2 > 0 && aboolean[((j2 - 1) * 16 + k3) * 8 + k4] || k3 < 15 && aboolean[(j2 * 16 + k3 + 1) * 8 + k4] || k3 > 0 && aboolean[(j2 * 16 + (k3 - 1)) * 8 + k4] || k4 < 7 && aboolean[(j2 * 16 + k3) * 8 + k4 + 1] || k4 > 0 && aboolean[(j2 * 16 + k3) * 8 + (k4 - 1)]);
-                            if (flag1 && (k4 < 4 || rand.nextInt(2) != 0) && reader.getBlockState(pos.add(j2, k4, k3))
-                                    .getMaterial().isSolid()) {
-                                reader.setBlockState(pos.add(j2, k4, k3),
-                                        config.edgeBlock.getBlockState(rand, pos.add(j2, k4, k3)), 2);
+                            if (flag1 && (k4 < 4 || rand.nextInt(2) != 0) && reader.getBlockState(pos.add(j2, k4, k3)).getMaterial().isSolid()) {
+                                reader.setBlockState(pos.add(j2, k4, k3), config.edgeBlock.getBlockState(rand, pos.add(j2, k4, k3)), 2);
                             }
                         }
                     }

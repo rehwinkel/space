@@ -30,14 +30,12 @@ public class AdvanceSideMsg {
     }
 
     public static AdvanceSideMsg deserialize(PacketBuffer packetBuffer) {
-        return new AdvanceSideMsg(packetBuffer.readBlockPos(), packetBuffer.readBoolean(),
-                packetBuffer.readEnumValue(Face.class));
+        return new AdvanceSideMsg(packetBuffer.readBlockPos(), packetBuffer.readBoolean(), packetBuffer.readEnumValue(Face.class));
     }
 
     public static void handle(AdvanceSideMsg msg, Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
-            SideConfig sides = ((MachineTileEntity) contextSupplier.get().getSender().getServerWorld()
-                    .getTileEntity(msg.pos)).getMachine().getSideConfig();
+            SideConfig sides = ((MachineTileEntity) contextSupplier.get().getSender().getServerWorld().getTileEntity(msg.pos)).getMachine().getSideConfig();
             switch (msg.face) {
                 case TOP:
                     sides.setTop(sides.getNext(sides.getTop(), msg.forward));

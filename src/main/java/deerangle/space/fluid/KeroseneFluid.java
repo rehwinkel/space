@@ -23,11 +23,7 @@ public class KeroseneFluid extends FlowingFluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_still"),
-                new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_flow"))
-                .overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_overlay"))
-                .translationKey("block.space.kerosene").density(810).viscosity(1000)
-                .sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY).color(0xFFe62740).build(this);
+        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_still"), new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_flow")).overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/kerosene_overlay")).translationKey("block.space.kerosene").density(810).viscosity(1000).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY).color(0xFFe62740).build(this);
     }
 
     @Override
@@ -86,8 +82,7 @@ public class KeroseneFluid extends FlowingFluid {
 
     @Override
     protected BlockState getBlockState(FluidState state) {
-        return FluidRegistry.KEROSENE_BLOCK.get().getDefaultState()
-                .with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
+        return FluidRegistry.KEROSENE_BLOCK.get().getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
     }
 
     @Override

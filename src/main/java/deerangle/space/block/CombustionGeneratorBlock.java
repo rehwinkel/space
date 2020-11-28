@@ -15,9 +15,7 @@ import java.util.Random;
 
 public class CombustionGeneratorBlock extends MachineBlock {
 
-    private static final VoxelShape[] SHAPE = VoxelShapeUtil
-            .horizontalShape(Block.makeCuboidShape(3, 0, 3, 13, 3, 16), Block.makeCuboidShape(1, 3, 3, 15, 12, 16),
-                    Block.makeCuboidShape(7, 8, 5, 9, 16, 7), Block.makeCuboidShape(5, 3, 0, 11, 9, 4));
+    private static final VoxelShape[] SHAPE = VoxelShapeUtil.horizontalShape(Block.makeCuboidShape(3, 0, 3, 13, 3, 16), Block.makeCuboidShape(1, 3, 3, 15, 12, 16), Block.makeCuboidShape(7, 8, 5, 9, 16, 7), Block.makeCuboidShape(5, 3, 0, 11, 9, 4));
 
     public CombustionGeneratorBlock(Properties properties) {
         super(properties, () -> MachineTypeRegistry.COMBUSTION_GENERATOR, Stats.INTERACT_WITH_COMBUSTION_GENERATOR);
@@ -39,8 +37,7 @@ public class CombustionGeneratorBlock extends MachineBlock {
                 for (int i = 0; i < 5; i++) {
                     double randOffX = rand.nextDouble() * 0.125D - 0.0625D;
                     double randOffZ = rand.nextDouble() * 0.125D - 0.0625D;
-                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY, baseZ,
-                            randOffX, randOffZ - 0.125D);
+                    this.spawnOffsetParticle(worldIn, stateIn.get(FACING), ParticleTypes.SMOKE, baseX, baseY, baseZ, randOffX, randOffZ - 0.125D);
                 }
             }
         }

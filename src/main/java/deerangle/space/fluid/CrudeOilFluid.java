@@ -23,11 +23,7 @@ public class CrudeOilFluid extends FlowingFluid {
 
     @Override
     protected FluidAttributes createAttributes() {
-        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_still"),
-                new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_flow"))
-                .overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_overlay"))
-                .translationKey("block.space.crude_oil").density(870).viscosity(4000)
-                .sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY).color(0xFF202020).build(this);
+        return FluidAttributes.builder(new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_still"), new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_flow")).overlay(new ResourceLocation(SpaceMod.MOD_ID, "block/crude_oil_overlay")).translationKey("block.space.crude_oil").density(870).viscosity(4000).sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY).color(0xFF202020).build(this);
     }
 
     @Override
@@ -86,8 +82,7 @@ public class CrudeOilFluid extends FlowingFluid {
 
     @Override
     protected BlockState getBlockState(FluidState state) {
-        return FluidRegistry.CRUDE_OIL_BLOCK.get().getDefaultState()
-                .with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
+        return FluidRegistry.CRUDE_OIL_BLOCK.get().getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
     }
 
     @Override

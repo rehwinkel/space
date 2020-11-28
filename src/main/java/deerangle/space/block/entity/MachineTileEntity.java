@@ -89,8 +89,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     public void read(BlockState state, CompoundNBT nbt) {
         super.read(state, nbt);
         IForgeRegistry<MachineType<?>> registry = RegistryManager.ACTIVE.getRegistry(MachineType.class);
-        MachineType<?> machineType = Objects
-                .requireNonNull(registry.getValue(new ResourceLocation(nbt.getString("MachineType"))));
+        MachineType<?> machineType = Objects.requireNonNull(registry.getValue(new ResourceLocation(nbt.getString("MachineType"))));
         this.machine = machineType.getNewInstance();
         this.machineName = nbt.getString("Name");
         machine.read(nbt);
@@ -134,8 +133,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
     }
 
     private void handlePush(Direction dir) {
-        Accessor accessor = this.machine.getSideConfig()
-                .getAccessorForSide(this.getBlockState().get(MachineBlock.FACING), dir);
+        Accessor accessor = this.machine.getSideConfig().getAccessorForSide(this.getBlockState().get(MachineBlock.FACING), dir);
         if (accessor == null) {
             return;
         }
@@ -146,14 +144,11 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
                 return;
             }
             if (data instanceof ItemMachineData && this.pushCooldown == 0) {
-                handleItemPush(((ItemMachineData) data).getItemHandler(),
-                        tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite()));
+                handleItemPush(((ItemMachineData) data).getItemHandler(), tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite()));
             } else if (data instanceof EnergyMachineData) {
-                handleEnergyPush(((EnergyMachineData) data).getEnergyStorage(),
-                        tileEntity.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()));
+                handleEnergyPush(((EnergyMachineData) data).getEnergyStorage(), tileEntity.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite()));
             } else if (data instanceof FluidMachineData) {
-                handleFluidPush(((FluidMachineData) data).getFluidHandler(),
-                        tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, dir.getOpposite()));
+                handleFluidPush(((FluidMachineData) data).getFluidHandler(), tileEntity.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, dir.getOpposite()));
             }
         }
         if (this.pushCooldown > 0) {
@@ -166,8 +161,7 @@ public class MachineTileEntity extends TileEntity implements INamedContainerProv
             FluidStack drainedSim = fluidHandler.drain(FLUID_PER_TICK, IFluidHandler.FluidAction.SIMULATE);
             IFluidHandler otherHandler = otherHandlerOpt.orElse(null);
             int filled = otherHandler.fill(drainedSim, IFluidHandler.FluidAction.SIMULATE);
-            otherHandler.fill(fluidHandler.drain(filled, IFluidHandler.FluidAction.EXECUTE),
-                    IFluidHandler.FluidAction.EXECUTE);
+            otherHandler.fill(fluidHandler.drain(filled, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
         }
     }
 

@@ -28,7 +28,6 @@ public class Planet extends ForgeRegistryEntry<Planet> {
     private final boolean superhot;
     private final boolean natural;
     private final long dayLength;
-    private final float ambientLight;
     private final Function<Planet, AbstractAtmosphereRenderer> atmosphereRenderer;
     private final Supplier<Dimension> dimensionMaker;
     private final Collection<Supplier<Biome>> biomeMakers;
@@ -48,12 +47,9 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         this.superhot = builder.superhot;
         this.natural = builder.natural;
         this.dayLength = builder.dayLength;
-        this.ambientLight = builder.ambientLight;
         this.atmosphereRenderer = builder.atmosphereRenderer;
         this.dimensionMaker = builder.dimensionMaker;
-        this.biomeMakers = builder.biomeMakers.entrySet().stream()
-                .map(entry -> (Supplier<Biome>) () -> entry.getValue().get().setRegistryName(entry.getKey()))
-                .collect(Collectors.toList());
+        this.biomeMakers = builder.biomeMakers.entrySet().stream().map(entry -> (Supplier<Biome>) () -> entry.getValue().get().setRegistryName(entry.getKey())).collect(Collectors.toList());
         this.skyPlanets = builder.skyPlanets;
         this.sunsetColors = builder.sunsetColors;
         this.sunsetAlpha = builder.sunsetAlpha;
@@ -90,7 +86,7 @@ public class Planet extends ForgeRegistryEntry<Planet> {
     }
 
     public DimensionType getDimensionType() {
-        return new CustomDimensionType(hasSkyLight, superhot, natural, this.getRegistryName(), ambientLight, dayLength);
+        return new CustomDimensionType(hasSkyLight, superhot, natural, this.getRegistryName(), dayLength);
     }
 
     public Function<Planet, AbstractAtmosphereRenderer> getAtmosphereRenderer() {

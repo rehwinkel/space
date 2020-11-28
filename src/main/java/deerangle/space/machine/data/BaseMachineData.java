@@ -15,10 +15,8 @@ public abstract class BaseMachineData implements IMachineData {
     public BaseMachineData(String name, FlowType flowType, IColorGetter colorGetter, ITextComponent dataName) {
         this.name = name;
         this.color = colorGetter.getNextColor(this.hashCode(), flowType, IColorGetter.ColorType.GUI);
-        this.inputAccessor = flowType.doesInput() ? new Accessor(this, true,
-                colorGetter.getNextColor(this.hashCode(), flowType, IColorGetter.ColorType.IN), dataName) : null;
-        this.outputAccessor = flowType.doesOutput() ? new Accessor(this, false,
-                colorGetter.getNextColor(this.hashCode(), flowType, IColorGetter.ColorType.OUT), dataName) : null;
+        this.inputAccessor = flowType.doesInput() ? new Accessor(this, true, colorGetter.getNextColor(this.hashCode(), flowType, IColorGetter.ColorType.IN), dataName) : null;
+        this.outputAccessor = flowType.doesOutput() ? new Accessor(this, false, colorGetter.getNextColor(this.hashCode(), flowType, IColorGetter.ColorType.OUT), dataName) : null;
     }
 
     @Override
