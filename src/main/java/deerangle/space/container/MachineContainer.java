@@ -9,7 +9,7 @@ import deerangle.space.machine.element.Element;
 import deerangle.space.machine.element.ItemElement;
 import deerangle.space.machine.element.MachineType;
 import deerangle.space.network.PacketHandler;
-import deerangle.space.network.UpdateMachineMsg;
+import deerangle.space.network.SyncMachineMsg;
 import deerangle.space.registry.MachineRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -86,7 +86,7 @@ public class MachineContainer extends Container {
         for (IContainerListener listener : this.listeners) {
             if (listener instanceof ServerPlayerEntity) {
                 if (this.machine.shouldSync()) {
-                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener), new UpdateMachineMsg(this.pos, this.machine));
+                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) listener), new SyncMachineMsg(this.pos, this.machine));
                 }
             }
         }

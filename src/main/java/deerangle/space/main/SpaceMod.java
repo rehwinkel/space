@@ -1,5 +1,6 @@
 package deerangle.space.main;
 
+import deerangle.space.capability.Capabilities;
 import deerangle.space.data.*;
 import deerangle.space.machine.element.MachineType;
 import deerangle.space.main.proxy.ClientProxy;
@@ -8,6 +9,7 @@ import deerangle.space.main.proxy.ServerProxy;
 import deerangle.space.network.PacketHandler;
 import deerangle.space.planet.Planet;
 import deerangle.space.planet.PlanetManager;
+import deerangle.space.planet.Weather;
 import deerangle.space.registry.AbstractRegistry;
 import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
@@ -83,6 +85,7 @@ public class SpaceMod {
     public static void newRegistries(RegistryEvent.NewRegistry event) {
         new RegistryBuilder<MachineType<?>>().setType(c(MachineType.class)).setName(new ResourceLocation(MOD_ID, "machine")).setMaxID(Integer.MAX_VALUE - 1).create();
         new RegistryBuilder<Planet>().setType(Planet.class).setName(new ResourceLocation(MOD_ID, "planet")).setMaxID(Integer.MAX_VALUE - 1).create();
+        new RegistryBuilder<Weather>().setType(Weather.class).setName(new ResourceLocation(MOD_ID, "weather")).setMaxID(Integer.MAX_VALUE - 1).create();
     }
 
     public void clientSetup(FMLClientSetupEvent event) {
@@ -91,6 +94,7 @@ public class SpaceMod {
 
     public void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerPackets();
+        Capabilities.register();
     }
 
 }

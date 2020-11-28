@@ -3,7 +3,10 @@ package deerangle.space.planet.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import deerangle.space.capability.Capabilities;
+import deerangle.space.capability.IWeatherCapability;
 import deerangle.space.planet.Planet;
+import deerangle.space.planet.Weather;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -23,6 +26,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,9 +41,9 @@ import java.util.stream.Collectors;
 public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
     //TODO: do thing about time setting (new command?)
+    //TODO: do thing about weather (new command?)
 
     private static final ResourceLocation CLOUDS_TEXTURES = new ResourceLocation("textures/environment/clouds.png");
-    private static final ResourceLocation RAIN_TEXTURES = new ResourceLocation("textures/environment/rain.png");
 
     private final VertexFormat skyVertexFormat = DefaultVertexFormats.POSITION;
     private final float[] sunsetColor = new float[4];
@@ -289,7 +293,6 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
     }
 
-
     private float getCelestialAngleByTime(World world) {
         double d0 = MathHelper.frac((double) world.func_241851_ab() / ((double) this.dayLength) - 0.25D);
         double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
@@ -313,26 +316,39 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         f1 = MathHelper.clamp(f1, 0.0F, 1.0F);
         Biome biome = world.getBiome(blockPosIn);
         int i = biome.getSkyColor();
-        float x = (float) (i >> 16 & 255) / 255.0F;
-        float y = (float) (i >> 8 & 255) / 255.0F;
-        float z = (float) (i & 255) / 255.0F;
-        x = x * f1;
-        y = y * f1;
-        z = z * f1;
-        float f5 = getRainStrength(world);
+        float r = (float) (i >> 16 & 255) / 255.0F;
+        float g = (float) (i >> 8 & 255) / 255.0F;
+        float b = (float) (i & 255) / 255.0F;
+        r = r * f1;
+        g = g * f1;
+        b = b * f1;
+        float f5 = getWeatherStrength(world);
         if (f5 > 0.0F) {
-            float f6 = (x * 0.3F + y * 0.59F + z * 0.11F) * 0.6F;
-            float f7 = 1.0F - f5 * 0.75F;
-            x = x * f7 + f6 * (1.0F - f7);
-            y = y * f7 + f6 * (1.0F - f7);
-            z = z * f7 + f6 * (1.0F - f7);
+            float f6 = (r * 0.3F + g * 0.59F + b * 0.11F) * 0.6F;
+            float mixWithOther = 1.0F - f5;
+            r = r * mixWithOther + f6 * (1.0F - mixWithOther);
+            g = g * mixWithOther + f6 * (1.0F - mixWithOther);
+            b = b * mixWithOther + f6 * (1.0F - mixWithOther);
         }
 
-        return new Vector3d(x, y, z);
+        return new Vector3d(r, g, b);
     }
 
-    private float getRainStrength(World world) {
-        return 1.0f;
+    private float getWeatherStrength(World world) {
+        Weather weather = getWeather(world);
+        if (weather == null) {
+            return 0;
+        }
+        return weather.getStrength(world);
+    }
+
+    private Weather getWeather(World world) {
+        LazyOptional<IWeatherCapability> weatherCapability = world.getCapability(Capabilities.WEATHER_CAPABILITY);
+        Weather thisWeather = null;
+        if (weatherCapability.isPresent()) {
+            thisWeather = weatherCapability.orElseThrow(() -> new RuntimeException("failed to get weather cap")).getCurrentWeather();
+        }
+        return thisWeather;
     }
 
     @Override
@@ -414,15 +430,15 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     @Override
     protected void renderSky(int ticks, float partialTicks, MatrixStack matrixStackIn, ClientWorld world, Minecraft mc) {
         RenderSystem.disableTexture();
-        Vector3d vector3d = getSkyColor(world, mc.gameRenderer.getActiveRenderInfo().getBlockPos());
-        float f = (float) vector3d.x;
-        float f1 = (float) vector3d.y;
-        float f2 = (float) vector3d.z;
+        Vector3d skyColor = getSkyColor(world, mc.gameRenderer.getActiveRenderInfo().getBlockPos());
+        float red = (float) skyColor.x;
+        float green = (float) skyColor.y;
+        float blue = (float) skyColor.z;
         FogRenderer.applyFog();
         BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
         RenderSystem.depthMask(false);
         RenderSystem.enableFog();
-        RenderSystem.color3f(f, f1, f2);
+        RenderSystem.color3f(red, green, blue);
         this.skyVBO.bindBuffer();
         this.skyVertexFormat.setupBufferState(0L);
         this.skyVBO.draw(matrixStackIn.getLast().getMatrix(), 7);
@@ -464,7 +480,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         RenderSystem.enableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         matrixStackIn.push();
-        float oneMinusRain = 1.0F - getRainStrength(world);
+        float oneMinusRain = (1.0F - getWeatherStrength(world)) * 0.95f + 0.05f;
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, oneMinusRain);
         for (Planet p : this.orbitingPlanets) {
@@ -513,7 +529,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             matrixStackIn.pop();
         }
 
-        RenderSystem.color3f(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
+        RenderSystem.color3f(red * 0.2F + 0.04F, green * 0.2F + 0.04F, blue * 0.6F + 0.1F);
 
         RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
@@ -522,7 +538,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
     @Override
     protected void renderWeather(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightMapIn, double xIn, double yIn, double zIn) {
-        float f = getRainStrength(world);
+        float f = getWeatherStrength(world);
         if (!(f <= 0.0F)) {
             lightMapIn.enableLightmap();
             int i = MathHelper.floor(xIn);
@@ -543,24 +559,26 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             }
 
             RenderSystem.depthMask(Minecraft.isFabulousGraphicsEnabled());
+            int i1 = -1;
+            float f1 = (float) ticks + partialTicks;
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
-            for (int posZ = k - rainGridSize; posZ <= k + rainGridSize; ++posZ) {
-                for (int posX = i - rainGridSize; posX <= i + rainGridSize; ++posX) {
-                    int l1 = (posZ - k + 16) * 32 + posX - i + 16;
-                    double d0 = (double) this.rainSizeX[l1] * 0.5D;
-                    double d1 = (double) this.rainSizeZ[l1] * 0.5D;
-                    blockPos.setPos(posX, 0, posZ);
+            for (int z = k - rainGridSize; z <= k + rainGridSize; ++z) {
+                for (int x = i - rainGridSize; x <= i + rainGridSize; ++x) {
+                    int rainHeightIndex = (z - k + 16) * 32 + x - i + 16;
+                    double d0 = (double) this.rainSizeX[rainHeightIndex] * 0.5D;
+                    double d1 = (double) this.rainSizeZ[rainHeightIndex] * 0.5D;
+                    blockPos.setPos(x, 0, z);
                     int i2 = world.getHeight(Heightmap.Type.MOTION_BLOCKING, blockPos).getY();
-                    int posY = j - rainGridSize;
-                    int k2 = j + rainGridSize;
-                    if (posY < i2) {
-                        posY = i2;
+                    int y = j - rainGridSize;
+                    int yEnd = j + rainGridSize;
+                    if (y < i2) {
+                        y = i2;
                     }
 
-                    if (k2 < i2) {
-                        k2 = i2;
+                    if (yEnd < i2) {
+                        yEnd = i2;
                     }
 
                     int l2 = i2;
@@ -568,29 +586,33 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
                         l2 = j;
                     }
 
-                    if (posY != k2) {
-                        //TODO: other weathers
-                        Random random = new Random((posX * posX * 3121 + posX * 45238971 ^ posZ * posZ * 418711 + posZ * 13761));
-                        blockPos.setPos(posX, posY, posZ);
-                        mc.getTextureManager().bindTexture(RAIN_TEXTURES);
-                        bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+                    if (y != yEnd) {
+                        Random random = new Random(x * x * 3121 + x * 45238971 ^ z * z * 418711 + z * 13761);
+                        blockPos.setPos(x, y, z);
+                        if (i1 != 0) {
+                            i1 = 0;
+                            mc.getTextureManager().bindTexture(getWeather(world).getWeatherTexture());
+                            bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+                        }
 
-                        int i3 = ticks + posX * posX * 3121 + posX * 45238971 + posZ * posZ * 418711 + posZ * 13761 & 31;
+                        int i3 = ticks + x * x * 3121 + x * 45238971 + z * z * 418711 + z * 13761 & 31;
                         float f3 = -((float) i3 + partialTicks) / 32.0F * (3.0F + random.nextFloat());
-                        double d2 = (double) ((float) posX + 0.5F) - xIn;
-                        double d4 = (double) ((float) posZ + 0.5F) - zIn;
+                        double d2 = (double) ((float) x + 0.5F) - xIn;
+                        double d4 = (double) ((float) z + 0.5F) - zIn;
                         float f4 = MathHelper.sqrt(d2 * d2 + d4 * d4) / (float) rainGridSize;
                         float f5 = ((1.0F - f4 * f4) * 0.5F + 0.5F) * f;
-                        blockPos.setPos(posX, l2, posZ);
+                        blockPos.setPos(x, l2, z);
                         int j3 = getCombinedLight(world, blockPos);
-                        bufferbuilder.pos((double) posX - xIn - d0 + 0.5D, (double) k2 - yIn, (double) posZ - zIn - d1 + 0.5D).tex(0.0F, (float) posY * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                        bufferbuilder.pos((double) posX - xIn + d0 + 0.5D, (double) k2 - yIn, (double) posZ - zIn + d1 + 0.5D).tex(1.0F, (float) posY * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                        bufferbuilder.pos((double) posX - xIn + d0 + 0.5D, (double) posY - yIn, (double) posZ - zIn + d1 + 0.5D).tex(1.0F, (float) k2 * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                        bufferbuilder.pos((double) posX - xIn - d0 + 0.5D, (double) posY - yIn, (double) posZ - zIn - d1 + 0.5D).tex(0.0F, (float) k2 * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
-                        bufferbuilder.finishDrawing();
-                        tessellator.draw();
+                        bufferbuilder.pos((double) x - xIn - d0 + 0.5D, (double) yEnd - yIn, (double) z - zIn - d1 + 0.5D).tex(0.0F, (float) y * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) x - xIn + d0 + 0.5D, (double) yEnd - yIn, (double) z - zIn + d1 + 0.5D).tex(1.0F, (float) y * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) x - xIn + d0 + 0.5D, (double) y - yIn, (double) z - zIn + d1 + 0.5D).tex(1.0F, (float) yEnd * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
+                        bufferbuilder.pos((double) x - xIn - d0 + 0.5D, (double) y - yIn, (double) z - zIn - d1 + 0.5D).tex(0.0F, (float) yEnd * 0.25F + f3).color(1.0F, 1.0F, 1.0F, f5).lightmap(j3).endVertex();
                     }
                 }
+            }
+
+            if (i1 >= 0) {
+                tessellator.draw();
             }
 
             RenderSystem.enableCull();
@@ -604,7 +626,6 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     // TODO: proper sunset colors, proper sky with dynamic moons and suns, lighting for world, day length settings,
     // TODO: beds that work and advance time partially, meteors
     // TODO: gravity
-    // TODO: acid rain, (clouds?)
 
     @Override
     public float[] getSunsetColor(float sunAngle, float partialTicks) {

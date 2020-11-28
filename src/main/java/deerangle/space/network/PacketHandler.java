@@ -12,8 +12,9 @@ public class PacketHandler {
     public static SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(SpaceMod.MOD_ID, "main"), () -> PROTO_VERSION, PROTO_VERSION::equals, PROTO_VERSION::equals);
 
     public static void registerPackets() {
-        INSTANCE.registerMessage(0, UpdateMachineMsg.class, UpdateMachineMsg::serialize, UpdateMachineMsg::deserialize, UpdateMachineMsg::handle);
+        INSTANCE.registerMessage(0, SyncMachineMsg.class, SyncMachineMsg::serialize, SyncMachineMsg::deserialize, SyncMachineMsg::handle);
         INSTANCE.registerMessage(1, AdvanceSideMsg.class, AdvanceSideMsg::serialize, AdvanceSideMsg::deserialize, AdvanceSideMsg::handle);
+        INSTANCE.registerMessage(2, SyncWeatherMsg.class, SyncWeatherMsg::serialize, SyncWeatherMsg::deserialize, SyncWeatherMsg::handle);
     }
 
 }

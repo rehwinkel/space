@@ -1,13 +1,17 @@
 package deerangle.space.planet;
 
+import com.google.common.collect.ImmutableList;
 import deerangle.space.planet.render.AbstractAtmosphereRenderer;
 import deerangle.space.planet.util.CustomDimensionType;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Dimension;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -36,6 +40,10 @@ public class Planet extends ForgeRegistryEntry<Planet> {
     private final OptionalDouble sunsetAlpha;
     private final BiFunction<Float, Float, Vector3d> cloudColor;
     private final float cloudHeight;
+    private final RegistryKey<World> dimensionRegistryKey;
+    private final int weatherDurationMax;
+    private final int weatherDurationMin;
+    private final List<Supplier<Weather>> availableWeathers;
 
     private Planet(ResourceLocation location, Builder builder) {
         this.setRegistryName(location);
@@ -55,6 +63,14 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         this.sunsetAlpha = builder.sunsetAlpha;
         this.cloudColor = builder.cloudColor;
         this.cloudHeight = builder.cloudHeight;
+        this.dimensionRegistryKey = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, location);
+        this.weatherDurationMin = builder.weatherDurationMin;
+        this.weatherDurationMax = builder.weatherDurationMax;
+        this.availableWeathers = builder.availableWeathers;
+    }
+
+    public RegistryKey<World> getDimensionKey() {
+        return dimensionRegistryKey;
     }
 
     public static Planet.Builder builder() {
@@ -121,6 +137,18 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         return this.cloudHeight;
     }
 
+    public int getWeatherCycleMax() {
+        return this.weatherDurationMax;
+    }
+
+    public int getWeatherCycleMin() {
+        return this.weatherDurationMin;
+    }
+
+    public List<Supplier<Weather>> getAvailableWeathers() {
+        return this.availableWeathers;
+    }
+
     public static class Builder {
 
         private final Map<ResourceLocation, Supplier<Biome>> biomeMakers;
@@ -129,6 +157,9 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         public OptionalDouble sunsetAlpha;
         public BiFunction<Float, Float, Vector3d> cloudColor;
         public float cloudHeight;
+        public int weatherDurationMin;
+        public int weatherDurationMax;
+        public List<Supplier<Weather>> availableWeathers;
         private ResourceLocation skyTextureLocation;
         private Supplier<Dimension> dimensionMaker;
         private int dayLength;
@@ -142,6 +173,9 @@ public class Planet extends ForgeRegistryEntry<Planet> {
         private Function<Planet, AbstractAtmosphereRenderer> atmosphereRenderer;
 
         private Builder() {
+            this.weatherDurationMin = 0;
+            this.weatherDurationMax = 1;
+            this.availableWeathers = ImmutableList.of();
             this.biomeMakers = new HashMap<>();
             this.skyPlanets = new ArrayList<>();
             this.dimensionMaker = null;
@@ -181,6 +215,13 @@ public class Planet extends ForgeRegistryEntry<Planet> {
 
         public Builder cloudHeight(float height) {
             this.cloudHeight = height;
+            return this;
+        }
+
+        public Builder weather(List<Supplier<Weather>> weathers, int minDuration, int maxDuration) {
+            this.availableWeathers = weathers;
+            this.weatherDurationMin = minDuration;
+            this.weatherDurationMax = maxDuration;
             return this;
         }
 

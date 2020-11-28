@@ -1,8 +1,9 @@
 package deerangle.space.planet.render;
 
+import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.math.vector.Vector3d;
 
-public class CustomDimensionRenderInfo extends net.minecraft.client.world.DimensionRenderInfo {
+public class CustomDimensionRenderInfo extends DimensionRenderInfo {
 
     private final AbstractAtmosphereRenderer atmosphereRenderer;
 
@@ -13,6 +14,8 @@ public class CustomDimensionRenderInfo extends net.minecraft.client.world.Dimens
         this.setSkyRenderHandler(this.atmosphereRenderer);
         this.setWeatherRenderHandler(this.atmosphereRenderer);
     }
+
+    //TODO: FogRenderer#updateFogColor
 
     // getSunsetColor
     @Override

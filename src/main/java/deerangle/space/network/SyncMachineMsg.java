@@ -11,38 +11,38 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class UpdateMachineMsg {
+public class SyncMachineMsg {
 
     private BlockPos pos;
     private ByteBuf data;
 
-    public UpdateMachineMsg() {
+    public SyncMachineMsg() {
 
     }
 
-    public UpdateMachineMsg(BlockPos pos, ByteBuf data) {
+    public SyncMachineMsg(BlockPos pos, ByteBuf data) {
         this.data = data;
         this.pos = pos;
     }
 
-    public UpdateMachineMsg(BlockPos pos, Machine machine) {
+    public SyncMachineMsg(BlockPos pos, Machine machine) {
         PacketBuffer data = new PacketBuffer(Unpooled.buffer());
         machine.writePacket(data);
         this.data = data;
         this.pos = pos;
     }
 
-    public static void serialize(UpdateMachineMsg msg, PacketBuffer packetBuffer) {
+    public static void serialize(SyncMachineMsg msg, PacketBuffer packetBuffer) {
         packetBuffer.writeBlockPos(msg.pos);
         packetBuffer.writeBytes(msg.data);
     }
 
-    public static UpdateMachineMsg deserialize(PacketBuffer packetBuffer) {
+    public static SyncMachineMsg deserialize(PacketBuffer packetBuffer) {
         BlockPos pos = packetBuffer.readBlockPos();
-        return new UpdateMachineMsg(pos, packetBuffer.copy(9, packetBuffer.array().length - 9));
+        return new SyncMachineMsg(pos, packetBuffer.copy(9, packetBuffer.array().length - 9));
     }
 
-    public static void handle(UpdateMachineMsg msg, Supplier<NetworkEvent.Context> contextSupplier) {
+    public static void handle(SyncMachineMsg msg, Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
             MachineTileEntity tileEntity = (MachineTileEntity) Minecraft.getInstance().world.getTileEntity(msg.pos);
             tileEntity.getMachine().readPacket(new PacketBuffer(msg.data));
