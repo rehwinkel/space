@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "space:block/lava_geysir",
+        "y": 90
+      },
+      {
+        "model": "space:block/lava_geysir",
+        "y": 180
+      },
+      {
+        "model": "space:block/lava_geysir",
+        "y": 270
+      },
+      {
+        "model": "space:block/lava_geysir"
+      }
+    ]
+  }
+}

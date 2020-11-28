@@ -5,11 +5,9 @@ import deerangle.space.main.SpaceMod;
 import deerangle.space.planet.PlanetManager;
 import deerangle.space.planet.planets.mercury.data.BlockStateGenerator;
 import deerangle.space.planet.planets.mercury.data.LootTableGenerator;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,11 +19,15 @@ public class MercuryRegistry {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
 
     public static final RegistryObject<Block> FIRESTONE = BLOCKS.register("firestone", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(1.5F, 6.0F)));
+    public static final RegistryObject<Block> LAVA_GEYSIR = BLOCKS.register("lava_geysir", () -> new Block(
+            AbstractBlock.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(4.0F, 12.0F)
+            .harvestLevel(3)));
     //TODO: bedrock-like
     public static final RegistryObject<Block> PLANET_CORE = BLOCKS.register("planet_core", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
 
     static {
         ITEMS.register("firestone", () -> new BlockItem(FIRESTONE.get(), new Item.Properties().group(PlanetManager.TAB)));
+        ITEMS.register("lava_geysir", () -> new BlockItem(LAVA_GEYSIR.get(), new Item.Properties().group(PlanetManager.TAB)));
         ITEMS.register("planet_core", () -> new BlockItem(PLANET_CORE.get(), new Item.Properties().group(PlanetManager.TAB)));
     }
 
@@ -41,6 +43,7 @@ public class MercuryRegistry {
 
     public static void registerLanguage(LanguageGenerator gen) {
         gen.add(FIRESTONE.get(), "Firestone");
+        gen.add(LAVA_GEYSIR.get(), "Lava Geysir");
         gen.add(PLANET_CORE.get(), "Planet Core");
     }
 
