@@ -35,6 +35,9 @@ public abstract class DuctBlock extends Block {
     protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
     private final VoxelShape[] SHAPES = makeShapes(4);
 
+    //TODO: fix conenction model for other blocks (e.g. chest)
+    //TODO: actually transmit items/fluids/energy
+
     public DuctBlock(AbstractBlock.Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false).with(WATERLOGGED, false));

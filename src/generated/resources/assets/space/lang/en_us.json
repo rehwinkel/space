@@ -118,7 +118,7 @@
   "item.space.titanium_ingot": "Titanium Ingot",
   "item.space.titanium_nugget": "Titanium Nugget",
   "itemGroup.space.extraterrestrial": "Space Planets",
-  "itemGroup.space.machine": "Space Machines",
+  "itemGroup.space.main": "Space Main",
   "itemGroup.space.resource": "Space Resources",
   "jei_category.space.blast_furnace": "Blast Furnace",
   "stat.space.interact_with_battery_pack": "Interactions with Battery Pack",
