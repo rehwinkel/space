@@ -341,13 +341,13 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         Weather weather = getWeather(world);
         float delta = Math.abs(prevPartialTicks - partialTicks);
         if (this.currentWeather != weather) {
-            this.weatherStrength -= delta * 0.03f;
+            this.weatherStrength -= delta * 0.01f;
             this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
             if (this.weatherStrength == 0) {
                 this.currentWeather = getWeather(world);
             }
         } else {
-            this.weatherStrength += delta * 0.03f;
+            this.weatherStrength += delta * 0.01f;
             this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
         }
         this.prevPartialTicks = partialTicks;
