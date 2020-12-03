@@ -62,7 +62,6 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     private Vector3d cloudsCheckColor = Vector3d.ZERO;
     private final float dayLength;
     private float weatherStrength;
-    private Weather previousWeather;
     private Weather currentWeather;
     private float prevPartialTicks;
 
@@ -342,14 +341,13 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         Weather weather = getWeather(world);
         float delta = Math.abs(prevPartialTicks - partialTicks);
         if (this.currentWeather != weather) {
-            this.weatherStrength -= delta * 0.01f;
+            this.weatherStrength -= delta * 0.03f;
             this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
             if (this.weatherStrength == 0) {
                 this.currentWeather = getWeather(world);
-                // this.previousWeather = weather;
             }
         } else {
-            this.weatherStrength += delta * 0.01f;
+            this.weatherStrength += delta * 0.03f;
             this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
         }
         this.prevPartialTicks = partialTicks;
@@ -365,7 +363,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         return thisWeather;
     }
 
-    private Weather getCurrentWeather(World world) {
+    private Weather getCurrentWeather() {
         return this.currentWeather;
     }
 
@@ -557,7 +555,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     @Override
     protected void renderWeather(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightMapIn, double xIn, double yIn, double zIn) {
         float f = getWeatherStrength(world, partialTicks);
-        if (!(f <= 0.0F) && getCurrentWeather(world) != null) {
+        if (!(f <= 0.0F) && getCurrentWeather() != null) {
             lightMapIn.enableLightmap();
             int i = MathHelper.floor(xIn);
             int j = MathHelper.floor(yIn);
@@ -578,7 +576,6 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
             RenderSystem.depthMask(Minecraft.isFabulousGraphicsEnabled());
             int i1 = -1;
-            float f1 = (float) ticks + partialTicks;
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             BlockPos.Mutable blockPos = new BlockPos.Mutable();
 
@@ -609,7 +606,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
                         blockPos.setPos(x, y, z);
                         if (i1 != 0) {
                             i1 = 0;
-                            mc.getTextureManager().bindTexture(getCurrentWeather(world).getWeatherTexture());
+                            mc.getTextureManager().bindTexture(getCurrentWeather().getWeatherTexture());
                             bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                         }
 
