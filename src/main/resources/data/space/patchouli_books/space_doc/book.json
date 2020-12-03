@@ -1,5 +1,8 @@
 {
-	"name": "BOOK NAME",
-	"landing_text": "LANDING TEXT",
-	"version": 1
+	"name": "S P A C E",
+	"landing_text": "Dig for new ores in your mines, craft new machines to assemble your own rocket and finally fly to the moon. ...And even further!",
+	"show_toasts": false,
+	"version": 1,
+	"book_texture": "space:book_space",
+	"crafting_texture": "space:gui/patchouli_book/crafting.png"
 }
