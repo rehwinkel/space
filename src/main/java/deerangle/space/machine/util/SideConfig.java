@@ -234,8 +234,4 @@ public class SideConfig {
         this.setRight(accessor);
     }
 
-    public boolean acceptsCableFrom(Direction facing, Direction direction) {
-        return !isBlockedForSide(facing, direction);
-    }
-
 }
