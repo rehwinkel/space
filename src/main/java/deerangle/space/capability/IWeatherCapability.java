@@ -58,7 +58,7 @@ public interface IWeatherCapability {
         @Override
         public void readNBT(Capability<IWeatherCapability> capability, IWeatherCapability instance, Direction side, INBT rawNbt) {
             CompoundNBT nbt = (CompoundNBT) rawNbt;
-            ListNBT available = nbt.getList("Available", new CompoundNBT().getId());
+            ListNBT available = nbt.getList("Available", 8);
             List<Supplier<Weather>> availableWeathers = new ArrayList<>();
             available.forEach(weatherNbt -> availableWeathers.add(() -> RegistryManager.ACTIVE.getRegistry(Weather.class).getValue(new ResourceLocation(weatherNbt.getString()))));
             Weather current = null;

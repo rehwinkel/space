@@ -61,6 +61,10 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     private boolean cloudsNeedUpdate;
     private Vector3d cloudsCheckColor = Vector3d.ZERO;
     private final float dayLength;
+    private float weatherStrength;
+    private Weather previousWeather;
+    private Weather currentWeather;
+    private float prevPartialTicks;
 
     public AtmosphereRenderer(Planet planet) {
         this.orbitingPlanets = planet.getSkyPlanets().stream().map(Supplier::get).collect(Collectors.toList());
@@ -311,7 +315,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         return f * ((float) Math.PI * 2F);
     }
 
-    private Vector3d getSkyColor(World world, BlockPos blockPosIn) {
+    private Vector3d getSkyColor(World world, BlockPos blockPosIn, float partialTicks) {
         float f1 = MathHelper.cos(getCelestialAngleByTime(world) * ((float) Math.PI * 2F)) * 2.0F + 0.5F;
         f1 = MathHelper.clamp(f1, 0.0F, 1.0F);
         Biome biome = world.getBiome(blockPosIn);
@@ -322,7 +326,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         r = r * f1;
         g = g * f1;
         b = b * f1;
-        float f5 = getWeatherStrength(world);
+        float f5 = getWeatherStrength(world, partialTicks);
         if (f5 > 0.0F) {
             float f6 = (r * 0.3F + g * 0.59F + b * 0.11F) * 0.6F;
             float mixWithOther = 1.0F - f5;
@@ -334,12 +338,22 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         return new Vector3d(r, g, b);
     }
 
-    private float getWeatherStrength(World world) {
+    private float getWeatherStrength(World world, float partialTicks) {
         Weather weather = getWeather(world);
-        if (weather == null) {
-            return 0;
+        float delta = Math.abs(prevPartialTicks - partialTicks);
+        if (this.currentWeather != weather) {
+            this.weatherStrength -= delta * 0.01f;
+            this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
+            if (this.weatherStrength == 0) {
+                this.currentWeather = getWeather(world);
+                // this.previousWeather = weather;
+            }
+        } else {
+            this.weatherStrength += delta * 0.01f;
+            this.weatherStrength = MathHelper.clamp(weatherStrength, 0, 1);
         }
-        return weather.getStrength(world);
+        this.prevPartialTicks = partialTicks;
+        return currentWeather == null ? 0 : this.weatherStrength;
     }
 
     private Weather getWeather(World world) {
@@ -349,6 +363,10 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
             thisWeather = weatherCapability.orElseThrow(() -> new RuntimeException("failed to get weather cap")).getCurrentWeather();
         }
         return thisWeather;
+    }
+
+    private Weather getCurrentWeather(World world) {
+        return this.currentWeather;
     }
 
     @Override
@@ -430,7 +448,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
     @Override
     protected void renderSky(int ticks, float partialTicks, MatrixStack matrixStackIn, ClientWorld world, Minecraft mc) {
         RenderSystem.disableTexture();
-        Vector3d skyColor = getSkyColor(world, mc.gameRenderer.getActiveRenderInfo().getBlockPos());
+        Vector3d skyColor = getSkyColor(world, mc.gameRenderer.getActiveRenderInfo().getBlockPos(), partialTicks);
         float red = (float) skyColor.x;
         float green = (float) skyColor.y;
         float blue = (float) skyColor.z;
@@ -480,7 +498,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         RenderSystem.enableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         matrixStackIn.push();
-        float oneMinusRain = (1.0F - getWeatherStrength(world)) * 0.95f + 0.05f;
+        float oneMinusRain = (1.0F - getWeatherStrength(world, partialTicks)) * 0.95f + 0.05f;
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, oneMinusRain);
         for (Planet p : this.orbitingPlanets) {
@@ -538,8 +556,8 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
 
     @Override
     protected void renderWeather(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightMapIn, double xIn, double yIn, double zIn) {
-        float f = getWeatherStrength(world);
-        if (!(f <= 0.0F)) {
+        float f = getWeatherStrength(world, partialTicks);
+        if (!(f <= 0.0F) && getCurrentWeather(world) != null) {
             lightMapIn.enableLightmap();
             int i = MathHelper.floor(xIn);
             int j = MathHelper.floor(yIn);
@@ -591,7 +609,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
                         blockPos.setPos(x, y, z);
                         if (i1 != 0) {
                             i1 = 0;
-                            mc.getTextureManager().bindTexture(getWeather(world).getWeatherTexture());
+                            mc.getTextureManager().bindTexture(getCurrentWeather(world).getWeatherTexture());
                             bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
                         }
 

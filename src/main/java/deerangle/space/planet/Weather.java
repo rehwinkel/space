@@ -16,10 +16,6 @@ public class Weather extends ForgeRegistryEntry<Weather> {
         this.particle = particle;
     }
 
-    public float getStrength(World world) {
-        return 1.0f;
-    }
-
     public ParticleType<?> getParticle() {
         return particle;
     }
