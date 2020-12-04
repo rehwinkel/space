@@ -1,0 +1,16 @@
+{
+    "name": "Ilmenite Ore",
+    "icon": "space:ilmenite_ore",
+    "category": "space:items",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Ilmenite ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain titanium ingots."
+        },
+        {
+            "type": "smelting",
+            "recipe": "space:ilmenite_ore",
+            "recipe2": "space:titanium_ingot"
+        }
+    ]
+}

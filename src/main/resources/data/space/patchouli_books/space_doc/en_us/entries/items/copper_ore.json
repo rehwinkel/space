@@ -1,0 +1,16 @@
+{
+    "name": "Copper Ore",
+    "icon": "space:copper_ore",
+    "category": "space:items",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Copper ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain copper ingots."
+        },
+        {
+            "type": "smelting",
+            "recipe": "space:copper_ore",
+            "recipe2": "space:copper_ingot"
+        }
+    ]
+}

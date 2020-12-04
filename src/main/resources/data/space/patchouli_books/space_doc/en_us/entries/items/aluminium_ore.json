@@ -1,0 +1,16 @@
+{
+    "name": "Aluminium Ore",
+    "icon": "space:aluminium_ore",
+    "category": "space:items",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Aluminium ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain aluminium ingots."
+        },
+        {
+            "type": "smelting",
+            "recipe": "space:aluminium_ore",
+            "recipe2": "space:aluminium_ingot"
+        }
+    ]
+}
