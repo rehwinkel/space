@@ -74,7 +74,7 @@ public class LanguageGenerator extends LanguageProvider {
         add(ResourceRegistry.EMPTY_CAN.get(), "Empty Can");
         add(ResourceRegistry.ASTRONAUT_FOOD.get(), "Astronaut Food");
         add("itemGroup.space.resource", "Space Resources");
-        add("itemGroup.space.machine", "Space Machines");
+        add("itemGroup.space.main", "Space Main");
         add("itemGroup.space.extraterrestrial", "Space Planets");
         add("info.space.energy", "Energy Stored: %s/%s FE");
         add("info.space.fluid", "%s: %s/%s mB");

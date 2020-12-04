@@ -1,9 +1,9 @@
 package deerangle.space.block;
 
-import deerangle.space.tags.BlockTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.tags.ITag;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 public class CableBlock extends DuctBlock {
 
@@ -12,8 +12,8 @@ public class CableBlock extends DuctBlock {
     }
 
     @Override
-    protected ITag<Block> getMachineTag() {
-        return BlockTags.ENERGY_MACHINES;
+    protected Capability<?> getDuctCapability() {
+        return CapabilityEnergy.ENERGY;
     }
 
     @Override

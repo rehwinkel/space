@@ -1,9 +1,9 @@
 package deerangle.space.block;
 
-import deerangle.space.tags.BlockTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.tags.ITag;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 
 public class PipeBlock extends DuctBlock {
 
@@ -12,8 +12,8 @@ public class PipeBlock extends DuctBlock {
     }
 
     @Override
-    protected ITag<Block> getMachineTag() {
-        return BlockTags.FLUID_MACHINES;
+    protected Capability<?> getDuctCapability() {
+        return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
     }
 
     @Override

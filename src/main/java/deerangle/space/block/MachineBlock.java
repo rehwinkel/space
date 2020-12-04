@@ -3,7 +3,6 @@ package deerangle.space.block;
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.Machine;
 import deerangle.space.machine.element.MachineType;
-import deerangle.space.tags.BlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
@@ -97,9 +96,10 @@ public abstract class MachineBlock extends Block {
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    public boolean canConnect(BlockState state) {
+    public boolean canConnect(IBlockReader world, BlockState state) {
+        //TODO only connect if side is right for connection
         Block block = state.getBlock();
-        return (this.isIn(BlockTags.ENERGY_MACHINES) && block instanceof CableBlock) || (this.isIn(BlockTags.ITEM_MACHINES) && block instanceof TransporterBlock) || (this.isIn(BlockTags.FLUID_MACHINES) && block instanceof PipeBlock);
+        return (block instanceof CableBlock) || (block instanceof TransporterBlock) || (block instanceof PipeBlock);
     }
 
     private Direction rotateByFacing(Direction facing, Direction side) {
@@ -121,7 +121,7 @@ public abstract class MachineBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         Direction facing = context.getPlacementHorizontalFacing().getOpposite();
-        IBlockReader iblockreader = context.getWorld();
+        IBlockReader world = context.getWorld();
         BlockPos blockpos = context.getPos();
         BlockPos northPos = blockpos.offset(rotateByFacing(facing, Direction.NORTH));
         BlockPos eastPos = blockpos.offset(rotateByFacing(facing, Direction.EAST));
@@ -129,14 +129,14 @@ public abstract class MachineBlock extends Block {
         BlockPos westPos = blockpos.offset(rotateByFacing(facing, Direction.WEST));
         BlockPos upPos = blockpos.up();
         BlockPos downPos = blockpos.down();
-        BlockState northState = iblockreader.getBlockState(northPos);
-        BlockState eastState = iblockreader.getBlockState(eastPos);
-        BlockState southState = iblockreader.getBlockState(southPos);
-        BlockState westState = iblockreader.getBlockState(westPos);
-        BlockState upState = iblockreader.getBlockState(upPos);
-        BlockState downState = iblockreader.getBlockState(downPos);
+        BlockState northState = world.getBlockState(northPos);
+        BlockState eastState = world.getBlockState(eastPos);
+        BlockState southState = world.getBlockState(southPos);
+        BlockState westState = world.getBlockState(westPos);
+        BlockState upState = world.getBlockState(upPos);
+        BlockState downState = world.getBlockState(downPos);
 
-        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(northState)).with(EAST, this.canConnect(eastState)).with(SOUTH, this.canConnect(southState)).with(WEST, this.canConnect(westState)).with(UP, this.canConnect(upState)).with(DOWN, this.canConnect(downState));
+        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(world, northState)).with(EAST, this.canConnect(world, eastState)).with(SOUTH, this.canConnect(world, southState)).with(WEST, this.canConnect(world, westState)).with(UP, this.canConnect(world, upState)).with(DOWN, this.canConnect(world, downState));
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction side, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
@@ -159,7 +159,7 @@ public abstract class MachineBlock extends Block {
             }
         }
         BooleanProperty prop = FACING_TO_PROPERTY_MAP.get(rotated);
-        return stateIn.with(prop, this.canConnect(facingState));
+        return stateIn.with(prop, this.canConnect(worldIn, facingState));
     }
 
     @Override

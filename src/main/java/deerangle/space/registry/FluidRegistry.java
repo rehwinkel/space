@@ -11,6 +11,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.RegistryObject;
 
 public class FluidRegistry extends AbstractRegistry {

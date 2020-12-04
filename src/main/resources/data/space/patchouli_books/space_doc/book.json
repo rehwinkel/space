@@ -3,6 +3,8 @@
 	"landing_text": "Gather more resources, craft new machines to assemble your own rocket and finally fly to the moon. ...And even further!",
 	"show_toasts": false,
 	"version": 1,
-	"book_texture": "space:book_space",
-	"crafting_texture": "space:gui/patchouli_book/crafting.png"
+	"book_texture": "space:textures/gui/book_space.png",
+	"model": "space:book_space",
+	"crafting_texture": "space:textures/gui/patchouli_book/crafting.png",
+	"creative_tab": "space.main"
 }

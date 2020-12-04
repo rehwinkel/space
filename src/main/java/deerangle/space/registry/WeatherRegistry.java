@@ -12,11 +12,13 @@ import net.minecraftforge.fml.common.Mod;
 public class WeatherRegistry {
 
     public static Weather ACID_RAIN;
+    public static Weather RAIN;
 
     @SubscribeEvent
     public static void registerWeathers(RegistryEvent.Register<Weather> event) {
         ACID_RAIN = new Weather(new ResourceLocation(SpaceMod.MOD_ID, "acid_rain"), ParticleTypes.RAIN).setRegistryName(new ResourceLocation(SpaceMod.MOD_ID, "acid_rain"));
-        event.getRegistry().registerAll(ACID_RAIN);
+        RAIN = new Weather(new ResourceLocation("rain"), ParticleTypes.RAIN).setRegistryName(new ResourceLocation(SpaceMod.MOD_ID, "rain"));
+        event.getRegistry().registerAll(ACID_RAIN, RAIN);
     }
 
 }

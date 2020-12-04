@@ -22,13 +22,14 @@ import java.util.function.ToIntFunction;
 
 public class MachineRegistry extends AbstractRegistry {
 
-    public static final RegistryObject<Block> COAL_GENERATOR = BLOCKS.register("coal_generator", () -> new CoalGeneratorBlock(AbstractBlock.Properties.create(Material.IRON).setLightLevel(getRunningLightLevel(13))));
-    public static final ItemGroup TAB = new ItemGroup(SpaceMod.MOD_ID + ".machine") {
+    public static final ItemGroup TAB = new ItemGroup(SpaceMod.MOD_ID + ".main") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(COAL_GENERATOR.get());
         }
     };
+
+    public static final RegistryObject<Block> COAL_GENERATOR = BLOCKS.register("coal_generator", () -> new CoalGeneratorBlock(AbstractBlock.Properties.create(Material.IRON).setLightLevel(getRunningLightLevel(13))));
     public static final RegistryObject<Block> BLAST_FURNACE = BLOCKS.register("blast_furnace", () -> new BlastFurnaceBlock(AbstractBlock.Properties.create(Material.IRON).setLightLevel(getRunningLightLevel(15))));
 
     public static final RegistryObject<Block> COMBUSTION_GENERATOR = BLOCKS.register("combustion_generator", () -> new CombustionGeneratorBlock(AbstractBlock.Properties.create(Material.IRON)));

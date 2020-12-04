@@ -1,6 +1,5 @@
 package deerangle.space.block;
 
-import deerangle.space.block.entity.MachineTileEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,7 +10,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.ITag;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -19,6 +18,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.Map;
 
@@ -32,10 +32,11 @@ public abstract class DuctBlock extends Block {
     public static final BooleanProperty DOWN = SixWayBlock.DOWN;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    // TODO: connect transporters to vanilla and other mods
-
     protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
     private final VoxelShape[] SHAPES = makeShapes(4);
+
+    //TODO: fix conenction model for other blocks (e.g. chest)
+    //TODO: actually transmit items/fluids/energy
 
     public DuctBlock(AbstractBlock.Properties properties) {
         super(properties);
@@ -86,19 +87,16 @@ public abstract class DuctBlock extends Block {
         return SHAPES[getIndex(state)];
     }
 
-    protected abstract ITag<Block> getMachineTag();
+    protected abstract Capability<?> getDuctCapability();
 
     protected abstract boolean canConnectDuct(Block block);
 
     public boolean canConnect(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
-        Block block = state.getBlock();
-        if (block.isIn(this.getMachineTag())) {
-            MachineTileEntity te = ((MachineTileEntity) world.getTileEntity(pos));
-            if (te != null) {
-                return te.getMachine().getSideConfig().acceptsCableFrom(state.get(MachineBlock.FACING), direction);
-            }
+        TileEntity te = world.getTileEntity(pos);
+        if (te != null) {
+            return te.getCapability(this.getDuctCapability(), direction).isPresent();
         }
-        return this.canConnectDuct(block);
+        return this.canConnectDuct(state.getBlock());
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {

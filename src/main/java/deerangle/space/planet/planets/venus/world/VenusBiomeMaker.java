@@ -21,6 +21,7 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 public class VenusBiomeMaker {
 
     public static Biome makeHillsBiome() {
+        //TODO: other boulders
         MobSpawnInfo.Builder spawnSettings = new MobSpawnInfo.Builder();
         BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder().withSurfaceBuilder(SurfaceBuilder.DEFAULT.func_242929_a(new SurfaceBuilderConfig(VenusRegistry.PULCHERITE_TURF.get().getDefaultState(), VenusRegistry.PULCHERITE.get().getDefaultState(), VenusRegistry.PULCHERITE.get().getDefaultState())));
         builder.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(new OreFeatureConfig(new TagMatchRuleTest(BlockTags.VENUS_GROUND), VenusRegistry.PULCHERITE_COAL.get().getDefaultState(), 17)).range(128).square().func_242731_b(20));
