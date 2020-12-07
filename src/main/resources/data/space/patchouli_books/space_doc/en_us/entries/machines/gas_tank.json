@@ -1,0 +1,12 @@
+{
+    "name": "Gas Tank",
+    "icon": "space:gas_tank",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The gas tank can be filled with different types of gases, but only one at a time. It can be quite handy if you want to have a buffer between two machines or for storing your oxygen when flying to the moon."
+        }
+    ]
+}

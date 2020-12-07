@@ -1,0 +1,16 @@
+{
+    "name": "Blast Furnace",
+    "icon": "space:blast_furnace",
+    "category": "space:machines",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The blast furnace is the very first machine you have to craft. It is used to make steel by smelting iron ingots together with coal."
+        },
+        {
+            "type": "text",
+            "text": "One iron ingot and one coal can be smelted into one steel ingot.\nOne iron block and nine coal can be smelted into 1 steel block."
+        }
+    ]
+}

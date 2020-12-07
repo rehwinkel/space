@@ -1,7 +1,7 @@
 {
     "name": "Copper Ore",
     "icon": "space:copper_ore",
-    "category": "space:items",
+    "category": "space:resources",
     "pages": [
         {
             "type": "text",

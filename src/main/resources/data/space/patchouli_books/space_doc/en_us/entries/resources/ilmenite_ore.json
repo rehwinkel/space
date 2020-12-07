@@ -1,7 +1,7 @@
 {
     "name": "Ilmenite Ore",
     "icon": "space:ilmenite_ore",
-    "category": "space:items",
+    "category": "space:resources",
     "pages": [
         {
             "type": "text",
