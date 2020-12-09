@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "Ilmenite ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain titanium ingots."
+            "text": "Ilmenite ore can be found in the overworld up to a height of 20 blocks and veins of up to 4 ores. There are at most 2 veins per chunk. It can be smelted in a furnace to obtain titanium ingots."
         },
         {
             "type": "smelting",

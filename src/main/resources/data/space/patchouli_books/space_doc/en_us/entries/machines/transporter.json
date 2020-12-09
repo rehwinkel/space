@@ -1,0 +1,12 @@
+{
+    "name": "Transporter",
+    "icon": "space:transporter",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "Transporters are used for transferring items from one inventory to another. Transporters can't pull items by themselves. However, you can push items through them, for example by using a hopper."
+        }
+    ]
+}

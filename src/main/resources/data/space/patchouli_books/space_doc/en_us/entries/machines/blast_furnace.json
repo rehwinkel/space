@@ -10,7 +10,7 @@
         },
         {
             "type": "text",
-            "text": "One iron ingot and one coal can be smelted into one steel ingot.\nOne iron block and nine coal can be smelted into 1 steel block."
+            "text": "One iron ingot and one coal can be blasted into one steel ingot.\nOne iron block and nine coal can be blasted into 1 steel block.\nSand can be blasted into an even purer form called quartz dust.\nSilica tiles can be blasted by either using quartz sand or minecrafts quartz blocks.\nTo create heat resistent glass simply put some soul sand into the blast furnace together with some coal."
         }
     ]
 }

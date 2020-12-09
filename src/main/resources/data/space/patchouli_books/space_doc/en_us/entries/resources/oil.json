@@ -1,0 +1,11 @@
+{
+    "name": "Oil",
+    "icon": "space:crude_oil_bucket",
+    "category": "space:resources",
+    "pages": [
+        {
+            "type": "text",
+            "text": "You can drill for oil with the oil pump. Different amounts of oil can be found in every chunk, but it doesn't refill so don't waste too much of it!"
+        }
+    ]
+}
