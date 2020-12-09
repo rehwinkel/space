@@ -1,6 +1,6 @@
 {
 	"name": "S P A C E",
-	"landing_text": "Dig for new ores in your mines, craft new machines to assemble your own rocket and finally fly to the moon. ...And even further!",
+	"landing_text": "Gather more resources, craft new machines to assemble your own rocket and finally fly to the moon. ...And even further!",
 	"show_toasts": false,
 	"version": 1,
 	"book_texture": "space:textures/gui/book_space.png",

@@ -1,0 +1,12 @@
+{
+    "name": "Drum",
+    "icon": "space:drum",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The drum is sililar to the gas tank, but stores fluids instead. Of course only one fluid at a time. Mixing liquid chemicals may always lead to fatal incidents, even in computer games like the one you're playing right now, so it's better you can't even try to."
+        }
+    ]
+}

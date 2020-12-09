@@ -1,0 +1,5 @@
+{
+	"name": "S P A C E Machines",
+	"description": "Search this category to look up all about machines added by the S P A C E mod.\nIn general, all machines have in- and outputs that can be configured in the options tab. Locked sides can not be configured and thus the button is disabled.\nAll machines output automagically if they are able to and the side is configured as output.",
+	"icon": "space:coal_generator"
+}

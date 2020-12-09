@@ -1,0 +1,12 @@
+{
+    "name": "Combustion Generator",
+    "icon": "space:combustion_generator",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The combustion generator is an advanced machine used to generate RF. It uses liquid fuels such as oil to produce even more energy. It is worse for the environment, but better for you."
+        }
+    ]
+}

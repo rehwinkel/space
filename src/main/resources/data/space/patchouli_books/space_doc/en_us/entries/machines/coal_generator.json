@@ -1,0 +1,16 @@
+{
+    "name": "Coal Generator",
+    "icon": "space:coal_generator",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The coal generator is the second machine you will craft. It can be used to generate some decent amount of energy that can be used by other machines."
+        },
+        {
+            "type": "text",
+            "text": "By default the coal generator produces 200 RF/t. This can be changed in the config.\nAll furnace fuels can be used."
+        }
+    ]
+}
