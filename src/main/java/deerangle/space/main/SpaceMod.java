@@ -15,6 +15,7 @@ import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.MachineRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import deerangle.space.stats.Stats;
+import deerangle.space.world.WorldEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -93,8 +94,10 @@ public class SpaceMod {
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-        PacketHandler.registerPackets();
-        Capabilities.register();
+        event.enqueueWork(PacketHandler::registerPackets);
+        event.enqueueWork(Capabilities::register);
+
+        event.enqueueWork(WorldEvents::registerFeatures);
     }
 
 }
