@@ -20,7 +20,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockStateGenerator extends BlockStateProvider {
 
-    private static final ResourceLocation CONNECTOR_LOC = new ResourceLocation(SpaceMod.MOD_ID, "block/connector");
     private static final ResourceLocation CONNECTOR_SHORT_LOC = new ResourceLocation(SpaceMod.MOD_ID, "block/connector_short");
     private static final ResourceLocation CONNECTOR_LONG_LOC = new ResourceLocation(SpaceMod.MOD_ID, "block/connector_long");
     private static final ResourceLocation CONNECTOR_LONG3_LOC = new ResourceLocation(SpaceMod.MOD_ID, "block/connector_long3");
@@ -73,9 +72,11 @@ public class BlockStateGenerator extends BlockStateProvider {
         ResourceLocation blockName = block.getRegistryName();
         ModelFile baseModel = models().getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath()));
         ModelFile connector = models().getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_connector"));
+        ModelFile connectorSelf = models().getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_connector_self"));
 
         MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
-        builder.part().modelFile(baseModel).addModel().end().part().modelFile(connector).rotationY(0).addModel().condition(DuctBlock.NORTH, true).end().part().modelFile(connector).rotationY(180).addModel().condition(DuctBlock.SOUTH, true).end().part().modelFile(connector).rotationY(90).addModel().condition(DuctBlock.EAST, true).end().part().modelFile(connector).rotationY(270).addModel().condition(DuctBlock.WEST, true).end().part().modelFile(connector).rotationX(270).addModel().condition(DuctBlock.UP, true).end().part().modelFile(connector).rotationX(90).addModel().condition(DuctBlock.DOWN, true).end();
+        builder.part().modelFile(baseModel).addModel().end().part().modelFile(connector).rotationY(0).addModel().condition(DuctBlock.NORTH, DuctBlock.Connection.OTHER).end().part().modelFile(connector).rotationY(180).addModel().condition(DuctBlock.SOUTH, DuctBlock.Connection.OTHER).end().part().modelFile(connector).rotationY(90).addModel().condition(DuctBlock.EAST, DuctBlock.Connection.OTHER).end().part().modelFile(connector).rotationY(270).addModel().condition(DuctBlock.WEST, DuctBlock.Connection.OTHER).end().part().modelFile(connector).rotationX(270).addModel().condition(DuctBlock.UP, DuctBlock.Connection.OTHER).end().part().modelFile(connector).rotationX(90).addModel().condition(DuctBlock.DOWN, DuctBlock.Connection.OTHER).end().part().modelFile(connectorSelf).rotationY(0).addModel().condition(DuctBlock.NORTH, DuctBlock.Connection.SELF).end().part().modelFile(connectorSelf).rotationY(180).addModel().condition(DuctBlock.SOUTH, DuctBlock.Connection.SELF).end().part()
+                .modelFile(connectorSelf).rotationY(90).addModel().condition(DuctBlock.EAST, DuctBlock.Connection.SELF).end().part().modelFile(connectorSelf).rotationY(270).addModel().condition(DuctBlock.WEST, DuctBlock.Connection.SELF).end().part().modelFile(connectorSelf).rotationX(270).addModel().condition(DuctBlock.UP, DuctBlock.Connection.SELF).end().part().modelFile(connectorSelf).rotationX(90).addModel().condition(DuctBlock.DOWN, DuctBlock.Connection.SELF).end();
 
         ModelFile inventoryModel = models().getExistingFile(new ResourceLocation(blockName.getNamespace(), "block/" + blockName.getPath() + "_inventory"));
         simpleBlockItem(block, inventoryModel);
@@ -108,7 +109,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        ModelFile connector = models().getExistingFile(CONNECTOR_LOC);
         ModelFile connectorShort = models().getExistingFile(CONNECTOR_SHORT_LOC);
         ModelFile connectorLong = models().getExistingFile(CONNECTOR_LONG_LOC);
         ModelFile connectorLong3 = models().getExistingFile(CONNECTOR_LONG3_LOC);
@@ -127,13 +127,13 @@ public class BlockStateGenerator extends BlockStateProvider {
         cableBlockWithItem(MachineRegistry.CABLE.get());
         cableBlockWithItem(MachineRegistry.TRANSPORTER.get());
         cableBlockWithItem(MachineRegistry.PIPE.get());
-        machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(), new RotatedModel[]{null, new RotatedModel(connector, 0, 180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270, 0), new RotatedModel(connector, 90, 0)}, true);
-        machineBlockWithItem(MachineRegistry.BLAST_FURNACE.get(), new RotatedModel[]{null, new RotatedModel(connectorLong3, 0, 180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), null, new RotatedModel(connector, 90, 0)}, true);
-        machineBlockWithItem(MachineRegistry.COMBUSTION_GENERATOR.get(), new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connectorShort, 0, 180), null, null, null, new RotatedModel(connector, 90, 0)}, false);
+        machineBlockWithItem(MachineRegistry.COAL_GENERATOR.get(), new RotatedModel[]{null, null, new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connectorLong, 270, 0), null}, true);
+        machineBlockWithItem(MachineRegistry.BLAST_FURNACE.get(), new RotatedModel[]{null, new RotatedModel(connectorLong3, 0, 180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), null, null}, true);
+        machineBlockWithItem(MachineRegistry.COMBUSTION_GENERATOR.get(), new RotatedModel[]{null, new RotatedModel(connectorShort, 0, 180), null, null, null, null}, false);
         machineBlockWithItem(MachineRegistry.GAS_TANK.get(), new RotatedModel[]{new RotatedModel(connectorLong3, 0, 0), new RotatedModel(connectorLong3, 0, 180), new RotatedModel(connectorLong3, 0, 90), new RotatedModel(connectorLong3, 0, 270), new RotatedModel(connectorShort, 270, 0), new RotatedModel(connectorShort, 90, 0)}, false);
-        machineBlockWithItem(MachineRegistry.DRUM.get(), new RotatedModel[]{new RotatedModel(connector, 0, 0), new RotatedModel(connector, 0, 180), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(connectorShort, 270, 0), new RotatedModel(connector, 90, 0)}, false);
-        machineBlockWithItem(MachineRegistry.BATTERY_PACK.get(), new RotatedModel[]{new RotatedModel(connectorShort, 0, 0), new RotatedModel(connectorShort, 0, 180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), new RotatedModel(connector, 270, 0), new RotatedModel(connector, 90, 0)}, false);
-        machineBlockWithItem(MachineRegistry.REFINERY.get(), new RotatedModel[]{new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_north")), 0, 0), new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_south")), 0, 0), new RotatedModel(connector, 0, 90), new RotatedModel(connector, 0, 270), new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_top")), 0, 0), new RotatedModel(connector, 90, 0)}, false);
+        machineBlockWithItem(MachineRegistry.DRUM.get(), new RotatedModel[]{null, null, null, null, new RotatedModel(connectorShort, 270, 0), null}, false);
+        machineBlockWithItem(MachineRegistry.BATTERY_PACK.get(), new RotatedModel[]{new RotatedModel(connectorShort, 0, 0), new RotatedModel(connectorShort, 0, 180), new RotatedModel(connectorShort, 0, 90), new RotatedModel(connectorShort, 0, 270), null, null}, false);
+        machineBlockWithItem(MachineRegistry.REFINERY.get(), new RotatedModel[]{new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_north")), 0, 0), new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_south")), 0, 0), null, null, new RotatedModel(models().getExistingFile(new ResourceLocation(SpaceMod.MOD_ID, "block/refinery_connector_top")), 0, 0), null}, false);
     }
 
     private class RotatedModel {

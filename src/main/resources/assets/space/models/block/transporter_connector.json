@@ -1,5 +1,6 @@
 {
 	"textures": {
+		"0": "space:block/steel_block",
 		"1": "space:block/transporter"
 	},
 	"elements": [
@@ -8,12 +9,22 @@
 			"to": [10, 10, 6],
 			"rotation": {"angle": 0, "axis": "y", "origin": [13, 8, 8]},
 			"faces": {
-				"north": {"uv": [0, 0, 4, 4], "texture": "#1"},
-				"south": {"uv": [0, 0, 4, 4], "texture": "#1"},
 				"east": {"uv": [8, 4, 14, 8], "texture": "#1"},
 				"west": {"uv": [8, 4, 14, 8], "rotation": 180, "texture": "#1"},
 				"up": {"uv": [8, 4, 14, 8], "rotation": 270, "texture": "#1"},
 				"down": {"uv": [8, 4, 14, 8], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"from": [5, 5, 0],
+			"to": [11, 11, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 1, 6], "texture": "#0"},
+				"up": {"uv": [0, 0, 6, 1], "texture": "#0"},
+				"down": {"uv": [0, 0, 6, 1], "texture": "#0"}
 			}
 		}
 	]

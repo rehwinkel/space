@@ -23,7 +23,7 @@ import java.util.Optional;
 public class RefineryMachine extends Machine {
 
     private static final int SIP_SIZE = 20;
-    private static final int RF_PER_TICK = 40; //TODO: balancing
+    private static final int RF_PER_TICK = 10;
 
     private final EnergyMachineData energy;
     private final FluidMachineData input;

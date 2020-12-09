@@ -37,45 +37,6 @@
     },
     {
       "when": {
-        "facing": "north",
-        "north": "true"
-      },
-      "apply": {
-        "model": "space:block/connector"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "north": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "north": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "north": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 270
-      }
-    },
-    {
-      "when": {
         "south": "true",
         "facing": "north"
       },
@@ -112,15 +73,6 @@
       "apply": {
         "model": "space:block/connector_short",
         "y": 450
-      }
-    },
-    {
-      "when": {
-        "down": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "x": 90
       }
     }
   ]

@@ -79,26 +79,30 @@ repositories {
     maven {
         url 'https://maven.blamejared.com'
     }
+    flatDir {
+        dirs "deps"
+    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.0.7'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.11'
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
+    runtimeOnly fg.deobf("blank:Mekanism:10.0.18.445")
 }
 
 jar {
     manifest {
         attributes([
-            "Specification-Title": "space",
-            "Specification-Vendor": "deerangle",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"deerangle",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                "Specification-Title"     : "space",
+                "Specification-Vendor"    : "deerangle",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "deerangle",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }

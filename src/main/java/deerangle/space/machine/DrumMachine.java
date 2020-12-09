@@ -13,13 +13,15 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class DrumMachine extends Machine {
 
+    private static final int DRAIN_AMOUNT = 20;
+
     private final FluidMachineData tank;
     private final ItemMachineData input;
     private final ItemMachineData output;
 
     public DrumMachine() {
         super(MachineTypeRegistry.DRUM);
-        tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> true, FlowType.INOUT, this, TANK_TEXT));
+        tank = addMachineData(new FluidMachineData("Tank", 64000, stack -> !stack.getFluid().getAttributes().isGaseous(), FlowType.INOUT, this, TANK_TEXT));
         input = addMachineData(new ItemMachineData("Input", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         output = addMachineData(new ItemMachineData("Output", MachineTypeRegistry::holdsFluid, FlowType.NONE, this, BUCKET_TEXT));
         this.sideConfig.setAll(tank.getOutputAccessor());
@@ -29,7 +31,7 @@ public class DrumMachine extends Machine {
     public void update(World world, BlockPos pos) {
         ItemStack inputItem = this.input.getItemHandler().getStackInSlot(0);
         inputItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(cap -> {
-            FluidStack simDrain = cap.drain(20, IFluidHandler.FluidAction.SIMULATE);
+            FluidStack simDrain = cap.drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.SIMULATE);
             if (simDrain.isEmpty()) {
                 simDrain = cap.drain(1000, IFluidHandler.FluidAction.SIMULATE);
                 if (!simDrain.isEmpty()) {
@@ -49,7 +51,7 @@ public class DrumMachine extends Machine {
 
         ItemStack outputItem = this.output.getItemHandler().getStackInSlot(0);
         outputItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(cap -> {
-            FluidStack simDrain = this.tank.getFluidHandler().drain(20, IFluidHandler.FluidAction.SIMULATE);
+            FluidStack simDrain = this.tank.getFluidHandler().drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.SIMULATE);
             int filled = cap.fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
             if (filled == 0) {
                 simDrain = this.tank.getFluidHandler().drain(1000, IFluidHandler.FluidAction.SIMULATE);
@@ -59,7 +61,7 @@ public class DrumMachine extends Machine {
                     cap.fill(drain, IFluidHandler.FluidAction.EXECUTE);
                 }
             } else {
-                FluidStack drain = this.tank.getFluidHandler().drain(20, IFluidHandler.FluidAction.EXECUTE);
+                FluidStack drain = this.tank.getFluidHandler().drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.EXECUTE);
                 cap.fill(drain, IFluidHandler.FluidAction.EXECUTE);
             }
             this.output.getItemHandler().setStackInSlot(0, cap.getContainer());

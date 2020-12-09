@@ -7,7 +7,7 @@
     },
     {
       "when": {
-        "north": "true"
+        "north": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector"
@@ -15,7 +15,7 @@
     },
     {
       "when": {
-        "south": "true"
+        "south": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector",
@@ -24,7 +24,7 @@
     },
     {
       "when": {
-        "east": "true"
+        "east": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector",
@@ -33,7 +33,7 @@
     },
     {
       "when": {
-        "west": "true"
+        "west": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector",
@@ -42,7 +42,7 @@
     },
     {
       "when": {
-        "up": "true"
+        "up": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector",
@@ -51,10 +51,63 @@
     },
     {
       "when": {
-        "down": "true"
+        "down": "other"
       },
       "apply": {
         "model": "space:block/transporter_connector",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "north": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self"
+      }
+    },
+    {
+      "when": {
+        "south": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "east": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "self"
+      },
+      "apply": {
+        "model": "space:block/transporter_connector_self",
         "x": 90
       }
     }

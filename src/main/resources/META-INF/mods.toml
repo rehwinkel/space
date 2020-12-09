@@ -15,7 +15,7 @@ Explore space!
 [[dependencies.space]]
     modId="forge"
     mandatory=true
-    versionRange="[35,)"
+    versionRange="[35.1.11,)"
     ordering="NONE"
     side="BOTH"
 
