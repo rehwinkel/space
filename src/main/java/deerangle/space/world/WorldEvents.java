@@ -58,9 +58,13 @@ public class WorldEvents {
     }
 
     private static ConfiguredFeature<?, ?> ALUMINIUM_ORE;
+    private static ConfiguredFeature<?, ?> COPPER_ORE;
+    private static ConfiguredFeature<?, ?> TITANIUM_ORE;
 
     public static void registerFeatures() {
-        ALUMINIUM_ORE = register("aluminium_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ResourceRegistry.ALUMINIUM_ORE.get().getDefaultState(), 9)).range(64).square().func_242731_b(20));
+        ALUMINIUM_ORE = register("aluminium_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ResourceRegistry.ALUMINIUM_ORE.get().getDefaultState(), 9)).range(256).square().func_242731_b(5));
+        COPPER_ORE = register("copper_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ResourceRegistry.COPPER_ORE.get().getDefaultState(), 12)).range(128).square().func_242731_b(20));
+        TITANIUM_ORE = register("titanium_ore", Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ResourceRegistry.ILMENITE_ORE.get().getDefaultState(), 4)).range(20).square().func_242731_b(2));
     }
 
     private static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> register(String key, ConfiguredFeature<FC, ?> configuredFeature) {
@@ -70,13 +74,15 @@ public class WorldEvents {
     @SubscribeEvent
     public static void onBiomeLoad(BiomeLoadingEvent event) {
         if (isOverworldBiome(event.getCategory())) {
-            withAluminiumOre(event.getGeneration());
-            //TODO: other overworld ores
+            withOres(event.getGeneration());
         }
     }
 
-    private static void withAluminiumOre(BiomeGenerationSettingsBuilder generation) {
+    private static void withOres(BiomeGenerationSettingsBuilder generation) {
+        //TODO: config checking
         generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ALUMINIUM_ORE);
+        generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, COPPER_ORE);
+        generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, TITANIUM_ORE);
     }
 
     public static boolean isOverworldBiome(Biome.Category category) {

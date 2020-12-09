@@ -35,8 +35,8 @@ public abstract class DuctBlock extends Block {
     protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
     private final VoxelShape[] SHAPES = makeShapes(4);
 
-    //TODO: fix conenction model for other blocks (e.g. chest)
     //TODO: actually transmit items/fluids/energy
+    //TODO: add connector to duct instead of machine
 
     public DuctBlock(AbstractBlock.Properties properties) {
         super(properties);

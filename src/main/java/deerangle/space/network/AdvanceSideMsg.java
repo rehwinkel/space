@@ -2,8 +2,10 @@ package deerangle.space.network;
 
 import deerangle.space.block.entity.MachineTileEntity;
 import deerangle.space.machine.util.SideConfig;
+import net.minecraft.block.Block;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -35,7 +37,8 @@ public class AdvanceSideMsg {
 
     public static void handle(AdvanceSideMsg msg, Supplier<NetworkEvent.Context> contextSupplier) {
         contextSupplier.get().enqueueWork(() -> {
-            SideConfig sides = ((MachineTileEntity) contextSupplier.get().getSender().getServerWorld().getTileEntity(msg.pos)).getMachine().getSideConfig();
+            World world = contextSupplier.get().getSender().getServerWorld();
+            SideConfig sides = ((MachineTileEntity) world.getTileEntity(msg.pos)).getMachine().getSideConfig();
             switch (msg.face) {
                 case TOP:
                     sides.setTop(sides.getNext(sides.getTop(), msg.forward));
@@ -56,6 +59,7 @@ public class AdvanceSideMsg {
                     sides.setRight(sides.getNext(sides.getRight(), msg.forward));
                     break;
             }
+            world.setBlockState(msg.pos, Block.getValidBlockForPosition(world.getBlockState(msg.pos), world, msg.pos)); // updates all sides for connections
         });
         contextSupplier.get().setPacketHandled(true);
     }
