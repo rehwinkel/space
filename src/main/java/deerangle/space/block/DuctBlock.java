@@ -1,17 +1,20 @@
 package deerangle.space.block;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SixWayBlock;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -24,23 +27,29 @@ import java.util.Map;
 
 public abstract class DuctBlock extends Block {
 
-    public static final BooleanProperty NORTH = SixWayBlock.NORTH;
-    public static final BooleanProperty EAST = SixWayBlock.EAST;
-    public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
-    public static final BooleanProperty WEST = SixWayBlock.WEST;
-    public static final BooleanProperty UP = SixWayBlock.UP;
-    public static final BooleanProperty DOWN = SixWayBlock.DOWN;
+    public static final EnumProperty<Connection> NORTH = EnumProperty.create("north", Connection.class);
+    public static final EnumProperty<Connection> EAST = EnumProperty.create("east", Connection.class);
+    public static final EnumProperty<Connection> SOUTH = EnumProperty.create("south", Connection.class);
+    public static final EnumProperty<Connection> WEST = EnumProperty.create("west", Connection.class);
+    public static final EnumProperty<Connection> UP = EnumProperty.create("up", Connection.class);
+    public static final EnumProperty<Connection> DOWN = EnumProperty.create("down", Connection.class);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP;
+    protected static final Map<Direction, EnumProperty<Connection>> FACING_TO_PROPERTY_MAP = Util.make(Maps.newEnumMap(Direction.class), (directions) -> {
+        directions.put(Direction.NORTH, NORTH);
+        directions.put(Direction.EAST, EAST);
+        directions.put(Direction.SOUTH, SOUTH);
+        directions.put(Direction.WEST, WEST);
+        directions.put(Direction.UP, UP);
+        directions.put(Direction.DOWN, DOWN);
+    });
     private final VoxelShape[] SHAPES = makeShapes(4);
 
-    //TODO: fix conenction model for other blocks (e.g. chest)
     //TODO: actually transmit items/fluids/energy
 
     public DuctBlock(AbstractBlock.Properties properties) {
         super(properties);
-        this.setDefaultState(this.stateContainer.getBaseState().with(UP, false).with(NORTH, false).with(SOUTH, false).with(EAST, false).with(WEST, false).with(DOWN, false).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateContainer.getBaseState().with(UP, Connection.NONE).with(NORTH, Connection.NONE).with(SOUTH, Connection.NONE).with(EAST, Connection.NONE).with(WEST, Connection.NONE).with(DOWN, Connection.NONE).with(WATERLOGGED, false));
     }
 
     private VoxelShape[] makeShapes(int width) {
@@ -55,22 +64,22 @@ public abstract class DuctBlock extends Block {
         VoxelShape upShape = Block.makeCuboidShape(edge, 16 - edge, edge, 16 - edge, 16, 16 - edge);
         for (BlockState state : this.stateContainer.getValidStates()) {
             VoxelShape shape = coreShape;
-            if (state.get(NORTH)) {
+            if (state.get(NORTH) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, northShape);
             }
-            if (state.get(SOUTH)) {
+            if (state.get(SOUTH) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, southShape);
             }
-            if (state.get(EAST)) {
+            if (state.get(EAST) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, eastShape);
             }
-            if (state.get(WEST)) {
+            if (state.get(WEST) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, westShape);
             }
-            if (state.get(UP)) {
+            if (state.get(UP) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, upShape);
             }
-            if (state.get(DOWN)) {
+            if (state.get(DOWN) != Connection.NONE) {
                 shape = VoxelShapes.or(shape, downShape);
             }
             shapes[getIndex(state)] = shape;
@@ -79,7 +88,7 @@ public abstract class DuctBlock extends Block {
     }
 
     private int getIndex(BlockState state) {
-        return (state.get(NORTH) ? 0b1 : 0) | (state.get(SOUTH) ? 0b10 : 0) | (state.get(EAST) ? 0b100 : 0) | (state.get(WEST) ? 0b1000 : 0) | (state.get(UP) ? 0b10000 : 0) | (state.get(DOWN) ? 0b100000 : 0);
+        return (state.get(NORTH) != Connection.NONE ? 0b1 : 0) | (state.get(SOUTH) != Connection.NONE ? 0b10 : 0) | (state.get(EAST) != Connection.NONE ? 0b100 : 0) | (state.get(WEST) != Connection.NONE ? 0b1000 : 0) | (state.get(UP) != Connection.NONE ? 0b10000 : 0) | (state.get(DOWN) != Connection.NONE ? 0b100000 : 0);
     }
 
     @Override
@@ -91,12 +100,12 @@ public abstract class DuctBlock extends Block {
 
     protected abstract boolean canConnectDuct(Block block);
 
-    public boolean canConnect(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
+    public Connection getConnectionType(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
         TileEntity te = world.getTileEntity(pos);
         if (te != null) {
-            return te.getCapability(this.getDuctCapability(), direction).isPresent();
+            return te.getCapability(this.getDuctCapability(), direction).isPresent() ? Connection.OTHER : Connection.NONE;
         }
-        return this.canConnectDuct(state.getBlock());
+        return this.canConnectDuct(state.getBlock()) ? Connection.SELF : Connection.NONE;
     }
 
     public BlockState getStateForPlacement(BlockItemUseContext context) {
@@ -116,7 +125,7 @@ public abstract class DuctBlock extends Block {
         BlockState upState = iblockreader.getBlockState(upPos);
         BlockState downState = iblockreader.getBlockState(downPos);
 
-        return super.getStateForPlacement(context).with(NORTH, this.canConnect(northState, iblockreader, northPos, Direction.SOUTH)).with(EAST, this.canConnect(eastState, iblockreader, eastPos, Direction.WEST)).with(SOUTH, this.canConnect(southState, iblockreader, southPos, Direction.NORTH)).with(WEST, this.canConnect(westState, iblockreader, westPos, Direction.EAST)).with(UP, this.canConnect(upState, iblockreader, upPos, Direction.DOWN)).with(DOWN, this.canConnect(downState, iblockreader, downPos, Direction.UP)).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
+        return super.getStateForPlacement(context).with(NORTH, this.getConnectionType(northState, iblockreader, northPos, Direction.SOUTH)).with(EAST, this.getConnectionType(eastState, iblockreader, eastPos, Direction.WEST)).with(SOUTH, this.getConnectionType(southState, iblockreader, southPos, Direction.NORTH)).with(WEST, this.getConnectionType(westState, iblockreader, westPos, Direction.EAST)).with(UP, this.getConnectionType(upState, iblockreader, upPos, Direction.DOWN)).with(DOWN, this.getConnectionType(downState, iblockreader, downPos, Direction.UP)).with(WATERLOGGED, fluidstate.getFluid() == Fluids.WATER);
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
@@ -124,7 +133,7 @@ public abstract class DuctBlock extends Block {
             worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
         }
 
-        return stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), this.canConnect(facingState, worldIn, currentPos.offset(facing), facing.getOpposite()));
+        return stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), this.getConnectionType(facingState, worldIn, currentPos.offset(facing), facing.getOpposite()));
     }
 
     @Override
@@ -133,4 +142,20 @@ public abstract class DuctBlock extends Block {
         builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN, WATERLOGGED);
     }
 
+    public enum Connection implements IStringSerializable {
+        NONE, SELF, OTHER;
+
+        @Override
+        public String getString() {
+            switch (this) {
+                case NONE:
+                    return "none";
+                case SELF:
+                    return "self";
+                case OTHER:
+                    return "other";
+            }
+            return "";
+        }
+    }
 }

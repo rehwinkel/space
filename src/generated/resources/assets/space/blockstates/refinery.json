@@ -37,8 +37,8 @@
     },
     {
       "when": {
-        "facing": "north",
-        "north": "true"
+        "north": "true",
+        "facing": "north"
       },
       "apply": {
         "model": "space:block/refinery_connector_north"
@@ -46,8 +46,8 @@
     },
     {
       "when": {
-        "facing": "south",
-        "north": "true"
+        "north": "true",
+        "facing": "south"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -56,8 +56,8 @@
     },
     {
       "when": {
-        "facing": "east",
-        "north": "true"
+        "north": "true",
+        "facing": "east"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -66,8 +66,8 @@
     },
     {
       "when": {
-        "facing": "west",
-        "north": "true"
+        "north": "true",
+        "facing": "west"
       },
       "apply": {
         "model": "space:block/refinery_connector_north",
@@ -115,99 +115,10 @@
     },
     {
       "when": {
-        "facing": "north",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 360
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "north"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 450
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "east"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 360
-      }
-    },
-    {
-      "when": {
-        "west": "true",
-        "facing": "west"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 540
-      }
-    },
-    {
-      "when": {
         "up": "true"
       },
       "apply": {
         "model": "space:block/refinery_connector_top"
-      }
-    },
-    {
-      "when": {
-        "down": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "x": 90
       }
     }
   ]

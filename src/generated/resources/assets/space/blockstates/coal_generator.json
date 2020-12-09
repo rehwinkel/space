@@ -2,8 +2,8 @@
   "multipart": [
     {
       "when": {
-        "running": "false",
-        "facing": "north"
+        "facing": "north",
+        "running": "false"
       },
       "apply": {
         "model": "space:block/coal_generator"
@@ -11,8 +11,8 @@
     },
     {
       "when": {
-        "running": "false",
-        "facing": "south"
+        "facing": "south",
+        "running": "false"
       },
       "apply": {
         "model": "space:block/coal_generator",
@@ -21,8 +21,8 @@
     },
     {
       "when": {
-        "running": "false",
-        "facing": "west"
+        "facing": "west",
+        "running": "false"
       },
       "apply": {
         "model": "space:block/coal_generator",
@@ -31,8 +31,8 @@
     },
     {
       "when": {
-        "running": "false",
-        "facing": "east"
+        "facing": "east",
+        "running": "false"
       },
       "apply": {
         "model": "space:block/coal_generator",
@@ -41,8 +41,8 @@
     },
     {
       "when": {
-        "running": "true",
-        "facing": "north"
+        "facing": "north",
+        "running": "true"
       },
       "apply": {
         "model": "space:block/coal_generator_running"
@@ -50,108 +50,68 @@
     },
     {
       "when": {
-        "running": "true",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "space:block/coal_generator_running",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "running": "true",
-        "facing": "west"
-      },
-      "apply": {
-        "model": "space:block/coal_generator_running",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "running": "true",
-        "facing": "east"
-      },
-      "apply": {
-        "model": "space:block/coal_generator_running",
-        "y": 90
-      }
-    },
-    {
-      "when": {
-        "south": "true",
-        "facing": "north"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "south": "true",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 360
-      }
-    },
-    {
-      "when": {
-        "south": "true",
-        "facing": "east"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "south": "true",
-        "facing": "west"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "y": 450
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
-        "y": 90
-      }
-    },
-    {
-      "when": {
         "facing": "south",
-        "east": "true"
+        "running": "true"
       },
       "apply": {
-        "model": "space:block/connector_short",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "east": "true"
-      },
-      "apply": {
-        "model": "space:block/connector_short",
+        "model": "space:block/coal_generator_running",
         "y": 180
       }
     },
     {
       "when": {
         "facing": "west",
-        "east": "true"
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "running": "true"
+      },
+      "apply": {
+        "model": "space:block/coal_generator_running",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "space:block/connector_short",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "facing": "west"
       },
       "apply": {
         "model": "space:block/connector_short",
@@ -205,15 +165,6 @@
       "apply": {
         "model": "space:block/connector_long",
         "x": 270
-      }
-    },
-    {
-      "when": {
-        "down": "true"
-      },
-      "apply": {
-        "model": "space:block/connector",
-        "x": 90
       }
     }
   ]

@@ -9,8 +9,10 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.LavaFluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.tags.FluidTags;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -28,9 +30,6 @@ public class FluidRegistry extends AbstractRegistry {
     public static final RegistryObject<FlowingFluid> ACID_FLOWING = FLUIDS.register("acid_flowing", AcidFluid.Flowing::new);
     public static final RegistryObject<BucketItem> ACID_BUCKET = ITEMS.register("acid_bucket", () -> new BucketItem(ACID, new Item.Properties().group(ResourceRegistry.TAB).maxStackSize(1)));
     public static final RegistryObject<Block> ACID_BLOCK = BLOCKS.register("acid", () -> new FlowingFluidBlock(ACID, AbstractBlock.Properties.create(Material.LAVA, MaterialColor.BLACK).doesNotBlockMovement().hardnessAndResistance(100.0F)));
-
-    // TODO: acid damage
-    // TODO: place acid in venus without evapotrating
 
     public static void register() {
     }

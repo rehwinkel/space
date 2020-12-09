@@ -66,8 +66,8 @@ public class BlastFurnaceBlock extends MachineBlock {
         }
     }
 
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        worldIn.setBlockState(pos.up(), state.with(TOP_HALF, true), 3);
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        world.setBlockState(pos.up(), state.with(TOP_HALF, true), 3);
     }
 
     @Override

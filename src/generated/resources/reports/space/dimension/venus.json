@@ -7,7 +7,7 @@
     "bed_works": true,
     "respawn_anchor_works": true,
     "has_raids": false,
-    "ultrawarm": true,
+    "ultrawarm": false,
     "natural": false,
     "coordinate_scale": 1.0,
     "piglin_safe": false,

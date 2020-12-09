@@ -24,6 +24,7 @@ public class VenusRegistry {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SpaceMod.MOD_ID);
     private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, SpaceMod.MOD_ID);
 
+    // FIXME
     public static final RegistryObject<SoundEvent> MUSIC_LOVE = SOUND_EVENTS.register("music_disc_love", () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.love")));
     public static final RegistryObject<SoundEvent> MUSIC_SPICY_AND_SOUR = SOUND_EVENTS.register("music_disc_spicy_and_sour", () -> new SoundEvent(new ResourceLocation(SpaceMod.MOD_ID, "music_disc.spicy_and_sour")));
 

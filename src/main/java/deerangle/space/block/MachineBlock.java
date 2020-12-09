@@ -6,6 +6,7 @@ import deerangle.space.machine.element.MachineType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -96,47 +97,16 @@ public abstract class MachineBlock extends Block {
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    public boolean canConnect(IBlockReader world, BlockState state) {
-        //TODO only connect if side is right for connection
+    public boolean canConnect(MachineTileEntity te, Direction side, BlockState state) {
         Block block = state.getBlock();
-        return (block instanceof CableBlock) || (block instanceof TransporterBlock) || (block instanceof PipeBlock);
-    }
-
-    private Direction rotateByFacing(Direction facing, Direction side) {
-        if (side.getAxis() != Direction.Axis.Y) {
-            switch (facing) {
-                case NORTH:
-                    return side;
-                case SOUTH:
-                    return side.rotateY().rotateY();
-                case EAST:
-                    return side.rotateY();
-                case WEST:
-                    return side.rotateYCCW();
-            }
-        }
-        return side;
+        return block instanceof DuctBlock && te.getCapability(((DuctBlock) block).getDuctCapability(), side).isPresent();
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        // don't worry, connections are handled in onBlockPlacedBy
         Direction facing = context.getPlacementHorizontalFacing().getOpposite();
-        IBlockReader world = context.getWorld();
-        BlockPos blockpos = context.getPos();
-        BlockPos northPos = blockpos.offset(rotateByFacing(facing, Direction.NORTH));
-        BlockPos eastPos = blockpos.offset(rotateByFacing(facing, Direction.EAST));
-        BlockPos southPos = blockpos.offset(rotateByFacing(facing, Direction.SOUTH));
-        BlockPos westPos = blockpos.offset(rotateByFacing(facing, Direction.WEST));
-        BlockPos upPos = blockpos.up();
-        BlockPos downPos = blockpos.down();
-        BlockState northState = world.getBlockState(northPos);
-        BlockState eastState = world.getBlockState(eastPos);
-        BlockState southState = world.getBlockState(southPos);
-        BlockState westState = world.getBlockState(westPos);
-        BlockState upState = world.getBlockState(upPos);
-        BlockState downState = world.getBlockState(downPos);
-
-        return super.getStateForPlacement(context).with(FACING, facing).with(NORTH, this.canConnect(world, northState)).with(EAST, this.canConnect(world, eastState)).with(SOUTH, this.canConnect(world, southState)).with(WEST, this.canConnect(world, westState)).with(UP, this.canConnect(world, upState)).with(DOWN, this.canConnect(world, downState));
+        return super.getStateForPlacement(context).with(FACING, facing);
     }
 
     public BlockState updatePostPlacement(BlockState stateIn, Direction side, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
@@ -159,7 +129,15 @@ public abstract class MachineBlock extends Block {
             }
         }
         BooleanProperty prop = FACING_TO_PROPERTY_MAP.get(rotated);
-        return stateIn.with(prop, this.canConnect(worldIn, facingState));
+        TileEntity tileEntity = worldIn.getTileEntity(currentPos);
+        assert tileEntity instanceof MachineTileEntity;
+        return stateIn.with(prop, this.canConnect((MachineTileEntity) tileEntity, side, facingState));
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, placer, stack);
+        world.setBlockState(pos, Block.getValidBlockForPosition(world.getBlockState(pos), world, pos)); // updates all sides for connections
     }
 
     @Override

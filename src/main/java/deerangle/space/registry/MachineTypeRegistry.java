@@ -36,7 +36,6 @@ public class MachineTypeRegistry {
     }
 
     public static boolean holdsEnergy(ItemStack stack) {
-        //TODO
         return stack.getCapability(CapabilityEnergy.ENERGY).isPresent();
     }
 
