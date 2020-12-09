@@ -4,8 +4,11 @@ import deerangle.space.capability.Capabilities;
 import deerangle.space.main.SpaceMod;
 import deerangle.space.network.PacketHandler;
 import deerangle.space.network.SyncWeatherMsg;
+import deerangle.space.registry.FluidRegistry;
 import deerangle.space.registry.ResourceRegistry;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -18,6 +21,7 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -79,7 +83,6 @@ public class WorldEvents {
     }
 
     private static void withOres(BiomeGenerationSettingsBuilder generation) {
-        //TODO: config checking
         generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ALUMINIUM_ORE);
         generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, COPPER_ORE);
         generation.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, TITANIUM_ORE);
@@ -87,6 +90,17 @@ public class WorldEvents {
 
     public static boolean isOverworldBiome(Biome.Category category) {
         return category != Biome.Category.NONE && category != Biome.Category.THEEND && category != Biome.Category.NETHER;
+    }
+
+
+    @SubscribeEvent
+    public static void entityTicking(LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntity().isInWater()) {
+            FluidState state = event.getEntity().getEntityWorld().getFluidState(event.getEntity().getPosition());
+            if (state.getFluid() == FluidRegistry.ACID.get()) {
+                event.getEntityLiving().attackEntityFrom(DamageSources.ACID, 1);
+            }
+        }
     }
 
 }

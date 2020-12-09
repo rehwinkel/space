@@ -1,11 +1,11 @@
 package deerangle.space.planet.planets.venus.block;
 
+import deerangle.space.world.DamageSources;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 
 public class RockBlock extends Block {
 
-    public static final DamageSource SPIKY = new DamageSource("spikyRock").setDamageBypassesArmor();
 
     private static final VoxelShape SHAPE = Block.makeCuboidShape(1, 0, 1, 15, 10, 15);
     private static final VoxelShape COLLISION_SHAPE = Block.makeCuboidShape(1, 0, 1, 14, 4, 14);
@@ -58,7 +57,7 @@ public class RockBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        entityIn.attackEntityFrom(SPIKY, 1.0f);
+        entityIn.attackEntityFrom(DamageSources.SPIKY, 1.0f);
     }
 
 }

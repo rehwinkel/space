@@ -12,6 +12,7 @@ public class ConfigData {
     public static boolean spawnCopper;
     public static boolean spawnAluminium;
     public static boolean doMachineParticles;
+    //TODO: rework config
 
     static {
         final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);

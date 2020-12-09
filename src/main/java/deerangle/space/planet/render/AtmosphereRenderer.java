@@ -638,7 +638,7 @@ public class AtmosphereRenderer extends AbstractAtmosphereRenderer {
         }
     }
 
-    // TODO: proper sunset colors, proper sky with dynamic moons and suns, lighting for world, day length settings,
+    // TODO: proper sunset colors, lighting for world
     // TODO: beds that work and advance time partially, meteors
     // TODO: gravity
 
