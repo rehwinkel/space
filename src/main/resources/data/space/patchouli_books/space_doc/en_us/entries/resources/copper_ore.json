@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "Copper ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain copper ingots."
+            "text": "Copper ore can be found in the overworld up to a height of 128 blocks and veins of up to 12 ores. There are at most 20 veins per chunk. It can be smelted in a furnace to obtain copper ingots."
         },
         {
             "type": "smelting",

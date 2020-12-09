@@ -1,0 +1,12 @@
+{
+    "name": "Battery Pack",
+    "icon": "space:battery_pack",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The battery pack is an advanced energy storage / source for your machines. It can be used as portable energy source as it keeps its energy upon destruction."
+        }
+    ]
+}

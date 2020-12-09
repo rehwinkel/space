@@ -5,7 +5,7 @@
     "pages": [
         {
             "type": "text",
-            "text": "Aluminium ore can be found in the overworld at yet undefined heights. It can be smelted in a furnace to obtain aluminium ingots."
+            "text": "Aluminium ore can be found in the overworld at all heights and veins of up to 9 ores. There are at most 5 veins per chunk. It can be smelted in a furnace to obtain aluminium ingots."
         },
         {
             "type": "smelting",

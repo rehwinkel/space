@@ -1,0 +1,12 @@
+{
+    "name": "Cable",
+    "icon": "space:cable",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "Cables are used for transferring energy from one machine to another."
+        }
+    ]
+}

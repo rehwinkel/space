@@ -1,0 +1,16 @@
+{
+    "name": "Refinery",
+    "icon": "space:refinery",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "The refinery can be used to process oil to get more efficient fuel for your combustion generator. This fuel is also needed for boosting rockets."
+        },
+        {
+            "type": "text",
+            "text": "2mB of oil need 4 ticks to be processed to 1mB of kerosene."
+        }
+    ]
+}

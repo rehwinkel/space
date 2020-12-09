@@ -1,0 +1,12 @@
+{
+    "name": "Pipe",
+    "icon": "space:pipe",
+    "category": "space:machines",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "text",
+            "text": "Pipes are used for transferring fluids from one machine to another."
+        }
+    ]
+}
